@@ -51,79 +51,58 @@
     .outline{background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--text);box-shadow:none}
     .small{font-size:.9rem}
 
-    /* Tournaments (logo dominant, date en bas à gauche, J-xx à droite) */
-    .tournaments{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:16px;
-      margin-top:10px;
-    }
-    .tcard{
-      background:#0b1020;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:16px;
-      padding:18px 18px 14px;
-      text-align:center;
-      overflow:hidden;
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:space-between;
-      min-height:170px;
-    }
-    .tcard .logo{
-      flex:1 1 auto;
-      display:grid;
-      place-items:center;
-      width:100%;
-      margin-bottom:10px;
-    }
-    .tcard .logo img{
-      width:100%;
-      max-width:190px;   /* LOGO LARGE */
-      max-height:110px;
-      height:auto;
-      object-fit:contain;
-      filter: drop-shadow(0 8px 22px rgba(0,0,0,.35));
-    }
-    .tinfo{
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .t-date{
-      font-weight:700;
-      font-size:.95rem;          /* date petite */
-      letter-spacing:.2px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      padding:6px 10px;
-      border-radius:10px;
-      font-variant-numeric: tabular-nums;
-    }
-    .t-badge{
-      font-weight:800;
-      font-size:.95rem;
-      padding:6px 10px;
-      border-radius:10px;
-      background:linear-gradient(135deg,#1f7cff,#60a5fa);
-      color:white;
-      letter-spacing:.2px;
-      white-space:nowrap;
-    }
-    @media (max-width: 900px){
-      .tournaments{ grid-template-columns: repeat(2, 1fr); }
-      .tcard .logo img{ max-width:180px; max-height:100px }
-    }
-    @media (max-width: 600px){
-      .tournaments{ grid-template-columns: 1fr; }
-      .tcard{ padding:16px 16px 12px; min-height:160px }
-      .tcard .logo img{ max-width:170px; max-height:96px }
-      .t-date, .t-badge{ padding:5px 8px; font-size:.9rem }
-    }
+    /* Tournaments — logo dominant, info en overlay */
+.tournaments{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:10px;
+}
+.tcard{
+  position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08);
+  border-radius:20px; padding:18px; min-height:220px; overflow:hidden;
+  display:grid; place-items:center;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+}
+.tcard::after{ /* léger vignettage pour focus le centre */
+  content:""; position:absolute; inset:0;
+  background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%);
+  pointer-events:none;
+}
+.tcard .logo{width:100%; height:100%; display:grid; place-items:center}
+.tcard .logo img{
+  width:90%; max-width:320px; max-height:160px; height:auto; object-fit:contain;
+  filter: drop-shadow(0 10px 28px rgba(0,0,0,.45));
+  transform: translateY(2px); transition: transform .2s ease;
+}
+.tcard:hover .logo img{ transform: translateY(0) scale(1.03) }
+
+.t-info-pill{
+  position:absolute; bottom:12px; height:34px; display:flex; align-items:center;
+  padding:6px 10px; border-radius:12px; font-variant-numeric:tabular-nums;
+  backdrop-filter: blur(6px);
+}
+.t-date{
+  left:12px; font-weight:700; font-size:.9rem; letter-spacing:.2px;
+  color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
+}
+.t-badge{
+  right:12px; font-weight:800; font-size:.9rem; letter-spacing:.2px; color:#fff;
+  background:linear-gradient(135deg,#1f7cff,#60a5fa);
+  box-shadow:0 6px 16px rgba(31,124,255,.35);
+}
+
+/* Resp: 2 colonnes tablette, 1 colonne iPhone */
+@media (max-width:900px){
+  .tournaments{ grid-template-columns:repeat(2,1fr) }
+  .tcard{ min-height:210px }
+  .tcard .logo img{ max-height:150px }
+}
+@media (max-width:600px){
+  .tournaments{ grid-template-columns:1fr }
+  .tcard{ min-height:200px; padding:14px }
+  .tcard .logo img{ width:92%; max-height:140px }
+  .t-info-pill{ height:30px; padding:4px 8px; border-radius:10px }
+  .t-date, .t-badge{ font-size:.85rem }
+}
+
 
     /* Language split */
     .lang-split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
