@@ -51,7 +51,7 @@
     .outline{background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--text);box-shadow:none}
     .small{font-size:.9rem}
 
-    /* Tournaments (responsive iPhone) */
+    /* Tournaments (logo dominant, date en bas à gauche, J-xx à droite) */
     .tournaments{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -62,52 +62,67 @@
       background:#0b1020;
       border:1px solid rgba(255,255,255,.08);
       border-radius:16px;
-      padding:16px;
+      padding:18px 18px 14px;
       text-align:center;
       overflow:hidden;
       position:relative;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:space-between;
+      min-height:170px;
     }
-    .tcard img{
-      max-width:140px;
-      max-height:80px;
+    .tcard .logo{
+      flex:1 1 auto;
+      display:grid;
+      place-items:center;
       width:100%;
+      margin-bottom:10px;
+    }
+    .tcard .logo img{
+      width:100%;
+      max-width:190px;   /* LOGO LARGE */
+      max-height:110px;
       height:auto;
       object-fit:contain;
-      display:inline-block;
+      filter: drop-shadow(0 8px 22px rgba(0,0,0,.35));
     }
-    .t-meta{
-      margin-top:10px;
+    .tinfo{
+      width:100%;
       display:flex;
       align-items:center;
-      justify-content:center;
+      justify-content:space-between;
       gap:10px;
-      flex-wrap:wrap;
     }
     .t-date{
-      font-weight:800;
-      letter-spacing:.4px;
+      font-weight:700;
+      font-size:.95rem;          /* date petite */
+      letter-spacing:.2px;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
       padding:6px 10px;
-      border-radius:12px;
+      border-radius:10px;
       font-variant-numeric: tabular-nums;
     }
     .t-badge{
       font-weight:800;
+      font-size:.95rem;
       padding:6px 10px;
-      border-radius:12px;
+      border-radius:10px;
       background:linear-gradient(135deg,#1f7cff,#60a5fa);
       color:white;
       letter-spacing:.2px;
+      white-space:nowrap;
     }
     @media (max-width: 900px){
       .tournaments{ grid-template-columns: repeat(2, 1fr); }
+      .tcard .logo img{ max-width:180px; max-height:100px }
     }
     @media (max-width: 600px){
       .tournaments{ grid-template-columns: 1fr; }
-      .tcard{ padding:14px }
-      .tcard img{ max-width:120px; max-height:68px }
-      .t-date, .t-badge{ padding:5px 8px }
+      .tcard{ padding:16px 16px 12px; min-height:160px }
+      .tcard .logo img{ max-width:170px; max-height:96px }
+      .t-date, .t-badge{ padding:5px 8px; font-size:.9rem }
     }
 
     /* Language split */
@@ -138,30 +153,30 @@
       <div class="tournaments">
         <!-- Boston -->
         <div class="tcard">
-          <a href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
+          <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
             <img src="logos/bluechip.png" alt="CCM Blue Chip Invite logo">
           </a>
-          <div class="t-meta">
+          <div class="tinfo">
             <div class="t-date">29–31.05</div>
             <div class="t-badge" id="cd-boston">J-—</div>
           </div>
         </div>
         <!-- Meltdown -->
         <div class="tcard">
-          <a href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
+          <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
             <img src="logos/meltdown.png" alt="Montreal Meltdown logo">
           </a>
-          <div class="t-meta">
+          <div class="tinfo">
             <div class="t-date">05–07.06</div>
             <div class="t-badge" id="cd-meltdown">J-—</div>
           </div>
         </div>
         <!-- The Throne -->
         <div class="tcard">
-          <a href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
+          <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
             <img src="logos/throne.png" alt="The Throne Tournament logo">
           </a>
-          <div class="t-meta">
+          <div class="tinfo">
             <div class="t-date">24–26.07</div>
             <div class="t-badge" id="cd-throne">J-—</div>
           </div>
@@ -193,7 +208,6 @@
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
       <input type="hidden" name="form_version" value="rttt_v1">
-      <!-- Local thank-you page -->
       <input type="hidden" name="_next" value="thanks.html">
 
       <fieldset>
@@ -387,14 +401,18 @@
         { id: 'cd-meltdown', date: new Date('2026-06-05T00:00:00-04:00') },
         { id: 'cd-throne',   date: new Date('2026-07-24T00:00:00-04:00') }
       ];
-      const today = new Date();
-      targets.forEach(t=>{
-        const el = document.getElementById(t.id);
-        if(!el) return;
-        const ms = t.date - today;
-        const d  = Math.ceil(ms / (1000*60*60*24));
-        el.textContent = (d > 0) ? `J-${d}` : (d === 0 ? 'Jour J' : 'Terminé');
-      });
+      function update(){
+        const today = new Date();
+        targets.forEach(t=>{
+          const el = document.getElementById(t.id);
+          if(!el) return;
+          const ms = t.date - today;
+          const d  = Math.ceil(ms / (1000*60*60*24));
+          el.textContent = (d > 0) ? `J-${d}` : (d === 0 ? 'Jour J' : 'Terminé');
+        });
+      }
+      update();
+      setInterval(update, 1000*60*60); // rafraîchit chaque heure
     })();
   </script>
 
