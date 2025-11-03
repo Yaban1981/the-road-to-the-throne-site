@@ -118,8 +118,7 @@
     }
     /* Selects plus visibles avec chevron or */
     select{
-      background-image:
-        url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+      background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
       background-repeat:no-repeat; background-position:right 12px center; padding-right:44px;
     }
     input:focus,select:focus,textarea:focus{ border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a }
@@ -161,7 +160,10 @@
     input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); cursor:pointer; position:relative; z-index:3; box-shadow:0 4px 12px rgba(59,130,246,.4); border:2px solid white }
     input[type="range"]::-webkit-slider-track{ height:8px; background:rgba(255,255,255,.1); border-radius:4px }
     input[type="range"]::-webkit-slider-thumb:hover{ transform:scale(1.1); box-shadow:0 6px 16px rgba(59,130,246,.6) }
-    .hand-hint{ position:absolute; top:-35px; left:0; z-index:1; animation:slideHand 3s ease-in-out infinite; opacity:.95; pointer-events:none }
+    .hand-hint{
+      position:absolute; top:-35px; left:0; z-index:5;              /* > pouce et piste */
+      animation:slideHand 3s ease-in-out infinite; opacity:.95; pointer-events:none
+    }
     .hand-hint svg{ width:32px; height:32px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3)); color:var(--accent) } /* GOLD */
     @keyframes slideHand{
       0%{ transform:translateX(0) scale(1); opacity:0 }
@@ -371,7 +373,7 @@
             <div class="muted small" style="margin-top:8px">
               <strong>Note / Note:</strong>
               des frais <u>supplémentaires</u> seront demandés pour un chandail <strong>personnalisé</strong> (nom & numéro). /
-              <em>An additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
+              <em>Additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
             </div>
           </div>
           <div class="col-6 input-container">
@@ -425,7 +427,7 @@
                      aria-label="Confidence percent" aria-valuemin="80" aria-valuemax="100" aria-valuenow="80"
                      oninput="updateConfidenceValue(this.value)">
               <div class="hand-hint" aria-hidden="true">
-                <!-- main animée gold -->
+                <!-- main animée or -->
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.5 9.5V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2M6.5 9.5v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1m-8 3v2a2 2 0 0 0 4 0v-2"/>
                 </svg>
@@ -485,11 +487,9 @@
       setInterval(update, 1000*60*60);
     })();
 
-    // Slider hand hint + live value
+    // Slider hand hint + live value (hand hides only on TRUE user interaction)
     function updateConfidenceValue(value){
       document.getElementById('confVal').textContent = value + '%';
-      const sliderWrap = document.getElementById('confidenceSlider');
-      sliderWrap.classList.add('interacted');
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', value);
     }
 
@@ -537,8 +537,9 @@
         });
       });
 
-      // initial fire
+      // initial (NE PAS simuler d'input sur le slider pour garder la main visible)
       form.querySelectorAll('input,select,textarea').forEach(el=>{
+        if (el.type === 'range') return;
         const evt = (el.type==='radio'||el.type==='checkbox')?'change':'input';
         el.dispatchEvent(new Event(evt));
       });
@@ -560,13 +561,13 @@
           case 'fieldset-position': {
             const primary = !!fs.querySelector('input[name="primary_position"]:checked');
             const sideOK = fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
-            ok = primary && sideOK; /* secondary a une valeur par défaut (None) */
+            ok = primary && sideOK; // secondary a une valeur par défaut (None)
             break;
           }
           case 'fieldset-jersey': {
             const typeOK = !!fs.querySelector('input[name="jersey_type"]:checked');
             const sizeOK = (document.getElementById('jersey_size').value || '') !== '';
-            ok = typeOK && sizeOK; /* numéros optionnels */
+            ok = typeOK && sizeOK; // numéros optionnels
             break;
           }
           case 'fieldset-availability': {
@@ -585,7 +586,6 @@
             break;
           }
           default: {
-            // fallback: all required inputs in fs are valid
             const req = fs.querySelectorAll('input[required], select[required]');
             ok = Array.from(req).every(el=>{
               if(el.type==='radio'){
@@ -600,15 +600,18 @@
       }
     }
 
-    // Submit guards
+    // Submit guards + slider hand visibility rules
     (function(){
       const form = document.getElementById('qhc-form');
       const slider = document.getElementById('confidence_pct');
       const sliderWrap = document.getElementById('confidenceSlider');
 
+      // La main dorée se cache UNIQUEMENT après une VRAIE interaction utilisateur
       if(slider){
-        ['input','touchstart','mousedown','keydown'].forEach(evt=>{
-          slider.addEventListener(evt, ()=> sliderWrap.classList.add('interacted'), {passive:true});
+        ['input','touchstart','mousedown','keydown'].forEach(evtName=>{
+          slider.addEventListener(evtName, (evt)=>{
+            if (evt.isTrusted) sliderWrap.classList.add('interacted');
+          }, {passive:true});
         });
       }
 
