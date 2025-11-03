@@ -1,249 +1,323 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
- <meta charset="utf-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>The Road to The Throne — Québec HC</title>
- <meta name="description" content="Formulaire d’intérêt pour constituer les alignements par tournoi (Boston, Montreal Meltdown, The Throne)." />
- <link rel="icon" href="logos/qhc.png">
- <!-- Favicon / icônes -->
- <link rel="icon" href="logos/qhc.png" sizes="32x32">
- <link rel="apple-touch-icon" href="logos/qhc.png">
- <meta name="theme-color" content="#0a1020">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QHC — The Road to The Throne</title>
+  <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, The Throne" />
+  <link rel="icon" href="logos/qhc.png">
 
- <!-- Open Graph (Facebook, iMessage, Slack…) -->
- <meta property="og:type"        content="website">
- <meta property="og:url"         content="https://yaban1981.github.io/the-road-to-the-throne-site/">
- <meta property="og:title"       content="Québec HC — The Road to The Throne">
- <meta property="og:description" content="Formulaire d’intérêt (printemps 2026) — Boston, Montreal Meltdown, The Throne.">
- <meta property="og:image"       content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
- <meta property="og:image:width" content="1200">
- <meta property="og:image:height"content="630">
+  <!-- Favicons / PWA basics -->
+  <link rel="icon" href="logos/qhc.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="logos/qhc.png">
+  <meta name="theme-color" content="#0a1020">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
 
-<!-- Twitter Card (X) -->
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="Québec HC — The Road to The Throne">
-<meta name="twitter:description" content="Formulaire d’intérêt (printemps 2026).">
-<meta name="twitter:image"       content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
+  <meta property="og:title" content="QHC — The Road to The Throne">
+  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
+  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="QHC — The Road to The Throne">
+  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
+  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
 
   <style>
-    :root{ --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020; --text:#e7ecf3; --muted:#a7b3c7; --accent:#d4af37; --accent2:#3b82f6; --ring: rgba(59,130,246,.3); --radius:20px;}
-    *{box-sizing:border-box} html,body{scroll-behavior:smooth}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:radial-gradient(1200px 600px at 10% -20%,#0b2451 0%,transparent 60%),linear-gradient(180deg,#091024,#0a0f1a);color:var(--text);line-height:1.6}
-
-    /* —— Hero header —— */
-    .hero{
-      padding: 38px 24px 22px;
-      background:
-        radial-gradient(1000px 480px at 15% -20%, rgba(59,130,246,.18), transparent 60%),
-        linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
-      border-bottom: 1px solid rgba(255,255,255,.06);
+    :root {
+      --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
+      --text:#e7ecf3; --muted:#a7b3c7; --accent:#d4af37;         /* Gold */
+      --accent2:#3b82f6; --success:#d4af37;                    /* Gold */
+      --ring:rgba(59,130,246,.3); --radius:16px;
     }
-    .hero-wrap{ max-width: 980px; margin: 0 auto; display: grid; align-items: center; justify-items: center; grid-template-columns: 96px 1fr; gap: 18px; }
-    @media (max-width: 860px){ .hero-wrap{ grid-template-columns: 1fr; gap: 14px; } }
-    .hero-logo{ width: 96px; height: 96px; border-radius: 22px; display: grid; place-items: center; overflow: hidden; background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%); box-shadow: 0 18px 48px rgba(3,102,214,.35); }
-    .hero-logo img{ width: 100%; height: 100%; object-fit: cover; border-radius: 18px; }
-    .hero-text{ text-align: center; }
-    .hero h1{ margin:0; font-size: clamp(1.6rem, 1.1rem + 2.4vw, 2.6rem); letter-spacing:.2px; line-height:1.15; }
-    .hero-sub{ margin:6px 0 6px; color:#dfe7ff; font-size:clamp(1rem,.9rem + .4vw,1.15rem); opacity:.95; }
-    .hero-meta{ margin:0; color:#9fb7ff; font-size:.95rem; opacity:.9; }
+    *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent }
+    html,body{ scroll-behavior:smooth; -webkit-text-size-adjust:100% }
+    body{
+      margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%),
+                  linear-gradient(180deg, #091024, #0a0f1a);
+      color:var(--text); line-height:1.5;
+    }
 
-    /* Cards / form */
-    main{padding:12px 24px 56px;max-width:1040px;margin:0 auto}
-    .card, form{background:linear-gradient(180deg,var(--panel2),var(--panel));border-radius:var(--radius);border:1px solid rgba(255,255,255,.06);box-shadow:0 12px 48px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);padding:28px}
-    .card{margin:18px 0}
-    fieldset{border:1px solid rgba(255,255,255,.08);padding:22px;border-radius:16px;margin:20px 0 0}
-    legend{padding:0 10px;color:var(--accent2);font-weight:700;letter-spacing:.2px;font-size:1rem}
-    .grid{display:grid;gap:18px;grid-template-columns:repeat(12,1fr)}
-    .col-12{grid-column:span 12}.col-6{grid-column:span 6}.col-4{grid-column:span 4}.col-3{grid-column:span 3}
-    @media (max-width:900px){.col-6,.col-4,.col-3{grid-column:span 12}}
-    label{display:block;font-size:.98rem;margin-bottom:8px}
-    input[type="text"],input[type="email"],input[type="tel"],input[type="range"],select,textarea{width:100%;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:#0b1020;color:var(--text);outline:none;transition:box-shadow .2s,border-color .2s}
-    textarea{min-height:120px;resize:vertical}
-    input:focus,select:focus,textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 5px var(--ring)}
-    .check-row{display:flex;flex-wrap:wrap;gap:16px}
-    .check{display:flex;gap:10px;align-items:center;background:#0b1020;padding:12px 14px;border:1px solid rgba(255,255,255,.08);border-radius:12px}
-    .muted{color:var(--muted);font-size:.95rem}
-    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    .submit{margin-top:22px;display:flex;gap:14px;align-items:center;justify-content:flex-end}
-    button{appearance:none;border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;padding:13px 20px;border-radius:16px;font-weight:700;cursor:pointer;box-shadow:0 14px 32px rgba(59,130,246,.28)}
-    button:hover{transform:translateY(-1px)}
-    .outline{background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--text);box-shadow:none}
-    .small{font-size:.9rem}
+    /* Hero */
+    .hero{
+      padding:24px 16px 16px;
+      background: radial-gradient(600px 300px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
+                  linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      position:relative; overflow:hidden;
+    }
+    .hero::before{
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg, transparent, var(--accent2), transparent);
+      animation:shimmer 3s ease-in-out infinite
+    }
+    @keyframes shimmer{ 0%,100%{opacity:.3} 50%{opacity:1} }
+    .hero-wrap{ max-width:980px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:16px }
+    .hero-logo{ width:80px; height:80px; border-radius:18px; display:grid; place-items:center; overflow:hidden;
+      background:radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%); box-shadow:0 12px 32px rgba(3,102,214,.35) }
+    .hero-logo img{ width:100%; height:100%; object-fit:cover; border-radius:16px }
+    .hero-text{ text-align:center }
+    .hero h1{ margin:0; font-size:1.8rem; letter-spacing:.2px; line-height:1.2 }
+    .hero-sub{ margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem; opacity:.95 }
+    .hero-meta{ margin:0; color:#9fb7ff; font-size:.9rem; opacity:.9 }
 
-    /* Tournaments — logo dominant, info overlay */
-    .tournaments{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:10px; }
+    /* Tournaments */
+    .tournaments-section{ max-width:1040px; margin:0 auto 20px; padding:0 16px }
+    .tournaments-section h2{ text-align:center; margin:0 0 20px; font-size:1.4rem; color:#eaf2ff }
+    .tournaments{ display:grid; grid-template-columns:1fr; gap:16px }
     .tcard{
       position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08);
-      border-radius:20px; padding:18px; min-height:220px; overflow:hidden;
-      display:grid; place-items:center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+      border-radius:20px; padding:20px; min-height:180px; overflow:hidden;
+      display:grid; place-items:center;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3);
+      transition:all .3s ease;
     }
-    .tcard::after{
-      content:""; position:absolute; inset:0;
-      background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%);
-      pointer-events:none;
-    }
-    .tcard .logo{width:100%; height:100%; display:grid; place-items:center}
-    .tcard .logo img{
-      width:90%; max-width:320px; max-height:160px; height:auto; object-fit:contain;
-      filter: drop-shadow(0 10px 28px rgba(0,0,0,.45));
-      transform: translateY(2px); transition: transform .2s ease;
-    }
-    .tcard:hover .logo img{ transform: translateY(0) scale(1.03) }
+    .tcard:hover{ transform:translateY(-2px); box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 40px rgba(0,0,0,.4); border-color:rgba(59,130,246,.3) }
+    .tcard::after{ content:""; position:absolute; inset:0; background:radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%); pointer-events:none }
+    .tcard .logo{ width:100%; height:100%; display:grid; place-items:center; z-index:2 }
+    .tcard .logo img{ width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:transform .3s ease }
+    .tcard:hover .logo img{ transform:translateY(0) scale(1.05) }
     .t-info-pill{
-      position:absolute; bottom:12px; height:34px; display:flex; align-items:center;
-      padding:6px 10px; border-radius:12px; font-variant-numeric:tabular-nums; backdrop-filter: blur(6px);
+      position:absolute; bottom:12px; height:32px; display:flex; align-items:center;
+      padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums;
+      backdrop-filter:blur(6px); font-size:.85rem; z-index:3
     }
-    .t-date{
-      left:12px; font-weight:700; font-size:.9rem; letter-spacing:.2px;
-      color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
-    }
-    .t-badge{
-      right:12px; font-weight:800; font-size:.9rem; letter-spacing:.2px; color:#fff;
-      background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35);
-    }
-    @media (max-width:900px){
-      .tournaments{ grid-template-columns:repeat(2,1fr) }
-      .tcard{ min-height:210px }
-      .tcard .logo img{ max-height:150px }
-    }
-    @media (max-width:600px){
-      .tournaments{ grid-template-columns:1fr }
-      .tcard{ min-height:200px; padding:14px }
-      .tcard .logo img{ width:92%; max-height:140px }
-      .t-info-pill{ height:30px; padding:4px 8px; border-radius:10px }
-      .t-date, .t-badge{ font-size:.85rem }
-    }
+    .t-date{ left:12px; font-weight:700; letter-spacing:.2px; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10) }
+    .t-badge{ right:12px; font-weight:800; letter-spacing:.2px; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35) }
 
-    /* Language split */
-    .lang-split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    @media (max-width:900px){.lang-split{grid-template-columns:1fr}}
-    .lcard{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px}
-    .lcard h3{margin:0 0 8px;font-size:1.05rem;color:#eaf2ff}
+    /* Layout */
+    main{ padding:12px 16px 40px; max-width:1040px; margin:0 auto }
+    .card, form{ background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06); box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); padding:20px; margin:12px 0; transition:box-shadow .3s ease }
+    .card:hover, form:hover{ box-shadow:0 12px 48px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.06), 0 0 0 1px rgba(59,130,246,.1) }
 
-    footer{max-width:1040px;margin:22px auto;padding:0 24px;color:var(--muted);font-size:.9rem}
+    /* Fieldsets */
+    fieldset{ border:2px solid rgba(212,175,55,.35); padding:18px; border-radius:14px; margin:16px 0 0; transition:all .3s ease; position:relative }
+    fieldset.completed::after{
+      content:"✓"; position:absolute; top:-12px; right:15px; background:var(--success); color:#0b1020;
+      width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:bold;
+      box-shadow:0 2px 8px rgba(212,175,55,.4);
+    }
+    legend{ padding:0 8px; color:var(--accent2); font-weight:700; font-size:1.1rem; margin-bottom:8px }
+    .grid{ display:flex; flex-direction:column; gap:16px }
+    .col-12,.col-6,.col-4,.col-3{ width:100% }
+    label{ display:block; font-size:1rem; margin-bottom:8px; font-weight:500 }
+
+    /* Inputs */
+    .input-container{ position:relative }
+    .input-container.valid::after{
+      content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800; font-size:16px;
+    }
+    input[type="text"],input[type="email"],input[type="tel"],input[type="range"],select,textarea{
+      width:100%; padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
+      background:#0b1020; color:var(--text); outline:none; transition:all .2s; font-size:16px; -webkit-appearance:none
+    }
+    input:focus,select:focus,textarea:focus{ border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a }
+    input.valid, select.valid, textarea.valid{ border-color:var(--success); background:rgba(212,175,55,.08) }
+    textarea{ min-height:120px; resize:vertical }
+
+    /* Check rows */
+    .check-row{ display:flex; flex-direction:column; gap:10px }
+    .check{
+      display:flex; gap:12px; align-items:center; background:#0b1020; padding:14px 44px 14px 14px;   /* padding-right pour la coche */
+      border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px; transition:all .2s ease; position:relative
+    }
+    .check.valid{ border-color:var(--success); background:rgba(212,175,55,.08) }
+    .check.valid::after{ content:"✓"; position:absolute; right:14px; color:var(--success); font-weight:800; font-size:16px }
+    .check:hover{ background:#0b142a; border-color:rgba(255,255,255,.12) }
+    .check input[type="radio"], .check input[type="checkbox"]{ transform:scale(1.2); margin:0 }
+
+    .muted{ color:var(--muted); font-size:.95rem }
+    .row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+    .submit{ margin-top:24px; display:flex; gap:12px; flex-direction:column }
+    button{
+      appearance:none; border:0; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white;
+      padding:18px 24px; border-radius:14px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(59,130,246,.28);
+      font-size:1.1rem; min-height:56px; flex:1; position:relative; overflow:hidden; transition:all .3s ease
+    }
+    button:hover{ transform:translateY(-2px); box-shadow:0 12px 32px rgba(59,130,246,.35) }
+    .outline{ background:transparent; border:1px solid rgba(255,255,255,.12); color:var(--text); box-shadow:none }
+    .small{ font-size:.9rem }
+
+    /* Language cards */
+    .lang-split{ display:flex; flex-direction:column; gap:12px }
+    .lcard{ background:linear-gradient(180deg,var(--panel2),var(--panel)); border:2px solid rgba(212,175,55,.35); border-radius:14px; padding:18px; transition:all .3s ease }
+    .lcard:hover{ border-color:rgba(212,175,55,.55); box-shadow:0 8px 24px rgba(0,0,0,.2) }
+    .lcard h3{ margin:0 0 10px; font-size:1.15rem; color:#eaf2ff }
+
+    /* Slider + hand animation */
+    .slider-container{ position:relative; margin:30px 0 20px; background:rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,55,.35) }
+    input[type="range"]{ height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px }
+    input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); cursor:pointer; position:relative; z-index:3; box-shadow:0 4px 12px rgba(59,130,246,.4); border:2px solid white }
+    input[type="range"]::-webkit-slider-track{ height:8px; background:rgba(255,255,255,.1); border-radius:4px }
+    input[type="range"]::-webkit-slider-thumb:hover{ transform:scale(1.1); box-shadow:0 6px 16px rgba(59,130,246,.6) }
+    .hand-hint{ position:absolute; top:-35px; left:0; z-index:1; animation:slideHand 3s ease-in-out infinite; opacity:.9; pointer-events:none }
+    .hand-hint svg{ width:32px; height:32px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3)); color:var(--accent2) }
+    @keyframes slideHand{
+      0%{ transform:translateX(0) scale(1); opacity:0 }
+      10%{ opacity:.9 } 30%{ transform:translateX(calc(100% - 50px)) scale(1.1) }
+      50%{ transform:translateX(calc(100% - 50px)) scale(1) }
+      70%{ transform:translateX(0) scale(1.1) }
+      90%{ opacity:.9 } 100%{ transform:translateX(0) scale(1); opacity:0 }
+    }
+    .slider-container.interacted .hand-hint{ animation:fadeOut .5s ease forwards }
+    @keyframes fadeOut{ to{ opacity:0; transform:translateY(-10px) } }
+
+    .confidence-display{ display:flex; justify-content:space-between; align-items:center; margin-top:10px }
+    .confidence-value{ font-weight:700; font-size:1.1rem; color:var(--accent2); background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3) }
+
+    /* Desktop */
+    @media (min-width:768px){
+      .hero{ padding:32px 24px 20px }
+      .hero-wrap{ flex-direction:row; justify-content:center; gap:20px }
+      .hero-logo{ width:96px; height:96px }
+      .hero-text{ text-align:left }
+      .hero h1{ font-size:2.2rem }
+      .tournaments{ grid-template-columns:repeat(3,1fr); gap:20px }
+      .tcard{ min-height:200px }
+      .check-row{ flex-direction:row; flex-wrap:wrap }
+      .check{ flex:1; min-width:168px } /* assez large pour la coche */
+      .submit{ flex-direction:row }
+      .lang-split{ flex-direction:row }
+      .grid{ display:grid; gap:16px; grid-template-columns:repeat(12,1fr) }
+      .col-12{ grid-column:span 12 } .col-6{ grid-column:span 6 } .col-4{ grid-column:span 4 } .col-3{ grid-column:span 3 }
+    }
+    @media (min-width:1024px){ .hero h1{ font-size:2.4rem } .tournaments-section h2{ font-size:1.6rem } }
+
+    footer{ max-width:1040px; margin:22px auto; padding:0 24px; color:var(--muted); font-size:.9rem; text-align:center }
   </style>
 </head>
 <body>
+  <noscript>
+    <div style="background:#3b82f6;color:white;padding:10px;text-align:center">
+      JavaScript est requis pour les validations et le compteur. / JavaScript is required for validation & countdown.
+    </div>
+  </noscript>
+
   <header class="hero">
     <div class="hero-wrap">
-      <div class="hero-logo">
-        <img src="logos/qhc.png" alt="Logo Québec HC">
-      </div>
+      <div class="hero-logo"><img src="logos/qhc.png" alt="Logo Québec HC"></div>
       <div class="hero-text">
         <h1>The Road to The Throne</h1>
-        <p class="hero-sub">Formulaire d’intérêt / Interest Form (Spring 2026)</p>
-        <p class="hero-meta">Indice de confiance demandé ≥ 80 % • Confidence required ≥ 80%</p>
+        <p class="hero-sub">Intérêt tournois printemps 2026</p>
+        <p class="hero-meta">Confiance requise ≥ 80% • Confidence required ≥ 80%</p>
       </div>
     </div>
   </header>
 
-  <main>
-    <div class="card">
-      <div class="tournaments">
-        <!-- Boston -->
-        <div class="tcard">
-          <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
-            <img src="logos/bluechip.png" alt="CCM Blue Chip Invite logo">
-          </a>
-          <div class="t-info-pill t-date">29–31.05</div>
-          <div class="t-info-pill t-badge" id="cd-boston">J-—</div>
-        </div>
-        <!-- Meltdown -->
-        <div class="tcard">
-          <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
-            <img src="logos/meltdown.png" alt="Montreal Meltdown logo">
-          </a>
-          <div class="t-info-pill t-date">05–07.06</div>
-          <div class="t-info-pill t-badge" id="cd-meltdown">J-—</div>
-        </div>
-        <!-- The Throne -->
-        <div class="tcard">
-          <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
-            <img src="logos/throne.png" alt="The Throne Tournament logo">
-          </a>
-          <div class="t-info-pill t-date">24–26.07</div>
-          <div class="t-info-pill t-badge" id="cd-throne">J-—</div>
-        </div>
+  <!-- Tournois -->
+  <div class="tournaments-section">
+    <h2>Nos Tournois 2026 / Our 2026 Tournaments</h2>
+    <div class="tournaments">
+      <div class="tcard">
+        <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
+          <img src="logos/bluechip.png" alt="CCM Blue Chip Invite logo" loading="lazy">
+        </a>
+        <div class="t-info-pill t-date">29–31.05.2026</div>
+        <div class="t-info-pill t-badge" id="cd-boston">J-—</div>
+      </div>
+      <div class="tcard">
+        <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
+          <img src="logos/meltdown.png" alt="Montreal Meltdown logo" loading="lazy">
+        </a>
+        <div class="t-info-pill t-date">05–07.06.2026</div>
+        <div class="t-info-pill t-badge" id="cd-meltdown">J-—</div>
+      </div>
+      <div class="tcard">
+        <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
+          <img src="logos/throne.png" alt="The Throne Tournament logo" loading="lazy">
+        </a>
+        <div class="t-info-pill t-date">24–26.07.2026</div>
+        <div class="t-info-pill t-badge" id="cd-throne">J-—</div>
       </div>
     </div>
+  </div>
 
+  <main>
     <div class="lang-split">
       <div class="lcard">
-        <h3>FR — Informations importantes</h3>
-        <p>Nous sommes <u>au-delà d’un simple sondage</u>. Ce formulaire sert à constituer des <strong>alignements par tournoi</strong>. Indiquez un <strong>indice de confiance d’au moins 80&nbsp;%</strong> pour vos disponibilités.</p>
-        <p><strong>Règle The Throne</strong> : tout joueur qui participe à <em>The Throne</em> doit <u>obligatoirement</u> faire au moins <strong>un</strong> des deux autres tournois (Boston ou Meltdown).</p>
-        <p><strong>Capacité limitée</strong> : tout le monde ne pourra pas participer à tous les tournois ; notre équipe technique formera les <strong>meilleurs trios/duos</strong> disponibles.</p>
-        <p class="small"><strong>Assurances & décharges :</strong> des <u>frais d’assurances</u> (faibles) pourraient être demandés. Des <u>décharges/consentements</u> devront être signés. Les détails suivront.</p>
+        <h3>FR — Important</h3>
+        <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
+        <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
+        <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
+        <p class="small">Frais d'assurances et décharges à prévoir.</p>
       </div>
       <div class="lcard">
-        <h3>EN — Key information</h3>
-        <p>We are <u>beyond a simple survey</u>. This form is used to build <strong>lineups per tournament</strong>. Please provide a <strong>commitment confidence of at least 80%</strong>.</p>
-        <p><strong>Throne rule</strong>: any player joining <em>The Throne</em> must commit to at least <strong>one</strong> of the other tournaments (Boston or Meltdown).</p>
-        <p><strong>Limited spots</strong>: not everyone will be able to attend all events; our staff will build the <strong>best lines/pairs</strong> available.</p>
-        <p class="small"><strong>Insurance & waivers:</strong> a small <u>insurance fee</u> may be required. <u>Waivers/consents</u> will be collected. Details to follow.</p>
+        <h3>EN — Key info</h3>
+        <p>This form builds <strong>tournament lineups</strong>.</p>
+        <p><strong>Throne rule</strong>: must play in at least <strong>one</strong> other tournament.</p>
+        <p><strong>Limited spots</strong>: staff will build the <strong>best lines/pairs</strong>.</p>
+        <p class="small">Insurance fees & waivers required.</p>
       </div>
     </div>
 
-    <!-- NOTE: field names are snake_case for easy regrouping from email exports -->
     <form action="https://formsubmit.co/yannick.banaszak@outlook.com" method="POST" id="qhc-form" novalidate>
       <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_subject" value="[QHC] RoadToThrone v1 — New Interest">
+      <input type="hidden" name="_subject" value="[QHC] RoadToThrone — New Interest">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
-      <input type="hidden" name="form_version" value="rttt_v1">
+      <input type="hidden" name="form_version" value="rttt_v1_mobile">
       <input type="hidden" name="_next" value="thanks.html">
 
-      <fieldset>
-        <legend>1) Identification du joueur / Player Info</legend>
+      <!-- 1 -->
+      <fieldset id="fieldset-player">
+        <legend>1) Info joueur / Player Info</legend>
         <div class="grid">
-          <div class="col-6">
+          <div class="col-6 input-container">
             <label for="player_name">Nom complet / Full name <span class="req">*</span></label>
-            <input type="text" id="player_name" name="player_name" required autocomplete="name" />
+            <input id="player_name" name="player_name" type="text" required autocomplete="name">
           </div>
-          <div class="col-3">
+          <div class="col-3 input-container">
             <label for="birth_year">Année / Year <span class="req">*</span></label>
             <select id="birth_year" name="birth_year" required>
-              <option value="">— Sélectionner / Select —</option>
-              <option>2014</option><option>2015</option><option>2013</option><option>2012</option>
+              <option value="">— Choisir / Select —</option>
+              <option>2012</option><option>2013</option><option>2014</option><option>2015</option>
             </select>
           </div>
-          <div class="col-3">
+          <div class="col-3 input-container">
             <label for="city">Ville / City <span class="req">*</span></label>
-            <input type="text" id="city" name="city" required />
+            <input id="city" name="city" type="text" required>
           </div>
-          <div class="col-6">
+          <div class="col-6 input-container">
             <label for="current_team">Équipe actuelle / Current team</label>
-            <input type="text" id="current_team" name="current_team" />
+            <input id="current_team" name="current_team" type="text">
           </div>
-          <div class="col-6">
+          <div class="col-6 input-container">
             <label for="parent_email">Courriel parent / Parent email <span class="req">*</span></label>
-            <input type="email" id="parent_email" name="parent_email" required autocomplete="email" />
+            <input id="parent_email" name="parent_email" type="email" required autocomplete="email">
           </div>
-          <div class="col-6">
+          <div class="col-6 input-container">
             <label for="parent_phone">Téléphone parent / Parent phone</label>
-            <input type="tel" id="parent_phone" name="parent_phone" autocomplete="tel" />
+            <input id="parent_phone" name="parent_phone" type="tel" autocomplete="tel">
           </div>
         </div>
       </fieldset>
 
-      <fieldset>
+      <!-- 2 -->
+      <fieldset id="fieldset-position">
         <legend>2) Poste & style / Position & Style</legend>
         <div class="grid">
           <div class="col-6">
             <label>Position principale / Primary position <span class="req">*</span></label>
-            <div class="check-row">
+            <div class="check-row" role="radiogroup" aria-label="Primary position">
               <label class="check"><input type="radio" name="primary_position" value="Forward" required> Avant / Forward</label>
-              <label class="check"><input type="radio" name="primary_position" value="Defence" required> Défenseur / Defence</label>
+              <label class="check"><input type="radio" name="primary_position" value="Defence" required> Défense / Defence</label>
               <label class="check"><input type="radio" name="primary_position" value="Center" required> Centre / Center</label>
               <label class="check"><input type="radio" name="primary_position" value="Goaler" required> Gardien / Goaler</label>
             </div>
           </div>
           <div class="col-6">
             <label>Position secondaire / Secondary position</label>
-            <div class="check-row">
+            <div class="check-row" role="radiogroup" aria-label="Secondary position">
               <label class="check"><input type="radio" name="secondary_position" value="Forward"> Avant / Forward</label>
-              <label class="check"><input type="radio" name="secondary_position" value="Defence"> Défenseur / Defence</label>
+              <label class="check"><input type="radio" name="secondary_position" value="Defence"> Défense / Defence</label>
               <label class="check"><input type="radio" name="secondary_position" value="Center"> Centre / Center</label>
               <label class="check"><input type="radio" name="secondary_position" value="Goaler"> Gardien / Goaler</label>
               <label class="check"><input type="radio" name="secondary_position" value="None" checked> Aucune / None</label>
@@ -251,213 +325,277 @@
           </div>
 
           <div class="col-12">
-            <label>Côté / Side</label>
-            <div class="check-row">
+            <label>Côté / Side <span class="req">*</span></label>
+            <div class="check-row" aria-label="Side (L/R)">
               <label class="check"><input type="checkbox" name="side_right" value="Yes"> Droite / Right</label>
               <label class="check"><input type="checkbox" name="side_left" value="Yes"> Gauche / Left</label>
             </div>
           </div>
 
-          <div class="col-12">
+          <div class="col-12 input-container">
             <label for="player_style">Style de joueur / Player style</label>
-            <input type="text" id="player_style" name="player_style" placeholder="ex: offensif, rapide, physique / offensive, fast, physical…" />
+            <input id="player_style" name="player_style" type="text" placeholder="ex: rapide/fast, offensif/offensive, physique/physical…">
           </div>
-          <div class="col-12">
-            <label for="video_links">Liens vidéo (YouTube, Instagram, LiveBarn…) / Video links</label>
-            <input type="text" id="video_links" name="video_links" placeholder="https://... ; https://..." />
+          <div class="col-12 input-container">
+            <label for="video_links">Liens vidéo / Video links</label>
+            <input id="video_links" name="video_links" type="text" placeholder="https://...">
           </div>
         </div>
       </fieldset>
 
-      <fieldset>
+      <!-- 3 -->
+      <fieldset id="fieldset-jersey">
         <legend>3) Chandail / Jersey</legend>
         <div class="grid">
-          <div class="col-4">
-            <label for="jersey_number_1">Choix #1 / Choice #1</label>
-            <input type="text" id="jersey_number_1" name="jersey_number_1" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 27" />
+          <div class="col-4 input-container">
+            <label for="jersey_number_1">Choix #1</label>
+            <input id="jersey_number_1" name="jersey_number_1" type="text" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 27">
           </div>
-          <div class="col-4">
-            <label for="jersey_number_2">Choix #2 / Choice #2</label>
-            <input type="text" id="jersey_number_2" name="jersey_number_2" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 88" />
+          <div class="col-4 input-container">
+            <label for="jersey_number_2">Choix #2</label>
+            <input id="jersey_number_2" name="jersey_number_2" type="text" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 88">
           </div>
-          <div class="col-4">
-            <label for="jersey_number_3">Choix #3 / Choice #3</label>
-            <input type="text" id="jersey_number_3" name="jersey_number_3" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 13" />
+          <div class="col-4 input-container">
+            <label for="jersey_number_3">Choix #3</label>
+            <input id="jersey_number_3" name="jersey_number_3" type="text" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 13">
           </div>
           <div class="col-6">
-            <label>Type de chandail / Jersey type</label>
-            <div class="check-row">
+            <label>Type</label>
+            <div class="check-row" role="radiogroup" aria-label="Jersey type">
               <label class="check"><input type="radio" name="jersey_type" value="Loaned" checked> Prêté / Loaned</label>
-              <label class="check"><input type="radio" name="jersey_type" value="Customized"> Personnalisé / Customized</label>
+              <label class="check"><input type="radio" name="jersey_type" value="Customized"> Personnalisé / Custom</label>
             </div>
             <div class="muted small" style="margin-top:8px">
-              <strong>Note :</strong> Des <u>frais supplémentaires</u> seront demandés pour un <strong>chandail personnalisé</strong> (nom & numéro). / Additional fee applies for custom jersey (name & number).
+              <strong>Note :</strong> des frais <u>supplémentaires</u> seront demandés pour un <strong>chandail personnalisé</strong> (nom & numéro). /
+              <em>Additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-6 input-container">
             <label for="jersey_size">Taille / Size</label>
             <select id="jersey_size" name="jersey_size">
-              <option>YS</option><option>YM</option><option>YL</option><option>AS</option><option>AM</option><option>AL</option><option>AXL</option>
+              <option>YS</option><option>YM</option><option>YL</option>
+              <option>AS</option><option>AM</option><option>AL</option><option>AXL</option>
             </select>
           </div>
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend>4) Disponibilités par tournoi / Tournament availability</legend>
+      <!-- 4 -->
+      <fieldset id="fieldset-availability">
+        <legend>4) Disponibilités / Availability</legend>
         <div class="grid">
-          <div class="col-12 muted">
-            Formulaire d’intérêt (constitution d’alignements) — aucun paiement maintenant. / Interest form (lineup building) — no payment now.
-          </div>
+          <div class="col-12 muted">Aucun paiement maintenant / No payment now.</div>
 
           <div class="col-12">
-            <label class="muted">Boston, MA — <span class="price">≈ 150 $ CAD / player</span></label>
-            <div class="check-row">
+            <label class="muted">Boston, MA — <span class="price">≈ 150 $ CAD</span></label>
+            <div class="check-row" role="radiogroup" aria-label="Boston">
               <label class="check"><input type="radio" name="boston_showdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="boston_showdown" value="No"> Non / No</label>
-              <label class="check"><input type="radio" name="boston_showdown" value="TBD" checked> À confirmer / To confirm</label>
+              <label class="check"><input type="radio" name="boston_showdown" value="TBD" checked> À confirmer / TBD</label>
             </div>
           </div>
 
           <div class="col-12">
-            <label class="muted">Montréal, QC — <span class="price">≈ 150 $ CAD / player</span></label>
-            <div class="check-row">
+            <label class="muted">Montréal, QC — <span class="price">≈ 150 $ CAD</span></label>
+            <div class="check-row" role="radiogroup" aria-label="Meltdown">
               <label class="check"><input type="radio" name="montreal_meltdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="montreal_meltdown" value="No"> Non / No</label>
-              <label class="check"><input type="radio" name="montreal_meltdown" value="TBD" checked> À confirmer / To confirm</label>
+              <label class="check"><input type="radio" name="montreal_meltdown" value="TBD" checked> À confirmer / TBD</label>
             </div>
           </div>
 
           <div class="col-12">
-            <label class="muted">Toronto, ON — <span class="price">≈ 250 $ CAD / player</span></label>
-            <div class="check-row">
+            <label class="muted">Toronto, ON — <span class="price">≈ 250 $ CAD</span></label>
+            <div class="check-row" role="radiogroup" aria-label="The Throne">
               <label class="check"><input type="radio" name="the_throne" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="the_throne" value="No"> Non / No</label>
-              <label class="check"><input type="radio" name="the_throne" value="TBD" checked> À confirmer / To confirm</label>
+              <label class="check"><input type="radio" name="the_throne" value="TBD" checked> À confirmer / TBD</label>
             </div>
           </div>
 
           <div class="col-12">
-            <label for="confidence_pct">Indice de confiance global (≥ 80 %) / Global commitment confidence (≥ 80%)</label>
-            <input type="range" id="confidence_pct" name="confidence_pct" min="80" max="100" value="80" oninput="document.getElementById('confVal').innerText=this.value+'%';" />
-            <div class="muted">Valeur / Value: <span id="confVal">80%</span></div>
+            <label for="confidence_pct">Confiance / Confidence (≥ 80%)</label>
+            <div class="slider-container" id="confidenceSlider">
+              <input type="range" id="confidence_pct" name="confidence_pct" min="80" max="100" value="80"
+                     aria-label="Confidence percent" aria-valuemin="80" aria-valuemax="100" aria-valuenow="80"
+                     oninput="updateConfidenceValue(this.value)">
+              <div class="hand-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10.5 9.5V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2M6.5 9.5v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1m-8 3v2a2 2 0 0 0 4 0v-2"/>
+                </svg>
+              </div>
+            </div>
+            <div class="confidence-display">
+              <span class="muted">Valeur / Value:</span>
+              <span class="confidence-value" id="confVal">80%</span>
+            </div>
           </div>
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend>5) Confirmations / Acknowledgements</legend>
+      <!-- 5 -->
+      <fieldset id="fieldset-confirmations">
+        <legend>5) Confirmations</legend>
         <div class="grid">
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="ack_throne_rule" required>
-              Je comprends que si je participe à The Throne, je dois faire au moins un des deux autres tournois (Boston ou Meltdown). / I understand the Throne rule.
-              <span class="req">*</span></label>
+            <label class="check"><input type="checkbox" name="ack_throne_rule" required> Je comprends la règle The Throne / I understand the Throne rule <span class="req">*</span></label>
           </div>
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="ack_limited_spots" required>
-              Je comprends que les places sont limitées et que le staff optimisera les trios/duos. / I understand limited spots and staff optimization.
-              <span class="req">*</span></label>
+            <label class="check"><input type="checkbox" name="ack_limited_spots" required> Places limitées / Limited spots <span class="req">*</span></label>
           </div>
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="consent_contact" required>
-              J’accepte d’être contacté(e) par Québec HC pour finaliser ma participation. / I agree to be contacted by Québec HC.
-              <span class="req">*</span></label>
+            <label class="check"><input type="checkbox" name="consent_contact" required> J'accepte d'être contacté / I agree to be contacted <span class="req">*</span></label>
           </div>
         </div>
       </fieldset>
 
       <div class="submit">
-        <button type="reset" class="outline">Réinitialiser / Reset</button>
+        <button type="reset" class="outline">Effacer / Clear</button>
         <button type="submit">Soumettre / Submit</button>
       </div>
     </form>
   </main>
 
-  <footer>
-    <div>© Québec HC — Spring 2026</div>
-  </footer>
+  <footer><div>© Québec HC — Spring 2026</div></footer>
 
   <script>
-    // Countdown badges (J-XX), refresh hourly
+    // Countdown badges (refresh hourly)
     (function(){
       const targets = [
-        { id: 'cd-boston',   date: new Date('2026-05-29T00:00:00-04:00') },
-        { id: 'cd-meltdown', date: new Date('2026-06-05T00:00:00-04:00') },
-        { id: 'cd-throne',   date: new Date('2026-07-24T00:00:00-04:00') }
+        { id:'cd-boston',   date:new Date('2026-05-29T00:00:00-04:00') },
+        { id:'cd-meltdown', date:new Date('2026-06-05T00:00:00-04:00') },
+        { id:'cd-throne',   date:new Date('2026-07-24T00:00:00-04:00') }
       ];
       function update(){
         const today = new Date();
         targets.forEach(t=>{
           const el = document.getElementById(t.id);
           if(!el) return;
-          const ms = t.date - today;
-          const d  = Math.ceil(ms / (1000*60*60*24));
+          const d = Math.ceil((t.date - today) / (1000*60*60*24));
           el.textContent = (d > 0) ? `J-${d}` : (d === 0 ? 'Jour J' : 'Terminé');
         });
       }
       update();
       setInterval(update, 1000*60*60);
     })();
-  </script>
 
-  <script>
-    // Validation renforcée (empêche soumission si infos cruciales manquent)
-    (function () {
+    // Confidence slider
+    function updateConfidenceValue(value){
+      document.getElementById('confVal').textContent = value + '%';
+      const sliderWrap = document.getElementById('confidenceSlider');
+      sliderWrap.classList.add('interacted');
+      document.getElementById('confidence_pct').setAttribute('aria-valuenow', value);
+    }
+
+    // Visual validation: only the filled/selected sub-block gets a gold check
+    function setupVisualValidation(){
       const form = document.getElementById('qhc-form');
-      function val(name) {
-        const el = form.querySelector(`[name="${name}"]:checked`);
-        return el ? el.value : null;
+
+      // text/select/textarea
+      form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select')
+        .forEach(el=>{
+          el.addEventListener('input', ()=>{
+            const wrap = el.closest('.input-container');
+            if(!wrap) return;
+            if((el.tagName==='SELECT' ? el.value : el.value.trim()) !== ''){
+              wrap.classList.add('valid'); el.classList.add('valid');
+            } else {
+              wrap.classList.remove('valid'); el.classList.remove('valid');
+            }
+            markFieldset(el.closest('fieldset'));
+          });
+        });
+
+      // radios & checkboxes
+      form.querySelectorAll('input[type="radio"]').forEach(r=>{
+        r.addEventListener('change', ()=>{
+          // nettoyer tout le groupe
+          const group = form.querySelectorAll(`input[name="${r.name}"]`);
+          group.forEach(i=>{
+            const c = i.closest('.check'); if(c) c.classList.remove('valid');
+          });
+          // marquer uniquement le choisi
+          const chosen = form.querySelector(`input[name="${r.name}"]:checked`);
+          if(chosen){
+            const c = chosen.closest('.check'); if(c) c.classList.add('valid');
+          }
+          markFieldset(r.closest('fieldset'));
+        });
+      });
+      form.querySelectorAll('input[type="checkbox"]').forEach(cbx=>{
+        cbx.addEventListener('change', ()=>{
+          const c = cbx.closest('.check');
+          if(c) cbx.checked ? c.classList.add('valid') : c.classList.remove('valid');
+          markFieldset(cbx.closest('fieldset'));
+        });
+      });
+
+      // initial
+      form.querySelectorAll('input,select,textarea').forEach(el=>{
+        const evt = (el.type==='radio'||el.type==='checkbox')?'change':'input';
+        el.dispatchEvent(new Event(evt));
+      });
+
+      function markFieldset(fs){
+        if(!fs) return;
+        // fieldset done if all required inside are satisfied (radio groups considered)
+        const req = fs.querySelectorAll('input[required], select[required]');
+        const ok = Array.from(req).every(el=>{
+          if(el.type==='radio'){
+            return !!fs.querySelector(`input[name="${el.name}"]:checked`);
+          } else {
+            return (el.value && el.value.trim()!=='');
+          }
+        });
+        fs.classList.toggle('completed', ok);
       }
-      function checked(name) {
-        const el = form.querySelector(`[name="${name}"]`);
-        return el ? el.checked : false;
-      }
-      function focusField(selector) {
-        const el = form.querySelector(selector);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        if (el && typeof el.focus === 'function') setTimeout(() => el.focus(), 250);
-      }
-      form.addEventListener('submit', function (e) {
-        if (!form.checkValidity()) {
+    }
+
+    // Form submission hard checks
+    (function(){
+      const form = document.getElementById('qhc-form');
+      const slider = document.getElementById('confidence_pct');
+
+      form.addEventListener('submit', e=>{
+        if(!form.checkValidity()){
           e.preventDefault();
-          alert("Merci de compléter les champs requis. / Please complete required fields.");
+          const firstInvalid = form.querySelector(':invalid');
+          if(firstInvalid){
+            firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+          }
           return;
         }
-        const conf = document.getElementById('confidence_pct');
-        if (conf && parseInt(conf.value, 10) < 80) {
+        // Side must have at least one
+        const sideRight = form.querySelector('[name="side_right"]').checked;
+        const sideLeft  = form.querySelector('[name="side_left"]').checked;
+        if(!sideRight && !sideLeft){
           e.preventDefault();
-          alert("L'indice de confiance doit être au moins 80%. / Confidence must be at least 80%.");
-          conf.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          conf.focus();
+          alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side (Right/Left).');
           return;
         }
-        const sideRight = checked('side_right');
-        const sideLeft  = checked('side_left');
-        if (!sideRight && !sideLeft) {
+        // Throne rule
+        const throne   = form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
+        const boston   = form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
+        const meltdown = form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
+        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
           e.preventDefault();
-          alert("Choisissez au moins un côté (Droite/Gauche). / Select at least one side (Right/Left).");
-          focusField('[name="side_right"]');
+          alert("The Throne: cochez 'Oui' à Boston OU Meltdown. / Select 'Yes' for Boston OR Meltdown.");
           return;
         }
-        const throne   = val('the_throne');
-        const boston   = val('boston_showdown');
-        const meltdown = val('montreal_meltdown');
-        if (throne === 'Yes' && !(boston === 'Yes' || meltdown === 'Yes')) {
+        // Confidence ≥ 80
+        if(parseInt(slider.value,10) < 80){
           e.preventDefault();
-          alert("Règle The Throne: si vous cochez 'Oui' à The Throne, vous devez aussi cocher 'Oui' à Boston OU Meltdown.");
-          focusField('[name="boston_showdown"]');
+          alert('Confidence must be ≥ 80% / La confiance doit être ≥ 80%');
+          slider.scrollIntoView({behavior:'smooth', block:'center'});
           return;
         }
-        const ack1 = checked('ack_throne_rule');
-        const ack2 = checked('ack_limited_spots');
-        const ack3 = checked('consent_contact');
-        if (!(ack1 && ack2 && ack3)) {
-          e.preventDefault();
-          alert("Merci d'accepter les confirmations requises. / Please accept the required acknowledgements.");
-          focusField('[name="ack_throne_rule"]');
-          return;
-        }
-      }, false);
+        // prevent double submit
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true; btn.innerText = 'Envoi… / Submitting…';
+      });
+
+      // init visual checks
+      setupVisualValidation();
     })();
   </script>
 </body>
