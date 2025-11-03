@@ -31,8 +31,11 @@
   <style>
     :root{
       --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
-      --text:#e7ecf3; --muted:#a7b3c7; --accent:#d4af37; /* gold */
-      --accent2:#3b82f6; --success:#d4af37; --ring:rgba(59,130,246,.3);
+      --text:#e7ecf3; --muted:#a7b3c7;
+      --accent:#d4af37;           /* gold */
+      --accent2:#3b82f6;          /* blue */
+      --success:#d4af37;          /* gold check */
+      --ring:rgba(59,130,246,.3);
       --radius:16px;
     }
     *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
@@ -59,9 +62,11 @@
     }
     @keyframes shimmer {0%,100%{opacity:.3} 50%{opacity:1}}
     .hero-wrap{max-width:980px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:18px}
-    .hero-logo{width:120px; height:120px; border-radius:22px; display:grid; place-items:center; overflow:hidden;
+    .hero-logo{
+      width:120px; height:120px; border-radius:22px; display:grid; place-items:center; overflow:hidden;
       background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%);
-      box-shadow: 0 16px 44px rgba(3,102,214,.35)}
+      box-shadow: 0 16px 44px rgba(3,102,214,.35)
+    }
     .hero-logo img{width:100%; height:100%; object-fit:cover; border-radius:20px}
     .hero-text{text-align:center}
     .hero h1{margin:0; font-size:2rem; letter-spacing:.3px; line-height:1.15}
@@ -109,7 +114,7 @@
     }
     input:focus, select:focus, textarea:focus{border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a}
     input.valid, select.valid, textarea.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
-    select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
+    select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3path d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
     /* choice blocks */
@@ -227,7 +232,6 @@
 
     <form action="https://formsubmit.co/yannick.banaszak@outlook.com" method="POST" id="qhc-form" novalidate>
       <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_subject" value="[QHC] RoadToThrone — New Interest">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
       <input type="hidden" name="form_version" value="rttt_v1_mobile">
@@ -431,7 +435,7 @@
   <script>
     // Countdown badges (robuste, rafraîchi chaque heure)
     (function(){
-      const mk = (y,m,d)=> new Date(y, m-1, d, 0,0,0,0); // mois 1-based → 0-based
+      const mk = (y,m,d)=> new Date(y, m-1, d, 0,0,0,0);
       const targets = [
         { id:'cd-boston',   date: mk(2026,5,29) },
         { id:'cd-meltdown', date: mk(2026,6,5)  },
@@ -439,10 +443,11 @@
       ];
       function update(){
         const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         for (const t of targets){
           const el = document.getElementById(t.id);
           if (!el) continue;
-          const ms = t.date - new Date(now.getFullYear(), now.getMonth(), now.getDate()); // à minuit local
+          const ms = t.date - today;
           const days = Math.ceil(ms / 86400000);
           el.textContent = (days > 0) ? `J-${days}` : (days === 0 ? 'Jour J' : 'Terminé');
         }
@@ -450,7 +455,7 @@
       update(); setInterval(update, 3600_000);
     })();
 
-    // Live value (and keep hand visible forever)
+    // Live value (hand stays visible forever)
     function updateConfidenceValue(val){
       document.getElementById('confVal').textContent = val + '%';
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
@@ -467,8 +472,8 @@
             const wrap = el.closest('.input-container');
             if(wrap){
               const filled = (el.tagName==='SELECT') ? el.value !== '' : el.value.trim() !== '';
-              wrap.classList.toggle('valid', !!filled);
-              el.classList.toggle('valid', !!filled);
+              wrap.classList.toggle('valid', filled);
+              el.classList.toggle('valid', filled);
             }
             markFieldset(el.closest('fieldset'));
           });
@@ -492,7 +497,7 @@
         });
       });
 
-      // prime visuel initial (ne pas toucher au slider)
+      // prime visuel (ne pas déclencher le range)
       form.querySelectorAll('input,select,textarea').forEach(el=>{
         if (el.type === 'range') return;
         const evt = (el.type==='radio'||el.type==='checkbox')?'change':'input';
@@ -520,14 +525,14 @@
           case 'fieldset-jersey': {
             const typeOK = !!fs.querySelector('input[name="jersey_type"]:checked');
             const sizeOK = (document.getElementById('jersey_size').value!=='');
-            ok = typeOK && sizeOK; // numbers optional
+            ok = typeOK && sizeOK;
             break;
           }
           case 'fieldset-availability': {
             const b=!!fs.querySelector('input[name="boston_showdown"]:checked');
             const m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
             const t=!!fs.querySelector('input[name="the_throne"]:checked');
-            const conf = parseInt(document.getElementById('confidence_pct').value,10) >= 80; /* FIX */
+            const conf = parseInt(document.getElementById('confidence_pct').value,10) >= 80;
             ok = b && m && t && conf;
             break;
           }
@@ -550,42 +555,56 @@
       }
     }
 
+    // AJAX submit to FormSubmit (prevents "Form should POST" page) + redirect to thanks.html
     (function(){
-      const form = document.getElementById('qhc-form');
+      const form   = document.getElementById('qhc-form');
+      const postTo = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
 
       setupVisualValidation();
 
-      form.addEventListener('submit', e=>{
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+
+        // native checks
         if(!form.checkValidity()){
-          e.preventDefault();
           const firstInvalid = form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
+
+        // business checks
         const right = form.querySelector('[name="side_right"]').checked;
         const left  = form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){
-          e.preventDefault();
-          alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side (Right/Left).');
-          return;
-        }
+        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
+
         const throne   = form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
         const boston   = form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
         const meltdown = form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
-        if (throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
-          e.preventDefault();
-          alert("The Throne : cochez 'Oui' à Boston OU Meltdown. / Select 'Yes' for Boston OR Meltdown.");
+        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
+          alert("The Throne : cochez 'Oui' à Boston OU Meltdown.");
           return;
         }
+
         const conf = parseInt(document.getElementById('confidence_pct').value,10);
-        if (conf < 80){
-          e.preventDefault();
-          alert('Confidence must be ≥ 80% / La confiance doit être ≥ 80%');
-          document.getElementById('confidence_pct').scrollIntoView({behavior:'smooth', block:'center'});
-          return;
-        }
+        if(isNaN(conf) || conf < 80){ alert('Confidence must be ≥ 80 %'); return; }
+
+        // lock button
         const btn = form.querySelector('button[type="submit"]');
-        btn.disabled=true; btn.innerText='Envoi… / Submitting…';
+        btn.disabled = true; btn.innerText = 'Envoi… / Submitting…';
+
+        try{
+          const fd = new FormData(form);
+          fd.delete('_next'); // we'll redirect manually
+
+          const res = await fetch(postTo, { method:'POST', headers:{'Accept':'application/json'}, body:fd });
+          if(!res.ok) throw new Error('FormSubmit error: '+res.status);
+
+          window.location.href = 'thanks.html';
+        }catch(err){
+          console.error(err);
+          alert("Erreur d'envoi. Réessayez dans un instant.");
+          btn.disabled = false; btn.innerText = 'Soumettre / Submit';
+        }
       });
     })();
   </script>
