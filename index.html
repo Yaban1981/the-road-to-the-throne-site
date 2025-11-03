@@ -333,3 +333,77 @@
   </script>
 </body>
 </html>
+<script>
+  (function () {
+    const form = document.getElementById('qhc-form');
+
+    function val(name) {
+      const el = form.querySelector(`[name="${name}"]:checked`);
+      return el ? el.value : null;
+    }
+    function checked(name) {
+      const el = form.querySelector(`[name="${name}"]`);
+      return el ? el.checked : false;
+    }
+    function focusField(selector) {
+      const el = form.querySelector(selector);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (el && typeof el.focus === 'function') setTimeout(() => el.focus(), 250);
+    }
+
+    form.addEventListener('submit', function (e) {
+      // 1) Validation HTML5 (required, emails, etc.)
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        alert("Merci de compléter les champs requis. / Please complete required fields.");
+        return;
+      }
+
+      // 2) Confiance ≥ 80%
+      const conf = document.getElementById('confidence_pct');
+      if (conf && parseInt(conf.value, 10) < 80) {
+        e.preventDefault();
+        alert("L'indice de confiance doit être au moins 80%. / Confidence must be at least 80%.");
+        conf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        conf.focus();
+        return;
+      }
+
+      // 3) Au moins un côté (Droite/Gauche)
+      const sideRight = checked('side_right');
+      const sideLeft  = checked('side_left');
+      if (!sideRight && !sideLeft) {
+        e.preventDefault();
+        alert("Choisissez au moins un côté (Droite/Gauche). / Select at least one side (Right/Left).");
+        // Ramène sur la section "Côté / Side"
+        focusField('[name="side_right"]');
+        return;
+      }
+
+      // 4) Règle The Throne: si The Throne = Oui => Boston OU Meltdown = Oui
+      const throne   = val('the_throne');
+      const boston   = val('boston_showdown');
+      const meltdown = val('montreal_meltdown');
+      if (throne === 'Yes' && !(boston === 'Yes' || meltdown === 'Yes')) {
+        e.preventDefault();
+        alert("Règle The Throne: si vous cochez 'Oui' à The Throne, vous devez aussi cocher 'Oui' à Boston OU Meltdown.");
+        // Ramène sur les dispos tournois
+        focusField('[name="boston_showdown"]');
+        return;
+      }
+
+      // 5) Confirmations (déjà 'required', mais on double-vérifie pour message clair)
+      const ack1 = checked('ack_throne_rule');
+      const ack2 = checked('ack_limited_spots');
+      const ack3 = checked('consent_contact');
+      if (!(ack1 && ack2 && ack3)) {
+        e.preventDefault();
+        alert("Merci d'accepter les confirmations requises. / Please accept the required acknowledgements.");
+        focusField('[name="ack_throne_rule"]');
+        return;
+      }
+
+      // Tout est OK -> soumission autorisée
+    }, false);
+  })();
+</script>
