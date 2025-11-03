@@ -15,7 +15,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
 
-  <!-- Open Graph -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
   <meta property="og:title" content="QHC — The Road to The Throne">
@@ -23,8 +23,6 @@
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="QHC — The Road to The Throne">
   <meta name="twitter:description" content="Intérêt tournois printemps 2026">
@@ -33,15 +31,12 @@
   <style>
     :root{
       --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
-      --text:#e7ecf3; --muted:#a7b3c7;
-      --accent:#d4af37;         /* Gold */
-      --accent2:#3b82f6;        /* Blue */
-      --success:#d4af37;        /* Gold check */
-      --ring:rgba(59,130,246,.3);
+      --text:#e7ecf3; --muted:#a7b3c7; --accent:#d4af37; /* gold */
+      --accent2:#3b82f6; --success:#d4af37; --ring:rgba(59,130,246,.3);
       --radius:16px;
     }
-    *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent }
-    html,body{ scroll-behavior:smooth; -webkit-text-size-adjust:100% }
+    *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+    html,body{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
     body{
       margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
       background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%),
@@ -51,161 +46,125 @@
 
     /* Hero */
     .hero{
-      padding:24px 16px 16px;
-      background: radial-gradient(600px 300px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
+      padding:28px 16px 18px;
+      background: radial-gradient(700px 320px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
                   linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
-      border-bottom:1px solid rgba(255,255,255,.06); position:relative; overflow:hidden
+      border-bottom:1px solid rgba(255,255,255,.06);
+      position:relative; overflow:hidden;
     }
     .hero::before{
-      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      content:""; position:absolute; top:0; left:0; right:0; height:1px;
       background:linear-gradient(90deg, transparent, var(--accent2), transparent);
-      animation:shimmer 3s ease-in-out infinite
+      animation: shimmer 3s ease-in-out infinite;
     }
-    @keyframes shimmer{ 0%,100%{opacity:.3} 50%{opacity:1} }
-    .hero-wrap{ max-width:980px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:16px }
-    .hero-logo{ width:80px; height:80px; border-radius:18px; display:grid; place-items:center; overflow:hidden;
-      background:radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%);
-      box-shadow:0 12px 32px rgba(3,102,214,.35) }
-    .hero-logo img{ width:100%; height:100%; object-fit:cover; border-radius:16px }
-    .hero-text{ text-align:center }
-    .hero h1{ margin:0; font-size:1.8rem; letter-spacing:.2px; line-height:1.2 }
-    .hero-sub{ margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem; opacity:.95 }
-    .hero-meta{ margin:0; color:#9fb7ff; font-size:.9rem; opacity:.9 }
+    @keyframes shimmer {0%,100%{opacity:.3} 50%{opacity:1}}
+    .hero-wrap{max-width:980px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:18px}
+    .hero-logo{width:120px; height:120px; border-radius:22px; display:grid; place-items:center; overflow:hidden;
+      background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%);
+      box-shadow: 0 16px 44px rgba(3,102,214,.35)}
+    .hero-logo img{width:100%; height:100%; object-fit:cover; border-radius:20px}
+    .hero-text{text-align:center}
+    .hero h1{margin:0; font-size:2rem; letter-spacing:.3px; line-height:1.15}
+    .hero-sub{margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem; opacity:.95}
+    .hero-meta{margin:0; color:#9fb7ff; font-size:.95rem; opacity:.9}
 
     /* Tournaments */
-    .tournaments-section{ max-width:1040px; margin:0 auto 20px; padding:0 16px }
-    .tournaments-section h2{ text-align:center; margin:0 0 20px; font-size:1.4rem; color:#eaf2ff }
-    .tournaments{ display:grid; grid-template-columns:1fr; gap:16px }
+    .tournaments-section{max-width:1040px; margin:0 auto 20px; padding:0 16px}
+    .tournaments-section h2{ text-align:center; margin:0 0 20px; font-size:1.4rem; color:#eaf2ff}
+    .tournaments{display:grid; grid-template-columns:1fr; gap:16px}
     .tcard{
       position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08);
-      border-radius:20px; padding:20px; min-height:180px; overflow:hidden; display:grid; place-items:center;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3); transition:all .3s ease
+      border-radius:20px; padding:20px; min-height:180px; overflow:hidden;
+      display:grid; place-items:center;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3);
+      transition:.3s transform, .3s box-shadow, .3s border-color;
     }
-    .tcard:hover{ transform:translateY(-2px); box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 40px rgba(0,0,0,.4); border-color:rgba(59,130,246,.3) }
-    .tcard::after{ content:""; position:absolute; inset:0; background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%); pointer-events:none }
-    .tcard .logo{ width:100%; height:100%; display:grid; place-items:center; z-index:2 }
-    .tcard .logo img{
-      width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain;
-      filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:transform .3s ease
-    }
-    .tcard:hover .logo img{ transform:translateY(0) scale(1.05) }
-    .t-info-pill{
-      position:absolute; bottom:12px; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px;
-      font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3
-    }
-    .t-date{ left:12px; font-weight:700; letter-spacing:.2px; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10) }
-    .t-badge{ right:12px; font-weight:800; letter-spacing:.2px; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35) }
+    .tcard:hover{transform:translateY(-2px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 40px rgba(0,0,0,.4); border-color: rgba(59,130,246,.3)}
+    .tcard::after{content:""; position:absolute; inset:0; background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%)}
+    .tcard .logo{width:100%; height:100%; display:grid; place-items:center; z-index:2}
+    .tcard .logo img{width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:.3s transform}
+    .tcard:hover .logo img{transform:translateY(0) scale(1.05)}
+    .t-info-pill{position:absolute; bottom:12px; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3}
+    .t-date {left:12px;  font-weight:700; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10)}
+    .t-badge{right:12px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35)}
 
     /* Layout */
-    main{ padding:12px 16px 40px; max-width:1040px; margin:0 auto }
-    .card, form{ background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06);
-      box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); padding:20px; margin:12px 0; transition:box-shadow .3s ease }
+    main{padding:12px 16px 40px; max-width:1040px; margin:0 auto}
+    .card, form{background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06); box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); padding:20px; margin:12px 0}
+    fieldset{border:2px solid rgba(212, 175, 94, .35); padding:18px; border-radius:14px; margin:16px 0 0; position:relative; transition:.3s}
+    fieldset.completed::after{content:"✓"; position:absolute; top:-12px; right:15px; width:24px; height:24px; border-radius:50%; background:var(--success); color:#0a0f1a; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 2px 8px rgba(212,175,94,.4)}
+    legend{padding:0 8px; color:var(--accent2); font-weight:700; font-size:1.1rem; margin-bottom:8px}
+    .grid{display:flex; flex-direction:column; gap:16px}
+    .col-12,.col-6,.col-4,.col-3{width:100%}
+    label{display:block; font-size:1rem; margin-bottom:8px; font-weight:500}
+    .muted{color:var(--muted); font-size:.95rem}
+    .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
 
-    /* Fieldsets & checks (gold) */
-    fieldset{ border:2px solid rgba(212,175,55,.35); padding:18px; border-radius:14px; margin:16px 0 0; transition:all .3s ease; position:relative }
-    fieldset.completed::after{
-      content:"✓"; position:absolute; top:-12px; right:15px; background:var(--success); color:#0b1020;
-      width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; box-shadow:0 2px 8px rgba(212,175,55,.4)
-    }
-    legend{ padding:0 8px; color:var(--accent2); font-weight:700; font-size:1.1rem; margin-bottom:8px }
-    .grid{ display:flex; flex-direction:column; gap:16px }
-    .col-12,.col-6,.col-4,.col-3{ width:100% }
-    label{ display:block; font-size:1rem; margin-bottom:8px; font-weight:500 }
-
-    /* Inputs & selects */
-    .input-container{ position:relative }
-    .input-container.valid::after{ content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800; font-size:16px }
-
-    input[type="text"],input[type="email"],input[type="tel"],input[type="range"],select,textarea{
+    /* inputs */
+    .input-container{position:relative}
+    .input-container.valid::after{content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800; font-size:16px}
+    input[type="text"], input[type="email"], input[type="tel"], input[type="range"], select, textarea{
       width:100%; padding:16px; border-radius:12px; border:1.5px solid rgba(255,255,255,.16);
-      background:#0b1020; color:var(--text); outline:none; transition:all .2s; font-size:16px; -webkit-appearance:none
+      background:#0b1020; color:var(--text); outline:none; font-size:16px;
     }
-    select{
-      background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
-      background-repeat:no-repeat; background-position:right 12px center; padding-right:44px;
-    }
-    input:focus,select:focus,textarea:focus{ border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a }
-    input.valid, select.valid, textarea.valid{ border-color:var(--success); background:rgba(212,175,55,.08) }
-    textarea{ min-height:120px; resize:vertical }
+    input:focus, select:focus, textarea:focus{border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a}
+    input.valid, select.valid, textarea.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
+    select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
+    textarea{min-height:120px; resize:vertical}
 
-    /* Check rows */
-    .check-row{ display:flex; flex-direction:column; gap:10px }
-    .check{
-      display:flex; gap:12px; align-items:center; background:#0b1020; padding:14px 44px 14px 14px;
-      border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px; transition:all .2s ease; position:relative
-    }
-    .check.valid{ border-color:var(--success); background:rgba(212,175,55,.08) }
-    .check.valid::after{ content:"✓"; position:absolute; right:14px; color:var(--success); font-weight:800; font-size:16px }
-    .check:hover{ background:#0b142a; border-color:rgba(255,255,255,.12) }
-    .check input[type="radio"], .check input[type="checkbox"]{ transform:scale(1.2); margin:0 }
+    /* choice blocks */
+    .check-row{display:flex; flex-direction:column; gap:10px}
+    .check{position:relative; display:flex; gap:12px; align-items:center; background:#0b1020; padding:14px 44px 14px 14px; border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px; transition:.2s}
+    .check.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
+    .check.valid::after{content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px}
+    .check input[type="radio"], .check input[type="checkbox"]{transform:scale(1.2); margin:0}
 
-    .muted{ color:var(--muted); font-size:.95rem }
-    .row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap }
-    .submit{ margin-top:24px; display:flex; gap:12px; flex-direction:column }
-    button{
-      appearance:none; border:0; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white;
-      padding:18px 24px; border-radius:14px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(59,130,246,.28);
-      font-size:1.1rem; min-height:56px; flex:1; position:relative; overflow:hidden; transition:all .3s ease
-    }
-    button:hover{ transform:translateY(-2px); box-shadow:0 12px 32px rgba(59,130,246,.35) }
-    .outline{ background:transparent; border:1px solid rgba(255,255,255,.12); color:var(--text); box-shadow:none }
-    .small{ font-size:.9rem }
+    /* submit */
+    .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
+    button{appearance:none; border:0; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; padding:18px 24px; border-radius:14px; font-weight:700; font-size:1.1rem; min-height:56px; cursor:pointer; box-shadow:0 8px 24px rgba(59,130,246,.28)}
+    button:hover{transform:translateY(-2px)}
+    .outline{background:transparent; border:1px solid rgba(255,255,255,.12); color:var(--text)}
+    .confidence-display{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
+    .confidence-value{font-weight:700; font-size:1.1rem; color:var(--accent2); background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3)}
 
-    /* Language cards */
-    .lang-split{ display:flex; flex-direction:column; gap:12px }
-    .lcard{ background:linear-gradient(180deg,var(--panel2),var(--panel)); border:2px solid rgba(212,175,55,.35); border-radius:14px; padding:18px; transition:all .3s ease }
-    .lcard:hover{ border-color:rgba(212,175,55,.55); box-shadow:0 8px 24px rgba(0,0,0,.2) }
-    .lcard h3{ margin:0 0 10px; font-size:1.15rem; color:#eaf2ff }
-
-    /* Slider + hand animation (gold) — always visible */
-    .slider-container{ position:relative; margin:30px 0 20px; background:rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,94,.5) }
-    input[type="range"]{ height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px }
-    input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); cursor:pointer; position:relative; z-index:3; box-shadow:0 4px 12px rgba(59,130,246,.4); border:2px solid white }
-    input[type="range"]::-webkit-slider-track{ height:8px; background:rgba(255,255,255,.1); border-radius:4px }
-    input[type="range"]::-webkit-slider-thumb:hover{ transform:scale(1.1); box-shadow:0 6px 16px rgba(59,130,246,.6) }
-
-    .hand-hint{
-      position:absolute; top:-35px; left:0; z-index:5;  /* always above */
-      animation:slideHand 3s ease-in-out infinite; opacity:.95; pointer-events:none
-    }
-    .hand-hint svg{ width:32px; height:32px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3)); color:var(--accent) } /* GOLD */
+    /* slider + GOLD hand (always visible) */
+    .slider-container{position:relative; margin:30px 0 20px; background: rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,94,.5)}
+    input[type="range"]{height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px}
+    input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); border:2px solid #fff; box-shadow:0 4px 12px rgba(59,130,246,.4)}
+    input[type="range"]::-webkit-slider-track{ height:8px; background:rgba(255,255,255,.12); border-radius:4px}
+    .hand-hint{ position:absolute; top:-35px; left:0; z-index:5; opacity:.95; pointer-events:none; animation: slideHand 3s ease-in-out infinite}
+    .hand-hint svg{ width:32px; height:32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); color: var(--accent)}
     @keyframes slideHand{
-      0%{ transform:translateX(0) scale(1); opacity:0 }
-      10%{ opacity:.95 } 30%{ transform:translateX(calc(100% - 50px)) scale(1.1) }
-      50%{ transform:translateX(calc(100% - 50px)) scale(1) }
-      70%{ transform:translateX(0) scale(1.1) }
-      90%{ opacity:.95 }
-      100%{ transform:translateX(0) scale(1); opacity:0 }
+      0%{transform:translateX(0); opacity:0}
+      10%{opacity:.95}
+      30%{transform:translateX(calc(100% - 50px)) scale(1.1)}
+      50%{transform:translateX(calc(100% - 50px))}
+      70%{transform:translateX(0) scale(1.1)}
+      90%{opacity:.95}
+      100%{transform:translateX(0); opacity:0}
     }
 
-    .confidence-display{ display:flex; justify-content:space-between; align-items:center; margin-top:10px }
-    .confidence-value{ font-weight:700; font-size:1.1rem; color:var(--accent2); background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3) }
-
-    /* Desktop */
+    /* Desktop tweaks */
     @media (min-width:768px){
-      .hero{ padding:32px 24px 20px }
-      .hero-wrap{ flex-direction:row; justify-content:center; gap:20px }
-      .hero-logo{ width:96px; height:96px }
-      .hero-text{ text-align:left }
-      .hero h1{ font-size:2.2rem }
-      .tournaments{ grid-template-columns:repeat(3,1fr); gap:20px }
-      .tcard{ min-height:200px }
-      .check-row{ flex-direction:row; flex-wrap:wrap }
-      .check{ flex:1; min-width:168px } /* espace pour la coche à droite */
-      .submit{ flex-direction:row }
-      .lang-split{ flex-direction:row }
-      .grid{ display:grid; gap:16px; grid-template-columns:repeat(12,1fr) }
-      .col-12{ grid-column:span 12 } .col-6{ grid-column:span 6 } .col-4{ grid-column:span 4 } .col-3{ grid-column:span 3 }
+      .hero{padding:36px 24px 22px}
+      .hero-wrap{flex-direction:row; justify-content:center; gap:24px}
+      .hero-logo{width:160px; height:160px}
+      .hero h1{font-size:2.4rem}
+      .tournaments{grid-template-columns:repeat(3,1fr); gap:20px}
+      .tcard{min-height:200px}
+      .check-row{flex-direction:row; flex-wrap:wrap}
+      .check{flex:1; min-width:168px}
+      .submit{flex-direction:row}
+      .lang-split{display:flex; gap:12px}
+      .grid{display:grid; gap:16px; grid-template-columns:repeat(12,1fr)}
+      .col-12{grid-column:span 12} .col-6{grid-column:span 6} .col-4{grid-column:span 4} .col-3{grid-column:span 3}
     }
-    @media (min-width:1024px){ .hero h1{ font-size:2.4rem } .tournaments-section h2{ font-size:1.6rem } }
-
-    footer{ max-width:1040px; margin:22px auto; padding:0 24px; color:var(--muted); font-size:.9rem; text-align:center }
   </style>
 </head>
 <body>
   <noscript>
-    <div style="background:#3b82f6;color:white;padding:10px;text-align:center">
-      JavaScript est requis pour les validations et le compteur. / JavaScript is required for validation & countdown.
+    <div style="background:#3b82f6;color:#fff;padding:10px;text-align:center">
+      JavaScript requis pour validations et compteurs. / JavaScript required for validation & countdown.
     </div>
   </noscript>
 
@@ -250,14 +209,14 @@
 
   <main>
     <div class="lang-split">
-      <div class="lcard">
+      <div class="card">
         <h3>FR — Important</h3>
         <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
         <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
         <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
         <p class="small">Frais d'assurances et décharges à prévoir.</p>
       </div>
-      <div class="lcard">
+      <div class="card">
         <h3>EN — Key info</h3>
         <p>This form builds <strong>tournament lineups</strong>.</p>
         <p><strong>Throne rule</strong>: must play in at least <strong>one</strong> other tournament.</p>
@@ -336,7 +295,7 @@
             <label>Côté / Side <span class="req">*</span></label>
             <div class="check-row" aria-label="Side (L/R)">
               <label class="check"><input type="checkbox" name="side_right" value="Yes"> Droite / Right</label>
-              <label class="check"><input type="checkbox" name="side_left" value="Yes"> Gauche / Left</label>
+              <label class="check"><input type="checkbox" name="side_left"  value="Yes"> Gauche / Left</label>
             </div>
           </div>
 
@@ -470,33 +429,34 @@
   <footer><div>© Québec HC — Spring 2026</div></footer>
 
   <script>
-    // Countdown badges (refresh hourly)
+    // Countdown badges (robuste, rafraîchi chaque heure)
     (function(){
+      const mk = (y,m,d)=> new Date(y, m-1, d, 0,0,0,0); // mois 1-based → 0-based
       const targets = [
-        { id:'cd-boston',   date:new Date('2026-05-29T00:00:00-04:00') },
-        { id:'cd-meltdown', date:new Date('2026-06-05T00:00:00-04:00') },
-        { id:'cd-throne',   date:new Date('2026-07-24T00:00:00-04:00') }
+        { id:'cd-boston',   date: mk(2026,5,29) },
+        { id:'cd-meltdown', date: mk(2026,6,5)  },
+        { id:'cd-throne',   date: mk(2026,7,24) }
       ];
       function update(){
-        const today = new Date();
-        targets.forEach(t=>{
+        const now = new Date();
+        for (const t of targets){
           const el = document.getElementById(t.id);
-          if(!el) return;
-          const d = Math.ceil((t.date - today) / (1000*60*60*24));
-          el.textContent = (d > 0) ? `J-${d}` : (d === 0 ? 'Jour J' : 'Terminé');
-        });
+          if (!el) continue;
+          const ms = t.date - new Date(now.getFullYear(), now.getMonth(), now.getDate()); // à minuit local
+          const days = Math.ceil(ms / 86400000);
+          el.textContent = (days > 0) ? `J-${days}` : (days === 0 ? 'Jour J' : 'Terminé');
+        }
       }
-      update();
-      setInterval(update, 1000*60*60);
+      update(); setInterval(update, 3600_000);
     })();
 
-    // Slider live value (hand stays visible permanently)
-    function updateConfidenceValue(value){
-      document.getElementById('confVal').textContent = value + '%';
-      document.getElementById('confidence_pct').setAttribute('aria-valuenow', value);
+    // Live value (and keep hand visible forever)
+    function updateConfidenceValue(val){
+      document.getElementById('confVal').textContent = val + '%';
+      document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    // Visual validation: sub-block checks (gold) and fieldset "complete" logic
+    // Visual validation & fieldset completion
     function setupVisualValidation(){
       const form = document.getElementById('qhc-form');
 
@@ -506,11 +466,9 @@
           el.addEventListener('input', ()=>{
             const wrap = el.closest('.input-container');
             if(wrap){
-              if((el.tagName==='SELECT' ? el.value : el.value.trim()) !== ''){
-                wrap.classList.add('valid'); el.classList.add('valid');
-              } else {
-                wrap.classList.remove('valid'); el.classList.remove('valid');
-              }
+              const filled = (el.tagName==='SELECT') ? el.value !== '' : el.value.trim() !== '';
+              wrap.classList.toggle('valid', !!filled);
+              el.classList.toggle('valid', !!filled);
             }
             markFieldset(el.closest('fieldset'));
           });
@@ -520,13 +478,8 @@
       form.querySelectorAll('input[type="radio"]').forEach(r=>{
         r.addEventListener('change', ()=>{
           const group = form.querySelectorAll(`input[name="${r.name}"]`);
-          group.forEach(i=>{
-            const c = i.closest('.check'); if(c) c.classList.remove('valid');
-          });
-          const chosen = form.querySelector(`input[name="${r.name}"]:checked`);
-          if(chosen){
-            const c = chosen.closest('.check'); if(c) c.classList.add('valid');
-          }
+          group.forEach(i=> i.closest('.check')?.classList.remove('valid'));
+          r.closest('.check')?.classList.add('valid');
           markFieldset(r.closest('fieldset'));
         });
       });
@@ -534,68 +487,62 @@
       // checkboxes
       form.querySelectorAll('input[type="checkbox"]').forEach(cbx=>{
         cbx.addEventListener('change', ()=>{
-          const c = cbx.closest('.check');
-          if(c) cbx.checked ? c.classList.add('valid') : c.classList.remove('valid');
+          cbx.closest('.check')?.classList.toggle('valid', cbx.checked);
           markFieldset(cbx.closest('fieldset'));
         });
       });
 
-      // initial (ne pas toucher au slider pour conserver la main visible)
+      // prime visuel initial (ne pas toucher au slider)
       form.querySelectorAll('input,select,textarea').forEach(el=>{
         if (el.type === 'range') return;
         const evt = (el.type==='radio'||el.type==='checkbox')?'change':'input';
         el.dispatchEvent(new Event(evt));
       });
 
-      // Fieldset completion rules
       function markFieldset(fs){
         if(!fs) return;
-        let ok = false;
-
+        let ok=false;
         switch(fs.id){
           case 'fieldset-player': {
-            const req = ['player_name','birth_year','city','parent_email'];
-            ok = req.every(id=>{
-              const el = document.getElementById(id);
-              return el && (el.tagName==='SELECT' ? el.value : el.value.trim()) !== '';
-            }) && document.getElementById('parent_email').validity.valid;
+            const need=['player_name','birth_year','city','parent_email'];
+            ok = need.every(id=>{
+              const el=document.getElementById(id);
+              return el && (el.tagName==='SELECT' ? el.value!=='' : el.value.trim()!=='') && (el.id!=='parent_email' || el.checkValidity());
+            });
             break;
           }
           case 'fieldset-position': {
             const primary = !!fs.querySelector('input[name="primary_position"]:checked');
-            const sideOK = fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
-            ok = primary && sideOK; // secondary a une valeur par défaut
+            const sideOK  = fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
+            ok = primary && sideOK;
             break;
           }
           case 'fieldset-jersey': {
             const typeOK = !!fs.querySelector('input[name="jersey_type"]:checked');
-            const sizeOK = (document.getElementById('jersey_size').value || '') !== '';
-            ok = typeOK && sizeOK; // numéros optionnels
+            const sizeOK = (document.getElementById('jersey_size').value!=='');
+            ok = typeOK && sizeOK; // numbers optional
             break;
           }
           case 'fieldset-availability': {
-            const b = !!fs.querySelector('input[name="boston_showdown"]:checked');
-            const m = !!fs.querySelector('input[name="montreal_meltdown"]:checked');
-            const t = !!fs.querySelector('input[name="the_throne"]:checked');
-            const conf = parse int(document.getElementById('confidence_pct').value, 10) >= 80;
+            const b=!!fs.querySelector('input[name="boston_showdown"]:checked');
+            const m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
+            const t=!!fs.querySelector('input[name="the_throne"]:checked');
+            const conf = parseInt(document.getElementById('confidence_pct').value,10) >= 80; /* FIX */
             ok = b && m && t && conf;
             break;
           }
           case 'fieldset-confirmations': {
-            const c1 = fs.querySelector('[name="ack_throne_rule"]').checked;
-            const c2 = fs.querySelector('[name="ack_limited_spots"]').checked;
-            const c3 = fs.querySelector('[name="consent_contact"]').checked;
+            const c1=fs.querySelector('[name="ack_throne_rule"]').checked;
+            const c2=fs.querySelector('[name="ack_limited_spots"]').checked;
+            const c3=fs.querySelector('[name="consent_contact"]').checked;
             ok = c1 && c2 && c3;
             break;
           }
           default: {
-            const req = fs.querySelectorAll('input[required], select[required]');
+            const req=fs.querySelectorAll('input[required],select[required]');
             ok = Array.from(req).every(el=>{
-              if(el.type==='radio'){
-                return !!fs.querySelector(`input[name="${el.name}"]:checked`);
-              } else {
-                return (el.value && el.value.trim()!=='');
-              }
+              if(el.type==='radio') return !!fs.querySelector(`input[name="${el.name}"]:checked`);
+              return (el.value && el.value.trim()!=='');
             });
           }
         }
@@ -606,7 +553,6 @@
     (function(){
       const form = document.getElementById('qhc-form');
 
-      // init visual rules
       setupVisualValidation();
 
       form.addEventListener('submit', e=>{
@@ -616,34 +562,30 @@
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
-        // Side rule
-        const sideRight = form.querySelector('[name="side_right"]').checked;
-        const sideLeft  = form.querySelector('[name="side_left"]').checked;
-        if(!sideRight && !sideLeft){
+        const right = form.querySelector('[name="side_right"]').checked;
+        const left  = form.querySelector('[name="side_left"]').checked;
+        if(!right && !left){
           e.preventDefault();
           alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side (Right/Left).');
           return;
         }
-        // Throne rule
         const throne   = form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
         const boston   = form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
         const meltdown = form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
-        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
+        if (throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
           e.preventDefault();
-          alert("The Throne: cochez 'Oui' à Boston OU Meltdown. / Select 'Yes' for Boston OR Meltdown.");
+          alert("The Throne : cochez 'Oui' à Boston OU Meltdown. / Select 'Yes' for Boston OR Meltdown.");
           return;
         }
-        // Confidence
-        const slider = document.getElementById('confidence_pct');
-        if(parseInt(slider.value,10) < 80){
+        const conf = parseInt(document.getElementById('confidence_pct').value,10);
+        if (conf < 80){
           e.preventDefault();
           alert('Confidence must be ≥ 80% / La confiance doit être ≥ 80%');
-          slider.scrollIntoView({behavior:'smooth', block:'center'});
+          document.getElementById('confidence_pct').scrollIntoView({behavior:'smooth', block:'center'});
           return;
         }
-        // prevent double submit
         const btn = form.querySelector('button[type="submit"]');
-        btn.disabled = true; btn.innerText = 'Envoi… / Submitting…';
+        btn.disabled=true; btn.innerText='Envoi… / Submitting…';
       });
     })();
   </script>
