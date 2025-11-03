@@ -31,11 +31,14 @@
   <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
 
   <style>
-    :root {
+    :root{
       --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
-      --text:#e7ecf3; --muted:#a7b3c7; --accent:#d4af37;         /* Gold */
-      --accent2:#3b82f6; --success:#d4af37;                    /* Gold */
-      --ring:rgba(59,130,246,.3); --radius:16px;
+      --text:#e7ecf3; --muted:#a7b3c7;
+      --accent:#d4af37;         /* Gold */
+      --accent2:#3b82f6;        /* Blue */
+      --success:#d4af37;        /* Gold check */
+      --ring:rgba(59,130,246,.3);
+      --radius:16px;
     }
     *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent }
     html,body{ scroll-behavior:smooth; -webkit-text-size-adjust:100% }
@@ -51,8 +54,7 @@
       padding:24px 16px 16px;
       background: radial-gradient(600px 300px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
                   linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      position:relative; overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.06); position:relative; overflow:hidden
     }
     .hero::before{
       content:''; position:absolute; top:0; left:0; right:0; height:1px;
@@ -75,10 +77,8 @@
     .tournaments{ display:grid; grid-template-columns:1fr; gap:16px }
     .tcard{
       position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08);
-      border-radius:20px; padding:20px; min-height:180px; overflow:hidden;
-      display:grid; place-items:center;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3);
-      transition:all .3s ease;
+      border-radius:20px; padding:20px; min-height:180px; overflow:hidden; display:grid; place-items:center;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3); transition:all .3s ease
     }
     .tcard:hover{ transform:translateY(-2px); box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 40px rgba(0,0,0,.4); border-color:rgba(59,130,246,.3) }
     .tcard::after{ content:""; position:absolute; inset:0; background:radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%); pointer-events:none }
@@ -86,38 +86,41 @@
     .tcard .logo img{ width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:transform .3s ease }
     .tcard:hover .logo img{ transform:translateY(0) scale(1.05) }
     .t-info-pill{
-      position:absolute; bottom:12px; height:32px; display:flex; align-items:center;
-      padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums;
-      backdrop-filter:blur(6px); font-size:.85rem; z-index:3
+      position:absolute; bottom:12px; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px;
+      font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3
     }
     .t-date{ left:12px; font-weight:700; letter-spacing:.2px; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10) }
     .t-badge{ right:12px; font-weight:800; letter-spacing:.2px; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35) }
 
     /* Layout */
     main{ padding:12px 16px 40px; max-width:1040px; margin:0 auto }
-    .card, form{ background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06); box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); padding:20px; margin:12px 0; transition:box-shadow .3s ease }
-    .card:hover, form:hover{ box-shadow:0 12px 48px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.06), 0 0 0 1px rgba(59,130,246,.1) }
+    .card, form{ background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06);
+      box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); padding:20px; margin:12px 0; transition:box-shadow .3s ease }
 
-    /* Fieldsets */
+    /* Fieldsets with gold checks only when COMPLETE */
     fieldset{ border:2px solid rgba(212,175,55,.35); padding:18px; border-radius:14px; margin:16px 0 0; transition:all .3s ease; position:relative }
     fieldset.completed::after{
       content:"✓"; position:absolute; top:-12px; right:15px; background:var(--success); color:#0b1020;
-      width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:bold;
-      box-shadow:0 2px 8px rgba(212,175,55,.4);
+      width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; box-shadow:0 2px 8px rgba(212,175,55,.4)
     }
     legend{ padding:0 8px; color:var(--accent2); font-weight:700; font-size:1.1rem; margin-bottom:8px }
     .grid{ display:flex; flex-direction:column; gap:16px }
     .col-12,.col-6,.col-4,.col-3{ width:100% }
     label{ display:block; font-size:1rem; margin-bottom:8px; font-weight:500 }
 
-    /* Inputs */
+    /* Inputs / selects */
     .input-container{ position:relative }
-    .input-container.valid::after{
-      content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800; font-size:16px;
-    }
+    .input-container.valid::after{ content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800; font-size:16px }
+
     input[type="text"],input[type="email"],input[type="tel"],input[type="range"],select,textarea{
-      width:100%; padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
+      width:100%; padding:16px; border-radius:12px; border:1.5px solid rgba(255,255,255,.16);
       background:#0b1020; color:var(--text); outline:none; transition:all .2s; font-size:16px; -webkit-appearance:none
+    }
+    /* Selects plus visibles avec chevron or */
+    select{
+      background-image:
+        url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 12px center; padding-right:44px;
     }
     input:focus,select:focus,textarea:focus{ border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a }
     input.valid, select.valid, textarea.valid{ border-color:var(--success); background:rgba(212,175,55,.08) }
@@ -126,7 +129,7 @@
     /* Check rows */
     .check-row{ display:flex; flex-direction:column; gap:10px }
     .check{
-      display:flex; gap:12px; align-items:center; background:#0b1020; padding:14px 44px 14px 14px;   /* padding-right pour la coche */
+      display:flex; gap:12px; align-items:center; background:#0b1020; padding:14px 44px 14px 14px;
       border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px; transition:all .2s ease; position:relative
     }
     .check.valid{ border-color:var(--success); background:rgba(212,175,55,.08) }
@@ -152,20 +155,20 @@
     .lcard:hover{ border-color:rgba(212,175,55,.55); box-shadow:0 8px 24px rgba(0,0,0,.2) }
     .lcard h3{ margin:0 0 10px; font-size:1.15rem; color:#eaf2ff }
 
-    /* Slider + hand animation */
+    /* Slider + hand animation (gold) */
     .slider-container{ position:relative; margin:30px 0 20px; background:rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,55,.35) }
     input[type="range"]{ height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px }
     input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); cursor:pointer; position:relative; z-index:3; box-shadow:0 4px 12px rgba(59,130,246,.4); border:2px solid white }
     input[type="range"]::-webkit-slider-track{ height:8px; background:rgba(255,255,255,.1); border-radius:4px }
     input[type="range"]::-webkit-slider-thumb:hover{ transform:scale(1.1); box-shadow:0 6px 16px rgba(59,130,246,.6) }
-    .hand-hint{ position:absolute; top:-35px; left:0; z-index:1; animation:slideHand 3s ease-in-out infinite; opacity:.9; pointer-events:none }
-    .hand-hint svg{ width:32px; height:32px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3)); color:var(--accent2) }
+    .hand-hint{ position:absolute; top:-35px; left:0; z-index:1; animation:slideHand 3s ease-in-out infinite; opacity:.95; pointer-events:none }
+    .hand-hint svg{ width:32px; height:32px; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3)); color:var(--accent) } /* GOLD */
     @keyframes slideHand{
       0%{ transform:translateX(0) scale(1); opacity:0 }
-      10%{ opacity:.9 } 30%{ transform:translateX(calc(100% - 50px)) scale(1.1) }
+      10%{ opacity:.95 } 30%{ transform:translateX(calc(100% - 50px)) scale(1.1) }
       50%{ transform:translateX(calc(100% - 50px)) scale(1) }
       70%{ transform:translateX(0) scale(1.1) }
-      90%{ opacity:.9 } 100%{ transform:translateX(0) scale(1); opacity:0 }
+      90%{ opacity:.95 } 100%{ transform:translateX(0) scale(1); opacity:0 }
     }
     .slider-container.interacted .hand-hint{ animation:fadeOut .5s ease forwards }
     @keyframes fadeOut{ to{ opacity:0; transform:translateY(-10px) } }
@@ -183,7 +186,7 @@
       .tournaments{ grid-template-columns:repeat(3,1fr); gap:20px }
       .tcard{ min-height:200px }
       .check-row{ flex-direction:row; flex-wrap:wrap }
-      .check{ flex:1; min-width:168px } /* assez large pour la coche */
+      .check{ flex:1; min-width:168px } /* espace pour la coche à droite */
       .submit{ flex-direction:row }
       .lang-split{ flex-direction:row }
       .grid{ display:grid; gap:16px; grid-template-columns:repeat(12,1fr) }
@@ -366,13 +369,15 @@
               <label class="check"><input type="radio" name="jersey_type" value="Customized"> Personnalisé / Custom</label>
             </div>
             <div class="muted small" style="margin-top:8px">
-              <strong>Note :</strong> des frais <u>supplémentaires</u> seront demandés pour un <strong>chandail personnalisé</strong> (nom & numéro). /
-              <em>Additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
+              <strong>Note / Note:</strong>
+              des frais <u>supplémentaires</u> seront demandés pour un chandail <strong>personnalisé</strong> (nom & numéro). /
+              <em>An additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
             </div>
           </div>
           <div class="col-6 input-container">
             <label for="jersey_size">Taille / Size</label>
-            <select id="jersey_size" name="jersey_size">
+            <select id="jersey_size" name="jersey_size" required>
+              <option value="">— Choisir / Select —</option>
               <option>YS</option><option>YM</option><option>YL</option>
               <option>AS</option><option>AM</option><option>AL</option><option>AXL</option>
             </select>
@@ -420,6 +425,7 @@
                      aria-label="Confidence percent" aria-valuemin="80" aria-valuemax="100" aria-valuenow="80"
                      oninput="updateConfidenceValue(this.value)">
               <div class="hand-hint" aria-hidden="true">
+                <!-- main animée gold -->
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.5 9.5V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2M6.5 9.5v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1m-8 3v2a2 2 0 0 0 4 0v-2"/>
                 </svg>
@@ -479,7 +485,7 @@
       setInterval(update, 1000*60*60);
     })();
 
-    // Confidence slider
+    // Slider hand hint + live value
     function updateConfidenceValue(value){
       document.getElementById('confVal').textContent = value + '%';
       const sliderWrap = document.getElementById('confidenceSlider');
@@ -487,7 +493,7 @@
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', value);
     }
 
-    // Visual validation: only the filled/selected sub-block gets a gold check
+    // Visual validation: sub-block checks (gold) and fieldset "complete" logic
     function setupVisualValidation(){
       const form = document.getElementById('qhc-form');
 
@@ -496,25 +502,24 @@
         .forEach(el=>{
           el.addEventListener('input', ()=>{
             const wrap = el.closest('.input-container');
-            if(!wrap) return;
-            if((el.tagName==='SELECT' ? el.value : el.value.trim()) !== ''){
-              wrap.classList.add('valid'); el.classList.add('valid');
-            } else {
-              wrap.classList.remove('valid'); el.classList.remove('valid');
+            if(wrap){
+              if((el.tagName==='SELECT' ? el.value : el.value.trim()) !== ''){
+                wrap.classList.add('valid'); el.classList.add('valid');
+              } else {
+                wrap.classList.remove('valid'); el.classList.remove('valid');
+              }
             }
             markFieldset(el.closest('fieldset'));
           });
         });
 
-      // radios & checkboxes
+      // radios
       form.querySelectorAll('input[type="radio"]').forEach(r=>{
         r.addEventListener('change', ()=>{
-          // nettoyer tout le groupe
           const group = form.querySelectorAll(`input[name="${r.name}"]`);
           group.forEach(i=>{
             const c = i.closest('.check'); if(c) c.classList.remove('valid');
           });
-          // marquer uniquement le choisi
           const chosen = form.querySelector(`input[name="${r.name}"]:checked`);
           if(chosen){
             const c = chosen.closest('.check'); if(c) c.classList.add('valid');
@@ -522,6 +527,8 @@
           markFieldset(r.closest('fieldset'));
         });
       });
+
+      // checkboxes
       form.querySelectorAll('input[type="checkbox"]').forEach(cbx=>{
         cbx.addEventListener('change', ()=>{
           const c = cbx.closest('.check');
@@ -530,42 +537,92 @@
         });
       });
 
-      // initial
+      // initial fire
       form.querySelectorAll('input,select,textarea').forEach(el=>{
         const evt = (el.type==='radio'||el.type==='checkbox')?'change':'input';
         el.dispatchEvent(new Event(evt));
       });
 
+      // Fieldset completion rules (strict)
       function markFieldset(fs){
         if(!fs) return;
-        // fieldset done if all required inside are satisfied (radio groups considered)
-        const req = fs.querySelectorAll('input[required], select[required]');
-        const ok = Array.from(req).every(el=>{
-          if(el.type==='radio'){
-            return !!fs.querySelector(`input[name="${el.name}"]:checked`);
-          } else {
-            return (el.value && el.value.trim()!=='');
+        let ok = false;
+
+        switch(fs.id){
+          case 'fieldset-player': {
+            const req = ['player_name','birth_year','city','parent_email'];
+            ok = req.every(id=>{
+              const el = document.getElementById(id);
+              return el && (el.tagName==='SELECT' ? el.value : el.value.trim()) !== '';
+            }) && document.getElementById('parent_email').validity.valid;
+            break;
           }
-        });
+          case 'fieldset-position': {
+            const primary = !!fs.querySelector('input[name="primary_position"]:checked');
+            const sideOK = fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
+            ok = primary && sideOK; /* secondary a une valeur par défaut (None) */
+            break;
+          }
+          case 'fieldset-jersey': {
+            const typeOK = !!fs.querySelector('input[name="jersey_type"]:checked');
+            const sizeOK = (document.getElementById('jersey_size').value || '') !== '';
+            ok = typeOK && sizeOK; /* numéros optionnels */
+            break;
+          }
+          case 'fieldset-availability': {
+            const b = !!fs.querySelector('input[name="boston_showdown"]:checked');
+            const m = !!fs.querySelector('input[name="montreal_meltdown"]:checked');
+            const t = !!fs.querySelector('input[name="the_throne"]:checked');
+            const conf = parseInt(document.getElementById('confidence_pct').value, 10) >= 80;
+            ok = b && m && t && conf;
+            break;
+          }
+          case 'fieldset-confirmations': {
+            const c1 = fs.querySelector('[name="ack_throne_rule"]').checked;
+            const c2 = fs.querySelector('[name="ack_limited_spots"]').checked;
+            const c3 = fs.querySelector('[name="consent_contact"]').checked;
+            ok = c1 && c2 && c3;
+            break;
+          }
+          default: {
+            // fallback: all required inputs in fs are valid
+            const req = fs.querySelectorAll('input[required], select[required]');
+            ok = Array.from(req).every(el=>{
+              if(el.type==='radio'){
+                return !!fs.querySelector(`input[name="${el.name}"]:checked`);
+              } else {
+                return (el.value && el.value.trim()!=='');
+              }
+            });
+          }
+        }
         fs.classList.toggle('completed', ok);
       }
     }
 
-    // Form submission hard checks
+    // Submit guards
     (function(){
       const form = document.getElementById('qhc-form');
       const slider = document.getElementById('confidence_pct');
+      const sliderWrap = document.getElementById('confidenceSlider');
+
+      if(slider){
+        ['input','touchstart','mousedown','keydown'].forEach(evt=>{
+          slider.addEventListener(evt, ()=> sliderWrap.classList.add('interacted'), {passive:true});
+        });
+      }
+
+      // init visual rules
+      setupVisualValidation();
 
       form.addEventListener('submit', e=>{
         if(!form.checkValidity()){
           e.preventDefault();
           const firstInvalid = form.querySelector(':invalid');
-          if(firstInvalid){
-            firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
-          }
+          if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
-        // Side must have at least one
+        // Side rule
         const sideRight = form.querySelector('[name="side_right"]').checked;
         const sideLeft  = form.querySelector('[name="side_left"]').checked;
         if(!sideRight && !sideLeft){
@@ -582,7 +639,7 @@
           alert("The Throne: cochez 'Oui' à Boston OU Meltdown. / Select 'Yes' for Boston OR Meltdown.");
           return;
         }
-        // Confidence ≥ 80
+        // Confidence
         if(parseInt(slider.value,10) < 80){
           e.preventDefault();
           alert('Confidence must be ≥ 80% / La confiance doit être ≥ 80%');
@@ -593,9 +650,6 @@
         const btn = form.querySelector('button[type="submit"]');
         btn.disabled = true; btn.innerText = 'Envoi… / Submitting…';
       });
-
-      // init visual checks
-      setupVisualValidation();
     })();
   </script>
 </body>
