@@ -51,58 +51,49 @@
     .outline{background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--text);box-shadow:none}
     .small{font-size:.9rem}
 
-    /* Tournaments — logo dominant, info en overlay */
-.tournaments{
-  display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:10px;
-}
-.tcard{
-  position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08);
-  border-radius:20px; padding:18px; min-height:220px; overflow:hidden;
-  display:grid; place-items:center;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
-}
-.tcard::after{ /* léger vignettage pour focus le centre */
-  content:""; position:absolute; inset:0;
-  background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%);
-  pointer-events:none;
-}
-.tcard .logo{width:100%; height:100%; display:grid; place-items:center}
-.tcard .logo img{
-  width:90%; max-width:320px; max-height:160px; height:auto; object-fit:contain;
-  filter: drop-shadow(0 10px 28px rgba(0,0,0,.45));
-  transform: translateY(2px); transition: transform .2s ease;
-}
-.tcard:hover .logo img{ transform: translateY(0) scale(1.03) }
-
-.t-info-pill{
-  position:absolute; bottom:12px; height:34px; display:flex; align-items:center;
-  padding:6px 10px; border-radius:12px; font-variant-numeric:tabular-nums;
-  backdrop-filter: blur(6px);
-}
-.t-date{
-  left:12px; font-weight:700; font-size:.9rem; letter-spacing:.2px;
-  color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
-}
-.t-badge{
-  right:12px; font-weight:800; font-size:.9rem; letter-spacing:.2px; color:#fff;
-  background:linear-gradient(135deg,#1f7cff,#60a5fa);
-  box-shadow:0 6px 16px rgba(31,124,255,.35);
-}
-
-/* Resp: 2 colonnes tablette, 1 colonne iPhone */
-@media (max-width:900px){
-  .tournaments{ grid-template-columns:repeat(2,1fr) }
-  .tcard{ min-height:210px }
-  .tcard .logo img{ max-height:150px }
-}
-@media (max-width:600px){
-  .tournaments{ grid-template-columns:1fr }
-  .tcard{ min-height:200px; padding:14px }
-  .tcard .logo img{ width:92%; max-height:140px }
-  .t-info-pill{ height:30px; padding:4px 8px; border-radius:10px }
-  .t-date, .t-badge{ font-size:.85rem }
-}
-
+    /* Tournaments — logo dominant, info overlay */
+    .tournaments{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:10px; }
+    .tcard{
+      position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08);
+      border-radius:20px; padding:18px; min-height:220px; overflow:hidden;
+      display:grid; place-items:center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+    .tcard::after{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%);
+      pointer-events:none;
+    }
+    .tcard .logo{width:100%; height:100%; display:grid; place-items:center}
+    .tcard .logo img{
+      width:90%; max-width:320px; max-height:160px; height:auto; object-fit:contain;
+      filter: drop-shadow(0 10px 28px rgba(0,0,0,.45));
+      transform: translateY(2px); transition: transform .2s ease;
+    }
+    .tcard:hover .logo img{ transform: translateY(0) scale(1.03) }
+    .t-info-pill{
+      position:absolute; bottom:12px; height:34px; display:flex; align-items:center;
+      padding:6px 10px; border-radius:12px; font-variant-numeric:tabular-nums; backdrop-filter: blur(6px);
+    }
+    .t-date{
+      left:12px; font-weight:700; font-size:.9rem; letter-spacing:.2px;
+      color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
+    }
+    .t-badge{
+      right:12px; font-weight:800; font-size:.9rem; letter-spacing:.2px; color:#fff;
+      background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35);
+    }
+    @media (max-width:900px){
+      .tournaments{ grid-template-columns:repeat(2,1fr) }
+      .tcard{ min-height:210px }
+      .tcard .logo img{ max-height:150px }
+    }
+    @media (max-width:600px){
+      .tournaments{ grid-template-columns:1fr }
+      .tcard{ min-height:200px; padding:14px }
+      .tcard .logo img{ width:92%; max-height:140px }
+      .t-info-pill{ height:30px; padding:4px 8px; border-radius:10px }
+      .t-date, .t-badge{ font-size:.85rem }
+    }
 
     /* Language split */
     .lang-split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -135,30 +126,24 @@
           <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
             <img src="logos/bluechip.png" alt="CCM Blue Chip Invite logo">
           </a>
-          <div class="tinfo">
-            <div class="t-date">29–31.05</div>
-            <div class="t-badge" id="cd-boston">J-—</div>
-          </div>
+          <div class="t-info-pill t-date">29–31.05</div>
+          <div class="t-info-pill t-badge" id="cd-boston">J-—</div>
         </div>
         <!-- Meltdown -->
         <div class="tcard">
           <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
             <img src="logos/meltdown.png" alt="Montreal Meltdown logo">
           </a>
-          <div class="tinfo">
-            <div class="t-date">05–07.06</div>
-            <div class="t-badge" id="cd-meltdown">J-—</div>
-          </div>
+          <div class="t-info-pill t-date">05–07.06</div>
+          <div class="t-info-pill t-badge" id="cd-meltdown">J-—</div>
         </div>
         <!-- The Throne -->
         <div class="tcard">
           <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
             <img src="logos/throne.png" alt="The Throne Tournament logo">
           </a>
-          <div class="tinfo">
-            <div class="t-date">24–26.07</div>
-            <div class="t-badge" id="cd-throne">J-—</div>
-          </div>
+          <div class="t-info-pill t-date">24–26.07</div>
+          <div class="t-info-pill t-badge" id="cd-throne">J-—</div>
         </div>
       </div>
     </div>
@@ -246,7 +231,7 @@
           </div>
 
           <div class="col-12">
-            <label>Côté / Side (plusieurs choix possibles)</label>
+            <label>Côté / Side</label>
             <div class="check-row">
               <label class="check"><input type="checkbox" name="side_right" value="Yes"> Droite / Right</label>
               <label class="check"><input type="checkbox" name="side_left" value="Yes"> Gauche / Left</label>
@@ -373,7 +358,7 @@
   </footer>
 
   <script>
-    // Countdown badges (J-XX)
+    // Countdown badges (J-XX), refresh hourly
     (function(){
       const targets = [
         { id: 'cd-boston',   date: new Date('2026-05-29T00:00:00-04:00') },
@@ -391,12 +376,12 @@
         });
       }
       update();
-      setInterval(update, 1000*60*60); // rafraîchit chaque heure
+      setInterval(update, 1000*60*60);
     })();
   </script>
 
   <script>
-    // Validation renforcée
+    // Validation renforcée (empêche soumission si infos cruciales manquent)
     (function () {
       const form = document.getElementById('qhc-form');
       function val(name) {
