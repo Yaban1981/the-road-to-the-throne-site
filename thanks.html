@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Merci • Thank you — Québec HC</title>
+  <link rel="icon" href="logos/qhc.png">
+  <style>
+    :root{
+      --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
+      --text:#e7ecf3; --muted:#a7b3c7; --accent:#d4af37; --accent2:#3b82f6;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      background: radial-gradient(900px 500px at 10% -10%, #0b2451 0%, transparent 60%), linear-gradient(180deg,#0a1020,#0b1222);
+      color:var(--text); min-height:100vh; display:grid; place-items:center; padding:24px
+    }
+    .card{
+      width:min(860px, 94%); background:linear (180deg, var(--panel2), var(--panel));
+      border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:28px;
+      box-shadow:0 14px 40px rgba(0,0,0,.35)
+    }
+    .head{display:flex; align-items:center; gap:16px; margin-bottom:16px}
+    .logo{width:64px; height:64px; border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.35); background:#0b1020; display:grid;place-items:center}
+    .logo img{width:100%; height:100%; object-fit:cover}
+    h1{margin:0; font-size:clamp(1.4rem,1rem+2vw,2rem)}
+    .muted{color:var(--muted)}
+    .grid{display:grid; grid-template-columns: 1fr; gap:16px}
+    @media(min-width:900px){ .grid{ grid-template-columns: 1fr 1fr } }
+    .panel{background:linear-gradient(180deg,#0a1020,#0e152a); border:1px solid rgba(255,255,255,.08); padding:16px; border-radius:12px}
+    .btns{display:flex; gap:12px; margin-top:18px}
+    .btn{display:inline-block; padding:12px 18px; border-radius:12px; text-decoration:none; font-weight:700}
+    .primary{background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; box-shadow:0 10px 24px rgba(59,130,246,.28)}
+    .ghost{border:1px solid rgba(255,255,255,.2); color:var(--text)}
+    .center{ text-align:center }
+    .pill{display:inline-block; padding:6px 10px; border-radius:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:#dfe7ff; font-size:.95rem}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="head">
+      <div class="logo"><img src="logos/qhc.png" alt="Logo Québec HC"></div>
+      <div>
+        <h1>Merci • Thank you!</h1>
+        <div class="muted">Québec HC — The Road to The Throne (Printemps / Spring 2026)</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <section class="panel">
+        <h2 style="margin-top:0">FR</h2>
+        <p>Merci beaucoup pour l’intérêt que vous portez au <strong>Québec HC</strong> et à notre saison de printemps <strong>“The Road to The Throne”</strong>.</p>
+        <p>Notre équipe technique est déjà à l’œuvre pour bâtir les <strong>meilleurs trios/duos</strong> et optimiser les <strong>lineups par tournoi</strong>. Nous vous reviendrons très prochainement avec la suite.</p>
+        <p class="muted">Rappel : des frais d’assurance (modiques) et des décharges pourront être requis selon les tournois.</p>
+      </section>
+
+      <section class="panel">
+        <h2 style="margin-top:0">EN</h2>
+        <p>Thank you for your interest in <strong>Québec HC</strong> and our spring season <strong>“The Road to The Throne.”</strong></p>
+        <p>Our staff is already working to build the <strong>best lines/pairs</strong> and optimize the <strong>lineups per tournament</strong>. We’ll get back to you shortly with the next steps.</p>
+        <p class="muted">Reminder: small <strong>insurance fees</strong> and <strong>waivers</strong> may be required depending on the events.</p>
+      </section>
+    </div>
+
+    <div class="center" style="margin-top:18px">
+      <span class="pill">Référence / Reference: <strong>RTTT-INT-SUBMIT</strong></span>
+      <div class="btns">
+        <a class="btn primary" href="index.html">← Retour au formulaire / Back to form</a>
+        <a class="btn ghost" href="https://yaban1981.github.io/the-road-to-the-throne-site/">Ouvrir le site public</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
