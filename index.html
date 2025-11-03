@@ -52,43 +52,63 @@
     .small{font-size:.9rem}
 
     /* Tournaments (responsive iPhone) */
-.tournaments{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:16px;
-  margin-top:10px;
-}
-.tcard{
-  background:#0b1020;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  padding:16px;
-  text-align:center;
-  overflow:hidden;
-}
-.tcard img{
-  max-width:140px;
-  max-height:80px;
-  width:100%;
-  height:auto;
-  object-fit:contain;
-  display:inline-block;
-}
-.tcard .title{ margin-top:10px; font-weight:700 }
-
-/* iPad portrait & petits écrans : 2 colonnes */
-@media (max-width: 900px){
-  .tournaments{ grid-template-columns: repeat(2, 1fr); }
-}
-
-/* iPhone : 1 colonne, logos plus petits, titres sur une ligne */
-@media (max-width: 600px){
-  .tournaments{ grid-template-columns: 1fr; }
-  .tcard{ padding:14px }
-  .tcard img{ max-width:120px; max-height:68px }
-  .tcard .title{ font-size:0.98rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
-}
-
+    .tournaments{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:16px;
+      margin-top:10px;
+    }
+    .tcard{
+      background:#0b1020;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:16px;
+      text-align:center;
+      overflow:hidden;
+      position:relative;
+    }
+    .tcard img{
+      max-width:140px;
+      max-height:80px;
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      display:inline-block;
+    }
+    .t-meta{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .t-date{
+      font-weight:800;
+      letter-spacing:.4px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      padding:6px 10px;
+      border-radius:12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .t-badge{
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#1f7cff,#60a5fa);
+      color:white;
+      letter-spacing:.2px;
+    }
+    @media (max-width: 900px){
+      .tournaments{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px){
+      .tournaments{ grid-template-columns: 1fr; }
+      .tcard{ padding:14px }
+      .tcard img{ max-width:120px; max-height:68px }
+      .t-date, .t-badge{ padding:5px 8px }
+    }
 
     /* Language split */
     .lang-split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -116,23 +136,35 @@
   <main>
     <div class="card">
       <div class="tournaments">
+        <!-- Boston -->
         <div class="tcard">
           <a href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
             <img src="logos/bluechip.png" alt="CCM Blue Chip Invite logo">
-            <div class="title">Boston Showdown — 29–31 mai 2026</div>
           </a>
+          <div class="t-meta">
+            <div class="t-date">29–31.05</div>
+            <div class="t-badge" id="cd-boston">J-—</div>
+          </div>
         </div>
+        <!-- Meltdown -->
         <div class="tcard">
           <a href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
             <img src="logos/meltdown.png" alt="Montreal Meltdown logo">
-            <div class="title">Montréal Meltdown — 5–7 juin 2026</div>
           </a>
+          <div class="t-meta">
+            <div class="t-date">05–07.06</div>
+            <div class="t-badge" id="cd-meltdown">J-—</div>
+          </div>
         </div>
+        <!-- The Throne -->
         <div class="tcard">
           <a href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
             <img src="logos/throne.png" alt="The Throne Tournament logo">
-            <div class="title">The Throne — 24–26 juillet 2026</div>
           </a>
+          <div class="t-meta">
+            <div class="t-date">24–26.07</div>
+            <div class="t-badge" id="cd-throne">J-—</div>
+          </div>
         </div>
       </div>
     </div>
@@ -161,7 +193,7 @@
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
       <input type="hidden" name="form_version" value="rttt_v1">
-      <!-- Redirect to local thank-you page (no AV warnings) -->
+      <!-- Local thank-you page -->
       <input type="hidden" name="_next" value="thanks.html">
 
       <fieldset>
@@ -220,7 +252,7 @@
             </div>
           </div>
 
-          <div class="col-6">
+          <div class="col-12">
             <label>Côté / Side (plusieurs choix possibles)</label>
             <div class="check-row">
               <label class="check"><input type="checkbox" name="side_right" value="Yes"> Droite / Right</label>
@@ -281,7 +313,7 @@
           </div>
 
           <div class="col-12">
-            <label class="muted"><strong>Boston Showdown</strong> — 29–31 mai 2026 — Boston, MA — <span class="price">≈ 150 $ CAD / player</span></label>
+            <label class="muted">Boston, MA — <span class="price">≈ 150 $ CAD / player</span></label>
             <div class="check-row">
               <label class="check"><input type="radio" name="boston_showdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="boston_showdown" value="No"> Non / No</label>
@@ -290,7 +322,7 @@
           </div>
 
           <div class="col-12">
-            <label class="muted"><strong>Montreal Meltdown</strong> — 5–7 juin 2026 — Montréal, QC — <span class="price">≈ 150 $ CAD / player</span></label>
+            <label class="muted">Montréal, QC — <span class="price">≈ 150 $ CAD / player</span></label>
             <div class="check-row">
               <label class="check"><input type="radio" name="montreal_meltdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="montreal_meltdown" value="No"> Non / No</label>
@@ -299,7 +331,7 @@
           </div>
 
           <div class="col-12">
-            <label class="muted"><strong>The Throne</strong> — 24–26 juillet 2026 — Toronto, ON — <span class="price">≈ 250 $ CAD / player</span></label>
+            <label class="muted">Toronto, ON — <span class="price">≈ 250 $ CAD / player</span></label>
             <div class="check-row">
               <label class="check"><input type="radio" name="the_throne" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="the_throne" value="No"> Non / No</label>
@@ -348,95 +380,83 @@
   </footer>
 
   <script>
+    // Countdown badges (J-XX)
     (function(){
+      const targets = [
+        { id: 'cd-boston',   date: new Date('2026-05-29T00:00:00-04:00') },
+        { id: 'cd-meltdown', date: new Date('2026-06-05T00:00:00-04:00') },
+        { id: 'cd-throne',   date: new Date('2026-07-24T00:00:00-04:00') }
+      ];
+      const today = new Date();
+      targets.forEach(t=>{
+        const el = document.getElementById(t.id);
+        if(!el) return;
+        const ms = t.date - today;
+        const d  = Math.ceil(ms / (1000*60*60*24));
+        el.textContent = (d > 0) ? `J-${d}` : (d === 0 ? 'Jour J' : 'Terminé');
+      });
+    })();
+  </script>
+
+  <script>
+    // Validation renforcée
+    (function () {
       const form = document.getElementById('qhc-form');
-      form.addEventListener('submit', function(e){
-        const conf = document.getElementById('confidence_pct');
-        if (conf && parseInt(conf.value,10) < 80) {
+      function val(name) {
+        const el = form.querySelector(`[name="${name}"]:checked`);
+        return el ? el.value : null;
+      }
+      function checked(name) {
+        const el = form.querySelector(`[name="${name}"]`);
+        return el ? el.checked : false;
+      }
+      function focusField(selector) {
+        const el = form.querySelector(selector);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (el && typeof el.focus === 'function') setTimeout(() => el.focus(), 250);
+      }
+      form.addEventListener('submit', function (e) {
+        if (!form.checkValidity()) {
           e.preventDefault();
-          alert('L\\'indice de confiance doit être au moins 80%. / Confidence must be at least 80%.');
+          alert("Merci de compléter les champs requis. / Please complete required fields.");
           return;
         }
-        if(!form.checkValidity()){
+        const conf = document.getElementById('confidence_pct');
+        if (conf && parseInt(conf.value, 10) < 80) {
           e.preventDefault();
-          alert('Merci de compléter les champs requis. / Please complete required fields.');
+          alert("L'indice de confiance doit être au moins 80%. / Confidence must be at least 80%.");
+          conf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          conf.focus();
+          return;
+        }
+        const sideRight = checked('side_right');
+        const sideLeft  = checked('side_left');
+        if (!sideRight && !sideLeft) {
+          e.preventDefault();
+          alert("Choisissez au moins un côté (Droite/Gauche). / Select at least one side (Right/Left).");
+          focusField('[name="side_right"]');
+          return;
+        }
+        const throne   = val('the_throne');
+        const boston   = val('boston_showdown');
+        const meltdown = val('montreal_meltdown');
+        if (throne === 'Yes' && !(boston === 'Yes' || meltdown === 'Yes')) {
+          e.preventDefault();
+          alert("Règle The Throne: si vous cochez 'Oui' à The Throne, vous devez aussi cocher 'Oui' à Boston OU Meltdown.");
+          focusField('[name="boston_showdown"]');
+          return;
+        }
+        const ack1 = checked('ack_throne_rule');
+        const ack2 = checked('ack_limited_spots');
+        const ack3 = checked('consent_contact');
+        if (!(ack1 && ack2 && ack3)) {
+          e.preventDefault();
+          alert("Merci d'accepter les confirmations requises. / Please accept the required acknowledgements.");
+          focusField('[name="ack_throne_rule"]');
+          return;
         }
       }, false);
     })();
   </script>
 </body>
 </html>
-<script>
-  (function () {
-    const form = document.getElementById('qhc-form');
-
-    function val(name) {
-      const el = form.querySelector(`[name="${name}"]:checked`);
-      return el ? el.value : null;
-    }
-    function checked(name) {
-      const el = form.querySelector(`[name="${name}"]`);
-      return el ? el.checked : false;
-    }
-    function focusField(selector) {
-      const el = form.querySelector(selector);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      if (el && typeof el.focus === 'function') setTimeout(() => el.focus(), 250);
-    }
-
-    form.addEventListener('submit', function (e) {
-      // 1) Validation HTML5 (required, emails, etc.)
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        alert("Merci de compléter les champs requis. / Please complete required fields.");
-        return;
-      }
-
-      // 2) Confiance ≥ 80%
-      const conf = document.getElementById('confidence_pct');
-      if (conf && parseInt(conf.value, 10) < 80) {
-        e.preventDefault();
-        alert("L'indice de confiance doit être au moins 80%. / Confidence must be at least 80%.");
-        conf.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        conf.focus();
-        return;
-      }
-
-      // 3) Au moins un côté (Droite/Gauche)
-      const sideRight = checked('side_right');
-      const sideLeft  = checked('side_left');
-      if (!sideRight && !sideLeft) {
-        e.preventDefault();
-        alert("Choisissez au moins un côté (Droite/Gauche). / Select at least one side (Right/Left).");
-        // Ramène sur la section "Côté / Side"
-        focusField('[name="side_right"]');
-        return;
-      }
-
-      // 4) Règle The Throne: si The Throne = Oui => Boston OU Meltdown = Oui
-      const throne   = val('the_throne');
-      const boston   = val('boston_showdown');
-      const meltdown = val('montreal_meltdown');
-      if (throne === 'Yes' && !(boston === 'Yes' || meltdown === 'Yes')) {
-        e.preventDefault();
-        alert("Règle The Throne: si vous cochez 'Oui' à The Throne, vous devez aussi cocher 'Oui' à Boston OU Meltdown.");
-        // Ramène sur les dispos tournois
-        focusField('[name="boston_showdown"]');
-        return;
-      }
-
-      // 5) Confirmations (déjà 'required', mais on double-vérifie pour message clair)
-      const ack1 = checked('ack_throne_rule');
-      const ack2 = checked('ack_limited_spots');
-      const ack3 = checked('consent_contact');
-      if (!(ack1 && ack2 && ack3)) {
-        e.preventDefault();
-        alert("Merci d'accepter les confirmations requises. / Please accept the required acknowledgements.");
-        focusField('[name="ack_throne_rule"]');
-        return;
-      }
-
-      // Tout est OK -> soumission autorisée
-    }, false);
-  })();
-</script>
