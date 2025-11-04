@@ -6,8 +6,6 @@
 <title>QHC — Admin “The Road to The Throne”</title>
 <meta name="description" content="QHC Admin • Composer les lineups (1G + 3×2 DEF + 3×3 AV) • Onglets par tournoi • Import .msg/.eml/.csv/.json • Export/Import JSON — 100% client-side" />
 <link rel="icon" href="logos/gear.png" />
-
-<!-- Open Graph / Twitter -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/admin-rttt-48a1.html" />
 <meta property="og:title" content="QHC Admin — The Road to The Throne" />
@@ -17,9 +15,6 @@
 <meta name="twitter:title" content="QHC Admin — The Road to The Throne" />
 <meta name="twitter:description" content="Composez vos lineups QHC et exportez en JSON (sans base de données)." />
 <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/gear.png" />
-
-<!-- msgreader pour .msg Outlook -->
-<script src="https://cdn.jsdelivr.net/npm/msgreader@1.0.8/dist/msgreader.min.js"></script>
 
 <style>
 :root{
@@ -31,21 +26,18 @@
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
 html,body{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
-body{
-  margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  background: radial-gradient(900px 500px at 10% -10%, #0b2451 0%, transparent 60%),
-             linear-gradient(180deg,#0a1020,#0b1222);
-  color:var(--text); line-height:1.5;
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(900px 500px at 10% -10%,#0b2451 0%,transparent 60%),linear-gradient(180deg,#0a1020,#0b1222);
+  color:var(--text); line-height:1.5}
 
 /* Header */
-header{display:flex; align-items:center; gap:18px; padding:24px 16px; border-bottom:1px solid rgba(255,255,255,.08)}
+header{display:flex;align-items:center;gap:18px;padding:24px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
 header .logo{width:140px;height:140px;border-radius:22px;overflow:hidden;display:grid;place-items:center;background:#0b1020;box-shadow:0 14px 40px rgba(0,0,0,.35)}
-@media(min-width:1000px){ header .logo{width:180px;height:180px} }
+@media(min-width:1000px){header .logo{width:180px;height:180px}}
 header .logo img{width:100%;height:100%;object-fit:cover}
 header .text{display:flex;flex-direction:column}
 header h1{margin:0;font-size:2.25rem}
-@media(min-width:1000px){ header h1{font-size:2.6rem} }
+@media(min-width:1000px){header h1{font-size:2.6rem}}
 header .sub{color:#dfe7ff;font-size:1.1rem}
 header .meta{color:#9fb7ff;font-size:.95rem}
 
@@ -57,25 +49,25 @@ h2{margin:0 0 12px;font-size:1.25rem}
 label{display:block;margin:8px 0 6px;color:#dfe7ff}
 
 /* Inputs */
-input[type="text"],input[type="email"],input[type="tel"],select,textarea{
+input[type="text"],select,textarea{
   width:100%;padding:14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.16);
-  background:#0b1020;color:var(--text);outline:none;font-size:16px;transition:.2s
-}
+  background:#0b1020;color:var(--text);outline:none;font-size:16px;transition:.2s}
 input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--ring);background:#0b142a}
 select{
   background-image:url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E<path d='M7 10l5 5 5-5'/></svg>");
-  background-repeat:no-repeat;background-position:right .8rem center;padding-right:2.2rem
-}
+  background-repeat:no-repeat;background-position:right .8rem center;padding-right:2.2rem}
 textarea{min-height:110px;resize:vertical}
 .small{color:var(--muted);font-size:.9rem}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border:none;border-radius:12px;font-weight:700;cursor:pointer}
 .btn.primary{background:linear-gradient(135deg,var(--gold),var(--blue));color:#fff;box-shadow:0 10px 24px rgba(59,130,246,.28)}
 .btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
 
-/* Import dropzone */
+/* Dropzone & debug */
 #dropZone{border:2px dashed rgba(255,255,255,.2);border-radius:12px;padding:18px;text-align:center;margin-top:12px}
+#debugWrap{display:none;margin-top:10px;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px}
+#debugOut{max-height:260px;overflow:auto;white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
 
-/* Players table */
+/* Table */
 .tablewrap{max-height:380px;overflow:auto;border:1px solid rgba(255,255,255,.08);border-radius:12px}
 table{width:100%;border-collapse:collapse;font-size:.95rem}
 th,td{border-bottom:1px solid rgba(255,255,255,.08);padding:10px 8px;text-align:left;vertical-align:top}
@@ -90,22 +82,16 @@ td.dr{cursor:grab}
 tr.candidate-yes{background:rgba(212,175,94,.10)}
 tr.candidate-no{opacity:.32}
 
-/* Tabs (tournois) — visibilité améliorée */
+/* Tabs (tournois) — plus visibles */
 .tabs{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 14px}
 .tab{
   display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.18);cursor:pointer;background:#0b1020;min-width:170px;
-  filter:drop-shadow(0 6px 16px rgba(0,0,0,.25));
-}
-.tab img{width:32px;height:32px;object-fit:contain}
+  border:1px solid rgba(255,255,255,.18);cursor:pointer;background:#0b1020;min-width:190px;
+  filter:drop-shadow(0 6px 16px rgba(0,0,0,.25))}
+.tab img{width:34px;height:34px;object-fit:contain}
 .tab .tname{font-weight:800}
-.tab .pill{
-  margin-left:auto;font-size:.8rem;padding:4px 8px;border-radius:10px;background:rgba(59,130,246,.15);
-  border:1px solid rgba(59,130,246,.35); color:#eaf2ff;
-}
-.tab[aria-selected="true"]{
-  border-color:var(--gold); box-shadow:0 0 0 3px var(--goldStroke) inset; background:linear-gradient(180deg,#0e1832,#0f1326);
-}
+.tab .pill{margin-left:auto;font-size:.8rem;padding:4px 8px;border-radius:10px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.35);color:#eaf2ff}
+.tab[aria-selected="true"]{border-color:var(--gold);box-shadow:0 0 0 3px var(--goldStroke) inset;background:linear-gradient(180deg,#0e1832,#0f1326)}
 
 /* Line selectors */
 .seg{display:inline-flex;border:1px solid rgba(255,255,255,.16);border-radius:10px;overflow:hidden}
@@ -115,13 +101,10 @@ tr.candidate-no{opacity:.32}
 
 /* Board */
 .board{display:grid;grid-template-columns:1fr;gap:14px}
-@media(min-width:900px){ .board{grid-template-columns:1fr 1fr 1fr} }
+@media(min-width:900px){.board{grid-template-columns:1fr 1fr 1fr}}
 .slotcol{display:grid;gap:10px}
 .slot.head{font-weight:700;color:#e7ecf3;background:transparent;border:none;min-height:auto;padding:0}
-.slot{
-  position:relative;background:#0b1020;border:2px dashed rgba(255,255,255,.18);
-  border-radius:12px;min-height:60px;padding:10px 44px 10px 10px;transition:.2s
-}
+.slot{position:relative;background:#0b1020;border:2px dashed rgba(255,255,255,.18);border-radius:12px;min-height:60px;padding:10px 44px 10px 10px;transition:.2s}
 .slot .slot-label{position:absolute;right:12px;top:8px;font-size:.8rem;color:#d4d4d4}
 .slot.active{box-shadow:0 0 0 3px var(--gold);border-color:var(--gold)}
 .slot.drop-ok{border-color:var(--blue)}
@@ -130,10 +113,6 @@ tr.candidate-no{opacity:.32}
 .chip .pos{font-weight:800;font-size:.75rem;padding:2px 6px;border-radius:8px;background:var(--gold);color:#0b1020}
 .chip .x{cursor:pointer;color:#cbd5e1}
 .chip[draggable="true"]{cursor:grab}
-
-/* Debug panel */
-#debugWrap{display:none;margin-top:10px;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px}
-#debugOut{max-height:260px;overflow:auto;white-space:pre-wrap;font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:.85rem}
 
 /* Toast */
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 20px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.25s}
@@ -167,13 +146,10 @@ tr.candidate-no{opacity:.32}
       <label class="small"><input type="checkbox" id="dbgToggle" /> Mode debug (logs)</label>
       <button class="btn ghost" id="btnLogClear">Effacer logs</button>
       <button class="btn ghost" id="btnLogDownload">Télécharger logs</button>
+      <button class="btn ghost" id="btnMsgHelp">Aide .MSG</button>
     </div>
     <div id="dropZone">Glissez-déposez **.msg / .eml / .csv / .json / .txt** ici (plusieurs fichiers possibles)</div>
-    <div id="debugWrap">
-      <div class="small">Logs (affichés aussi dans la console navigateur) :</div>
-      <pre id="debugOut"></pre>
-    </div>
-    <div class="small">Astuce Outlook : si un .msg ne passe pas, **Enregistrer sous → .eml** puis déposez le .eml.</div>
+    <div id="debugWrap"><div class="small">Logs :</div><pre id="debugOut"></pre></div>
   </section>
 
   <!-- Players -->
@@ -181,9 +157,7 @@ tr.candidate-no{opacity:.32}
     <h2>2) Joueurs</h2>
     <div class="bar">
       <input id="q" type="text" placeholder="Recherche (nom/ville)…" style="max-width:260px">
-      <select id="fPos">
-        <option value="">Position (toutes)</option><option>DEF</option><option>FWD</option><option>CEN</option><option>GOL</option>
-      </select>
+      <select id="fPos"><option value="">Position (toutes)</option><option>DEF</option><option>FWD</option><option>CEN</option><option>GOL</option></select>
       <label class="small"><input type="checkbox" id="cbOnlyEligible" checked /> Candidats uniquement (slot actif)</label>
       <label class="small"><input type="checkbox" id="cbAvail" checked /> Disponibles uniquement (onglet)</label>
       <select id="fConf"><option value="">Confiance</option><option value="80">≥ 80%</option><option value="90">≥ 90%</option></select>
@@ -201,47 +175,38 @@ tr.candidate-no{opacity:.32}
         <tbody></tbody>
       </table>
     </div>
-    <div class="small">Glissez une ligne (col. “Drag”) vers un slot ci-dessous, ou déplacez un **chip** entre slots.</div>
   </section>
 
   <!-- Lineups -->
   <section class="card">
     <h2>3) Lineups — par tournoi</h2>
-
-    <!-- Onglets tournois -->
-    <div class="tabs" role="tablist" aria-label="Tournois">
+    <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tab-boston"   aria-controls="panel-boston"   aria-selected="true">
-        <img src="logos/bluechip.png" alt="Blue Chip" /><span class="tname">Boston</span><span class="pill" id="p-boston">J‑—</span>
+        <img src="logos/bluechip.png" alt="Blue Chip" /><span class="tname">Boston</span><span class="pill" id="p-boston">J-—</span>
       </button>
       <button class="tab" role="tab" id="tab-meltdown" aria-controls="panel-meltdown" aria-selected="false">
-        <img src="logos/meltdown.png" alt="Meltdown" /><span class="tname">Meltdown</span><span class="pill" id="p-meltdown">J‑—</span>
+        <img src="logos/meltdown.png" alt="Meltdown" /><span class="tname">Meltdown</span><span class="pill" id="p-meltdown">J-—</span>
       </button>
       <button class="tab" role="tab" id="tab-throne"   aria-controls="panel-throne"   aria-selected="false">
-        <img src="logos/throne.png" alt="Throne" /><span class="tname">Throne</span><span class="pill" id="p-throne">J‑—</span>
+        <img src="logos/throne.png" alt="Throne" /><span class="tname">Throne</span><span class="pill" id="p-throne">J-—</span>
       </button>
     </div>
 
-    <!-- Sélecteurs de lignes -->
     <div class="bar">
       <div class="small">Défense:</div>
       <div class="seg" id="segD">
-        <button data-d="D1" aria-pressed="true">D1</button>
-        <button data-d="D2">D2</button>
-        <button data-d="D3">D3</button>
+        <button data-d="D1" aria-pressed="true">D1</button><button data-d="D2">D2</button><button data-d="D3">D3</button>
       </div>
       <div class="small">Attaque:</div>
       <div class="seg" id="segF">
-        <button data-f="F1" aria-pressed="true">F1</button>
-        <button data-f="F2">F2</button>
-        <button data-f="F3">F3</button>
+        <button data-f="F1" aria-pressed="true">F1</button><button data-f="F2">F2</button><button data-f="F3">F3</button>
       </div>
       <span class="small" id="lineHint"></span>
     </div>
 
-    <!-- Panneaux -->
-    <div id="panel-boston"   role="tabpanel" aria-labelledby="tab-boston"></div>
-    <div id="panel-meltdown" role="tabpanel" aria-labelledby="tab-meltdown" hidden></div>
-    <div id="panel-throne"   role="tabpanel" aria-labelledby="tab-throne" hidden></div>
+    <div id="panel-boston"></div>
+    <div id="panel-meltdown" hidden></div>
+    <div id="panel-throne" hidden></div>
 
     <div class="bar" style="margin-top:12px">
       <button class="btn primary" id="btnAuto">✨ Auto-suggest (onglet)</button>
@@ -259,9 +224,7 @@ tr.candidate-no{opacity:.32}
       <span class="small">Importer un <code>lineups.json</code> :</span>
       <input type="file" id="fileLineup" accept=".json,application/json" />
     </div>
-    <div class="preview" id="pvWrap">
-      <pre id="pvShort" style="white-space:pre-wrap"></pre>
-    </div>
+    <div class="preview" id="pvWrap"><pre id="pvShort" style="white-space:pre-wrap"></pre></div>
     <div class="showmore"><button class="btn ghost" id="btnExpand">Afficher/masquer l’aperçu complet</button></div>
   </section>
 </main>
@@ -269,184 +232,181 @@ tr.candidate-no{opacity:.32}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ================== DEBUG LOGGING ================== */
-let DEBUG = false;
-const dbgOut = () => document.getElementById('debugOut');
-let debugBuffer = [];
-function dts(){ const d=new Date(); return d.toISOString().split('T')[1].slice(0,12); }
-function dline(...args){
-  const parts = args.map(a=>{
-    if(a==null) return String(a);
-    if(typeof a==='string') return a;
-    try{ return JSON.stringify(a); }catch{ return String(a); }
-  });
-  return `[${dts()}] ${parts.join(' ')}`;
-}
-function dlog(...args){
-  console.log('[ADMIN]', ...args);
-  const line = dline(...args);
-  debugBuffer.push(line);
-  if(debugBuffer.length>1000) debugBuffer.shift(); // garde 1000 lignes max
-  if(DEBUG && dbgOut()){
-    dbgOut().textContent = debugBuffer.join('\n');
-    dbgOut().scrollTop = dbgOut().scrollHeight;
-  }
-}
-document.getElementById('dbgToggle').addEventListener('change', (e)=>{
-  DEBUG = e.target.checked;
-  document.getElementById('debugWrap').style.display = DEBUG ? 'block' : 'none';
-  if(DEBUG){ dbgOut().textContent = debugBuffer.join('\n'); }
-});
-document.getElementById('btnLogClear').addEventListener('click', ()=>{
-  debugBuffer = []; if(dbgOut()) dbgOut().textContent = '';
-});
-document.getElementById('btnLogDownload').addEventListener('click', ()=>{
-  const blob = new Blob([debugBuffer.join('\n')], {type:'text/plain'});
-  const url = URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='qhc-admin-logs.txt'; a.click();
-  setTimeout(()=>URL.revokeObjectURL(url),400);
-});
+/* ==== DEBUG PANEL ==== */
+let DEBUG=false; const dbg=()=>document.getElementById('debugOut'); let dbgBuf=[];
+function logL(...a){ console.log('[ADMIN]',...a); const s=a.map(x=>typeof x==='string'?x:JSON.stringify(x)).join(' '); dbgBuf.push(`[${new Date().toISOString().split('T')[1].slice(0,12)}] ${s}`); if(dbgBuf.length>1200) dbgBuf.shift(); if(DEBUG&&dbg()) {dbg().textContent=dbgBuf.join('\\n'); dbg().scrollTop=dbg().scrollHeight;} }
+document.getElementById('dbgToggle').addEventListener('change',e=>{DEBUG=e.target.checked; document.getElementById('debugWrap').style.display=DEBUG?'block':'none'; if(DEBUG&&dbg()) dbg().textContent=dbgBuf.join('\\n');});
+document.getElementById('btnLogClear').onclick=()=>{dbgBuf=[]; if(dbg()) dbg().textContent='';};
+document.getElementById('btnLogDownload').onclick=()=>{const blob=new Blob([dbgBuf.join('\\n')],{type:'text/plain'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='qhc-admin-logs.txt'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),300);};
+document.getElementById('btnMsgHelp').onclick=()=>alert("Si un .MSG Outlook ne s'importe pas:\\n1) Dans Outlook: Fichier → Enregistrer sous → Type: .eml\\n2) Déposez le .eml ici\\n3) Ou copiez-collez l'email dans la zone de texte");
 
-/* ================== CORE (identique + instrumentation) ================== */
+/* ==== STATE/HELPERS ==== */
 const POS_MAP={Defence:'DEF',Defense:'DEF',Def:'DEF',Forward:'FWD',Avant:'FWD',Center:'CEN',Centre:'CEN',Goaler:'GOL',Goalie:'GOL',Gardien:'GOL'};
-const TEAMS={ boston:{label:'Boston',date:[2026,5,29]}, meltdown:{label:'Montreal Meltdown',date:[2026,6,5]}, throne:{label:'The Throne',date:[2026,7,24]} };
-let state={ players:[], lineups:{ boston:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]}}, meltdown:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]}}, throne:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]} } } };
+const TEAMS={boston:{label:'Boston',date:[2026,5,29]},meltdown:{label:'Montreal Meltdown',date:[2026,6,5]},throne:{label:'The Throne',date:[2026,7,24]}};
+let state={players:[], lineups:{ boston:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]} },
+                              meltdown:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]} },
+                              throne:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]} } } };
 let activeTeam='boston', activeD='D1', activeF='F1', activeSlot=null, showAllCandidates=false;
 
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const slug=s=>(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
-function stripHtml(s){ return (s||'').replace(/<\/?[^>]+(>|$)/g,''); }
-function decodeQP(s){ if(!s) return s; return s.replace(/=\r?\n/g,'').replace(/=3D/g,'=').replace(/=20/g,' ').replace(/=09/g,'\t').replace(/=0A/g,'\n').replace(/=0D/g,'\r'); }
+const $=s=>document.querySelector(s);
+function toast(m){const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600);}
 
-/* ---- Form parser ---- */
-function extractFormBlocks(txt){ const start = txt.search(/^\s*Name\s+Value\s*$/im); if(start>=0){ return txt.slice(start).trim(); } return txt; }
+/* ==== UTILS ==== */
+function stripHtml(s){return (s||'').replace(/<\/?[^>]+(>|$)/g,'');}
+function decodeQP(s){return (s||'').replace(/=\r?\n/g,'').replace(/=3D/g,'=').replace(/=20/g,' ').replace(/=09/g,'\t').replace(/=0A/g,'\n').replace(/=0D/g,'\r');}
+function extractFormBlocks(txt){const i=txt.search(/^\s*Name\s+Value\s*$/im); return i>=0?txt.slice(i).trim():txt;}
+
+/* ==== FORM PARSER ==== */
 function parseEmailBlocks(txt){
-  dlog('parseEmailBlocks: length', txt.length);
-  const blocks = txt.trim().split(/\n\s*\n/);
-  const out=[];
-  for(const block of blocks){
-    const lines=block.split(/\r?\n/);
-    const o={};
+  logL('parseEmailBlocks len', txt.length);
+  const blocks=txt.trim().split(/\n\s*\n/); const out=[];
+  for(const b of blocks){
+    const lines=b.split(/\r?\n/); const o={};
     for(const line of lines){
-      const m = line.match(/^([^:]+?)\s{2,}(.+)$/) || line.match(/^([^:]+?)\s*:\s*(.+)$/) || line.match(/^([^\t]+)\t(.+)$/);
-      if(!m) continue;
-      o[m[1].trim().toLowerCase().replace(/\s+/g,'_')] = m[2].trim();
+      const m=line.match(/^([^:]+?)\s{2,}(.+)$/)||line.match(/^([^:]+?)\s*:\s*(.+)$/)||line.match(/^([^\t]+)\t(.+)$/);
+      if(!m) continue; o[m[1].trim().toLowerCase().replace(/\s+/g,'_')]=m[2].trim();
     }
-    const p = normalizeRow(o, block);
-    if(p && p.name){ out.push(p); }
+    const p=normalizeRow(o,b); if(p&&p.name) out.push(p);
   }
-  dlog('parseEmailBlocks: players parsed', out.length);
-  return out;
+  logL('parsed players', out.length); return out;
 }
-function normalizeRow(raw, rawTxt){
-  const name=raw.player_name||raw.name||'';
-  if(!name) return null;
-  const by=raw.birth_year?Number(raw.birth_year):null;
-  const id=`${slug(name)}-${by??'xxxx'}`;
+function normalizeRow(raw,rawTxt){
+  const name=raw.player_name||raw.name||''; if(!name) return null;
+  const by=raw.birth_year?Number(raw.birth_year):null; const id=`${(name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-')}-${by??'xxxx'}`;
   const sides=[]; if((raw.side_right||'').toUpperCase()==='YES') sides.push('R'); if((raw.side_left||'').toUpperCase()==='YES') sides.push('L');
-  const P=(raw.primary_position && (POS_MAP[raw.primary_position]||raw.primary_position.toUpperCase()))||'';
-  const S=(raw.secondary_position && (POS_MAP[raw.secondary_position]||raw.secondary_position.toUpperCase()))||'NONE';
+  const map=x=>POS_MAP[x]||x?.toUpperCase()||'';
+  const P=map(raw.primary_position), S=map(raw.secondary_position)||'NONE';
   const yn=v=>{const s=(v||'').toUpperCase(); if(s==='YES'||s==='OUI')return 'Yes'; if(s==='NO'||s==='NON')return 'No'; return 'TBD'};
-  const ts = /Submitted\s+at\s+(.+?)\s*\(/i.exec(rawTxt||''); const submitted_at = ts ? new Date(ts[1]+' UTC').toISOString() : null;
-  return {
-    id, name, birth_year:isNaN(by)?null:by,
-    city:raw.city||'', current_team:raw.current_team||'',
-    parent:{email:raw.parent_email||'', phone:raw.parent_phone||''},
-    positions:{primary:P, secondary:S},
-    sides,
-    jersey:{type:raw.jersey_type||'', size:raw.jersey_size||'', pref_numbers:[raw.jersey_number_1,raw.jersey_number_2,raw.jersey_number_3].filter(Boolean)},
-    availability:{boston:yn(raw.boston_showdown), meltdown:yn(raw.montreal_meltdown), throne:yn(raw.the_throne)},
-    confidence_pct: parseInt(raw.confidence_pct||'0',10)||0,
-    consents:{
-      throne_rule:(raw.ack_throne_rule||'').toLowerCase()==='on' || (raw.ack_throne_rule||'').toLowerCase()==='true',
-      limited_spots:(raw.ack_limited_spots||'').toLowerCase()==='on' || (raw.ack_limited_spots||'').toLowerCase()==='true',
-      consent_contact:(raw.consent_contact||'').toLowerCase()==='on' || (raw.consent_contact||'').toLowerCase()==='true'
-    },
-    submitted_at
-  };
+  const ts=/Submitted\s+at\s+(.+?)\s*\(/i.exec(rawTxt||''); const submitted_at=ts?new Date(ts[1]+' UTC').toISOString():null;
+  return {id,name,birth_year:isNaN(by)?null:by,city:raw.city||'',current_team:raw.current_team||'',
+    parent:{email:raw.parent_email||'',phone:raw.parent_phone||''},
+    positions:{primary:P,secondary:S},sides,
+    jersey:{type:raw.jersey_type||'',size:raw.jersey_size||'',pref_numbers:[raw.jersey_number_1,raw.jersey_number_2,raw.jersey_number_3].filter(Boolean)},
+    availability:{boston:yn(raw.boston_showdown),meltdown:yn(raw.montreal_meltdown),throne:yn(raw.the_throne)},
+    confidence_pct:parseInt(raw.confidence_pct||'0',10)||0,
+    consents:{throne_rule:(raw.ack_throne_rule||'').toLowerCase()==='on',limited_spots:(raw.ack_limited_spots||'').toLowerCase()==='on',consent_contact:(raw.consent_contact||'').toLowerCase()==='on'},
+    submitted_at};
 }
 function upsertPlayer(p){
   const i=state.players.findIndex(x=>x.id===p.id);
-  if(i<0){ state.players.push(p); dlog('upsert: added', p.id); return; }
-  const a=state.players[i].submitted_at, b=p.submitted_at;
-  if(b && (!a || new Date(b)>new Date(a))){ state.players[i]=p; dlog('upsert: replaced by newer', p.id); }
+  if(i<0){state.players.push(p);logL('upsert add',p.id);return;}
+  const a=state.players[i].submitted_at,b=p.submitted_at;
+  if(b&&(!a||new Date(b)>new Date(a))){state.players[i]=p;logL('upsert replace newer',p.id);}
 }
 
-/* ---- Eligibility ---- */
-function eligibleFor(p, team, role){
-  const av=(p.availability?.[team]||'').toUpperCase();
-  if(av==='NO') return {ok:false, why:'Non inscrit pour ce tournoi'};
-  const has=(x)=> (p.positions?.primary===x || p.positions?.secondary===x);
-  if(role==='G') return {ok: has('GOL'), why:'Goaler requis'};
-  if(role==='LD' || role==='RD'){
-    if(!has('DEF')) return {ok:false, why:'Poste DEF requis'};
-    const need = (role==='LD')?'L':'R';
-    if(!(p.sides||[]).includes(need)) return {ok:false, why:`Côté ${need} requis`};
-    return {ok:true};
+/* ==== MSG READER DYNAMIC LOADER ==== */
+async function ensureMsgReader(){
+  if(typeof MSGReader!=='undefined'){ logL('MSGReader present'); return true; }
+  const urls=[
+    'https://cdn.jsdelivr.net/npm/msgreader@1.0.8/dist/msgreader.min.js',
+    'https://unpkg.com/msgreader@1.0.8/dist/msgreader.min.js'
+  ];
+  for(const u of urls){
+    logL('loading MSGReader from', u);
+    try{
+      await new Promise((res,rej)=>{
+        const sc=document.createElement('script');
+        sc.src=u; sc.crossOrigin='anonymous'; sc.referrerPolicy='no-referrer'; sc.onload=()=>res(); sc.onerror=()=>rej(new Error('load error'));
+        document.head.appendChild(sc);
+      });
+      if(typeof MSGReader!=='undefined'){ logL('MSGReader loaded from', u); return true; }
+    }catch(e){ logL('load fail', u, e?.message||e); }
   }
-  if(role==='LW' || role==='RW'){
-    if(!has('FWD')) return {ok:false, why:'Poste FWD requis'};
-    const need = (role==='LW')?'L':'R';
-    if(!(p.sides||[]).includes(need)) return {ok:false, why:`Côté ${need} requis`};
-    return {ok:true};
-  }
-  if(role==='C'){
-    return {ok: has('CEN'), why:'Poste Center requis'};
-  }
-  return {ok:false, why:'Slot inconnu'};
+  logL('MSGReader still undefined after fallbacks'); return false;
 }
 
-/* ---- Render players table ---- */
-const tblBody = document.querySelector('#tbl tbody');
+/* ==== IMPORT FILES ==== */
+const tblBody=document.querySelector('#tbl tbody');
+async function importFiles(files){
+  let added=0; logL('importFiles count', files.length);
+  for(const f of files){
+    const name=f.name.toLowerCase(); logL('process', {name:f.name,size:f.size,type:f.type||'n/a'});
+    try{
+      if(name.endsWith('.json')){
+        const j=JSON.parse(await f.text()); const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]);
+        arr.forEach(upsertPlayer); added+=arr.length; logL('json added',arr.length);
+      }else if(name.endsWith('.csv')){
+        csvToPlayers(await f.text()).forEach(p=>{upsertPlayer(p);added++;}); logL('csv added so far',added);
+      }else if(name.endsWith('.eml')||name.endsWith('.txt')){
+        const raw=await f.text(); const qp=/content-transfer-encoding:\s*quoted-printable/i.test(raw);
+        const body=/(<!DOCTYPE|<html|<body[\s>])/i.test(raw)?stripHtml(raw):raw;
+        const clean=extractFormBlocks((qp?decodeQP(body):body).replace(/\u0000/g,''));
+        parseEmailBlocks(clean).forEach(p=>{upsertPlayer(p);added++;}); logL('eml/txt added',added);
+      }else if(name.endsWith('.msg')){
+        // MSG path with dynamic loader
+        const ok=await ensureMsgReader();
+        if(!ok){ toast('MSGReader indisponible. Sauvegarde en .eml puis redépose.'); continue; }
+        try{
+          const ab=await f.arrayBuffer(); logL('MSG ab len', ab.byteLength);
+          const mr=new MSGReader(ab); const data=mr.getFileData();
+          logL('MSG subject', data?.subject||'(none)'); logL('MSG body len', data?.body?.length||0); logL('MSG html len', data?.bodyHTML?.length||0);
+          let chunks=[];
+          if(data?.body) chunks.push(data.body);
+          if(data?.bodyHTML) chunks.push(stripHtml(data.bodyHTML));
+          if(Array.isArray(data?.attachments)){
+            logL('MSG attachments', data.attachments.length);
+            for(const att of data.attachments){
+              const fn=(att.fileName||'').toLowerCase(); const clen=att.content?(att.content.byteLength||att.content.length||0):0;
+              logL('att', fn, clen);
+              if(/\.txt$|\.htm$|\.html$|\.eml$/.test(fn) && att.content){
+                try{
+                  let t=''; try{ t=new TextDecoder('utf-8').decode(att.content); }catch{ t=Array.from(new Uint8Array(att.content)).map(c=>String.fromCharCode(c)).join(''); }
+                  chunks.push(t);
+                }catch(e){ logL('att decode fail', fn, e?.message||e); }
+              }
+            }
+          }
+          const text=decodeQP(chunks.join('\n\n')).replace(/\u0000/g,'');
+          const clean=extractFormBlocks(text); const parsed=parseEmailBlocks(clean);
+          parsed.forEach(upsertPlayer); added+=parsed.length; logL('MSG parsed players', parsed.length);
+        }catch(err){ logL('MSG parse error', err?.message||err); toast('Échec .msg — essaye .eml'); }
+      }else{
+        const txt=await f.text(); parseEmailBlocks(stripHtml(txt)).forEach(p=>{upsertPlayer(p);added++;}); logL('txt added',added);
+      }
+    }catch(e){ logL('import error for', f.name, e?.message||e); toast(`Erreur import: ${f.name}`); }
+  }
+  renderPlayers(); updatePreviewShort(); toast(`Import terminé : ${added} joueur(s)`); logL('import done total',added);
+}
+function csvToPlayers(csv){
+  const sep=(csv.indexOf(';')>-1 && csv.indexOf(',')===-1)?';':','; const rows=csv.split(/\r?\n/).filter(r=>r.trim()!==''); if(rows.length<2) return [];
+  const head=rows.shift().split(sep).map(h=>h.trim().toLowerCase()); const out=[];
+  for(const r of rows){ const c=r.split(sep).map(x=>x.trim().replace(/^"|"$/g,'')); const o={}; head.forEach((h,i)=>o[h]=c[i]||''); let b=''; for(const k of Object.keys(o)){ if(!k) continue; b+=`${k}  ${o[k]}\n`; } out.push(b); }
+  return parseEmailBlocks(out.join('\n\n'));
+}
+
+/* ==== TABLE/BOARD/LOGIQUE ==== */
+const tblBodyEl=document.querySelector('#tbl tbody');
 function renderPlayers(){
-  const q = ($('#q').value||'').toLowerCase();
-  const pos = $('#fPos').value;
-  const confMin = parseInt($('#fConf').value||'0',10);
-  const onlyAvail = $('#cbAvail').checked;
-  const onlyEligible = $('#cbOnlyEligible').checked;
-
-  let list = [...state.players];
-
+  const q=($('#q').value||'').toLowerCase(), pos=$('#fPos').value, conf=parseInt($('#fConf').value||'0',10), onlyAvail=$('#cbAvail').checked, onlyElig=$('#cbOnlyEligible').checked;
+  let list=[...state.players];
   if(q) list=list.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.city||'').toLowerCase().includes(q));
-  if(pos) list=list.filter(p=>p.positions?.primary===pos || p.positions?.secondary===pos);
+  if(pos) list=list.filter(p=>p.positions?.primary===pos||p.positions?.secondary===pos);
   if(onlyAvail) list=list.filter(p=>(p.availability?.[activeTeam]||'').toUpperCase()==='YES');
-  if(activeSlot && onlyEligible){ list=list.filter(p=> eligibleFor(p, activeSlot.team, activeSlot.role).ok ); }
-  if(confMin) list=list.filter(p=>(p.confidence_pct||0)>=confMin);
-
-  let scored = list.map(p=>({p,score: activeSlot? scoreFor(p, activeSlot.team, activeSlot.role) : 0}));
-  if(activeSlot) scored.sort((a,b)=> b.score-a.score || a.p.name.localeCompare(b.p.name));
-  else scored.sort((a,b)=> a.p.name.localeCompare(b.p.name));
-
-  tblBody.innerHTML='';
+  if(activeSlot && onlyElig) list=list.filter(p=> eligibleFor(p,activeSlot.team,activeSlot.role).ok);
+  if(conf) list=list.filter(p=>(p.confidence_pct||0)>=conf);
+  let scored=list.map(p=>({p,score:activeSlot?scoreFor(p,activeSlot.team,activeSlot.role):0}));
+  if(activeSlot) scored.sort((a,b)=>b.score-a.score||a.p.name.localeCompare(b.p.name)); else scored.sort((a,b)=>a.p.name.localeCompare(b.p.name));
+  tblBodyEl.innerHTML='';
   for(const {p,score} of scored){
-    const tr=document.createElement('tr');
-    if(activeSlot){ if(score>=1) tr.classList.add('candidate-yes'); else if(!showAllCandidates) tr.classList.add('candidate-no'); }
-    tr.innerHTML=`
-      <td class="dr" draggable="true" data-id="${p.id}">${p.name}<div class="small">${p.parent?.email||''}</div></td>
-      <td>${p.birth_year||''}</td>
-      <td>${p.city||''}</td>
-      <td><span class="badge ${p.positions?.primary||''}">${p.positions?.primary||''}</span>
-          ${p.positions?.secondary && p.positions.secondary!=='NONE'?` <span class="badge ${p.positions.secondary}">${p.positions.secondary}</span>`:''}</td>
+    const tr=document.createElement('tr'); if(activeSlot){ if(score>=1) tr.classList.add('candidate-yes'); else if(!showAllCandidates) tr.classList.add('candidate-no'); }
+    tr.innerHTML=`<td class="dr" draggable="true" data-id="${p.id}">${p.name}<div class="small">${p.parent?.email||''}</div></td>
+      <td>${p.birth_year||''}</td><td>${p.city||''}</td>
+      <td><span class="badge ${p.positions?.primary||''}">${p.positions?.primary||''}</span>${p.positions?.secondary&&p.positions.secondary!=='NONE'?` <span class="badge ${p.positions.secondary}">${p.positions.secondary}</span>`:''}</td>
       <td class="fit">${(p.sides||[]).join('/')||'-'}</td>
       <td class="fit">${p.availability?.boston||''}</td>
       <td class="fit">${p.availability?.meltdown||''}</td>
       <td class="fit">${p.availability?.throne||''}</td>
       <td class="fit">${p.confidence_pct!=null?p.confidence_pct+'%':''}</td>
       <td class="fit small muted">Drag</td>`;
-    tblBody.appendChild(tr);
+    tblBodyEl.appendChild(tr);
   }
-  tblBody.querySelectorAll('td.dr').forEach(td=>{
-    td.addEventListener('dragstart',e=>{
-      e.dataTransfer.setData('text/plain', td.dataset.id);
-      td.parentElement.style.opacity='.6';
-    });
+  tblBodyEl.querySelectorAll('td.dr').forEach(td=>{
+    td.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',td.dataset.id);td.parentElement.style.opacity='.6';});
     td.addEventListener('dragend',()=> td.parentElement.style.opacity='');
   });
 }
-function scoreFor(p, team, role){
-  const a=(p.availability?.[team]||'').toUpperCase(); if(a==='NO') return -999;
-  let s=0; const has=x=> (p.positions?.primary===x||p.positions?.secondary===x);
+function scoreFor(p,team,role){
+  const a=(p.availability?.[team]||'').toUpperCase(); if(a==='NO') return -999; let s=0; const has=x=>(p.positions?.primary===x||p.positions?.secondary===x);
   if(role==='G'){ if(has('GOL')) s+=6; else return -999; }
   if(role==='LD'||role==='RD'){ if(!has('DEF')) return -999; s+=4; const need=role==='LD'?'L':'R'; if((p.sides||[]).includes(need)) s+=2; }
   if(role==='LW'||role==='RW'){ if(has('FWD')) s+=3; const need=role==='LW'?'L':'R'; if((p.sides||[]).includes(need)) s+=2; }
@@ -454,349 +414,171 @@ function scoreFor(p, team, role){
   if(a==='YES') s+=2; const c=+p.confidence_pct||0; if(c>=90)s+=2; else if(c>=80)s+=1; return s;
 }
 
-/* ---- Boards (panels) ---- */
-function headSlot(text){ const d=document.createElement('div'); d.className='slot head'; d.textContent=text; return d; }
-function slotEl(id, team, role, group){
-  const s=document.createElement('div'); s.className='slot'; s.id=id;
-  s.dataset.team=team; s.dataset.role=role; s.dataset.group=group;
-  const lab=document.createElement('div'); lab.className='slot-label'; lab.textContent = `${role}${group==='G'?'':group.substring(1)}`;
-  s.appendChild(lab);
-  s.addEventListener('dragover', e=>{ e.preventDefault(); s.classList.add('drop-ok'); setActiveSlot(s); });
-  s.addEventListener('dragleave', ()=> s.classList.remove('drop-ok'));
-  s.addEventListener('drop', e=>{
-    e.preventDefault(); s.classList.remove('drop-ok'); const id=e.dataTransfer.getData('text/plain');
-    placePlayer(team, role, group, id);
-  });
-  s.addEventListener('click', ()=> setActiveSlot(s));
-  return s;
+/* PANELS */
+function headSlot(t){const d=document.createElement('div');d.className='slot head';d.textContent=t;return d;}
+function slotEl(id,team,role,group){
+  const s=document.createElement('div'); s.className='slot'; s.id=id; s.dataset.team=team; s.dataset.role=role; s.dataset.group=group;
+  s.innerHTML=`<div class="slot-label">${role}${group==='G'?'':group.substring(1)}</div>`;
+  s.addEventListener('dragover',e=>{e.preventDefault();s.classList.add('drop-ok');setActiveSlot(s);});
+  s.addEventListener('dragleave',()=>s.classList.remove('drop-ok'));
+  s.addEventListener('drop',e=>{e.preventDefault();s.classList.remove('drop-ok');placePlayer(team,role,group,e.dataTransfer.getData('text/plain'));});
+  s.addEventListener('click',()=>setActiveSlot(s)); return s;
 }
-function buildPanel(teamKey){
-  const wrap = document.getElementById(`panel-${teamKey}`); wrap.innerHTML='';
-  const board = document.createElement('div'); board.className='board';
-  const colD=document.createElement('div'); colD.className='slotcol';
-  colD.appendChild(headSlot(`Défense — ${activeD}`));
-  colD.appendChild(slotEl(`${teamKey}-LD${activeD.substring(1)}`, teamKey,'LD',activeD));
-  colD.appendChild(slotEl(`${teamKey}-RD${activeD.substring(1)}`, teamKey,'RD',activeD));
-  const colF=document.createElement('div'); colF.className='slotcol';
-  colF.appendChild(headSlot(`Attaque — ${activeF}`));
+function buildPanel(team){
+  const wrap=document.getElementById(`panel-${team}`); wrap.innerHTML='';
+  const b=document.createElement('div'); b.className='board';
+  const d=document.createElement('div'); d.className='slotcol'; d.appendChild(headSlot(`Défense — ${activeD}`));
+  d.appendChild(slotEl(`${team}-LD${activeD.substring(1)}`,team,'LD',activeD));
+  d.appendChild(slotEl(`${team}-RD${activeD.substring(1)}`,team,'RD',activeD));
+  const f=document.createElement('div'); f.className='slotcol'; f.appendChild(headSlot(`Attaque — ${activeF}`));
   const row=document.createElement('div'); row.style.display='flex'; row.style.gap='10px';
-  row.appendChild(slotEl(`${teamKey}-LW${activeF.substring(1)}`, teamKey,'LW',activeF));
-  row.appendChild(slotEl(`${teamKey}-C${activeF.substring(1)}`,  teamKey,'C', activeF));
-  row.appendChild(slotEl(`${teamKey}-RW${activeF.substring(1)}`, teamKey,'RW',activeF));
-  colF.appendChild(row);
-  const colG=document.createElement('div'); colG.className='slotcol';
-  colG.appendChild(headSlot('Goaler'));
-  colG.appendChild(slotEl(`${teamKey}-G`, teamKey,'G','G'));
-  board.appendChild(colD); board.appendChild(colF); board.appendChild(colG); wrap.appendChild(board);
-  renderBoard(teamKey);
+  row.appendChild(slotEl(`${team}-LW${activeF.substring(1)}`,team,'LW',activeF));
+  row.appendChild(slotEl(`${team}-C${activeF.substring(1)}`, team,'C', activeF));
+  row.appendChild(slotEl(`${team}-RW${activeF.substring(1)}`,team,'RW',activeF));
+  f.appendChild(row);
+  const g=document.createElement('div'); g.className='slotcol'; g.appendChild(headSlot('Goaler')); g.appendChild(slotEl(`${team}-G`,team,'G','G'));
+  b.appendChild(d); b.appendChild(f); b.appendChild(g); wrap.appendChild(b); renderBoard(team);
 }
 function renderBoard(team){
-  const L = state.lineups[team];
-  renderSlotChips(document.getElementById(`${team}-LD${activeD.substring(1)}`), L[activeD].LD, team, 'LD', activeD);
-  renderSlotChips(document.getElementById(`${team}-RD${activeD.substring(1)}`), L[activeD].RD, team, 'RD', activeD);
-  renderSlotChips(document.getElementById(`${team}-LW${activeF.substring(1)}`), L[activeF].LW, team, 'LW', activeF);
-  renderSlotChips(document.getElementById(`${team}-C${activeF.substring(1)}`),  L[activeF].C,  team, 'C',  activeF);
-  renderSlotChips(document.getElementById(`${team}-RW${activeF.substring(1)}`), L[activeF].RW, team, 'RW', activeF);
-  renderSlotChips(document.getElementById(`${team}-G`), L.G, team, 'G', 'G');
+  const L=state.lineups[team];
+  renderChip(`${team}-LD${activeD.substring(1)}`, L[activeD].LD, team,'LD',activeD);
+  renderChip(`${team}-RD${activeD.substring(1)}`, L[activeD].RD, team,'RD',activeD);
+  renderChip(`${team}-LW${activeF.substring(1)}`, L[activeF].LW, team,'LW',activeF);
+  renderChip(`${team}-C${activeF.substring(1)}`,  L[activeF].C,  team,'C', activeF);
+  renderChip(`${team}-RW${activeF.substring(1)}`, L[activeF].RW, team,'RW',activeF);
+  renderChip(`${team}-G`, L.G, team,'G','G');
 }
-function renderSlotChips(slotEl, arr, team, role, group){
-  if(!slotEl) return;
-  slotEl.innerHTML=`<div class="slot-label">${role}${group==='G'?'':group.substring(1)}</div>`;
+function renderChip(slotId, arr, team, role, group){
+  const el=document.getElementById(slotId); if(!el) return;
+  el.innerHTML=`<div class="slot-label">${role}${group==='G'?'':group.substring(1)}</div>`;
   (arr||[]).forEach(id=>{
-    const p=state.players.find(x=>x.id===id);
-    const chip=document.createElement('span'); chip.className='chip'; chip.draggable=true; chip.dataset.id=id;
+    const p=state.players.find(x=>x.id===id); const chip=document.createElement('span'); chip.className='chip'; chip.draggable=true; chip.dataset.id=id;
     const pos=p?.positions?.primary||''; chip.innerHTML=`<span class="role">${p?.name||id}</span><span class="pos">${pos}</span><span class="x" title="Retirer">✕</span>`;
-    chip.querySelector('.x').onclick=()=> removeFromSlot(team, role, group, id);
-    chip.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', id); setActiveSlot(slotEl); });
-    slotEl.appendChild(chip);
+    chip.querySelector('.x').onclick=()=>removeFromSlot(team,role,group,id);
+    chip.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',id); setActiveSlot(el);});
+    el.appendChild(chip);
   });
 }
-function placePlayer(team, role, group, playerId){
-  const p = state.players.find(x=>x.id===playerId);
-  if(!p){ toast('Joueur introuvable'); return; }
-  const ok = eligibleFor(p, team, role);
-  if(!ok.ok){ toast(`Refusé: ${ok.why}`); return; }
-  removePlayerEverywhere(team, playerId, {silent:true});
-  const L=state.lineups[team];
-  if(role==='G'){ L.G=[playerId]; renderBoard(team); return; }
-  const arr = L[group][role]; arr[0]=playerId; renderBoard(team);
-}
-function removePlayerEverywhere(team, playerId, {silent}={}){
-  const L=state.lineups[team]; if(!L) return;
-  if(L.G[0]===playerId) L.G=[];
-  ['D1','D2','D3'].forEach(g=>{['LD','RD'].forEach(r=>{ const a=L[g][r]; const i=a.indexOf(playerId); if(i>=0) a.splice(i,1); });});
-  ['F1','F2','F3'].forEach(g=>{['LW','C','RW'].forEach(r=>{ const a=L[g][r]; const i=a.indexOf(playerId); if(i>=0) a.splice(i,1); });});
-  if(!silent) renderBoard(team);
-}
-function removeFromSlot(team, role, group, id){
-  const L=state.lineups[team];
-  if(role==='G'){ L.G=[]; renderBoard(team); return; }
-  const arr=L[group][role]; const i=arr.indexOf(id);
-  if(i>=0) arr.splice(i,1);
-  renderBoard(team);
-}
-
-/* slot focus / filtre auto */
 function setActiveSlot(el){
   if(activeSlot?.el) activeSlot.el.classList.remove('active');
-  activeSlot={team:el.dataset.team, role:el.dataset.role, group:el.dataset.group, el};
+  activeSlot={team:el.dataset.team,role:el.dataset.role,group:el.dataset.group,el};
   el.classList.add('active');
-  const map={G:'GOL',LD:'DEF',RD:'DEF',LW:'FWD',RW:'FWD',C:'CEN'};
-  const pv = map[activeSlot.role] || '';
-  const sel = $('#fPos'); if(sel.value!==pv){ sel.value=pv; }
-  $('#hintTarget').textContent = `Cible : ${TEAMS[activeSlot.team].label} • ${activeSlot.role}${activeSlot.group==='G'?'':activeSlot.group.substring(1)}`;
+  // position auto
+  const map={G:'GOL',LD:'DEF',RD:'DEF',LW:'FWD',RW:'FWD',C:'CEN'}; const pv=map[activeSlot.role]||''; const sel=$('#fPos'); if(sel.value!==pv){ sel.value=pv; }
+  $('#hintTarget').textContent=`Cible : ${TEAMS[activeSlot.team].label} • ${activeSlot.role}${activeSlot.group==='G'?'':activeSlot.group.substring(1)}`;
   renderPlayers();
 }
 function clearActiveSlot(){ if(activeSlot?.el) activeSlot.el.classList.remove('active'); activeSlot=null; $('#hintTarget').textContent=''; renderPlayers(); }
 document.addEventListener('click',e=>{ if(!e.target.closest('.slot')) clearActiveSlot(); });
 
-/* ---- Tabs & countdown ---- */
-function updateTabCountdowns(){
-  for(const k of Object.keys(TEAMS)){
-    const el=$(`#p-${k}`); if(!el) continue;
-    const [Y,M,D]=TEAMS[k].date;
-    const d=new Date(`${Y}-${String(M).padStart(2,'0')}-${String(D).padStart(2,'0')}T00:00:00-04:00`);
-    const diff=Math.ceil( (d - new Date()) / (1000*60*60*24) );
-    el.textContent = diff>0 ? `J‑${diff}` : (diff===0?'Jour J':'Terminé');
-  }
+function placePlayer(team,role,group,id){
+  const p=state.players.find(x=>x.id===id); if(!p){toast('Joueur introuvable');return;}
+  const ok=eligibleFor(p,team,role); if(!ok.ok){toast(`Refusé: ${ok.why}`);return;}
+  removeEverywhere(team,id,true); const L=state.lineups[team];
+  if(role==='G'){L.G=[id]; renderBoard(team); return;}
+  const arr=L[group][role]; arr[0]=id; renderBoard(team);
+}
+function removeEverywhere(team,id,silent){
+  const L=state.lineups[team]; if(!L)return;
+  if(L.G[0]===id) L.G=[];
+  ['D1','D2','D3'].forEach(g=>{['LD','RD'].forEach(r=>{const a=L[g][r]; const i=a.indexOf(id); if(i>=0)a.splice(i,1);});});
+  ['F1','F2','F3'].forEach(g=>{['LW','C','RW'].forEach(r=>{const a=L[g][r]; const i=a.indexOf(id); if(i>=0)a.splice(i,1);});});
+  if(!silent) renderBoard(team);
+}
+function removeFromSlot(team,role,group,id){ const L=state.lineups[team]; if(role==='G'){L.G=[];renderBoard(team);return;} const a=L[group][role]; const i=a.indexOf(id); if(i>=0)a.splice(i,1); renderBoard(team); }
+
+/* Tabs */
+function updateCountdowns(){
+  const now=new Date(); const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  for(const k of Object.keys(TEAMS)){ const [Y,M,D]=TEAMS[k].date; const d=new Date(Y,M-1,D); const el=document.getElementById('p-'+k); if(!el) continue; const diff=Math.ceil((d-today)/86400000); el.textContent= diff>0?`J-${diff}`:(diff===0?'Jour J':'Terminé');}
 }
 function setActiveTeam(key){
   activeTeam=key;
-  for(const k of Object.keys(TEAMS)){
-    const tab=$(`#tab-${k}`), panel=$(`#panel-${k}`);
-    const sel = (k===key); tab.setAttribute('aria-selected', sel?'true':'false'); panel.hidden = !sel;
-  }
-  buildPanel(activeTeam); renderPlayers(); updateTabCountdowns();
+  ['boston','meltdown','throne'].forEach(k=>{document.getElementById('tab-'+k).setAttribute('aria-selected',k===key?'true':'false'); document.getElementById('panel-'+k).hidden = k!==key;});
+  buildPanel(activeTeam); renderPlayers(); updateCountdowns();
 }
-$('#tab-boston').onclick = ()=> setActiveTeam('boston');
-$('#tab-meltdown').onclick = ()=> setActiveTeam('meltdown');
-$('#tab-throne').onclick = ()=> setActiveTeam('throne');
+document.getElementById('tab-boston').onclick = ()=>setActiveTeam('boston');
+document.getElementById('tab-meltdown').onclick = ()=>setActiveTeam('meltdown');
+document.getElementById('tab-throne').onclick = ()=>setActiveTeam('throne');
+['segD','segF'].forEach(id=>{
+  const seg=document.getElementById(id);
+  seg.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{
+    seg.querySelectorAll('button').forEach(b=>b.removeAttribute('aria-pressed'));
+    btn.setAttribute('aria-pressed','true');
+    if(id==='segD') activeD=btn.dataset.d; else activeF=btn.dataset.f;
+    buildPanel(activeTeam); renderPlayers();
+  }));
+});
 
-function wireSeg(segId, type){
-  const seg=$(segId);
-  seg.querySelectorAll('button').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      seg.querySelectorAll('button').forEach(b=>b.removeAttribute('aria-pressed'));
-      btn.setAttribute('aria-pressed','true');
-      if(type==='D') activeD = btn.dataset.d;
-      if(type==='F') activeF = btn.dataset.f;
-      buildPanel(activeTeam); renderPlayers();
-    });
-  });
-}
-wireSeg('#segD','D'); wireSeg('#segF','F');
-
-/* ---- Buttons ---- */
-$('#q').addEventListener('input', renderPlayers);
-$('#fPos').addEventListener('input', renderPlayers);
-$('#fConf').addEventListener('input', renderPlayers);
-$('#cbAvail').addEventListener('change', renderPlayers);
-$('#cbOnlyEligible').addEventListener('change', renderPlayers);
-$('#btnToggleCandidates').onclick=()=>{ showAllCandidates=!showAllCandidates; renderPlayers(); };
-
-$('#btnAuto').onclick=()=>{
+/* Buttons */
+document.getElementById('btnToggleCandidates').onclick=()=>{showAllCandidates=!showAllCandidates; renderPlayers();};
+document.getElementById('btnAuto').onclick=()=>{
   const L=state.lineups[activeTeam];
-  if(L.G.length===0){ const g = bestCandidate(activeTeam,'G'); if(g) L.G=[g.id]; }
-  ['LD','RD'].forEach(r=>{ if(L[activeD][r].length===0){ const p=bestCandidate(activeTeam,r); if(p) L[activeD][r]=[p.id]; }});
-  ['LW','C','RW'].forEach(r=>{ if(L[activeF][r].length===0){ const p=bestCandidate(activeTeam,r); if(p) L[activeF][r]=[p.id]; }});
-  renderBoard(activeTeam);
-  $('#status').textContent='Auto-suggest (ligne DEF & FWD actives + G) effectué.';
+  if(L.G.length===0){const g=best(activeTeam,'G'); if(g) L.G=[g.id];}
+  ['LD','RD'].forEach(r=>{if(L[activeD][r].length===0){const p=best(activeTeam,r); if(p) L[activeD][r]=[p.id];}});
+  ['LW','C','RW'].forEach(r=>{if(L[activeF][r].length===0){const p=best(activeTeam,r); if(p) L[activeF][r]=[p.id];}});
+  renderBoard(activeTeam); document.getElementById('status').textContent='Auto-suggest effectué.';
 };
-function bestCandidate(team, role){
+function best(team,role){
   const placed=new Set(); const L=state.lineups[team];
-  [L.G, L.D1.LD, L.D1.RD, L.D2.LD, L.D2.RD, L.D3.LD, L.D3.RD, L.F1.LW, L.F1.C, L.F1.RW, L.F2.LW, L.F2.C, L.F2.RW, L.F3.LW, L.F3.C, L.F3.RW].forEach(a=>a.forEach(id=>placed.add(id)));
-  const onlyAvail = $('#cbAvail').checked;
-  const cand = state.players
-    .filter(p=>!placed.has(p.id))
-    .filter(p=>!onlyAvail || (p.availability?.[team]||'').toUpperCase()==='YES')
-    .map(p=>({p,score:scoreFor(p,team,role)}))
-    .filter(x=>x.score>0)
-    .sort((a,b)=> b.score-a.score);
-  return cand[0]?.p || null;
+  [L.G,L.D1.LD,L.D1.RD,L.D2.LD,L.D2.RD,L.D3.LD,L.D3.RD,L.F1.LW,L.F1.C,L.F1.RW,L.F2.LW,L.F2.C,L.F2.RW,L.F3.LW,L.F3.C,L.F3.RW].forEach(a=>a.forEach(id=>placed.add(id)));
+  const cand=state.players.filter(p=>!placed.has(p.id)&& (document.getElementById('cbAvail').checked? (p.availability?.[team]||'').toUpperCase()==='YES':true))
+               .map(p=>({p,score:scoreFor(p,team,role)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+  return cand[0]?.p||null;
 }
-$('#btnCheck').onclick=()=>{
+document.getElementById('btnCheck').onclick=()=>{
   const L=state.lineups[activeTeam];
-  const cnt = {
-    G:L.G.length,
-    D:L.D1.LD.length+L.D1.RD.length+L.D2.LD.length+L.D2.RD.length+L.D3.LD.length+L.D3.RD.length,
-    F:L.F1.LW.length+L.F1.C.length+L.F1.RW.length+L.F2.LW.length+L.F2.C.length+L.F2.RW.length+L.F3.LW.length+L.F3.C.length+L.F3.RW.length
-  };
-  $('#status').textContent = `${TEAMS[activeTeam].label} — ${cnt.G===1&&cnt.D===6&&cnt.F===9?'✔ complet':'⚠ incomplet'} (G:${cnt.G}/1, D:${cnt.D}/6, F:${cnt.F}/9)`;
+  const cnt={G:L.G.length, D:L.D1.LD.length+L.D1.RD.length+L.D2.LD.length+L.D2.RD.length+L.D3.LD.length+L.D3.RD.length,
+    F:L.F1.LW.length+L.F1.C.length+L.F1.RW.length+L.F2.LW.length+L.F2.C.length+L.F2.RW.length+L.F3.LW.length+L.F3.C.length+L.F3.RW.length};
+  document.getElementById('status').textContent=`${TEAMS[activeTeam].label} — ${(cnt.G===1&&cnt.D===6&&cnt.F===9)?'✔ complet':'⚠ incomplet'} (G:${cnt.G}/1, D:${cnt.D}/6, F:${cnt.F}/9)`;
 };
 
-/* ---- Export/Import lineups ---- */
-function toLineupsJson(){ const t={}; for(const k of Object.keys(state.lineups)){ t[k]=state.lineups[k]; } return {version:1, updated_at:new Date().toISOString(), tournaments:t}; }
-$('#btnExportPlayers').onclick=()=> download('players.json', JSON.stringify({players:state.players},null,2));
-$('#btnExportLineups').onclick=()=> download('lineups.json', JSON.stringify(toLineupsJson(),null,2));
-$('#fileLineup').onchange=async e=>{
+/* Export / Import lineup */
+function toLineupsJson(){const t={};['boston','meltdown','throne'].forEach(k=>t[k]=state.lineups[k]); return {version:1,updated_at:new Date().toISOString(),tournaments:t};}
+document.getElementById('btnExportPlayers').onclick=()=>dl('players.json',JSON.stringify({players:state.players},null,2));
+document.getElementById('btnExportLineups').onclick=()=>dl('lineups.json',JSON.stringify(toLineupsJson(),null,2));
+document.getElementById('fileLineup').onchange=async e=>{
   const f=e.target.files[0]; if(!f) return;
   try{
     const j=JSON.parse(await f.text());
-    if(j.tournaments){ for(const k of Object.keys(state.lineups)){ if(j.tournaments[k]) state.lineups[k]=j.tournaments[k]; } }
+    if(j.tournaments){['boston','meltdown','throne'].forEach(k=>{if(j.tournaments[k]) state.lineups[k]=j.tournaments[k];});}
     else if(j.boston||j.meltdown||j.throne){
-      for(const k of Object.keys(state.lineups)){
-        const T=j[k]||{def:[],fwd:[],gol:[]}; const L=state.lineups[k];
-        L.G = T.gol?.slice(0,1) || [];
-        const D=T.def||[]; [['D1','LD'],['D1','RD'],['D2','LD'],['D2','RD'],['D3','LD'],['D3','RD']].forEach(([g,r],i)=>{ const id=D[i]; if(id) L[g][r]=[id]; });
-        const F=T.fwd||[]; [['F1','LW'],['F1','C'],['F1','RW'],['F2','LW'],['F2','C'],['F2','RW'],['F3','LW'],['F3','C'],['F3','RW']].forEach(([g,r],i)=>{ const id=F[i]; if(id) L[g][r]=[id]; });
-      }
+      ['boston','meltdown','throne'].forEach(k=>{
+        const T=j[k]||{def:[],fwd:[],gol:[]}, L=state.lineups[k]; L.G=T.gol?.slice(0,1)||[];
+        const D=T.def||[];[['D1','LD'],['D1','RD'],['D2','LD'],['D2','RD'],['D3','LD'],['D3','RD']].forEach(([g,r],i)=>{const id=D[i];if(id) L[g][r]=[id];});
+        const F=T.fwd||[];[['F1','LW'],['F1','C'],['F1','RW'],['F2','LW'],['F2','C'],['F2','RW'],['F3','LW'],['F3','C'],['F3','RW']].forEach(([g,r],i)=>{const id=F[i];if(id) L[g][r]=[id];});
+      });
     }else throw new Error('format inconnu');
     buildPanel(activeTeam); renderPlayers(); updatePreviewShort(); toast('Lineup importé');
-  }catch(err){ dlog('import lineups error', err?.message||err); alert('lineups.json invalide'); }
+  }catch(e){logL('lineup import error',e?.message||e); alert('lineups.json invalide');}
 };
-function download(name, text){
-  const blob=new Blob([text],{type:'application/json'}); const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),400);
+function dl(name,text){const blob=new Blob([text],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),300);}
+
+/* Init */
+function updateCountdowns(){
+  const now=new Date(); const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  for(const k of Object.keys(TEAMS)){const [Y,M,D]=TEAMS[k].date;const d=new Date(Y,M-1,D);const el=document.getElementById('p-'+k);if(!el)continue;const dif=Math.ceil((d-today)/86400000);el.textContent=dif>0?`J-${dif}`:(dif===0?'Jour J':'Terminé');}
 }
-function updatePreviewShort(){ const sample = { players: state.players.slice(0,3), tournaments: toLineupsJson().tournaments }; $('#pvShort').textContent = JSON.stringify(sample,null,2); }
-$('#btnExpand').onclick=()=> $('#pvWrap').classList.toggle('expanded');
+function buildAll(){['boston','meltdown','throne'].forEach(k=>{const p=document.getElementById('panel-'+k); p.innerHTML='';}); buildPanel('boston');}
+function setActiveTeamInit(k){['boston','meltdown','throne'].forEach(x=>{document.getElementById('tab-'+x).setAttribute('aria-selected',x===k?'true':'false'); document.getElementById('panel-'+x).hidden=x!==k;}); activeTeam=k; buildPanel(k); renderPlayers(); updateCountdowns();}
+buildAll(); setActiveTeamInit('boston'); logL('Admin ready');
+/* Bind search filters */
+['q','fPos','fConf','cbAvail','cbOnlyEligible'].forEach(id=>document.getElementById(id).addEventListener('input',renderPlayers));
 
-/* ================== IMPORT FILES (instrumenté) ================== */
-$('#btnFetch').onclick=async()=>{
-  try{
-    dlog('fetch /data/players.json');
-    const r=await fetch('data/players.json',{cache:'no-store'});
-    const j=await r.json();
-    const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]);
-    arr.forEach(upsertPlayer); renderPlayers(); updatePreviewShort(); toast(`Chargé: ${arr.length} joueur(s)`); dlog('fetch OK, players:', arr.length);
-  }catch(err){ dlog('fetch error', err?.message||err); alert('Impossible de charger /data/players.json'); }
-};
-$('#btnParse').onclick=()=>{
-  const raw=$('#taEmails').value.trim(); if(!raw){ alert('Collez un ou plusieurs emails FormSubmit.'); return; }
-  dlog('parse from textarea length=', raw.length);
-  const clean = extractFormBlocks(raw);
-  parseEmailBlocks(clean).forEach(upsertPlayer);
-  $('#taEmails').value=''; renderPlayers(); updatePreviewShort(); toast('Joueurs ajoutés depuis le presse‑papiers');
-};
-$('#btnClear').onclick=()=> $('#taEmails').value='';
-
-$('#filePlayers').addEventListener('change', async e=>{
-  const files=[...e.target.files]; dlog('file input change:', files.map(f=>({name:f.name,size:f.size,type:f.type})));
-  await importFiles(files);
-});
-const dz=$('#dropZone');
+/* Drag/drop handlers */
+const dz=document.getElementById('dropZone');
 ['dragenter','dragover','dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();},false));
 dz.addEventListener('dragover',()=>dz.style.borderColor='rgba(59,130,246,.6)');
 dz.addEventListener('dragleave',()=>dz.style.borderColor='rgba(255,255,255,.2)');
-dz.addEventListener('drop', async e=>{
-  dz.style.borderColor='rgba(255,255,255,.2)';
-  const files=[...e.dataTransfer.files]; dlog('drop files:', files.map(f=>({name:f.name,size:f.size,type:f.type})));
-  await importFiles(files);
-});
+dz.addEventListener('drop',async e=>{dz.style.borderColor='rgba(255,255,255,.2)';const files=[...e.dataTransfer.files];logL('drop',files.map(f=>({name:f.name,size:f.size,type:f.type||'n/a'})));await importFiles(files);});
 
-async function importFiles(files){
-  let added=0;
-  dlog('importFiles started, count=', files.length);
-  for(const f of files){
-    const name=f.name.toLowerCase(); const info={name:f.name,size:f.size,type:f.type||'n/a'}; dlog('processing file:', info);
+/* File input */
+document.getElementById('filePlayers').addEventListener('change',async e=>{const files=[...e.target.files];logL('file input',files.map(f=>({name:f.name,size:f.size,type:f.type||'n/a'})));await importFiles(files);});
 
-    try{
-      if(name.endsWith('.json')){
-        dlog('route: JSON');
-        const j=JSON.parse(await f.text());
-        const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]);
-        arr.forEach(upsertPlayer); added+=arr.length; dlog('json parsed players:', arr.length);
-      }else if(name.endsWith('.csv')){
-        dlog('route: CSV');
-        csvToPlayers(await f.text()).forEach(p=>{upsertPlayer(p);added++;});
-        dlog('csv parsed, total added so far:', added);
-      }else if(name.endsWith('.eml')||name.endsWith('.txt')){
-        dlog('route: EML/TXT');
-        const raw=await f.text();
-        const hdrEnc = /content-transfer-encoding:\s*quoted-printable/i.test(raw);
-        const body = /(<!DOCTYPE|<html|<body[\s>])/i.test(raw) ? stripHtml(raw) : raw;
-        const text = (hdrEnc? decodeQP(body) : body).replace(/\u0000/g,'');
-        const clean = extractFormBlocks(text);
-        parseEmailBlocks(clean).forEach(p=>{upsertPlayer(p);added++;});
-        dlog('eml/txt parsed, total added:', added);
-      }else if(name.endsWith('.msg')){
-        dlog('route: MSG (Outlook)', info);
-        const ab = await f.arrayBuffer();
-        dlog('msg ArrayBuffer length', ab.byteLength);
-        try{
-          const mr=new MSGReader(ab);
-          const data=mr.getFileData();
-          dlog('MSGReader.getFileData keys', Object.keys(data||{}));
-          dlog('msg subject:', data?.subject||'(none)');
-          dlog('msg senderName:', data?.senderName||'(none)');
-          dlog('msg body length:', data?.body?data.body.length:0);
-          dlog('msg bodyHTML length:', data?.bodyHTML?data.bodyHTML.length:0);
-          dlog('msg attachments count:', Array.isArray(data?.attachments)?data.attachments.length:0);
-
-          let chunks=[];
-          if(data?.body){ chunks.push({src:'body', text:data.body}); }
-          if(data?.bodyHTML){ chunks.push({src:'bodyHTML', text: stripHtml(data.bodyHTML)}); }
-
-          if(Array.isArray(data?.attachments)){
-            data.attachments.forEach(att=>{
-              const fn=(att.fileName||'').toLowerCase();
-              const clen = att.content ? (att.content.byteLength||att.content.length||0) : 0;
-              dlog('attachment:', {fileName:att.fileName, contentLen:clen});
-              if(/\.txt$|\.htm$|\.html$|\.eml$/.test(fn) && att.content){
-                try{
-                  let text='';
-                  try{
-                    const dec=new TextDecoder('utf-8'); text=dec.decode(att.content);
-                    dlog('attachment decoded as utf-8', fn, 'len', text.length);
-                  }catch(err1){
-                    dlog('utf-8 decode failed, fallback latin1', err1?.message||err1);
-                    text = Array.from(new Uint8Array(att.content)).map(c=>String.fromCharCode(c)).join('');
-                  }
-                  chunks.push({src:`attach:${att.fileName}`, text});
-                }catch(err){ dlog('attachment read error', err?.message||err); }
-              }
-            });
-          }
-          dlog('msg chunks count:', chunks.length);
-          const joined = chunks.map(c=>`[${c.src}]\n${c.text}`).join('\n\n');
-          const text = decodeQP(joined).replace(/\u0000/g,'');
-          const clean = extractFormBlocks(text);
-          const parsed = parseEmailBlocks(clean);
-          parsed.forEach(upsertPlayer); added+=parsed.length;
-          dlog('msg parsed players:', parsed.length, 'added total:', added);
-        }catch(err){
-          dlog('MSGReader error, fallback to text()', err?.message||err);
-          try{
-            const txt=(await f.text()).replace(/\u0000/g,'');
-            const clean = extractFormBlocks( decodeQP(stripHtml(txt)) );
-            const parsed = parseEmailBlocks(clean);
-            parsed.forEach(upsertPlayer); added+=parsed.length;
-            dlog('fallback text() parsed players:', parsed.length);
-          }catch(err2){
-            dlog('fallback text() failed', err2?.message||err2);
-            toast(`Échec .msg : ${f.name}`);
-          }
-        }
-      }else{
-        dlog('route: OTHER/TEXT');
-        const txt=await f.text();
-        parseEmailBlocks(stripHtml(txt)).forEach(p=>{upsertPlayer(p);added++;});
-      }
-    }catch(err){
-      dlog('importFiles error for', info.name, err?.message||err, err);
-      console.error('Import error for', info.name, err);
-      toast(`Erreur import: ${info.name}`);
-    }
-  }
-  renderPlayers(); updatePreviewShort(); toast(`Import terminé : ${added} joueur(s)`); dlog('importFiles finished, total added:', added);
-}
-function csvToPlayers(csv){
-  const sep = (csv.indexOf(';')>-1 && csv.indexOf(',')===-1)?';':',';
-  const rows = csv.split(/\r?\n/).filter(r=>r.trim()!==''); if(rows.length<2) return [];
-  const head = rows.shift().split(sep).map(h=>h.trim().toLowerCase()); const out=[];
-  for(const r of rows){
-    const cells=r.split(sep).map(x=>x.trim().replace(/^"|"$/g,''));
-    const o={}; head.forEach((h,i)=> o[h]=cells[i]||'');
-    let block=''; for(const k of Object.keys(o)){ if(!k) continue; block += `${k}  ${o[k]}\n`; }
-    out.push(block);
-  }
-  return parseEmailBlocks(out.join('\n\n'));
-}
-
-/* ---- INIT ---- */
-function updateTabUI(){ updateTabCountdowns(); }
-setActiveTeam('boston'); updateTabUI(); renderPlayers(); updatePreviewShort();
-dlog('Admin ready');
+/* Paste */
+document.getElementById('btnFetch').onclick=async()=>{try{logL('fetch data/players.json');const r=await fetch('data/players.json',{cache:'no-store'});const j=await r.json();const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]);arr.forEach(upsertPlayer);renderPlayers();updatePreviewShort();toast(`Chargé: ${arr.length} joueur(s)`);}catch(e){logL('fetch error',e?.message||e);alert('Impossible de charger /data/players.json');}};
+document.getElementById('btnParse').onclick=()=>{const raw=document.getElementById('taEmails').value.trim(); if(!raw){alert('Collez un ou plusieurs emails FormSubmit.');return;} const clean=extractFormBlocks(raw); parseEmailBlocks(clean).forEach(upsertPlayer); document.getElementById('taEmails').value=''; renderPlayers(); updatePreviewShort(); toast('Joueurs ajoutés');};
+document.getElementById('btnClear').onclick=()=>document.getElementById('taEmails').value='';
 </script>
 </body>
 </html>
