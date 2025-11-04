@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "updated_at": "2025-11-03T23:30:00Z",
+  "tournaments": {
+    "boston":   { "def": [], "fwd": [], "gol": [], "notes": "" },
+    "meltdown": { "def": [], "fwd": [], "gol": [], "notes": "" },
+    "throne":   { "def": [], "fwd": [], "gol": [], "notes": "" }
+  }
+}
