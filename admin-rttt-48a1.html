@@ -131,6 +131,10 @@ tr.candidate-no{opacity:.32}
 .chip .x{cursor:pointer;color:#cbd5e1}
 .chip[draggable="true"]{cursor:grab}
 
+/* Debug panel */
+#debugWrap{display:none;margin-top:10px;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px}
+#debugOut{max-height:260px;overflow:auto;white-space:pre-wrap;font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:.85rem}
+
 /* Toast */
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 20px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.25s}
 .toast.show{opacity:1}
@@ -160,8 +164,15 @@ tr.candidate-no{opacity:.32}
     <div class="bar">
       <button class="btn primary" id="btnParse">➕ Parser & ajouter</button>
       <button class="btn ghost" id="btnClear">Effacer</button>
+      <label class="small"><input type="checkbox" id="dbgToggle" /> Mode debug (logs)</label>
+      <button class="btn ghost" id="btnLogClear">Effacer logs</button>
+      <button class="btn ghost" id="btnLogDownload">Télécharger logs</button>
     </div>
     <div id="dropZone">Glissez-déposez **.msg / .eml / .csv / .json / .txt** ici (plusieurs fichiers possibles)</div>
+    <div id="debugWrap">
+      <div class="small">Logs (affichés aussi dans la console navigateur) :</div>
+      <pre id="debugOut"></pre>
+    </div>
     <div class="small">Astuce Outlook : si un .msg ne passe pas, **Enregistrer sous → .eml** puis déposez le .eml.</div>
   </section>
 
@@ -250,7 +261,6 @@ tr.candidate-no{opacity:.32}
     </div>
     <div class="preview" id="pvWrap">
       <pre id="pvShort" style="white-space:pre-wrap"></pre>
-      <div class="fade"></div>
     </div>
     <div class="showmore"><button class="btn ghost" id="btnExpand">Afficher/masquer l’aperçu complet</button></div>
   </section>
@@ -259,76 +269,85 @@ tr.candidate-no{opacity:.32}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ====== CONST & STATE ====== */
-const POS_MAP={Defence:'DEF',Defense:'DEF',Def:'DEF',Forward:'FWD',Avant:'FWD',Center:'CEN',Centre:'CEN',Goaler:'GOL',Goalie:'GOL',Gardien:'GOL'};
-const TEAMS={
-  boston   :{label:'Boston',   date:[2026,5,29]},
-  meltdown :{label:'Montreal Meltdown', date:[2026,6,5]},
-  throne   :{label:'The Throne', date:[2026,7,24]}
-};
-let state={
-  players:[],
-  lineups:{
-    boston   :{G:[], D1:{LD:[],RD:[]}, D2:{LD:[],RD:[]}, D3:{LD:[],RD:[]}, F1:{LW:[],C:[],RW:[]}, F2:{LW:[],C:[],RW:[]}, F3:{LW:[],C:[],RW:[]}},
-    meltdown :{G:[], D1:{LD:[],RD:[]}, D2:{LD:[],RD:[]}, D3:{LD:[],RD:[]}, F1:{LW:[],C:[],RW:[]}, F2:{LW:[],C:[],RW:[]}, F3:{LW:[],C:[],RW:[]}},
-    throne   :{G:[], D1:{LD:[],RD:[]}, D2:{LD:[],RD:[]}, D3:{LD:[],RD:[]}, F1:{LW:[],C:[],RW:[]}, F2:{LW:[],C:[],RW:[]}, F3:{LW:[],C:[],RW:[]}}
+/* ================== DEBUG LOGGING ================== */
+let DEBUG = false;
+const dbgOut = () => document.getElementById('debugOut');
+let debugBuffer = [];
+function dts(){ const d=new Date(); return d.toISOString().split('T')[1].slice(0,12); }
+function dline(...args){
+  const parts = args.map(a=>{
+    if(a==null) return String(a);
+    if(typeof a==='string') return a;
+    try{ return JSON.stringify(a); }catch{ return String(a); }
+  });
+  return `[${dts()}] ${parts.join(' ')}`;
+}
+function dlog(...args){
+  console.log('[ADMIN]', ...args);
+  const line = dline(...args);
+  debugBuffer.push(line);
+  if(debugBuffer.length>1000) debugBuffer.shift(); // garde 1000 lignes max
+  if(DEBUG && dbgOut()){
+    dbgOut().textContent = debugBuffer.join('\n');
+    dbgOut().scrollTop = dbgOut().scrollHeight;
   }
-};
-let activeTeam='boston';
-let activeD='D1';
-let activeF='F1';
-let activeSlot=null; // {team, role, group, el}
-let showAllCandidates=false;
+}
+document.getElementById('dbgToggle').addEventListener('change', (e)=>{
+  DEBUG = e.target.checked;
+  document.getElementById('debugWrap').style.display = DEBUG ? 'block' : 'none';
+  if(DEBUG){ dbgOut().textContent = debugBuffer.join('\n'); }
+});
+document.getElementById('btnLogClear').addEventListener('click', ()=>{
+  debugBuffer = []; if(dbgOut()) dbgOut().textContent = '';
+});
+document.getElementById('btnLogDownload').addEventListener('click', ()=>{
+  const blob = new Blob([debugBuffer.join('\n')], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='qhc-admin-logs.txt'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),400);
+});
 
-/* ====== HELPERS ====== */
+/* ================== CORE (identique + instrumentation) ================== */
+const POS_MAP={Defence:'DEF',Defense:'DEF',Def:'DEF',Forward:'FWD',Avant:'FWD',Center:'CEN',Centre:'CEN',Goaler:'GOL',Goalie:'GOL',Gardien:'GOL'};
+const TEAMS={ boston:{label:'Boston',date:[2026,5,29]}, meltdown:{label:'Montreal Meltdown',date:[2026,6,5]}, throne:{label:'The Throne',date:[2026,7,24]} };
+let state={ players:[], lineups:{ boston:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]}}, meltdown:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]}}, throne:{G:[],D1:{LD:[],RD:[]},D2:{LD:[],RD:[]},D3:{LD:[],RD:[]},F1:{LW:[],C:[],RW:[]},F2:{LW:[],C:[],RW:[]},F3:{LW:[],C:[],RW:[]} } } };
+let activeTeam='boston', activeD='D1', activeF='F1', activeSlot=null, showAllCandidates=false;
+
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const slug=s=>(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
 function stripHtml(s){ return (s||'').replace(/<\/?[^>]+(>|$)/g,''); }
-function decodeQP(s){
-  if(!s) return s;
-  return s
-    .replace(/=\r?\n/g,'')          // soft line breaks
-    .replace(/=3D/g,'=')
-    .replace(/=20/g,' ')
-    .replace(/=09/g,'\t')
-    .replace(/=0A/g,'\n')
-    .replace(/=0D/g,'\r');
-}
+function decodeQP(s){ if(!s) return s; return s.replace(/=\r?\n/g,'').replace(/=3D/g,'=').replace(/=20/g,' ').replace(/=09/g,'\t').replace(/=0A/g,'\n').replace(/=0D/g,'\r'); }
 
-/* ====== EMAIL FORM PARSER ====== */
-function extractFormBlocks(txt){
-  // Essaie d'isoler la section "Name  Value"
-  const start = txt.search(/^\s*Name\s+Value\s*$/im);
-  if(start>=0){ return txt.slice(start).trim(); }
-  return txt; // fallback : on parse tout
-}
+/* ---- Form parser ---- */
+function extractFormBlocks(txt){ const start = txt.search(/^\s*Name\s+Value\s*$/im); if(start>=0){ return txt.slice(start).trim(); } return txt; }
 function parseEmailBlocks(txt){
+  dlog('parseEmailBlocks: length', txt.length);
   const blocks = txt.trim().split(/\n\s*\n/);
   const out=[];
   for(const block of blocks){
     const lines=block.split(/\r?\n/);
     const o={};
     for(const line of lines){
-      // accepte: "Name  Value" ou "Name\tValue" ou "Name : Value"
       const m = line.match(/^([^:]+?)\s{2,}(.+)$/) || line.match(/^([^:]+?)\s*:\s*(.+)$/) || line.match(/^([^\t]+)\t(.+)$/);
       if(!m) continue;
       o[m[1].trim().toLowerCase().replace(/\s+/g,'_')] = m[2].trim();
     }
     const p = normalizeRow(o, block);
-    if(p && p.name) out.push(p);
+    if(p && p.name){ out.push(p); }
   }
+  dlog('parseEmailBlocks: players parsed', out.length);
   return out;
 }
 function normalizeRow(raw, rawTxt){
   const name=raw.player_name||raw.name||'';
+  if(!name) return null;
   const by=raw.birth_year?Number(raw.birth_year):null;
   const id=`${slug(name)}-${by??'xxxx'}`;
   const sides=[]; if((raw.side_right||'').toUpperCase()==='YES') sides.push('R'); if((raw.side_left||'').toUpperCase()==='YES') sides.push('L');
   const P=(raw.primary_position && (POS_MAP[raw.primary_position]||raw.primary_position.toUpperCase()))||'';
   const S=(raw.secondary_position && (POS_MAP[raw.secondary_position]||raw.secondary_position.toUpperCase()))||'NONE';
   const yn=v=>{const s=(v||'').toUpperCase(); if(s==='YES'||s==='OUI')return 'Yes'; if(s==='NO'||s==='NON')return 'No'; return 'TBD'};
-  // Submitted timestamp (si présent dans l'email brut)
   const ts = /Submitted\s+at\s+(.+?)\s*\(/i.exec(rawTxt||''); const submitted_at = ts ? new Date(ts[1]+' UTC').toISOString() : null;
   return {
     id, name, birth_year:isNaN(by)?null:by,
@@ -349,12 +368,12 @@ function normalizeRow(raw, rawTxt){
 }
 function upsertPlayer(p){
   const i=state.players.findIndex(x=>x.id===p.id);
-  if(i<0){ state.players.push(p); return; }
+  if(i<0){ state.players.push(p); dlog('upsert: added', p.id); return; }
   const a=state.players[i].submitted_at, b=p.submitted_at;
-  if(b && (!a || new Date(b)>new Date(a))) state.players[i]=p;
+  if(b && (!a || new Date(b)>new Date(a))){ state.players[i]=p; dlog('upsert: replaced by newer', p.id); }
 }
 
-/* ====== ELIGIBILITY (poste/côté/dispo) ====== */
+/* ---- Eligibility ---- */
 function eligibleFor(p, team, role){
   const av=(p.availability?.[team]||'').toUpperCase();
   if(av==='NO') return {ok:false, why:'Non inscrit pour ce tournoi'};
@@ -378,7 +397,7 @@ function eligibleFor(p, team, role){
   return {ok:false, why:'Slot inconnu'};
 }
 
-/* ====== TABLE RENDER ====== */
+/* ---- Render players table ---- */
 const tblBody = document.querySelector('#tbl tbody');
 function renderPlayers(){
   const q = ($('#q').value||'').toLowerCase();
@@ -389,37 +408,20 @@ function renderPlayers(){
 
   let list = [...state.players];
 
-  // Texte
   if(q) list=list.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.city||'').toLowerCase().includes(q));
-
-  // Filtre position manuel (DEF/FWD/CEN/GOL)
   if(pos) list=list.filter(p=>p.positions?.primary===pos || p.positions?.secondary===pos);
-
-  // Disponibilité — par onglet
   if(onlyAvail) list=list.filter(p=>(p.availability?.[activeTeam]||'').toUpperCase()==='YES');
-
-  // Éligibilité stricte si un slot est actif + option cochée
-  if(activeSlot && onlyEligible){
-    list=list.filter(p=> eligibleFor(p, activeSlot.team, activeSlot.role).ok );
-  }
-
-  // Confiance
+  if(activeSlot && onlyEligible){ list=list.filter(p=> eligibleFor(p, activeSlot.team, activeSlot.role).ok ); }
   if(confMin) list=list.filter(p=>(p.confidence_pct||0)>=confMin);
 
-  // Score candidats (pour trier quand slot actif)
   let scored = list.map(p=>({p,score: activeSlot? scoreFor(p, activeSlot.team, activeSlot.role) : 0}));
-  if(activeSlot){
-    scored.sort((a,b)=> b.score-a.score || a.p.name.localeCompare(b.p.name));
-  }else{
-    scored.sort((a,b)=> a.p.name.localeCompare(b.p.name));
-  }
+  if(activeSlot) scored.sort((a,b)=> b.score-a.score || a.p.name.localeCompare(b.p.name));
+  else scored.sort((a,b)=> a.p.name.localeCompare(b.p.name));
 
   tblBody.innerHTML='';
   for(const {p,score} of scored){
     const tr=document.createElement('tr');
-    if(activeSlot){
-      if(score>=1) tr.classList.add('candidate-yes'); else if(!showAllCandidates) tr.classList.add('candidate-no');
-    }
+    if(activeSlot){ if(score>=1) tr.classList.add('candidate-yes'); else if(!showAllCandidates) tr.classList.add('candidate-no'); }
     tr.innerHTML=`
       <td class="dr" draggable="true" data-id="${p.id}">${p.name}<div class="small">${p.parent?.email||''}</div></td>
       <td>${p.birth_year||''}</td>
@@ -431,11 +433,9 @@ function renderPlayers(){
       <td class="fit">${p.availability?.meltdown||''}</td>
       <td class="fit">${p.availability?.throne||''}</td>
       <td class="fit">${p.confidence_pct!=null?p.confidence_pct+'%':''}</td>
-      <td class="fit small muted">Drag</td>
-    `;
+      <td class="fit small muted">Drag</td>`;
     tblBody.appendChild(tr);
   }
-  // Drag depuis le tableau
   tblBody.querySelectorAll('td.dr').forEach(td=>{
     td.addEventListener('dragstart',e=>{
       e.dataTransfer.setData('text/plain', td.dataset.id);
@@ -451,19 +451,16 @@ function scoreFor(p, team, role){
   if(role==='LD'||role==='RD'){ if(!has('DEF')) return -999; s+=4; const need=role==='LD'?'L':'R'; if((p.sides||[]).includes(need)) s+=2; }
   if(role==='LW'||role==='RW'){ if(has('FWD')) s+=3; const need=role==='LW'?'L':'R'; if((p.sides||[]).includes(need)) s+=2; }
   if(role==='C'){ if(has('CEN')) s+=4; }
-  if(a==='YES') s+=2;
-  const c=+p.confidence_pct||0; if(c>=90)s+=2; else if(c>=80)s+=1;
-  return s;
+  if(a==='YES') s+=2; const c=+p.confidence_pct||0; if(c>=90)s+=2; else if(c>=80)s+=1; return s;
 }
 
-/* ====== BOARDS (onglet actif, 1 ligne DEF + 1 ligne FWD + 1 G) ====== */
+/* ---- Boards (panels) ---- */
 function headSlot(text){ const d=document.createElement('div'); d.className='slot head'; d.textContent=text; return d; }
 function slotEl(id, team, role, group){
   const s=document.createElement('div'); s.className='slot'; s.id=id;
   s.dataset.team=team; s.dataset.role=role; s.dataset.group=group;
   const lab=document.createElement('div'); lab.className='slot-label'; lab.textContent = `${role}${group==='G'?'':group.substring(1)}`;
   s.appendChild(lab);
-
   s.addEventListener('dragover', e=>{ e.preventDefault(); s.classList.add('drop-ok'); setActiveSlot(s); });
   s.addEventListener('dragleave', ()=> s.classList.remove('drop-ok'));
   s.addEventListener('drop', e=>{
@@ -474,17 +471,12 @@ function slotEl(id, team, role, group){
   return s;
 }
 function buildPanel(teamKey){
-  const wrap = document.getElementById(`panel-${teamKey}`);
-  wrap.innerHTML='';
+  const wrap = document.getElementById(`panel-${teamKey}`); wrap.innerHTML='';
   const board = document.createElement('div'); board.className='board';
-
-  // DEF (ligne activeD)
   const colD=document.createElement('div'); colD.className='slotcol';
   colD.appendChild(headSlot(`Défense — ${activeD}`));
   colD.appendChild(slotEl(`${teamKey}-LD${activeD.substring(1)}`, teamKey,'LD',activeD));
   colD.appendChild(slotEl(`${teamKey}-RD${activeD.substring(1)}`, teamKey,'RD',activeD));
-
-  // FWD (ligne activeF)
   const colF=document.createElement('div'); colF.className='slotcol';
   colF.appendChild(headSlot(`Attaque — ${activeF}`));
   const row=document.createElement('div'); row.style.display='flex'; row.style.gap='10px';
@@ -492,15 +484,10 @@ function buildPanel(teamKey){
   row.appendChild(slotEl(`${teamKey}-C${activeF.substring(1)}`,  teamKey,'C', activeF));
   row.appendChild(slotEl(`${teamKey}-RW${activeF.substring(1)}`, teamKey,'RW',activeF));
   colF.appendChild(row);
-
-  // G
   const colG=document.createElement('div'); colG.className='slotcol';
   colG.appendChild(headSlot('Goaler'));
   colG.appendChild(slotEl(`${teamKey}-G`, teamKey,'G','G'));
-
-  board.appendChild(colD); board.appendChild(colF); board.appendChild(colG);
-  wrap.appendChild(board);
-
+  board.appendChild(colD); board.appendChild(colF); board.appendChild(colG); wrap.appendChild(board);
   renderBoard(teamKey);
 }
 function renderBoard(team){
@@ -518,13 +505,9 @@ function renderSlotChips(slotEl, arr, team, role, group){
   (arr||[]).forEach(id=>{
     const p=state.players.find(x=>x.id===id);
     const chip=document.createElement('span'); chip.className='chip'; chip.draggable=true; chip.dataset.id=id;
-    const pos=p?.positions?.primary||'';
-    chip.innerHTML=`<span class="role">${p?.name||id}</span><span class="pos">${pos}</span><span class="x" title="Retirer">✕</span>`;
+    const pos=p?.positions?.primary||''; chip.innerHTML=`<span class="role">${p?.name||id}</span><span class="pos">${pos}</span><span class="x" title="Retirer">✕</span>`;
     chip.querySelector('.x').onclick=()=> removeFromSlot(team, role, group, id);
-    chip.addEventListener('dragstart',e=>{
-      e.dataTransfer.setData('text/plain', id);
-      setActiveSlot(slotEl);
-    });
+    chip.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', id); setActiveSlot(slotEl); });
     slotEl.appendChild(chip);
   });
 }
@@ -533,17 +516,13 @@ function placePlayer(team, role, group, playerId){
   if(!p){ toast('Joueur introuvable'); return; }
   const ok = eligibleFor(p, team, role);
   if(!ok.ok){ toast(`Refusé: ${ok.why}`); return; }
-
   removePlayerEverywhere(team, playerId, {silent:true});
   const L=state.lineups[team];
   if(role==='G'){ L.G=[playerId]; renderBoard(team); return; }
-  const arr = L[group][role];
-  arr[0]=playerId;
-  renderBoard(team);
+  const arr = L[group][role]; arr[0]=playerId; renderBoard(team);
 }
 function removePlayerEverywhere(team, playerId, {silent}={}){
-  const L=state.lineups[team];
-  if(!L) return;
+  const L=state.lineups[team]; if(!L) return;
   if(L.G[0]===playerId) L.G=[];
   ['D1','D2','D3'].forEach(g=>{['LD','RD'].forEach(r=>{ const a=L[g][r]; const i=a.indexOf(playerId); if(i>=0) a.splice(i,1); });});
   ['F1','F2','F3'].forEach(g=>{['LW','C','RW'].forEach(r=>{ const a=L[g][r]; const i=a.indexOf(playerId); if(i>=0) a.splice(i,1); });});
@@ -562,23 +541,16 @@ function setActiveSlot(el){
   if(activeSlot?.el) activeSlot.el.classList.remove('active');
   activeSlot={team:el.dataset.team, role:el.dataset.role, group:el.dataset.group, el};
   el.classList.add('active');
-
-  // Filtre Position auto en fonction du slot
   const map={G:'GOL',LD:'DEF',RD:'DEF',LW:'FWD',RW:'FWD',C:'CEN'};
   const pv = map[activeSlot.role] || '';
-  const sel = $('#fPos');
-  if(sel.value!==pv){ sel.value=pv; }
-
+  const sel = $('#fPos'); if(sel.value!==pv){ sel.value=pv; }
   $('#hintTarget').textContent = `Cible : ${TEAMS[activeSlot.team].label} • ${activeSlot.role}${activeSlot.group==='G'?'':activeSlot.group.substring(1)}`;
   renderPlayers();
 }
-function clearActiveSlot(){
-  if(activeSlot?.el) activeSlot.el.classList.remove('active');
-  activeSlot=null; $('#hintTarget').textContent=''; renderPlayers();
-}
+function clearActiveSlot(){ if(activeSlot?.el) activeSlot.el.classList.remove('active'); activeSlot=null; $('#hintTarget').textContent=''; renderPlayers(); }
 document.addEventListener('click',e=>{ if(!e.target.closest('.slot')) clearActiveSlot(); });
 
-/* ====== Onglets ====== */
+/* ---- Tabs & countdown ---- */
 function updateTabCountdowns(){
   for(const k of Object.keys(TEAMS)){
     const el=$(`#p-${k}`); if(!el) continue;
@@ -592,19 +564,14 @@ function setActiveTeam(key){
   activeTeam=key;
   for(const k of Object.keys(TEAMS)){
     const tab=$(`#tab-${k}`), panel=$(`#panel-${k}`);
-    const sel = (k===key);
-    tab.setAttribute('aria-selected', sel?'true':'false');
-    panel.hidden = !sel;
+    const sel = (k===key); tab.setAttribute('aria-selected', sel?'true':'false'); panel.hidden = !sel;
   }
-  buildPanel(activeTeam);
-  renderPlayers();
-  updateTabCountdowns();
+  buildPanel(activeTeam); renderPlayers(); updateTabCountdowns();
 }
 $('#tab-boston').onclick = ()=> setActiveTeam('boston');
 $('#tab-meltdown').onclick = ()=> setActiveTeam('meltdown');
 $('#tab-throne').onclick = ()=> setActiveTeam('throne');
 
-/* ====== Sélecteurs de lignes ====== */
 function wireSeg(segId, type){
   const seg=$(segId);
   seg.querySelectorAll('button').forEach(btn=>{
@@ -613,15 +580,13 @@ function wireSeg(segId, type){
       btn.setAttribute('aria-pressed','true');
       if(type==='D') activeD = btn.dataset.d;
       if(type==='F') activeF = btn.dataset.f;
-      buildPanel(activeTeam);
-      renderPlayers();
+      buildPanel(activeTeam); renderPlayers();
     });
   });
 }
-wireSeg('#segD','D');
-wireSeg('#segF','F');
+wireSeg('#segD','D'); wireSeg('#segF','F');
 
-/* ====== Filtres / boutons ====== */
+/* ---- Buttons ---- */
 $('#q').addEventListener('input', renderPlayers);
 $('#fPos').addEventListener('input', renderPlayers);
 $('#fConf').addEventListener('input', renderPlayers);
@@ -638,8 +603,7 @@ $('#btnAuto').onclick=()=>{
   $('#status').textContent='Auto-suggest (ligne DEF & FWD actives + G) effectué.';
 };
 function bestCandidate(team, role){
-  const placed=new Set();
-  const L=state.lineups[team];
+  const placed=new Set(); const L=state.lineups[team];
   [L.G, L.D1.LD, L.D1.RD, L.D2.LD, L.D2.RD, L.D3.LD, L.D3.RD, L.F1.LW, L.F1.C, L.F1.RW, L.F2.LW, L.F2.C, L.F2.RW, L.F3.LW, L.F3.C, L.F3.RW].forEach(a=>a.forEach(id=>placed.add(id)));
   const onlyAvail = $('#cbAvail').checked;
   const cand = state.players
@@ -650,7 +614,6 @@ function bestCandidate(team, role){
     .sort((a,b)=> b.score-a.score);
   return cand[0]?.p || null;
 }
-
 $('#btnCheck').onclick=()=>{
   const L=state.lineups[activeTeam];
   const cnt = {
@@ -661,20 +624,16 @@ $('#btnCheck').onclick=()=>{
   $('#status').textContent = `${TEAMS[activeTeam].label} — ${cnt.G===1&&cnt.D===6&&cnt.F===9?'✔ complet':'⚠ incomplet'} (G:${cnt.G}/1, D:${cnt.D}/6, F:${cnt.F}/9)`;
 };
 
-/* ====== EXPORT / IMPORT lineups ====== */
-function toLineupsJson(){
-  const t={}; for(const k of Object.keys(state.lineups)){ t[k]=state.lineups[k]; }
-  return {version:1, updated_at:new Date().toISOString(), tournaments:t};
-}
+/* ---- Export/Import lineups ---- */
+function toLineupsJson(){ const t={}; for(const k of Object.keys(state.lineups)){ t[k]=state.lineups[k]; } return {version:1, updated_at:new Date().toISOString(), tournaments:t}; }
 $('#btnExportPlayers').onclick=()=> download('players.json', JSON.stringify({players:state.players},null,2));
 $('#btnExportLineups').onclick=()=> download('lineups.json', JSON.stringify(toLineupsJson(),null,2));
 $('#fileLineup').onchange=async e=>{
   const f=e.target.files[0]; if(!f) return;
   try{
     const j=JSON.parse(await f.text());
-    if(j.tournaments){
-      for(const k of Object.keys(state.lineups)){ if(j.tournaments[k]) state.lineups[k]=j.tournaments[k]; }
-    }else if(j.boston||j.meltdown||j.throne){
+    if(j.tournaments){ for(const k of Object.keys(state.lineups)){ if(j.tournaments[k]) state.lineups[k]=j.tournaments[k]; } }
+    else if(j.boston||j.meltdown||j.throne){
       for(const k of Object.keys(state.lineups)){
         const T=j[k]||{def:[],fwd:[],gol:[]}; const L=state.lineups[k];
         L.G = T.gol?.slice(0,1) || [];
@@ -683,30 +642,28 @@ $('#fileLineup').onchange=async e=>{
       }
     }else throw new Error('format inconnu');
     buildPanel(activeTeam); renderPlayers(); updatePreviewShort(); toast('Lineup importé');
-  }catch{ alert('lineups.json invalide'); }
+  }catch(err){ dlog('import lineups error', err?.message||err); alert('lineups.json invalide'); }
 };
 function download(name, text){
   const blob=new Blob([text],{type:'application/json'}); const url=URL.createObjectURL(blob);
   const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),400);
 }
-
-/* ====== PREVIEW ====== */
-function updatePreviewShort(){
-  const sample = { players: state.players.slice(0,3), tournaments: toLineupsJson().tournaments };
-  $('#pvShort').textContent = JSON.stringify(sample,null,2);
-}
+function updatePreviewShort(){ const sample = { players: state.players.slice(0,3), tournaments: toLineupsJson().tournaments }; $('#pvShort').textContent = JSON.stringify(sample,null,2); }
 $('#btnExpand').onclick=()=> $('#pvWrap').classList.toggle('expanded');
 
-/* ====== IMPORT (fetch / parse / dnd) ====== */
+/* ================== IMPORT FILES (instrumenté) ================== */
 $('#btnFetch').onclick=async()=>{
   try{
-    const r=await fetch('data/players.json',{cache:'no-store'}); const j=await r.json();
+    dlog('fetch /data/players.json');
+    const r=await fetch('data/players.json',{cache:'no-store'});
+    const j=await r.json();
     const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]);
-    arr.forEach(upsertPlayer); renderPlayers(); updatePreviewShort(); toast(`Chargé: ${arr.length} joueur(s)`);
-  }catch{ alert('Impossible de charger /data/players.json'); }
+    arr.forEach(upsertPlayer); renderPlayers(); updatePreviewShort(); toast(`Chargé: ${arr.length} joueur(s)`); dlog('fetch OK, players:', arr.length);
+  }catch(err){ dlog('fetch error', err?.message||err); alert('Impossible de charger /data/players.json'); }
 };
 $('#btnParse').onclick=()=>{
   const raw=$('#taEmails').value.trim(); if(!raw){ alert('Collez un ou plusieurs emails FormSubmit.'); return; }
+  dlog('parse from textarea length=', raw.length);
   const clean = extractFormBlocks(raw);
   parseEmailBlocks(clean).forEach(upsertPlayer);
   $('#taEmails').value=''; renderPlayers(); updatePreviewShort(); toast('Joueurs ajoutés depuis le presse‑papiers');
@@ -714,7 +671,7 @@ $('#btnParse').onclick=()=>{
 $('#btnClear').onclick=()=> $('#taEmails').value='';
 
 $('#filePlayers').addEventListener('change', async e=>{
-  const files=[...e.target.files];
+  const files=[...e.target.files]; dlog('file input change:', files.map(f=>({name:f.name,size:f.size,type:f.type})));
   await importFiles(files);
 });
 const dz=$('#dropZone');
@@ -723,86 +680,123 @@ dz.addEventListener('dragover',()=>dz.style.borderColor='rgba(59,130,246,.6)');
 dz.addEventListener('dragleave',()=>dz.style.borderColor='rgba(255,255,255,.2)');
 dz.addEventListener('drop', async e=>{
   dz.style.borderColor='rgba(255,255,255,.2)';
-  const files=[...e.dataTransfer.files]; await importFiles(files);
+  const files=[...e.dataTransfer.files]; dlog('drop files:', files.map(f=>({name:f.name,size:f.size,type:f.type})));
+  await importFiles(files);
 });
+
 async function importFiles(files){
   let added=0;
+  dlog('importFiles started, count=', files.length);
   for(const f of files){
-    const name=f.name.toLowerCase();
+    const name=f.name.toLowerCase(); const info={name:f.name,size:f.size,type:f.type||'n/a'}; dlog('processing file:', info);
+
     try{
       if(name.endsWith('.json')){
+        dlog('route: JSON');
         const j=JSON.parse(await f.text());
         const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]);
-        arr.forEach(upsertPlayer); added+=arr.length;
+        arr.forEach(upsertPlayer); added+=arr.length; dlog('json parsed players:', arr.length);
       }else if(name.endsWith('.csv')){
+        dlog('route: CSV');
         csvToPlayers(await f.text()).forEach(p=>{upsertPlayer(p);added++;});
+        dlog('csv parsed, total added so far:', added);
       }else if(name.endsWith('.eml')||name.endsWith('.txt')){
+        dlog('route: EML/TXT');
         const raw=await f.text();
         const hdrEnc = /content-transfer-encoding:\s*quoted-printable/i.test(raw);
         const body = /(<!DOCTYPE|<html|<body[\s>])/i.test(raw) ? stripHtml(raw) : raw;
-        const clean = extractFormBlocks( (hdrEnc? decodeQP(body) : body).replace(/\u0000/g,'') );
+        const text = (hdrEnc? decodeQP(body) : body).replace(/\u0000/g,'');
+        const clean = extractFormBlocks(text);
         parseEmailBlocks(clean).forEach(p=>{upsertPlayer(p);added++;});
+        dlog('eml/txt parsed, total added:', added);
       }else if(name.endsWith('.msg')){
-        // Lecture robuste .MSG
-        const u8=new Uint8Array(await f.arrayBuffer());
+        dlog('route: MSG (Outlook)', info);
+        const ab = await f.arrayBuffer();
+        dlog('msg ArrayBuffer length', ab.byteLength);
         try{
-          const mr=new MSGReader(u8.buffer);
-          const info=mr.getFileData();
+          const mr=new MSGReader(ab);
+          const data=mr.getFileData();
+          dlog('MSGReader.getFileData keys', Object.keys(data||{}));
+          dlog('msg subject:', data?.subject||'(none)');
+          dlog('msg senderName:', data?.senderName||'(none)');
+          dlog('msg body length:', data?.body?data.body.length:0);
+          dlog('msg bodyHTML length:', data?.bodyHTML?data.bodyHTML.length:0);
+          dlog('msg attachments count:', Array.isArray(data?.attachments)?data.attachments.length:0);
+
           let chunks=[];
-          if(info?.body)      chunks.push(info.body);
-          if(info?.bodyHTML)  chunks.push(stripHtml(info.bodyHTML));
-          // parfois le corps est dans une PJ texte/HTML
-          if(Array.isArray(info?.attachments)){
-            info.attachments.forEach(att=>{
+          if(data?.body){ chunks.push({src:'body', text:data.body}); }
+          if(data?.bodyHTML){ chunks.push({src:'bodyHTML', text: stripHtml(data.bodyHTML)}); }
+
+          if(Array.isArray(data?.attachments)){
+            data.attachments.forEach(att=>{
               const fn=(att.fileName||'').toLowerCase();
+              const clen = att.content ? (att.content.byteLength||att.content.length||0) : 0;
+              dlog('attachment:', {fileName:att.fileName, contentLen:clen});
               if(/\.txt$|\.htm$|\.html$|\.eml$/.test(fn) && att.content){
                 try{
-                  const dec=new TextDecoder('utf-8');
-                  chunks.push(dec.decode(att.content));
-                }catch{}
+                  let text='';
+                  try{
+                    const dec=new TextDecoder('utf-8'); text=dec.decode(att.content);
+                    dlog('attachment decoded as utf-8', fn, 'len', text.length);
+                  }catch(err1){
+                    dlog('utf-8 decode failed, fallback latin1', err1?.message||err1);
+                    text = Array.from(new Uint8Array(att.content)).map(c=>String.fromCharCode(c)).join('');
+                  }
+                  chunks.push({src:`attach:${att.fileName}`, text});
+                }catch(err){ dlog('attachment read error', err?.message||err); }
               }
             });
           }
-          const text = chunks.join('\n').replace(/\u0000/g,'');
-          const clean = extractFormBlocks( decodeQP(text) );
-          parseEmailBlocks(clean).forEach(p=>{upsertPlayer(p);added++;});
+          dlog('msg chunks count:', chunks.length);
+          const joined = chunks.map(c=>`[${c.src}]\n${c.text}`).join('\n\n');
+          const text = decodeQP(joined).replace(/\u0000/g,'');
+          const clean = extractFormBlocks(text);
+          const parsed = parseEmailBlocks(clean);
+          parsed.forEach(upsertPlayer); added+=parsed.length;
+          dlog('msg parsed players:', parsed.length, 'added total:', added);
         }catch(err){
-          // fallback: lire comme texte brut
-          const txt=(await f.text()).replace(/\u0000/g,'');
-          const clean = extractFormBlocks( decodeQP(stripHtml(txt)) );
-          parseEmailBlocks(clean).forEach(p=>{upsertPlayer(p);added++;});
+          dlog('MSGReader error, fallback to text()', err?.message||err);
+          try{
+            const txt=(await f.text()).replace(/\u0000/g,'');
+            const clean = extractFormBlocks( decodeQP(stripHtml(txt)) );
+            const parsed = parseEmailBlocks(clean);
+            parsed.forEach(upsertPlayer); added+=parsed.length;
+            dlog('fallback text() parsed players:', parsed.length);
+          }catch(err2){
+            dlog('fallback text() failed', err2?.message||err2);
+            toast(`Échec .msg : ${f.name}`);
+          }
         }
       }else{
+        dlog('route: OTHER/TEXT');
         const txt=await f.text();
         parseEmailBlocks(stripHtml(txt)).forEach(p=>{upsertPlayer(p);added++;});
       }
-    }catch(err){ console.warn('Import error for',name,err); }
+    }catch(err){
+      dlog('importFiles error for', info.name, err?.message||err, err);
+      console.error('Import error for', info.name, err);
+      toast(`Erreur import: ${info.name}`);
+    }
   }
-  renderPlayers(); updatePreviewShort(); toast(`Import terminé : ${added} joueur(s)`);
+  renderPlayers(); updatePreviewShort(); toast(`Import terminé : ${added} joueur(s)`); dlog('importFiles finished, total added:', added);
 }
 function csvToPlayers(csv){
-  // séparateur auto ; ou ,
   const sep = (csv.indexOf(';')>-1 && csv.indexOf(',')===-1)?';':',';
-  const rows = csv.split(/\r?\n/).filter(r=>r.trim()!=='');
-  if(rows.length<2) return [];
-  const head = rows.shift().split(sep).map(h=>h.trim().toLowerCase());
-  const out=[];
+  const rows = csv.split(/\r?\n/).filter(r=>r.trim()!==''); if(rows.length<2) return [];
+  const head = rows.shift().split(sep).map(h=>h.trim().toLowerCase()); const out=[];
   for(const r of rows){
     const cells=r.split(sep).map(x=>x.trim().replace(/^"|"$/g,''));
     const o={}; head.forEach((h,i)=> o[h]=cells[i]||'');
-    // reconstruit un bloc "Name  Value"
     let block=''; for(const k of Object.keys(o)){ if(!k) continue; block += `${k}  ${o[k]}\n`; }
     out.push(block);
   }
   return parseEmailBlocks(out.join('\n\n'));
 }
 
-/* ====== INIT ====== */
+/* ---- INIT ---- */
 function updateTabUI(){ updateTabCountdowns(); }
-setActiveTeam('boston');
-updateTabUI();
-renderPlayers();
-updatePreviewShort();
+setActiveTeam('boston'); updateTabUI(); renderPlayers(); updatePreviewShort();
+dlog('Admin ready');
 </script>
 </body>
 </html>
