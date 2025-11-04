@@ -1,0 +1,38 @@
+{
+  "players": [
+    {
+      "id": "yannick-banaszak-2012",
+      "name": "Yannick Banaszak",
+      "birth_year": 2012,
+      "city": "Quebec",
+      "current_team": "",
+      "parent": {
+        "email": "yannick.banaszak@polymtl.ca",
+        "phone": ""
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "CEN"
+      },
+      "sides": ["L"],
+      "jersey": {
+        "type": "Loaned",
+        "size": "AXL",
+        "pref_numbers": []
+      },
+      "availability": {
+        "boston": "No",
+        "meltdown": "Yes",
+        "throne": "TBD"
+      },
+      "confidence_pct": 87,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "2025-11-03T23:16:00Z",
+      "source": "https://yaban1981.github.io/the-road-to-the-throne-site/"
+    }
+  ]
+}
