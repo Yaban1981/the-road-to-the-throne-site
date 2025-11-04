@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>QHC — Admin “The Road to The Throne”</title>
-<meta name="description" content="QHC Admin • Composer des lineups (1G + 3x2 DEF + 3x3 AV) • Onglets par tournoi • Import .msg/.eml/.csv/.json • Export/Import JSON — 100% client-side" />
+<meta name="description" content="QHC Admin • Composer les lineups (1G + 3×2 DEF + 3×3 AV) • Onglets par tournoi • Import .msg/.eml/.csv/.json • Export/Import JSON — 100% client-side" />
 <link rel="icon" href="logos/gear.png" />
 
 <!-- Open Graph / Twitter -->
@@ -40,17 +40,17 @@ body{
 
 /* Header */
 header{display:flex; align-items:center; gap:18px; padding:24px 16px; border-bottom:1px solid rgba(255,255,255,.08)}
-header .logo{width:120px;height:120px;border-radius:22px;overflow:hidden;display:grid;place-items:center;background:#0b1020;box-shadow:0 14px 40px rgba(0,0,0,.35)}
-@media(min-width:1000px){ header .logo{width:160px;height:160px} }
+header .logo{width:140px;height:140px;border-radius:22px;overflow:hidden;display:grid;place-items:center;background:#0b1020;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+@media(min-width:1000px){ header .logo{width:180px;height:180px} }
 header .logo img{width:100%;height:100%;object-fit:cover}
 header .text{display:flex;flex-direction:column}
-header h1{margin:0;font-size:2rem}
-@media(min-width:1000px){ header h1{font-size:2.4rem} }
+header h1{margin:0;font-size:2.25rem}
+@media(min-width:1000px){ header h1{font-size:2.6rem} }
 header .sub{color:#dfe7ff;font-size:1.1rem}
 header .meta{color:#9fb7ff;font-size:.95rem}
 
 /* Layout cards */
-main{max-width:1200px;margin:0 auto;padding:16px}
+main{max-width:1220px;margin:0 auto;padding:16px}
 .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:18px;margin:14px 0;box-shadow:0 10px 28px rgba(0,0,0,.35)}
 h2{margin:0 0 12px;font-size:1.25rem}
 .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
@@ -88,16 +88,28 @@ td.dr{cursor:grab}
 .badge.GOL{background:#1a1f2b;border-color:#2e3b52}
 .fit{white-space:nowrap}
 tr.candidate-yes{background:rgba(212,175,94,.10)}
-tr.candidate-no{opacity:.35}
+tr.candidate-no{opacity:.32}
 
-/* Tabs (tournois) */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
-.tab{padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.16);cursor:pointer;background:#0b1020}
-.tab[aria-selected="true"]{border-color:var(--gold);box-shadow:0 0 0 3px var(--goldStroke) inset}
+/* Tabs (tournois) — visibilité améliorée */
+.tabs{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 14px}
+.tab{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.18);cursor:pointer;background:#0b1020;min-width:170px;
+  filter:drop-shadow(0 6px 16px rgba(0,0,0,.25));
+}
+.tab img{width:32px;height:32px;object-fit:contain}
+.tab .tname{font-weight:800}
+.tab .pill{
+  margin-left:auto;font-size:.8rem;padding:4px 8px;border-radius:10px;background:rgba(59,130,246,.15);
+  border:1px solid rgba(59,130,246,.35); color:#eaf2ff;
+}
+.tab[aria-selected="true"]{
+  border-color:var(--gold); box-shadow:0 0 0 3px var(--goldStroke) inset; background:linear-gradient(180deg,#0e1832,#0f1326);
+}
 
 /* Line selectors */
 .seg{display:inline-flex;border:1px solid rgba(255,255,255,.16);border-radius:10px;overflow:hidden}
-.seg button{padding:8px 12px;border:0;background:transparent;color:var(--text);cursor:pointer}
+.seg button{padding:8px 12px;border:0;background:transparent;color:#e7ecf3;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--goldTint);border-right:1px solid var(--goldStroke)}
 .seg button+button{border-left:1px solid rgba(255,255,255,.12)}
 
@@ -161,6 +173,7 @@ tr.candidate-no{opacity:.35}
       <select id="fPos">
         <option value="">Position (toutes)</option><option>DEF</option><option>FWD</option><option>CEN</option><option>GOL</option>
       </select>
+      <label class="small"><input type="checkbox" id="cbOnlyEligible" checked /> Candidats uniquement (slot actif)</label>
       <label class="small"><input type="checkbox" id="cbAvail" checked /> Disponibles uniquement (onglet)</label>
       <select id="fConf"><option value="">Confiance</option><option value="80">≥ 80%</option><option value="90">≥ 90%</option></select>
       <span class="small" id="hintTarget"></span>
@@ -186,9 +199,15 @@ tr.candidate-no{opacity:.35}
 
     <!-- Onglets tournois -->
     <div class="tabs" role="tablist" aria-label="Tournois">
-      <button class="tab" role="tab" id="tab-boston"   aria-controls="panel-boston"   aria-selected="true">Boston</button>
-      <button class="tab" role="tab" id="tab-meltdown" aria-controls="panel-meltdown" aria-selected="false">Meltdown</button>
-      <button class="tab" role="tab" id="tab-throne"   aria-controls="panel-throne"   aria-selected="false">Throne</button>
+      <button class="tab" role="tab" id="tab-boston"   aria-controls="panel-boston"   aria-selected="true">
+        <img src="logos/bluechip.png" alt="Blue Chip" /><span class="tname">Boston</span><span class="pill" id="p-boston">J‑—</span>
+      </button>
+      <button class="tab" role="tab" id="tab-meltdown" aria-controls="panel-meltdown" aria-selected="false">
+        <img src="logos/meltdown.png" alt="Meltdown" /><span class="tname">Meltdown</span><span class="pill" id="p-meltdown">J‑—</span>
+      </button>
+      <button class="tab" role="tab" id="tab-throne"   aria-controls="panel-throne"   aria-selected="false">
+        <img src="logos/throne.png" alt="Throne" /><span class="tname">Throne</span><span class="pill" id="p-throne">J‑—</span>
+      </button>
     </div>
 
     <!-- Sélecteurs de lignes -->
@@ -258,6 +277,7 @@ let state={
 let activeTeam='boston';
 let activeD='D1';
 let activeF='F1';
+let activeSlot=null; // {team, role, group, el}
 let showAllCandidates=false;
 
 /* ====== HELPERS ====== */
@@ -269,16 +289,20 @@ function decodeQP(s){
   if(!s) return s;
   return s
     .replace(/=\r?\n/g,'')          // soft line breaks
-    .replace(/=3D/g,'=')            // equals
+    .replace(/=3D/g,'=')
     .replace(/=20/g,' ')
     .replace(/=09/g,'\t')
     .replace(/=0A/g,'\n')
-    .replace(/=0D/g,'\r')
-    .replace(/=C3=A9/g,'é').replace(/=C3=A8/g,'è').replace(/=C3=AA/g,'ê').replace(/=C3=A0/g,'à')
-    .replace(/=C3=87/g,'Ç').replace(/=C3=A7/g,'ç');
+    .replace(/=0D/g,'\r');
 }
 
-/* ====== NORMALISATION FORM SUBMIT ====== */
+/* ====== EMAIL FORM PARSER ====== */
+function extractFormBlocks(txt){
+  // Essaie d'isoler la section "Name  Value"
+  const start = txt.search(/^\s*Name\s+Value\s*$/im);
+  if(start>=0){ return txt.slice(start).trim(); }
+  return txt; // fallback : on parse tout
+}
 function parseEmailBlocks(txt){
   const blocks = txt.trim().split(/\n\s*\n/);
   const out=[];
@@ -304,7 +328,7 @@ function normalizeRow(raw, rawTxt){
   const P=(raw.primary_position && (POS_MAP[raw.primary_position]||raw.primary_position.toUpperCase()))||'';
   const S=(raw.secondary_position && (POS_MAP[raw.secondary_position]||raw.secondary_position.toUpperCase()))||'NONE';
   const yn=v=>{const s=(v||'').toUpperCase(); if(s==='YES'||s==='OUI')return 'Yes'; if(s==='NO'||s==='NON')return 'No'; return 'TBD'};
-  // Submitted timestamp (si présent dans l'email)
+  // Submitted timestamp (si présent dans l'email brut)
   const ts = /Submitted\s+at\s+(.+?)\s*\(/i.exec(rawTxt||''); const submitted_at = ts ? new Date(ts[1]+' UTC').toISOString() : null;
   return {
     id, name, birth_year:isNaN(by)?null:by,
@@ -317,7 +341,7 @@ function normalizeRow(raw, rawTxt){
     confidence_pct: parseInt(raw.confidence_pct||'0',10)||0,
     consents:{
       throne_rule:(raw.ack_throne_rule||'').toLowerCase()==='on' || (raw.ack_throne_rule||'').toLowerCase()==='true',
-      limited_spots:(raw.ack_limited_spots||raw.awk_limited_spots||'').toLowerCase()==='on' || (raw.ack_limited_spots||'').toLowerCase()==='true',
+      limited_spots:(raw.ack_limited_spots||'').toLowerCase()==='on' || (raw.ack_limited_spots||'').toLowerCase()==='true',
       consent_contact:(raw.consent_contact||'').toLowerCase()==='on' || (raw.consent_contact||'').toLowerCase()==='true'
     },
     submitted_at
@@ -332,10 +356,8 @@ function upsertPlayer(p){
 
 /* ====== ELIGIBILITY (poste/côté/dispo) ====== */
 function eligibleFor(p, team, role){
-  // Dispo : on respecte le choix (No = refus)
   const av=(p.availability?.[team]||'').toUpperCase();
   if(av==='NO') return {ok:false, why:'Non inscrit pour ce tournoi'};
-  // Postes & côtés
   const has=(x)=> (p.positions?.primary===x || p.positions?.secondary===x);
   if(role==='G') return {ok: has('GOL'), why:'Goaler requis'};
   if(role==='LD' || role==='RD'){
@@ -363,14 +385,28 @@ function renderPlayers(){
   const pos = $('#fPos').value;
   const confMin = parseInt($('#fConf').value||'0',10);
   const onlyAvail = $('#cbAvail').checked;
+  const onlyEligible = $('#cbOnlyEligible').checked;
 
   let list = [...state.players];
+
+  // Texte
   if(q) list=list.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.city||'').toLowerCase().includes(q));
+
+  // Filtre position manuel (DEF/FWD/CEN/GOL)
   if(pos) list=list.filter(p=>p.positions?.primary===pos || p.positions?.secondary===pos);
+
+  // Disponibilité — par onglet
   if(onlyAvail) list=list.filter(p=>(p.availability?.[activeTeam]||'').toUpperCase()==='YES');
+
+  // Éligibilité stricte si un slot est actif + option cochée
+  if(activeSlot && onlyEligible){
+    list=list.filter(p=> eligibleFor(p, activeSlot.team, activeSlot.role).ok );
+  }
+
+  // Confiance
   if(confMin) list=list.filter(p=>(p.confidence_pct||0)>=confMin);
 
-  // Candidats si slot actif
+  // Score candidats (pour trier quand slot actif)
   let scored = list.map(p=>({p,score: activeSlot? scoreFor(p, activeSlot.team, activeSlot.role) : 0}));
   if(activeSlot){
     scored.sort((a,b)=> b.score-a.score || a.p.name.localeCompare(b.p.name));
@@ -389,7 +425,7 @@ function renderPlayers(){
       <td>${p.birth_year||''}</td>
       <td>${p.city||''}</td>
       <td><span class="badge ${p.positions?.primary||''}">${p.positions?.primary||''}</span>
-          ${p.positions?.secondary && p.positions.secondary!=='NONE'?`<span class="badge ${p.positions.secondary}">${p.positions.secondary}</span>`:''}</td>
+          ${p.positions?.secondary && p.positions.secondary!=='NONE'?` <span class="badge ${p.positions.secondary}">${p.positions.secondary}</span>`:''}</td>
       <td class="fit">${(p.sides||[]).join('/')||'-'}</td>
       <td class="fit">${p.availability?.boston||''}</td>
       <td class="fit">${p.availability?.meltdown||''}</td>
@@ -399,7 +435,7 @@ function renderPlayers(){
     `;
     tblBody.appendChild(tr);
   }
-  // drag depuis le tableau
+  // Drag depuis le tableau
   tblBody.querySelectorAll('td.dr').forEach(td=>{
     td.addEventListener('dragstart',e=>{
       e.dataTransfer.setData('text/plain', td.dataset.id);
@@ -421,7 +457,22 @@ function scoreFor(p, team, role){
 }
 
 /* ====== BOARDS (onglet actif, 1 ligne DEF + 1 ligne FWD + 1 G) ====== */
-let activeSlot=null; // {team, role, group, el}
+function headSlot(text){ const d=document.createElement('div'); d.className='slot head'; d.textContent=text; return d; }
+function slotEl(id, team, role, group){
+  const s=document.createElement('div'); s.className='slot'; s.id=id;
+  s.dataset.team=team; s.dataset.role=role; s.dataset.group=group;
+  const lab=document.createElement('div'); lab.className='slot-label'; lab.textContent = `${role}${group==='G'?'':group.substring(1)}`;
+  s.appendChild(lab);
+
+  s.addEventListener('dragover', e=>{ e.preventDefault(); s.classList.add('drop-ok'); setActiveSlot(s); });
+  s.addEventListener('dragleave', ()=> s.classList.remove('drop-ok'));
+  s.addEventListener('drop', e=>{
+    e.preventDefault(); s.classList.remove('drop-ok'); const id=e.dataTransfer.getData('text/plain');
+    placePlayer(team, role, group, id);
+  });
+  s.addEventListener('click', ()=> setActiveSlot(s));
+  return s;
+}
 function buildPanel(teamKey){
   const wrap = document.getElementById(`panel-${teamKey}`);
   wrap.innerHTML='';
@@ -452,36 +503,13 @@ function buildPanel(teamKey){
 
   renderBoard(teamKey);
 }
-function headSlot(text){ const d=document.createElement('div'); d.className='slot head'; d.textContent=text; return d; }
-function slotEl(id, team, role, group){
-  const s=document.createElement('div'); s.className='slot'; s.id=id;
-  s.dataset.team=team; s.dataset.role=role; s.dataset.group=group;
-  const lab=document.createElement('div'); lab.className='slot-label'; lab.textContent = `${role}${group==='G'?'':group.substring(1)}`;
-  s.appendChild(lab);
-
-  s.addEventListener('dragover', e=>{ e.preventDefault(); s.classList.add('drop-ok'); setActiveSlot(s); });
-  s.addEventListener('dragleave', ()=> s.classList.remove('drop-ok'));
-  s.addEventListener('drop', e=>{
-    e.preventDefault(); s.classList.remove('drop-ok'); const id=e.dataTransfer.getData('text/plain');
-    placePlayer(team, role, group, id);
-  });
-  s.addEventListener('click', ()=> setActiveSlot(s));
-  return s;
-}
 function renderBoard(team){
-  // Nettoie puis affiche les chips pour la ligne active
   const L = state.lineups[team];
-
-  // DEF
   renderSlotChips(document.getElementById(`${team}-LD${activeD.substring(1)}`), L[activeD].LD, team, 'LD', activeD);
   renderSlotChips(document.getElementById(`${team}-RD${activeD.substring(1)}`), L[activeD].RD, team, 'RD', activeD);
-
-  // FWD
   renderSlotChips(document.getElementById(`${team}-LW${activeF.substring(1)}`), L[activeF].LW, team, 'LW', activeF);
   renderSlotChips(document.getElementById(`${team}-C${activeF.substring(1)}`),  L[activeF].C,  team, 'C',  activeF);
   renderSlotChips(document.getElementById(`${team}-RW${activeF.substring(1)}`), L[activeF].RW, team, 'RW', activeF);
-
-  // G
   renderSlotChips(document.getElementById(`${team}-G`), L.G, team, 'G', 'G');
 }
 function renderSlotChips(slotEl, arr, team, role, group){
@@ -500,18 +528,13 @@ function renderSlotChips(slotEl, arr, team, role, group){
     slotEl.appendChild(chip);
   });
 }
-
-/* placement + contraintes */
 function placePlayer(team, role, group, playerId){
   const p = state.players.find(x=>x.id===playerId);
   if(!p){ toast('Joueur introuvable'); return; }
   const ok = eligibleFor(p, team, role);
   if(!ok.ok){ toast(`Refusé: ${ok.why}`); return; }
 
-  // supprime ce joueur des slots de ce team
   removePlayerEverywhere(team, playerId, {silent:true});
-
-  // ajoute dans le slot cible
   const L=state.lineups[team];
   if(role==='G'){ L.G=[playerId]; renderBoard(team); return; }
   const arr = L[group][role];
@@ -534,11 +557,18 @@ function removeFromSlot(team, role, group, id){
   renderBoard(team);
 }
 
-/* slot focus / candidats */
+/* slot focus / filtre auto */
 function setActiveSlot(el){
   if(activeSlot?.el) activeSlot.el.classList.remove('active');
   activeSlot={team:el.dataset.team, role:el.dataset.role, group:el.dataset.group, el};
   el.classList.add('active');
+
+  // Filtre Position auto en fonction du slot
+  const map={G:'GOL',LD:'DEF',RD:'DEF',LW:'FWD',RW:'FWD',C:'CEN'};
+  const pv = map[activeSlot.role] || '';
+  const sel = $('#fPos');
+  if(sel.value!==pv){ sel.value=pv; }
+
   $('#hintTarget').textContent = `Cible : ${TEAMS[activeSlot.team].label} • ${activeSlot.role}${activeSlot.group==='G'?'':activeSlot.group.substring(1)}`;
   renderPlayers();
 }
@@ -549,6 +579,15 @@ function clearActiveSlot(){
 document.addEventListener('click',e=>{ if(!e.target.closest('.slot')) clearActiveSlot(); });
 
 /* ====== Onglets ====== */
+function updateTabCountdowns(){
+  for(const k of Object.keys(TEAMS)){
+    const el=$(`#p-${k}`); if(!el) continue;
+    const [Y,M,D]=TEAMS[k].date;
+    const d=new Date(`${Y}-${String(M).padStart(2,'0')}-${String(D).padStart(2,'0')}T00:00:00-04:00`);
+    const diff=Math.ceil( (d - new Date()) / (1000*60*60*24) );
+    el.textContent = diff>0 ? `J‑${diff}` : (diff===0?'Jour J':'Terminé');
+  }
+}
 function setActiveTeam(key){
   activeTeam=key;
   for(const k of Object.keys(TEAMS)){
@@ -559,6 +598,7 @@ function setActiveTeam(key){
   }
   buildPanel(activeTeam);
   renderPlayers();
+  updateTabCountdowns();
 }
 $('#tab-boston').onclick = ()=> setActiveTeam('boston');
 $('#tab-meltdown').onclick = ()=> setActiveTeam('meltdown');
@@ -586,22 +626,18 @@ $('#q').addEventListener('input', renderPlayers);
 $('#fPos').addEventListener('input', renderPlayers);
 $('#fConf').addEventListener('input', renderPlayers);
 $('#cbAvail').addEventListener('change', renderPlayers);
+$('#cbOnlyEligible').addEventListener('change', renderPlayers);
 $('#btnToggleCandidates').onclick=()=>{ showAllCandidates=!showAllCandidates; renderPlayers(); };
 
 $('#btnAuto').onclick=()=>{
-  // Auto-suggest pour l'onglet actif uniquement
   const L=state.lineups[activeTeam];
-  // G
   if(L.G.length===0){ const g = bestCandidate(activeTeam,'G'); if(g) L.G=[g.id]; }
-  // DEF (uniquement ligne active)
   ['LD','RD'].forEach(r=>{ if(L[activeD][r].length===0){ const p=bestCandidate(activeTeam,r); if(p) L[activeD][r]=[p.id]; }});
-  // FWD (uniquement ligne active)
   ['LW','C','RW'].forEach(r=>{ if(L[activeF][r].length===0){ const p=bestCandidate(activeTeam,r); if(p) L[activeF][r]=[p.id]; }});
   renderBoard(activeTeam);
   $('#status').textContent='Auto-suggest (ligne DEF & FWD actives + G) effectué.';
 };
 function bestCandidate(team, role){
-  // évite les doublons dans le team
   const placed=new Set();
   const L=state.lineups[team];
   [L.G, L.D1.LD, L.D1.RD, L.D2.LD, L.D2.RD, L.D3.LD, L.D3.RD, L.F1.LW, L.F1.C, L.F1.RW, L.F2.LW, L.F2.C, L.F2.RW, L.F3.LW, L.F3.C, L.F3.RW].forEach(a=>a.forEach(id=>placed.add(id)));
@@ -639,7 +675,6 @@ $('#fileLineup').onchange=async e=>{
     if(j.tournaments){
       for(const k of Object.keys(state.lineups)){ if(j.tournaments[k]) state.lineups[k]=j.tournaments[k]; }
     }else if(j.boston||j.meltdown||j.throne){
-      // rétro-compat simple (ordre : G, 3*DEF pairs, 3*FWD trios)
       for(const k of Object.keys(state.lineups)){
         const T=j[k]||{def:[],fwd:[],gol:[]}; const L=state.lineups[k];
         L.G = T.gol?.slice(0,1) || [];
@@ -672,7 +707,8 @@ $('#btnFetch').onclick=async()=>{
 };
 $('#btnParse').onclick=()=>{
   const raw=$('#taEmails').value.trim(); if(!raw){ alert('Collez un ou plusieurs emails FormSubmit.'); return; }
-  parseEmailBlocks(raw).forEach(upsertPlayer);
+  const clean = extractFormBlocks(raw);
+  parseEmailBlocks(clean).forEach(upsertPlayer);
   $('#taEmails').value=''; renderPlayers(); updatePreviewShort(); toast('Joueurs ajoutés depuis le presse‑papiers');
 };
 $('#btnClear').onclick=()=> $('#taEmails').value='';
@@ -704,20 +740,37 @@ async function importFiles(files){
         const raw=await f.text();
         const hdrEnc = /content-transfer-encoding:\s*quoted-printable/i.test(raw);
         const body = /(<!DOCTYPE|<html|<body[\s>])/i.test(raw) ? stripHtml(raw) : raw;
-        const clean = hdrEnc ? decodeQP(body) : body;
+        const clean = extractFormBlocks( (hdrEnc? decodeQP(body) : body).replace(/\u0000/g,'') );
         parseEmailBlocks(clean).forEach(p=>{upsertPlayer(p);added++;});
       }else if(name.endsWith('.msg')){
-        const buf=await f.arrayBuffer();
+        // Lecture robuste .MSG
+        const u8=new Uint8Array(await f.arrayBuffer());
         try{
-          const mr=new MSGReader(buf);
+          const mr=new MSGReader(u8.buffer);
           const info=mr.getFileData();
-          const body = info?.body ? info.body : (info?.bodyHTML? stripHtml(info.bodyHTML) : '');
-          const clean = decodeQP(body);
+          let chunks=[];
+          if(info?.body)      chunks.push(info.body);
+          if(info?.bodyHTML)  chunks.push(stripHtml(info.bodyHTML));
+          // parfois le corps est dans une PJ texte/HTML
+          if(Array.isArray(info?.attachments)){
+            info.attachments.forEach(att=>{
+              const fn=(att.fileName||'').toLowerCase();
+              if(/\.txt$|\.htm$|\.html$|\.eml$/.test(fn) && att.content){
+                try{
+                  const dec=new TextDecoder('utf-8');
+                  chunks.push(dec.decode(att.content));
+                }catch{}
+              }
+            });
+          }
+          const text = chunks.join('\n').replace(/\u0000/g,'');
+          const clean = extractFormBlocks( decodeQP(text) );
           parseEmailBlocks(clean).forEach(p=>{upsertPlayer(p);added++;});
         }catch(err){
-          // fallback: lire comme binaire texte
-          const txt=await f.text();
-          parseEmailBlocks(stripHtml(txt)).forEach(p=>{upsertPlayer(p);added++;});
+          // fallback: lire comme texte brut
+          const txt=(await f.text()).replace(/\u0000/g,'');
+          const clean = extractFormBlocks( decodeQP(stripHtml(txt)) );
+          parseEmailBlocks(clean).forEach(p=>{upsertPlayer(p);added++;});
         }
       }else{
         const txt=await f.text();
@@ -728,12 +781,14 @@ async function importFiles(files){
   renderPlayers(); updatePreviewShort(); toast(`Import terminé : ${added} joueur(s)`);
 }
 function csvToPlayers(csv){
+  // séparateur auto ; ou ,
+  const sep = (csv.indexOf(';')>-1 && csv.indexOf(',')===-1)?';':',';
   const rows = csv.split(/\r?\n/).filter(r=>r.trim()!=='');
   if(rows.length<2) return [];
-  const head = rows.shift().split(',').map(h=>h.trim().toLowerCase());
+  const head = rows.shift().split(sep).map(h=>h.trim().toLowerCase());
   const out=[];
   for(const r of rows){
-    const cells=r.split(',').map(x=>x.trim());
+    const cells=r.split(sep).map(x=>x.trim().replace(/^"|"$/g,''));
     const o={}; head.forEach((h,i)=> o[h]=cells[i]||'');
     // reconstruit un bloc "Name  Value"
     let block=''; for(const k of Object.keys(o)){ if(!k) continue; block += `${k}  ${o[k]}\n`; }
@@ -743,7 +798,9 @@ function csvToPlayers(csv){
 }
 
 /* ====== INIT ====== */
+function updateTabUI(){ updateTabCountdowns(); }
 setActiveTeam('boston');
+updateTabUI();
 renderPlayers();
 updatePreviewShort();
 </script>
