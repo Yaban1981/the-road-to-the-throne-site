@@ -1,388 +1,684 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>QHC Admin — The Road to The Throne</title>
-  <meta name="description" content="Admin QHC: importer les réponses, composer les lineups et exporter JSON (sans base de données)." />
-  <!-- Open Graph / Twitter (prévisualisation avec engrenage) -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/admin-rttt-48a1.html">
-  <meta property="og:title" content="QHC Admin — The Road to The Throne">
-  <meta property="og:description" content="Interface coach (sans DB) pour préparer les lineups QHC.">
-  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/gear.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="QHC Admin — The Road to The Throne">
-  <meta name="twitter:description" content="Interface coach (sans DB) pour préparer les lineups QHC.">
-  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/gear.png">
-  <link rel="icon" href="logos/gear.png">
-  <style>
-    :root{--bg:#0f172a;--panel:#0e152a;--panel2:#0a1020;--text:#e7ecf3;--muted:#a7b3c7;--accent:#d4af37;--accent2:#3b82f6;--ring:rgba(59,130,246,.3);--radius:14px}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(900px 500px at 10% -10%,#0b2451 0,transparent 60%),linear-gradient(180deg,#0a1020,#0b1222);color:var(--text)}
-    header{padding:18px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;gap:10px;align-items:center}
-    h1{margin:0;font-size:1.35rem}
-    main{max-width:1200px;margin:0 auto;padding:16px}
-    .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:0 8px 28px rgba(0,0,0,.35);padding:16px;margin:12px 0}
-    .bar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
-    textarea,input,select,button{font:inherit;color:var(--text)}
-    textarea,input[type=file],input[type=text],select{width:100%;background:#0b1020;border:1px solid rgba(255,255,255,.12);padding:10px 12px;border-radius:10px;outline:none;transition:.2s}
-    textarea:focus,input:focus,select:focus{border-color:var(--accent2);box-shadow:0 0 0 3px var(--ring)}
-    textarea{min-height:120px;resize:vertical}
-    .btn{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0;padding:10px 14px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(59,130,246,.28)}
-    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.2);color:#e7ecf3;box-shadow:none}
-    .muted{color:var(--muted);font-size:.9rem}
-    .grid{display:grid;gap:12px}
-    @media(min-width:990px){.grid-2{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:1fr 1fr 1fr}}
-    table{width:100%;border-collapse:collapse;font-size:.95rem}
-    th,td{border-bottom:1px solid rgba(255,255,255,.08);padding:8px 6px;vertical-align:top}
-    th{color:#cfe1ff;text-align:left}
-    .pill{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.8rem;border:1px solid rgba(255,255,255,.15)}
-    .DEF{background:#0b2a3c;border-color:#124b6b}.FWD{background:#3a2a0b;border-color:#6b5312}.CEN{background:#3a300b;border-color:#6b5e12}.GOL{background:#27272a;border-color:#52525b}
-    .rowflex{display:flex;gap:8px;flex-wrap:wrap}
-    .slot{border:1px dashed rgba(255,255,255,.18);border-radius:12px;padding:10px;min-height:60px;background:rgba(255,255,255,.03)}
-    .slotHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;background:#0b1020;border:1px solid rgba(255,255,255,.18)}
-    .chip .x{cursor:pointer;opacity:.85}
-    .dnd-drag{opacity:.6}
-    /* drop highlight */
-    .slot.drop-ok{outline:2px solid var(--accent2);outline-offset:2px}
-    /* drag area */
-    .dropzone{border:2px dashed rgba(255,255,255,.18);border-radius:12px;padding:12px;text-align:center}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QHC — Admin “The Road to The Throne”</title>
+<meta name="description" content="QHC Admin • Composer les lineups (1G + 3x2 DEF + 3x3 AV) • Import .msg/.eml/.csv/.json • Chargement direct /data/players.json • Export/Import JSON — 100% client-side" />
+<link rel="icon" href="logos/gear.png" />
+
+<!-- Open Graph / Twitter (aperçu avec engrenage) -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/admin-rttt-48a1.html" />
+<meta property="og:title" content="QHC Admin — The Road to The Throne" />
+<meta property="og:description" content="Interface coach (sans DB) pour composer les lineups QHC. Drag & drop d’emails .msg/.eml, import CSV/JSON, export/import de lineups." />
+<meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/gear.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="QHC Admin — The Road to The Throne" />
+<meta name="twitter:description" content="Composez vos lineups QHC et exportez en JSON (sans base de données)." />
+<meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/gear.png" />
+
+<!-- msgreader pour .msg Outlook -->
+<script src="https://cdn.jsdelivr.net/npm/msgreader@1.0.8/dist/msgreader.min.js"></script>
+
+<style>
+:root{
+  --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
+  --text:#e7ecf3; --muted:#a7b3c7;
+  --gold:#d4af37; --blue:#3b82f6; --goldTint:rgba(212,175,94,.10); --goldStroke:rgba(212,175,94,.35);
+  --ring:rgba(59,130,246,.30); --r:16px;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html,body{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+body{
+  margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background: radial-gradient(900px 500px at 10% -10%, #0b2451 0%, transparent 60%), linear-gradient(180deg,#0a1020,#0b1222);
+  color:var(--text); line-height:1.5;
+}
+
+/* Header */
+header{display:flex; align-items:center; gap:18px; padding:24px 16px; border-bottom:1px solid rgba(255,255,255,.08)}
+header .logo{width:120px; height:120px; border-radius:22px; overflow:hidden; display:grid; place-items:center; background:#0b1020; box-shadow:0 14px 40px rgba(0,0,0,.35)}
+@media(min-width:1000px){ header .logo{width:160px; height:160px} }
+header .logo img{width:100%; height:100%; object-fit:cover}
+header .text{display:flex; flex-direction:column}
+header h1{margin:0; font-size:2rem}
+@media(min-width:1000px){ header h1{font-size:2.4rem} }
+header .sub{color:#dfe7ff; font-size:1.1rem}
+header .meta{color:#9fb7ff; font-size:.95rem}
+
+/* Cards & layout */
+main{max-width:1200px; margin:0 auto; padding:16px}
+.card{background:linear-gradient(180deg, var(--panel2), var(--panel)); border:1px solid rgba(255,255,255,.08); border-radius:var(--r); padding:18px; margin:14px 0; box-shadow:0 10px 28px rgba(0,0,0,.35)}
+h2{margin:0 0 12px; font-size:1.25rem}
+.bar{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+label{display:block; margin:8px 0 6px; color:#dfe7ff}
+
+input[type="text"],input[type="email"],input[type="tel"],input[type="range"],select,textarea{
+  width:100%; padding:14px; border-radius:12px; border:1.5px solid rgba(255,255,255,.16);
+  background:#0b1020; color:var(--text); outline:none; font-size:16px; transition:.2s
+}
+input:focus,select:focus,textarea:focus{border-color:var(--blue); box-shadow:0 0 0 3px var(--ring); background:#0b142a}
+input.valid,select.valid,textarea.valid{border-color:var(--gold); background:rgba(212,175,94,.08)}
+select{
+  background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E<path d='M7 10l5 5 5-5'/></svg>");
+  background-repeat:no-repeat; background-position:right .8rem center; padding-right:2.2rem;
+}
+textarea{min-height:110px; resize:vertical}
+.small{color:var(--muted); font-size:.9rem}
+.btn{display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border:none; border-radius:12px; font-weight:700; cursor:pointer}
+.btn.primary{background:linear-gradient(135deg, var(--gold), var(--blue)); color:#fff; box-shadow:0 10px 24px rgba(59,130,246,.28)}
+.btn.ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.2)}
+
+/* Table */
+.tablewrap{max-height:360px; overflow:auto; border:1px solid rgba(255,255,255,.08); border-radius:12px}
+table{width:100%; border-collapse:collapse; font-size:.95rem}
+th,td{border-bottom:1px solid rgba(255,255,255,.08); padding:10px 8px; text-align:left; vertical-align:top}
+th{color:#cfe2ff}
+td.dr{cursor:grab}
+.badge{display:inline-block; padding:4px 8px; border-radius:12px; font-size:.8rem; border:1px solid rgba(255,255,255,.15)}
+.badge.DEF{background:#0b2230; border-color:#1b3a50}
+.badge.FWD{background:#301d0b; border-color:#6b3b0f}
+.badge.CEN{background:#2a2030; border-color:#5b3d6b}
+.badge.GOL{background:#1a1f2b; border-color:#2e3b52}
+.fit{white-space:nowrap}
+
+tr.candidate-yes{ background: rgba(212,175,94,.10); }
+tr.candidate-no { opacity:.35; }
+
+/* Board: 3x2 DEF + 3x3 FWD + 1 G per team */
+.board{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px }
+.slotcol{ display:grid; gap:10px }
+.slot.head{ font-weight:700; color:#e7ecf3; background:transparent; border:none; min-height:auto; padding:0 }
+.slot{
+  position:relative; background:#0b1020; border:2px dashed rgba(255,255,255,.18);
+  border-radius:12px; min-height:60px; padding:10px 44px 10px 10px; transition:.2s;
+}
+.slot .slot-label{ position:absolute; right:12px; top:8px; font-size:.8rem; color:#d4d4d4 }
+.slot.active{ box-shadow:0 0 0 3px var(--gold); border-color: var(--gold) }
+.slot.drop-ok{ border-color: var(--blue) }
+.chip{ display:inline-flex; align-items:center; gap:8px; padding:8px 10px; background:#0b1020; border:1px solid rgba(255,255,255,.16); border-radius:999px; margin:4px; position:relative }
+.chip .role{ font-weight:800; font-size:.8rem; color:#eaeaea; padding:2px 6px; border-radius:8px; border:1px solid rgba(255,255,255,.1) }
+.chip .pos{ font-weight:800; font-size:.75rem; padding:2px 6px; border-radius:8px; background: var(--gold); color:#0b1020 }
+.chip .x{ cursor:pointer; color:#cbd5e1 }
+
+/* Slider (si jamais on en ajoute) */
+.slider-wrap{ position:relative; margin:30px 0 16px; background:rgba(11,16,32,.5); border:2px solid rgba(212,175,94,.35); border-radius:12px; padding:14px }
+.hand-hint{ position:absolute; top:-36px; left:0; z-index:5; animation: handmove 3s ease-in-out infinite; opacity:.95; pointer-events:none }
+.hand-hint svg{ width:36px; height:36px; color: var(--gold); filter: drop-shadow(0 2px 4px rgba(0,0,0,.35)) }
+@keyframes handmove{ 0%{transform:translateX(0); opacity:0} 15%{opacity:1} 40%{transform:translateX(calc(100% - 60px))} 60%{transform:translateX(calc(100% - 60px))} 85%{transform:translateX(0)} 100%{opacity:0} }
+
+/* Preview (collapsé) */
+.preview{ max-height:180px; overflow:hidden; position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px }
+.preview.expanded{ max-height:none }
+.preview .fade{ position:absolute; left:0; right:0; bottom:0; height:48px; background: linear-gradient(180deg, transparent, rgba(0,0,0,.85)) }
+.showmore{ margin-top:10px }
+.showmore .btn{ padding:10px 14px }
+</style>
 </head>
 <body>
 <header>
-  <img src="logos/gear.png" alt="admin" style="width:28px;height:28px;border-radius:6px">
-  <h1>QHC Admin — The Road to The Throne</h1>
-  <span class="muted">sans DB • GitHub JSON</span>
+  <div class="logo"><img src="logos/qhc.png" alt="Logo Québec HC"></div>
+  <div class="text">
+    <h1>QHC — Admin “The Road to The Throne”</h1>
+    <div class="sub">Interface coach • 1 Goaler • 3×2 DEF • 3×3 AV • Drag & Drop</div>
+    <div class="meta">Confiance ≥ 80% • Filtres (poste/côté/dispo) • Import .msg/.eml/.csv • Export/Import JSON</div>
+  </div>
 </header>
-<main>
 
-  <!-- Import / Load -->
+<main>
+  <!-- Import -->
   <section class="card">
     <h2>1) Importer des joueurs</h2>
-    <div class="grid grid-2">
-      <div>
-        <label>Coller des emails FormSubmit (format “Name / Value”)</label>
-        <textarea id="taEmails" placeholder="Colle ici un ou plusieurs emails FormSubmit…"></textarea>
-        <div class="bar">
-          <button class="btn" id="btnParse">➕ Parser & Ajouter</button>
-          <button class="btn ghost" id="btnClear">Effacer</button>
-        </div>
-
-        <div class="dropzone" id="dz">
-          Drag & drop **CSV/JSON** ici (players.json ou export CSV)…<br>
-          <span class="muted">Astuce: depuis Outlook, exporte en CSV puis dépose.</span>
-        </div>
-      </div>
-      <div>
-        <label>Charger depuis le site (fetch)</label>
-        <div class="bar">
-          <input type="text" id="fetchUrl" value="data/players.json" />
-          <button class="btn" id="btnFetch">🔄 Charger /data/players.json</button>
-        </div>
-        <label>Charger un fichier local</label>
-        <input type="file" id="filePlayers" accept=".json,.csv,text/csv,application/json" />
-        <div class="bar">
-          <button class="btn" id="btnExportPlayers">💾 Exporter players.json</button>
-          <button class="btn" id="btnExportLineups">💾 Exporter lineups.json</button>
-        </div>
-        <div class="muted">Remets ces fichiers dans <code>/data/</code> du repo pour partager aux coachs.</div>
-      </div>
+    <div class="bar">
+      <button class="btn primary" id="btnFetch">Charger depuis <code>/data/players.json</code></button>
+      <span class="small">ou</span>
+      <input type="file" id="filePlayers" accept=".json,.csv,.eml,.msg,text/*,application/json,.txt,.msg" />
+      <span class="small">ou collez des emails FormSubmit :</span>
+    </div>
+    <textarea id="taEmails" placeholder="Collez ici 1..N emails (format 'Name  Value' par ligne)…"></textarea>
+    <div class="bar">
+      <button class="btn primary" id="btnParse">➕ Parser & ajouter</button>
+      <button class="btn ghost" id="btnClear">Effacer</button>
+    </div>
+    <div id="dropZone" style="border:2px dashed rgba(255,255,255,.2);border-radius:12px;padding:18px;text-align:center;margin-top:12px">
+      Glissez-déposez ici vos fichiers **.msg / .eml / .csv / .json / .txt** (ou collez du texte ci-dessus)
     </div>
   </section>
 
-  <!-- Players table -->
+  <!-- Players -->
   <section class="card">
     <h2>2) Joueurs</h2>
     <div class="bar">
-      <input id="q" type="text" placeholder="Recherche (nom/ville)..." style="max-width:260px">
-      <select id="fPos">
-        <option value="">Position (toutes)</option>
-        <option>DEF</option><option>FWD</option><option>CEN</option><option>GOL</option>
-      </select>
-      <select id="fAvail">
-        <option value="">Tournoi (Yes)</option>
-        <option value="boston">Boston</option>
-        <option value="meltdown">Meltdown</option>
-        <option value="throne">Throne</option>
-      </select>
-      <select id="fConf">
-        <option value="">Confiance</option>
-        <option value="80">≥80%</option><option value="90">≥90%</option>
-      </select>
+      <input id="q" type="text" placeholder="Recherche (nom/ville)…" style="max-width:260px">
+      <select id="fPos"><option value="">Position (toutes)</option><option>DEF</option><option>FWD</option><option>CEN</option><option>GOL</option></select>
+      <select id="fAvail"><option value="">Tournoi (Yes)</option><option value="boston">Boston</option><option value="meltdown">Meltdown</option><option value="throne">Throne</option></select>
+      <select id="fConf"><option value="">Confiance</option><option value="80">≥ 80%</option><option value="90">≥ 90%</option></select>
+      <span class="small" id="hintTarget"></span>
+      <button class="btn ghost" id="btnToggle">Afficher tout / Candidats</button>
     </div>
-    <div style="max-height:360px;overflow:auto;border:1px solid rgba(255,255,255,.08);border-radius:10px">
+    <div class="tablewrap">
       <table id="tbl">
-        <thead><tr>
-          <th>Nom</th><th>Année</th><th>Ville</th><th>Pos</th><th>L/R</th>
-          <th>Boston</th><th>Meltdown</th><th>Throne</th><th>Conf</th><th>Glisser vers un slot →</th>
-        </tr></thead>
+        <thead>
+          <tr>
+            <th>Nom</th><th>Année</th><th>Ville</th><th>Postes</th><th>Side</th>
+            <th>BOS</th><th>MTL</th><th>THR</th><th>Conf</th><th>Drag</th>
+          </tr>
+        </thead>
         <tbody></tbody>
       </table>
     </div>
+    <div class="small">Astuce : fais glisser une ligne (col. “Drag”) vers un slot plus bas (LD1/LW1/…/G)</div>
   </section>
 
-  <!-- Lineups -->
+  <!-- Boards pour 3 tournois -->
   <section class="card">
-    <h2>3) Lineups</h2>
-    <div class="grid grid-3">
-      <div>
-        <div class="slotHeader"><strong>Boston</strong><span class="muted">6 DEF • 9 AV/CEN • 1 GOL</span></div>
-        <div class="slot" id="boston-def"></div>
-        <div class="slot" id="boston-fwd" style="margin-top:8px"></div>
-        <div class="slot" id="boston-gol" style="margin-top:8px"></div>
-      </div>
-      <div>
-        <div class="slotHeader"><strong>Meltdown</strong><span class="muted">6 • 9 • 1</span></div>
-        <div class="slot" id="meltdown-def"></div>
-        <div class="slot" id="meltdown-fwd" style="margin-top:8px"></div>
-        <div class="slot" id="meltdown-gol" style="margin-top:8px"></div>
-      </div>
-      <div>
-        <div class="slotHeader"><strong>The Throne</strong><span class="muted">6 • 9 • 1</span></div>
-        <div class="slot" id="throne-def"></div>
-        <div class="slot" id="throne-fwd" style="margin-top:8px"></div>
-        <div class="slot" id="throne-gol" style="margin-top:8px"></div>
-      </div>
-    </div>
-    <div class="bar" style="margin-top:12px">
-      <button class="btn" id="btnAutosuggest">✨ Autosuggest</button>
-      <button class="btn ghost" id="btnValidate">✔ Vérifier quotas</button>
-      <span class="muted" id="status"></span>
+    <h2>3) Lineups par tournoi (1G • 3×2 DEF • 3×3 AV)</h2>
+    <div id="boards"></div>
+    <div class="bar" style="margin-top:16px">
+      <button class="btn primary" id="btnAuto">✨ Auto-suggest (poste + côté + dispo + confiance)</button>
+      <button class="btn ghost" id="btnCheck">✔ Vérifier quotas</button>
+      <span id="status" class="small"></span>
     </div>
   </section>
 
-  <!-- Previews -->
+  <!-- Export / Import lineups & preview -->
   <section class="card">
-    <h2>4) Prévisualisation JSON</h2>
-    <details open><summary class="muted">players.json</summary><pre id="pvPlayers" style="white-space:pre-wrap"></pre></details>
-    <details><summary class="muted">lineups.json</summary><pre id="pvLineups" style="white-space:pre-wrap"></pre></details>
+    <h2>4) Export / Import</h2>
+    <div class="bar">
+      <button class="btn" id="btnExportPlayers">💾 Exporter <code>players.json</code></button>
+      <button class="btn" id="btnExportLineups">💾 Exporter <code>lineups.json</code></button>
+      <span class="small">Importer un <code>lineups.json</code> :</span>
+      <input type="file" id="fileLineup" accept=".json,application/json" />
+    </div>
+    <div class="preview" id="pvWrap">
+      <pre id="pvShort" style="white-space:pre-wrap"></pre>
+      <div class="fade"></div>
+    </div>
+    <div class="showmore"><button class="btn ghost" id="btnExpand">Afficher/masquer l’aperçu complet</button></div>
   </section>
 </main>
 
 <script>
-/* ====== STATE ====== */
+/* ===================== STATE & HELPERS ===================== */
 const POS_MAP={Defence:'DEF',Defense:'DEF',Def:'DEF',Forward:'FWD',Avant:'FWD',Center:'CEN',Centre:'CEN',Goaler:'GOL',Goalie:'GOL',Gardien:'GOL'};
-const state={players:[], lineups:{boston:{def:[],fwd:[],gol:[],notes:""}, meltdown:{def:[],fwd:[],gol:[],notes:""}, throne:{def:[],fwd:[],gol:[],notes:""}}};
-const el=(id)=>document.getElementById(id);
+const TEAMS = {
+  boston : { label:'Boston',   key:'boston',   date:[2026,5,29] },
+  meltdown:{ label:'Montreal Meltdown', key:'meltdown', date:[2026,6,5] },
+  throne : { label:'The Throne', key:'throne', date:[2026,7,24] }
+};
+let state = {
+  players: [],
+  lineups: {
+    boston:   { G:[], D1:{LD:[],RD:[]}, D2:{LD:[],RD:[]}, D3:{LD:[],RD:[]}, F1:{LW:[],C:[],RW:[]}, F2:{LW:[],C:[],RW:[]}, F3:{LW:[],C:[],RW:[]} },
+    meltdown: { G:[], D1:{LD:[],RD:[]}, D2:{LD:[],RD:[]}, D3:{LD:[],RD:[]}, F1:{LW:[],C:[],RW:[]}, F2:{LW:[],C:[],RW:[]}, F3:{LW:[],C:[],RW:[]} },
+    throne:   { G:[], D1:{LD:[],RD:[]}, D2:{LD:[],RD:[]}, D3:{LD:[],RD:[]}, F1:{LW:[],C:[],RW:[]}, F2:{LW:[],C:[],RW:[]}, F3:{LW:[],C:[],RW:[]} }
+  }
+};
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const slug=s=>(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 
-/* ====== PARSE EMAIL BLOCKS ====== */
-function slug(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
-function parseEmails(txt){
-  const blocks=txt.trim().split(/\n\s*\n/);
+/* ===================== IMPORT / NORMALIZE ===================== */
+function parseEmailBlocks(txt){
+  const blocks = txt.trim().split(/\n\s*\n/);
   const out=[];
   for(const block of blocks){
     const lines=block.split(/\r?\n/);
     const o={};
     for(const line of lines){
-      const m=line.match(/^([A-Za-z0-9_ ]+)\s+(.+)$/); if(!m) continue;
-      const k=m[1].trim().toLowerCase().replace(/\s+/g,'_'), v=m[2].trim(); o[k]=v;
+      const m=line.match(/^([A-Za-z0-9_ ]+)\s+(.+)$/);
+      if(!m) continue;
+      o[m[1].trim().toLowerCase().replace(/\s+/g,'_')] = m[2].trim();
     }
-    const p=normalize(o,block); if(p && p.name) out.push(p);
+    const p = normalizeRow(o, block);
+    if (p && p.name) out.push(p);
   }
   return out;
 }
-function normalize(raw,rawTxt){
+function normalizeRow(raw, rawTxt){
   const name=raw.player_name||raw.name||''; const by=raw.birth_year?Number(raw.birth_year):null; const id=`${slug(name)}-${by??'xxxx'}`;
-  const sides=[]; if((raw.side_left||'').toLowerCase()==='yes')sides.push('L'); if((raw.side_right||'').toLowerCase()==='yes')sides.push('R');
-  const prim=POS_MAP[raw.primary_position]||raw.primary_position||''; const sec=POS_MAP[raw.secondary_position]||raw.secondary_position||'NONE';
-  function yn(v){const s=(v||'').toUpperCase(); if(['YES','OUI'].includes(s))return 'Yes'; if(['NO','NON'].includes(s))return 'No'; return 'TBD'}
-  const p={
-    id, name, birth_year:by, city:raw.city||'', current_team:raw.current_team||'',
+  const sides=[]; if((raw.side_right||'').toUpperCase()==='YES') sides.push('R'); if((raw.side_left||'').toUpperCase()==='YES') sides.push('L');
+  const P = (raw.primary_position && (POS_MAP[raw.primary_position]||raw.primary_position.toUpperCase())) || '';
+  const S = (raw.secondary_position && (POS_MAP[raw.secondary_position]||raw.secondary_position.toUpperCase())) || 'NONE';
+  const yn=v=>{const s=(v||'').toUpperCase(); if(s==='YES'||s==='OUI') return 'Yes'; if(s==='NO'||s==='NON') return 'No'; return 'TBD';};
+  const tsMatch = /Submitted\s+at\s+(.+?)\s*\(/i.exec(rawTxt||'');
+  const submitted_at = tsMatch ? new Date(tsMatch[1]+' UTC').toISOString() : null;
+  const srcMatch = /(https?:\/\/\S+)/.exec(rawTxt||'');
+  return {
+    id, name,
+    birth_year: isNaN(by)?null:by,
+    city: raw.city||'',
+    current_team: raw.current_team||'',
     parent:{email:raw.parent_email||'', phone:raw.parent_phone||''},
-    positions:{primary:(prim||'').toUpperCase(), secondary:(sec||'').toUpperCase()},
-    sides, jersey:{type:raw.jersey_type||'', size:raw.jersey_size||'', pref_numbers:[raw.jersey_number_1,raw.jersey_number_2,raw.jersey_number_3].filter(x=>x&&String(x).trim())},
+    positions:{primary:P, secondary:S},
+    sides,
+    jersey:{type:raw.jersey_type||'', size:raw.jersey_size||'', pref_numbers:[raw.jersey_number_1,raw.jersey_number_2,raw.jersey_number_3].filter(Boolean)},
     availability:{boston:yn(raw.boston_showdown), meltdown:yn(raw.montreal_meltdown), throne:yn(raw.the_throne)},
-    confidence_pct: raw.confidence_pct?Number(raw.confidence_pct):null,
-    consents:{throne_rule:(raw.ack_throne_rule||'').toLowerCase()==='on', limited_spots:(raw.ack_limited_spots||'').toLowerCase()==='on', consent_contact:(raw.consent_contact||'').toLowerCase()==='on'},
-    submitted_at: (rawTxt.match(/Submitted at\s+(.+?)\s*\(UTC\)/i)?.[1] ? new Date(RegExp.$1+' UTC').toISOString() : null),
-    source: (rawTxt.match(/submitted your form on\s+(https?:\/\/\S+)/i)?.[1]||null)
+    confidence_pct: parseInt(raw.confidence_pct||'0',10)||0,
+    consents:{
+      throne_rule:(raw.ack_throne_rule||'').toLowerCase()==='on' || (raw.ack_throne_rule||'').toLowerCase()==='true',
+      limited_spots:(raw.ack_limited_spots||raw.awk_limited_spots||'').toLowerCase()==='on' || (raw.ack_limited_spots||'').toLowerCase()==='true',
+      consent_contact:(raw.consent_contact||'').toLowerCase()==='on' || (raw.consent_contact||'').toLowerCase()==='true'
+    },
+    submitted_at, source: srcMatch?srcMatch[1]:null
   };
-  return p;
 }
-function upsert(player){
-  const i=state.players.findIndex(x=>x.id===player.id);
-  if(i<0){ state.players.push(player); return; }
-  const a=state.players[i].submitted_at, b=player.submitted_at;
-  if(b && (!a || new Date(b)>new Date(a))) state.players[i]=player;
+function upsertPlayer(p){
+  const i = state.players.findIndex(x=>x.id===p.id);
+  if(i<0){ state.players.push(p); return; }
+  const a=state.players[i].submitted_at, b=p.submitted_at;
+  if(b && (!a || new Date(b)>new Date(a))) state.players[i]=p;
 }
 
-/* ====== RENDER TABLE ====== */
+/* ===================== TABLE RENDER & FILTERS ===================== */
+const tblBody = $('#tbl tbody');
+let activeTarget = null;       // {team, role, group, el}
+let showAll = false;
+
+function matchScoreForRole(p, role, team){
+  const av=(p.availability?.[team]||'').toUpperCase();
+  if(av==='NO') return -999;
+  let s=0;
+  const has=(x)=> (p.positions?.primary===x || p.positions?.secondary===x);
+  if(role==='G'){ if(has('GOL')) s+=6; else return -999; }
+  if(role==='LD'||role==='RD'){
+    if(!has('DEF')) return -999; s+=4;
+    const need=(role==='LD')?'L':'R';
+    if((p.sides||[]).includes(need)) s+=2;
+  }
+  if(role==='LW'||role==='RW'){
+    if(has('FWD')) s+=3; else if(has('CEN')) s+=1;
+    const need=(role==='LW')?'L':'R';
+    if((p.sides||[]).includes(need)) s+=2;
+  }
+  if(role==='C'){
+    if(has('CEN')) s+=4; else if(has('FWD')) s+=2;
+  }
+  if(av==='YES') s+=2;
+  const c = Number(p.confidence_pct)||0;
+  if(c>=90) s+=2; else if(c>=80) s+=1;
+  return s;
+}
+
 function renderPlayers(){
-  const tb=el('tbl').querySelector('tbody'); tb.innerHTML='';
-  const q=el('q').value.toLowerCase(), pos=el('fPos').value, fav=el('fAvail').value, fconf=el('fConf').value;
-  const rows=state.players.filter(p=>{
-    if(q && !(`${p.name} ${p.city}`.toLowerCase().includes(q))) return false;
-    if(pos && p.positions && !(p.positions.primary===pos || p.positions.secondary===pos)) return false;
-    if(fav){ if((p.availability?.[fav]||'')!=='Yes') return false; }
-    if(fconf && (p.confidence_pct||0)<Number(fconf)) return false;
-    return true;
-  }).sort((a,b)=> (a.name||'').localeCompare(b.name||''));
-  for(const p of rows){
+  const q=($('#q').value||'').toLowerCase();
+  const pos=$('#fPos').value; const av=$('#fAvail').value; const confMin=parseInt($('#fConf').value||'0',10);
+  let list=[...state.players];
+  if(q) list=list.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.city||'').toLowerCase().includes(q));
+  if(pos) list=list.filter(p=>p.positions?.primary===pos||p.positions?.secondary===pos);
+  if(av) list=list.filter(p=>(p.availability?.[av]||'').toUpperCase()==='YES');
+  if(confMin) list=list.filter(p=>(p.confidence_pct||0)>=confMin);
+
+  // Candidate scoring if a slot is active
+  let scored = list.map(p=>({p,score: activeTarget? matchScoreForRole(p, activeTarget.role, activeTarget.team) : 0}));
+  if (activeTarget){
+    // sort best first
+    scored.sort((a,b)=> b.score-a.score || a.p.name.localeCompare(b.p.name));
+  } else {
+    scored.sort((a,b)=> a.p.name.localeCompare(b.p.name));
+  }
+
+  tblBody.innerHTML='';
+  for(const {p,score} of scored){
     const tr=document.createElement('tr');
-    const pospill=(r)=>`<span class="pill ${r||''}">${r||''}</span>`;
+    if(activeTarget){
+      if(score>=1) tr.classList.add('candidate-yes'); else if(!showAll) tr.classList.add('candidate-no');
+    }
     tr.innerHTML=`
-      <td draggable="true" data-id="${p.id}" class="dr">${p.name}<div class="muted small">${p.parent?.email||''}</div></td>
+      <td class="dr" draggable="true" data-id="${p.id}">${p.name}<div class="small">${p.parent?.email||''}</div></td>
       <td>${p.birth_year||''}</td>
       <td>${p.city||''}</td>
-      <td>${pospill(p.positions?.primary)} ${p.positions?.secondary && p.positions.secondary!=='NONE'? pospill(p.positions.secondary):''}</td>
-      <td>${(p.sides||[]).join('/')||'-'}</td>
-      <td>${p.availability?.boston||''}</td>
-      <td>${p.availability?.meltdown||''}</td>
-      <td>${p.availability?.throne||''}</td>
-      <td>${p.confidence_pct!=null?p.confidence_pct+'%':''}</td>
-      <td class="muted small">Glisser vers un slot</td>`;
-    tb.appendChild(tr);
+      <td><span class="badge ${p.positions?.primary||''}">${p.positions?.primary||''}</span> ${p.positions?.secondary && p.positions.secondary!=='NONE'?`<span class="badge ${p.positions.secondary}">${p.positions.secondary}</span>`:''}</td>
+      <td class="fit">${(p.sides||[]).join('/')||'-'}</td>
+      <td class="fit">${p.availability?.boston||''}</td>
+      <td class="fit">${p.availability?.meltdown||''}</td>
+      <td class="fit">${p.availability?.throne||''}</td>
+      <td class="fit">${p.confidence_pct!=null?p.confidence_pct+'%':''}</td>
+      <td class="fit small muted">Drag</td>
+    `;
+    tblBody.appendChild(tr);
   }
-  // DnD source
-  tb.querySelectorAll('.dr').forEach(cell=>{
-    cell.addEventListener('dragstart',e=>{
-      e.dataTransfer.setData('text/plain', cell.dataset.id);
-      cell.parentElement.classList.add('dnd-drag');
+  // drag sources
+  tblBody.querySelectorAll('td.dr').forEach(td=>{
+    td.addEventListener('dragstart',e=>{
+      e.dataTransfer.setData('text/plain', td.dataset.id);
+      td.parentElement.style.opacity='.6';
     });
-    cell.addEventListener('dragend',e=>cell.parentElement.classList.remove('dnd-drag'));
+    td.addEventListener('dragend',()=>{ td.parentElement.style.opacity=''; });
   });
-  updatePreviews();
+
+  updatePreviewShort();
 }
 
-/* ====== LINEUPS ====== */
-function renderSlots(){
-  const lanes=[['boston','def'],['boston','fwd'],['boston','gol'],['meltdown','def'],['meltdown','fwd'],['meltdown','gol'],['throne','def'],['throne','fwd'],['throne','gol']];
-  for(const [t,l] of lanes){
-    const host=el(`${t}-${l}`); host.innerHTML='';
-    // Drop handlers
-    host.ondragover=(e)=>{e.preventDefault(); host.classList.add('drop-ok')};
-    host.ondragleave=()=>host.classList.remove('drop-ok');
-    host.ondrop=(e)=>{e.preventDefault(); host.classList.remove('drop-ok'); const id=e.dataTransfer.getData('text/plain'); addTo(t,l,id);};
-    // chips
-    for(const id of state.lineups[t][l]){
-      const p=state.players.find(x=>x.id===id);
-      const chip=document.createElement('span'); chip.className='chip';
-      chip.innerHTML=`<span class="small bold">${p?.name||id}</span><span class="pill ${p?.positions?.primary||''}">${p?.positions?.primary||''}</span><span class="x" title="retirer">✕</span>`;
-      chip.querySelector('.x').onclick=()=>removeFrom(t,l,id);
-      host.appendChild(chip);
+/* ===================== BOARDS (3 tournois) ===================== */
+function buildBoards(){
+  const holder = document.getElementById('boards');
+  holder.innerHTML='';
+  for (const key of Object.keys(TEAMS)){
+    const wrap = document.createElement('div'); wrap.className='card';
+    wrap.innerHTML = `<h3 style="margin:0 0 8px">${TEAMS[key].label}</h3>`;
+    const board = document.createElement('div'); board.className='board';
+
+    // DEF
+    const colD=document.createElement('div'); colD.className='slotcol';
+    colD.appendChild(headSlot('Défense'));
+    ['D1','D2','D3'].forEach(g=>{
+      colD.appendChild(slotEl(`${key}-LD${g.substring(1)}`, key,'LD',g));
+      colD.appendChild(slotEl(`${key}-RD${g.substring(1)}`, key,'RD',g));
+    });
+
+    // FWD
+    const colF=document.createElement('div'); colF.className='slotcol';
+    colF.appendChild(headSlot('Attaquants'));
+    ['F1','F2','F3'].forEach(g=>{
+      const row=document.createElement('div'); row.style.display='flex'; row.style.gap='10px';
+      row.appendChild(slotEl(`${key}-LW${g.substring(1)}`, key,'LW',g));
+      row.appendChild(slotEl(`${key}-C${g.substring(1)}`, key,'C',g));
+      row.appendChild(slotEl(`${key}-RW${g.substring(1)}`, key,'RW',g));
+      colF.appendChild(row);
+    });
+
+    // G
+    const colG=document.createElement('div'); colG.className='slotcol';
+    colG.appendChild(headSlot('Goaler'));
+    colG.appendChild(slotEl(`${key}-G`, key,'G','G'));
+
+    board.appendChild(colD); board.appendChild(colF); board.appendChild(colG);
+    wrap.appendChild(board);
+    holder.appendChild(wrap);
+  }
+  renderBoards();
+}
+function headSlot(text){ const d=document.createElement('div'); d.className='slot head'; d.textContent=text; return d; }
+function slotEl(id, team, role, group){
+  const s=document.createElement('div'); s.className='slot'; s.id=id;
+  s.dataset.team=team; s.dataset.role=role; s.dataset.group=group;
+  const lab=document.createElement('div'); lab.className='slot-label'; lab.textContent = `${role}${group==='G'?'':group.substring(1)}`;
+  s.appendChild(lab);
+  s.addEventListener('dragover', e=>{ e.preventDefault(); s.classList.add('drop-ok'); setActiveTarget(s); });
+  s.addEventListener('dragleave', ()=> s.classList.remove('drop-ok'));
+  s.addEventListener('drop', e=>{
+    e.preventDefault(); s.classList.remove('drop-ok'); clearActiveTarget();
+    const id=e.dataTransfer.getData('text/plain'); addToSlot(team, role, group, id);
+  });
+  s.addEventListener('click', ()=> setActiveTarget(s));
+  return s;
+}
+function renderBoards(){
+  for (const [team, layout] of Object.entries(state.lineups)){
+    // Goaler
+    renderSlotChips(document.getElementById(`${team}-G`), layout.G, team,'G','G');
+    // DEF
+    for (const g of ['D1','D2','D3']){
+      renderSlotChips(document.getElementById(`${team}-LD${g.substring(1)}`), layout[g].LD, team,'LD',g);
+      renderSlotChips(document.getElementById(`${team}-RD${g.substring(1)}`), layout[g].RD, team,'RD',g);
+    }
+    // FWD
+    for (const g of ['F1','F2','F3']){
+      renderSlotChips(document.getElementById(`${team}-LW${g.substring(1)}`), layout[g].LW, team,'LW',g);
+      renderSlotChips(document.getElementById(`${team}-C${g.substring(1)}`),  layout[g].C,  team,'C', g);
+      renderSlotChips(document.getElementById(`${team}-RW${g.substring(1)}`), layout[g].RW, team,'RW',g);
     }
   }
-  updatePreviews();
 }
-function addTo(t,l,id){
-  if(!id) return;
-  const arr=state.lineups[t][l]; if(arr.includes(id)) return;
-  const limit=(l==='def')?6:(l==='fwd')?9:1;
-  if(arr.length>=limit && !confirm(`${t} ${l.toUpperCase()} dépasse ${limit}. Ajouter quand même ?`)) return;
-  arr.push(id); renderSlots();
-}
-function removeFrom(t,l,id){
-  const arr=state.lineups[t][l]; const i=arr.indexOf(id); if(i>=0) arr.splice(i,1); renderSlots();
-}
-el('btnValidate').onclick=()=>{
-  const msg=[];
-  const check=(t,l,lim)=>{ const n=state.lineups[t][l].length; if(n!==lim) msg.push(`${t} ${l.toUpperCase()} ${n}/${lim}`); };
-  check('boston','def',6);check('boston','fwd',9);check('boston','gol',1);
-  check('meltdown','def',6);check('meltdown','fwd',9);check('meltdown','gol',1);
-  check('throne','def',6);check('throne','fwd',9);check('throne','gol',1);
-  el('status').textContent = msg.length? '⚠ ' + msg.join(' | ') : '✔ Quotas OK';
-};
-el('btnAutosuggest').onclick=()=>{
-  ['boston','meltdown','throne'].forEach(t=>{
-    const want={def:6,fwd:9,gol:1};
-    for(const lane of ['def','fwd','gol']){
-      const arr=state.lineups[t][lane]; const need=Math.max(0,want[lane]-arr.length);
-      if(!need) continue;
-      const cand=state.players.filter(p=>{
-        const okAvail=(p.availability?.[t]||'')==='Yes';
-        const okConf=(p.confidence_pct||0)>=80;
-        const already = ['def','fwd','gol'].some(L=>state.lineups[t][L].includes(p.id));
-        if(!okAvail||!okConf||already) return false;
-        if(lane==='def') return p.positions?.primary==='DEF'||p.positions?.secondary==='DEF';
-        if(lane==='fwd') return ['FWD','CEN'].includes(p.positions?.primary)||['FWD','CEN'].includes(p.positions?.secondary);
-        if(lane==='gol') return p.positions?.primary==='GOL'||p.positions?.secondary==='GOL';
-        return false;
-      }).slice(0,need);
-      arr.push(...cand.map(p=>p.id));
-    }
+function renderSlotChips(slotEl, arr, team, role, group){
+  if(!slotEl) return;
+  slotEl.innerHTML = `<div class="slot-label">${role}${group==='G'?'':group.substring(1)}</div>`;
+  (arr||[]).forEach(id=>{
+    const p = state.players.find(x=>x.id===id);
+    const chip=document.createElement('span'); chip.className='chip';
+    const pos=p?.positions?.primary||'';
+    chip.innerHTML = `<span class="role">${p?.name||id}</span><span class="badge ${pos}">${pos}</span><span class="x" title="Retirer">✕</span>`;
+    chip.querySelector('.x').onclick=()=> removeFromSlot(team, role, group, id);
+    slotEl.appendChild(chip);
   });
-  renderSlots();
-};
-
-/* ====== EXPORT ====== */
-function updatePreviews(){
-  el('pvPlayers').textContent=JSON.stringify({players:state.players},null,2);
-  el('pvLineups').textContent=JSON.stringify({version:1,updated_at:new Date().toISOString(),tournaments:state.lineups},null,2);
 }
-el('btnExportPlayers').onclick=()=>download('players.json', JSON.stringify({players:state.players},null,2));
-el('btnExportLineups').onclick=()=>download('lineups.json', JSON.stringify({version:1,updated_at:new Date().toISOString(),tournaments:state.lineups},null,2));
-function download(name, text){const blob=new Blob([text],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),500);}
+function addToSlot(team, role, group, id){
+  const L = state.lineups[team]; if(!L) return;
+  // empêcher doublons dans le même team
+  for(const g of ['D1','D2','D3','F1','F2','F3']){
+    ['LD','RD','LW','C','RW'].forEach(r=>{
+      const arr=L[g]?.[r]; if(arr){ const i=arr.indexOf(id); if(i>=0) arr.splice(i,1); }
+    });
+  }
+  const all = [L.G, L.D1.LD, L.D1.RD, L.D2.LD, L.D2.RD, L.D3.LD, L.D3.RD, L.F1.LW, L.F1.C, L.F1.RW, L.F2.LW, L.F2.C, L.F2.RW, L.F3.LW, L.F3.C, L.F3.RW];
+  const inG = L.G.indexOf(id)>=0;
+  if(inG) L.G=[];
+  if(role==='G'){ L.G=[id]; renderBoards(); return; }
+  // DEF/FWD slots: un joueur max par slot
+  const targetArr = (role==='LD'||role==='RD') ? L[group][role] : L[group][role];
+  targetArr[0]=id;
+  renderBoards();
+}
+function removeFromSlot(team, role, group, id){
+  const L = state.lineups[team]; if(!L) return;
+  if(role==='G'){ L.G=[]; renderBoards(); return; }
+  const arr = L[group][role]; const i=arr.indexOf(id); if(i>=0) arr.splice(i,1);
+  renderBoards();
+}
 
-/* ====== FILTERS ====== */
-['q','fPos','fAvail','fConf'].forEach(id=>el(id).addEventListener('input',renderPlayers));
+function setActiveTarget(slotEl){
+  clearActiveTarget();
+  activeTarget = { team:slotEl.dataset.team, role:slotEl.dataset.role, group:slotEl.dataset.group, el:slotEl };
+  slotEl.classList.add('active');
+  $('#hintTarget').textContent = `Cible: ${activeTarget.team.toUpperCase()} ${activeTarget.role}${activeTarget.group==='G'?'':activeTarget.group.substring(1)} — candidats surlignés`;
+  renderPlayers();
+}
+function clearActiveTarget(){
+  if(activeTarget?.el) activeTarget.el.classList.remove('active');
+  activeTarget=null; $('#hintTarget').textContent=''; renderPlayers();
+}
 
-/* ====== BUTTONS ====== */
-el('btnParse').onclick=()=>{
-  const src=el('taEmails').value.trim(); if(!src){alert('Colle des emails.');return;}
-  const list=parseEmails(src); let n=0; list.forEach(p=>{upsert(p);n++}); renderPlayers(); renderSlots(); updatePreviews(); el('taEmails').value=''; el('status').textContent=`Ajoutés: ${n}`;
+/* ===================== ACTIONS (filter/auto/check/export) ===================== */
+$('#btnToggle').onclick=()=>{ showAll=!showAll; $('#btnToggle').textContent = showAll?'Masquer non pertinents':'Afficher tout / Candidats'; renderPlayers(); };
+
+['q','fPos','fAvail','fConf'].forEach(id=> $( '#'+id ).addEventListener('input', renderPlayers));
+
+$('#btnAuto').onclick=()=>{
+  // pour chaque team, remplir G, D1..D3, F1..F3
+  for(const t of Object.keys(state.lineups)){
+    // Goaler
+    if(state.lineups[t].G.length===0){
+      const g = bestFor(t,'G'); if(g) state.lineups[t].G=[g.id];
+    }
+    // DEF
+    for(const grp of ['D1','D2','D3']){
+      if(state.lineups[t][grp].LD.length===0){ const p=bestFor(t,'LD'); if(p) state.lineups[t][grp].LD=[p.id]; }
+      if(state.lineups[t][grp].RD.length===0){ const p=bestFor(t,'RD'); if(p) state.lineups[t][grp].RD=[p.id]; }
+    }
+    // FWD
+    for(const grp of ['F1','F2','F3']){
+      if(state.lineups[t][grp].LW.length===0){ const p=bestFor(t,'LW'); if(p) state.lineups[t][grp].LW=[p.id]; }
+      if(state.lineups[t][grp].C.length===0 ){ const p=bestFor(t,'C');  if(p) state.lineups[t][grp].C =[p.id]; }
+      if(state.lineups[t][grp].RW.length===0){ const p=bestFor(t,'RW'); if(p) state.lineups[t][grp].RW=[p.id]; }
+    }
+  }
+  renderBoards(); $('#status').textContent='Auto-suggest terminé (poste/côté/dispo/confiance).';
 };
-el('btnClear').onclick=()=>el('taEmails').value='';
-el('btnFetch').onclick=async()=>{
+function bestFor(team, role){
+  const placed = new Set();
+  const L = state.lineups[team];
+  // joueurs déjà utilisés dans ce team
+  [L.G, L.D1.LD, L.D1.RD, L.D2.LD, L.D2.RD, L.D3.LD, L.D3.RD, L.F1.LW, L.F1.C, L.F1.RW, L.F2.LW, L.F2.C, L.F2.RW, L.F3.LW, L.F3.C, L.F3.RW].forEach(a=>a.forEach(id=>placed.add(id)));
+  const scored = state.players
+    .filter(p=>!placed.has(p.id))
+    .map(p=>({p,score:matchScoreForRole(p,role,team)}))
+    .filter(x=>x.score>0)
+    .sort((a,b)=> b.score-a.score);
+  return scored[0]?.p || null;
+}
+
+$('#btnCheck').onclick=()=>{
+  const msgs=[];
+  for(const t of Object.keys(state.lineups)){
+    const L=state.lineups[t];
+    const cnt = {
+      G: L.G.length,
+      D: L.D1.LD.length+L.D1.RD.length+L.D2.LD.length+L.D2.RD.length+L.D3.LD.length+L.D3.RD.length,
+      F: L.F1.LW.length+L.F1.C.length+L.F1.RW.length+L.F2.LW.length+L.F2.C.length+L.F2.RW.length+L.F3.LW.length+L.F3.C.length+L.F3.RW.length
+    };
+    const bad = (cnt.G!==1) || (cnt.D!==6) || (cnt.F!==9);
+    msgs.push(`${t}: ${bad?'⚠':'✔'} G:${cnt.G}/1, D:${cnt.D}/6, F:${cnt.F}/9`);
+  }
+  $('#status').textContent = msgs.join(' | ');
+};
+
+/* ===================== EXPORT / IMPORT JSON ===================== */
+function toLineupsJson(){
+  const t = {};
+  for(const k of Object.keys(state.lineups)){
+    const L=state.lineups[k];
+    t[k]={ G: L.G, D1:L.D1, D2:L.D2, D3:L.D3, F1:L.F1, F2:L.F2, F3:L.F3, notes: L.notes||"" };
+  }
+  return { version:1, updated_at:new Date().toISOString(), tournaments:t };
+}
+$('#btnExportPlayers').onclick=()=> download('players.json', JSON.stringify({players:state.players},null,2));
+$('#btnExportLineups').onclick=()=> download('lineups.json', JSON.stringify(toLineupsJson(),null,2));
+$('#fileLineup').onchange=async e=>{
+  const f=e.target.files[0]; if(!f) return;
   try{
-    const url=el('fetchUrl').value||'data/players.json'; const r=await fetch(url,{cache:'no-store'}); const j=await r.json();
-    const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]); let n=0; arr.forEach(p=>{upsert(p);n++});
-    renderPlayers(); renderSlots(); updatePreviews(); el('status').textContent=`Chargé depuis ${url}: ${n} joueurs fusionnés.`;
-  }catch(e){ alert('Impossible de charger le JSON (CORS/URL).'); }
-};
-/* drag & drop zone for files */
-(function(){
-  const dz=el('dz');
-  function stop(e){e.preventDefault();e.stopPropagation();}
-  ['dragenter','dragover','dragleave','drop'].forEach(ev=>dz.addEventListener(ev,stop,false));
-  dz.addEventListener('dragover',()=>dz.style.borderColor='rgba(59,130,246,.6)');
-  dz.addEventListener('dragleave',()=>dz.style.borderColor='rgba(255,255,255,.18)');
-  dz.addEventListener('drop',async (e)=>{
-    dz.style.borderColor='rgba(255,255,255,.18)';
-    const f=e.dataTransfer.files[0]; if(!f) return;
     const txt=await f.text();
-    if(f.name.endsWith('.json')){
-      try{ const j=JSON.parse(txt); const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]); arr.forEach(p=>upsert(p)); renderPlayers(); renderSlots(); updatePreviews(); }
-      catch{ alert('JSON invalide.'); }
-    }else{ // CSV basique: header + lignes
-      const rows=txt.split(/\r?\n/).filter(Boolean).map(r=>r.split(/,(?![^"]*"[^"]*(?:"[^"]*"[^"]*)*$)/)); // split CSV simple
-      const header=rows.shift().map(h=>h.trim().toLowerCase());
-      const emails=[];
-      for(const r of rows){
-        const o={}; r.forEach((v,i)=>o[header[i]]=v.trim());
-        // reconstruit un bloc "Name  Value"
-        let block=''; for(const k in o){ if(!k) continue; block += `${k}  ${o[k]}\n`; }
-        emails.push(block);
+    const j=JSON.parse(txt);
+    if(j.tournaments){
+      // notre format “par slots”
+      for(const k of Object.keys(state.lineups)){
+        const T=j.tournaments[k]||{};
+        if(T.G) state.lineups[k].G = T.G;
+        ['D1','D2','D3'].forEach(g=>{
+          state.lineups[k][g].LD = T[g]?.LD || [];
+          state.lineups[k][g].RD = T[g]?.RD || [];
+        });
+        ['F1','F2','F3'].forEach(g=>{
+          state.lineups[k][g].LW = T[g]?.LW || [];
+          state.lineups[k][g].C  = T[g]?.C  || [];
+          state.lineups[k][g].RW = T[g]?.RW || [];
+        });
       }
-      const list=parseEmails(emails.join('\n\n')); list.forEach(p=>upsert(p)); renderPlayers(); renderSlots(); updatePreviews();
-    }
-  });
-})();
+    }else if(j.boston || j.meltdown || j.throne){
+      // ancien format (def/fwd/gol) → on repack
+      for(const k of Object.keys(state.lineups)){
+        const T=j[k]||{def:[],fwd:[],gol:[]};
+        const D=T.def||[]; const F=T.fwd||[]; const G=T.gol||[];
+        state.lineups[k].G = G.slice(0,1);
+        const defPairs=[[ 'D1','LD'],['D1','RD'],['D2','LD'],['D2','RD'],['D3','LD'],['D3','RD']];
+        defPairs.forEach(([g,r],i)=>{ const id=D[i]; if(id) state.lineups[k][g][r]=[id]; });
+        const fTrip=[[ 'F1','LW'],['F1','C'],['F1','RW'],['F2','LW'],['F2','C'],['F2','RW'],['F3','LW'],['F3','C'],['F3','RW']];
+        fTrip.forEach(([g,r],i)=>{ const id=F[i]; if(id) state.lineups[k][g][r]=[id]; });
+      }
+    }else throw new Error('format inconnu');
+    renderBoards(); updatePreviewShort(); $('#status').textContent='Lineup importé.';
+  }catch(err){ alert('lineups.json invalide.'); }
+};
 
-/* file input */
-el('filePlayers').addEventListener('change',async e=>{
-  const f=e.target.files[0]; if(!f) return; const txt=await f.text();
-  if(f.name.endsWith('.json')){
-    try{ const j=JSON.parse(txt); const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]); arr.forEach(p=>upsert(p)); renderPlayers(); renderSlots(); updatePreviews(); }
-    catch{ alert('JSON invalide.'); }
-  }else{
-    // CSV
-    const rows=txt.split(/\r?\n/).filter(Boolean).map(r=>r.split(/,(?![^"]*"[^"]*(?:"[^"]*"[^"]*)*$)/));
-    const header=rows.shift().map(h=>h.trim().toLowerCase());
-    const emails=[];
-    for(const r of rows){
-      const o={}; r.forEach((v,i)=>o[header[i]]=v.trim());
-      let block=''; for(const k in o){ if(!k) continue; block += `${k}  ${o[k]}\n`; }
-      emails.push(block);
-    }
-    const list=parseEmails(emails.join('\n\n')); list.forEach(p=>upsert(p)); renderPlayers(); renderSlots(); updatePreviews();
-  }
+function download(name, text){
+  const blob=new Blob([text],{type:'application/json'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),500);
+}
+
+/* ===================== PREVIEW JSON (réduit) ===================== */
+function updatePreviewShort(){
+  const sample = {players: (state.players.slice(0,3)), lineups: toLineupsJson().tournaments };
+  $('#pvShort').textContent = JSON.stringify(sample, null, 2);
+}
+$('#btnExpand').onclick=()=>{
+  $('#pvWrap').classList.toggle('expanded');
+};
+
+/* ===================== IMPORT SOURCES (fetch / file / paste / dnd) ===================== */
+$('#btnFetch').onclick=async()=>{
+  try{
+    const r=await fetch('data/players.json',{cache:'no-store'}); const j=await r.json();
+    const arr = Array.isArray(j.players) ? j.players : (Array.isArray(j) ? j : []);
+    arr.forEach(upsertPlayer); renderPlayers(); renderBoards(); updatePreviewShort(); $('#status').textContent='Chargé depuis /data/players.json';
+  }catch(e){ alert('Impossible de charger /data/players.json'); }
+};
+$('#btnParse').onclick=()=>{
+  const raw=$('#taEmails').value.trim(); if(!raw){ alert('Colle un ou plusieurs emails FormSubmit.'); return; }
+  const list=parseEmailBlocks(raw); list.forEach(upsertPlayer);
+  $('#taEmails').value=''; renderPlayers(); renderBoards(); updatePreviewShort(); $('#status').textContent=`Ajout: ${list.length} joueur(s)`;
+};
+$('#btnClear').onclick=()=> $('#taEmails').value='';
+
+$('#filePlayers').onchange=async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const txt=await f.text(); const name=f.name.toLowerCase();
+  if(name.endsWith('.json')){ try{ const j=JSON.parse(txt); const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]); arr.forEach(upsertPlayer); }catch{ alert('JSON invalide'); } }
+  else if(name.endsWith('.csv')){ csvToPlayers(txt).forEach(upsertPlayer); }
+  else if(name.endsWith('.eml')||name.endsWith('.txt')){ parseEmailBlocks(stripHtml(txt)).forEach(upsertPlayer); }
+  else if(name.endsWith('.msg')){ await parseMsgFile(f); }
+  renderPlayers(); renderBoards(); updatePreviewShort();
+};
+
+const dz = $('#dropZone');
+['dragenter','dragover','dragleave','drop'].forEach(ev=> dz.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); }, false));
+dz.addEventListener('dragover', ()=> dz.style.borderColor='rgba(59,130,246,.6)');
+dz.addEventListener('dragleave', ()=> dz.style.borderColor='rgba(255,255,255,.2)');
+dz.addEventListener('drop', async e=>{
+  dz.style.borderColor='rgba(255,255,255,.2)';
+  const f=e.dataTransfer.files?.[0]; if(!f) return;
+  const txt=await f.text(); const n=f.name.toLowerCase();
+  if(n.endsWith('.json')){ try{ const j=JSON.parse(txt); const arr=Array.isArray(j.players)?j.players:(Array.isArray(j)?j:[]); arr.forEach(upsertPlayer);}catch{alert('JSON invalide');} }
+  else if(n.endsWith('.csv')){ csvToPlayers(txt).forEach(upsertPlayer); }
+  else if(n.endsWith('.eml')||n.endsWith('.txt')){ parseEmailBlocks(stripHtml(txt)).forEach(upsertPlayer); }
+  else if(n.endsWith('.msg')){ await parseMsgFile(f); }
+  renderPlayers(); renderBoards(); updatePreviewShort();
 });
 
-/* init */
-renderPlayers(); renderSlots(); updatePreviews();
+/* ---- helpers import ---- */
+function stripHtml(s){ return s.replace(/<\/?[^>]+(>|$)/g,''); }
+function csvToPlayers(csv){
+  const rows=csv.split(/\r?\n/).filter(r=>r.trim().length>0);
+  if(rows.length<2) return [];
+  const head=rows.shift().split(',').map(h=>h.trim().toLowerCase());
+  const blocks=[];
+  for(const r of rows){
+    const cells = r.split(',').map(x=>x.trim());
+    const o={}; head.forEach((h,i)=> o[h]=cells[i]||'');
+    // recompose "Name  Value" format quickly
+    let block=''; for(const k of Object.keys(o)){ if(!k) continue; block += `${k}  ${o[k]}\n`; }
+    blocks.push(block);
+  }
+  const all= parseEmailBlocks(blocks.join('\n\n')); return all;
+}
+async function parseMsgFile(file){
+  // Read as ArrayBuffer then parse with MSGReader
+  const buf = await file.arrayBuffer();
+  const mr = new MSGReader(buf);
+  const info = mr.getFileData();
+  const body = (info?.body || info?.bodyHTML || '');
+  const plain = stripHtml(body);
+  parseEmailBlocks(plain).forEach(upsertPlayer);
+}
+
+/* ===================== DRAG FROM TABLE TO SLOTS ===================== */
+function setActiveFromEl(el){ setActiveTarget(el); }
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.slot')) clearActiveTarget();
+});
+
+/* ===================== BUILD & INIT ===================== */
+buildBoards();
+renderPlayers();
+updatePreviewShort();
+
+/* ===================== COUNTDOWN (option léger dans l’admin) ===================== */
+(function(){
+  function mk(y,m,d){ return new Date(y, m-1, d, 0,0,0,0)}
+  const targets = {
+    'cd-boston':   mk(...TEAMS.boston.date),
+    'cd-meltdown': mk(...TEAMS.meltdown.date),
+    'cd-throne':   mk(...TEAMS.throne.date)
+  };
+  function upd(){
+    const today = new Date(); const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    for(const id of Object.keys(targets)){
+      const el = document.getElementById(id); if(!el) continue;
+      const days = Math.ceil((targets[id]-t0)/86400000);
+      el.textContent = (days>0)? `J-${days}` : (days===0? 'Jour J' : 'Terminé');
+    }
+  }
+  upd(); setInterval(upd, 3600_000);
+})();
 </script>
 </body>
 </html>
