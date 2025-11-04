@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QHC Admin — The Road to The Throne (sans DB)</title>
+<meta name="description" content="Admin QHC: importer réponses FormSubmit, composer lineups et exporter JSON (sans base de données)." />
+<style>
+  :root{
+    --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
+    --text:#e7ecf3; --muted:#a7b3c7; --accent:#d4af37; --accent2:#3b82f6;
+    --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --ring:rgba(59,130,246,.3);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background: radial-gradient(900px 500px at 10% -10%, #0b2451 0, transparent 60%), linear-gradient(180deg,#0a1020,#0b1222);
+    color:var(--text);
+  }
+  header{padding:20px 16px; border-bottom:1px solid rgba(255,255,255,.08)}
+  h1{margin:0; font-size:1.4rem}
+  main{max-width:1200px; margin:0 auto; padding:16px}
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+  .card{
+    background:linear-gradient(180deg,var(--panel2),var(--panel));
+    border:1px solid rgba(255,255,255,.08); border-radius:var(--radius);
+    box-shadow:0 8px 28px rgba(0,0,0,.35); padding:16px; margin:12px 0;
+  }
+  .grid{display:grid; gap:12px}
+  @media(min-width:960px){ .grid-cols-2{ grid-template-columns:1fr 1fr } .grid-cols-3{ grid-template-columns:1fr 1fr 1fr } }
+  label{font-weight:600; display:block; margin-bottom:6px}
+  textarea,input,select,button{
+    font: inherit; color:var(--text);
+  }
+  textarea,input[type="text"],input[type="email"],input[type="number"],select{
+    width:100%; background:#0b1020; border:1px solid rgba(255,255,255,.12);
+    padding:10px 12px; border-radius:10px; outline:none; transition:.2s;
+  }
+  textarea:focus,input:focus,select:focus{ border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring) }
+  textarea{min-height:140px; resize:vertical}
+  .btn{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:0; padding:10px 14px; border-radius:10px; color:#fff; font-weight:700; cursor:pointer;
+    box-shadow:0 8px 24px rgba(59,130,246,.28);
+  }
+  .btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,.2); color:#e7ecf3; box-shadow:none}
+  .btn.warn{ background:linear-gradient(135deg,var(--warn),#fbbf24); color:#111}
+  .btn.red{ background:linear-gradient(135deg,var(--bad),#f87171) }
+  table{width:100%; border-collapse:collapse; font-size:.95rem}
+  th,td{border-bottom:1px solid rgba(255,255,255,.08); padding:8px 6px; vertical-align:top}
+  th{color:#cfe1ff; text-align:left}
+  .pill{display:inline-block; padding:3px 8px; border-radius:999px; font-size:.8rem; border:1px solid rgba(255,255,255,.15)}
+  .DEF{ background:#0b2a3c; border-color:#124b6b } .FWD{ background:#3a2a0b; border-color:#6b5312 }
+  .CEN{ background:#3a300b; border-color:#6b5e12 } .GOL{ background:#27272a; border-color:#52525b }
+  .ok{color:#bef264} .bad{color:#fca5a5}
+  .slots{display:grid; gap:10px}
+  .slotBox{
+    border:1px dashed rgba(255,255,255,.18); border-radius:12px; padding:10px; min-height:56px;
+    background:rgba(255,255,255,.03)
+  }
+  .slotHeader{display:flex; justify-content:space-between; align-items:center; margin-bottom:6px}
+  .rowflex{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  .chip{
+    display:inline-flex; align-items:center; gap:6px; padding:6px 8px; border-radius:999px;
+    background:#0b1020; border:1px solid rgba(255,255,255,.18)
+  }
+  .chip .x{cursor:pointer; opacity:.8}
+  .muted{color:var(--muted); font-size:.9rem}
+  .hr{border-top:1px solid rgba(255,255,255,.08); margin:8px 0}
+  .right{ text-align:right }
+  .small{font-size:.85rem}
+  .bold{font-weight:700}
+  details>summary{cursor:pointer; margin-bottom:8px}
+  /* sticky actions */
+  .sticky-actions{position:sticky; bottom:0; padding:8px 0; background:linear-gradient(180deg,transparent,rgba(10,16,32,.9)); z-index:5}
+</style>
+</head>
+<body>
+<header>
+  <h1>QHC Admin — The Road to The Throne (sans DB)</h1>
+  <div class="muted small">Importer les réponses FormSubmit → construire les lineups → exporter JSON pour GitHub</div>
+</header>
+<main>
+
+  <!-- SECTION 1: Import / Merge players -->
+  <section class="card">
+    <h2>1) Données joueurs — import</h2>
+    <div class="grid grid-cols-2">
+      <div>
+        <label>Coller des emails FormSubmit (plusieurs, format “Name / Value”)</label>
+        <textarea id="pasteArea" placeholder="Colle ici l'email brut FormSubmit (Name / Value)…"></textarea>
+        <div class="bar">
+          <button class="btn" id="btnParseAdd">➕ Parser & Ajouter</button>
+          <button class="btn ghost" id="btnClearPaste">Effacer</button>
+        </div>
+        <details>
+          <summary class="muted">Format attendu (exemple)</summary>
+          <pre class="small muted">Name  Value
+player_name  John Doe
+birth_year   2014
+...
+(une ligne vide sépare les soumissions)</pre>
+        </details>
+      </div>
+
+      <div>
+        <label>Charger un fichier <code>players.json</code> existant</label>
+        <input type="file" id="filePlayers" accept="application/json" />
+        <div class="hr"></div>
+        <label>Charger un fichier <code>lineups.json</code> existant</label>
+        <input type="file" id="fileLineups" accept="application/json" />
+        <div class="hr"></div>
+        <div class="bar">
+          <button class="btn" id="btnDownloadPlayers">💾 Exporter players.json</button>
+          <button class="btn" id="btnDownloadLineups">💾 Exporter lineups.json</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div>
+      <div class="bar">
+        <label class="muted">Filtrer&nbsp;:</label>
+        <select id="filterAvail">
+          <option value="">Disponibilité (tous)</option>
+          <option value="boston">Boston: Yes</option>
+          <option value="meltdown">Meltdown: Yes</option>
+          <option value="throne">Throne: Yes</option>
+        </select>
+        <select id="filterPos">
+          <option value="">Position (toutes)</option>
+          <option value="DEF">DEF</option><option value="FWD">FWD</option><option value="CEN">CEN</option><option value="GOL">GOL</option>
+        </select>
+        <select id="filterConf">
+          <option value="">Confiance (toutes)</option>
+          <option value="80">≥ 80%</option><option value="90">≥ 90%</option>
+        </select>
+        <input id="filterSearch" type="text" placeholder="Rechercher nom/ville…" />
+        <button class="btn ghost" id="btnResetFilters">Réinitialiser</button>
+      </div>
+
+      <div style="overflow:auto; max-height:360px; border:1px solid rgba(255,255,255,.08); border-radius:10px;">
+        <table id="tblPlayers">
+          <thead>
+            <tr>
+              <th>Nom</th><th>Année</th><th>Ville</th><th>Pos</th><th>L/R</th>
+              <th>Boston</th><th>Meltdown</th><th>Throne</th><th>Conf</th><th>+ Lineup</th>
+            </tr>
+          </thead>
+          <tbody><!-- rows --></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Builder lineups -->
+  <section class="card">
+    <h2>2) Composer les lineups</h2>
+    <div class="grid grid-cols-3">
+      <div class="slotBox">
+        <div class="slotHeader"><div class="bold">Boston</div><div class="muted small">6 DEF • 9 AV/CEN • 1 GOL</div></div>
+        <div class="slots">
+          <div><span class="muted small">DEF</span><div id="boston-def" class="rowflex"></div></div>
+          <div><span class="muted small">AV/CEN</span><div id="boston-fwd" class="rowflex"></div></div>
+          <div><span class="muted small">GOL</span><div id="boston-gol" class="rowflex"></div></div>
+        </div>
+      </div>
+      <div class="slotBox">
+        <div class="slotHeader"><div class="bold">Meltdown</div><div class="muted small">6 • 9 • 1</div></div>
+        <div class="slots">
+          <div><span class="muted small">DEF</span><div id="meltdown-def" class="rowflex"></div></div>
+          <div><span class="muted small">AV/CEN</span><div id="meltdown-fwd" class="rowflex"></div></div>
+          <div><span class="muted small">GOL</span><div id="meltdown-gol" class="rowflex"></div></div>
+        </div>
+      </div>
+      <div class="slotBox">
+        <div class="slotHeader"><div class="bold">The Throne</div><div class="muted small">6 • 9 • 1</div></div>
+        <div class="slots">
+          <div><span class="muted small">DEF</span><div id="throne-def" class="rowflex"></div></div>
+          <div><span class="muted small">AV/CEN</span><div id="throne-fwd" class="rowflex"></div></div>
+          <div><span class="muted small">GOL</span><div id="throne-gol" class="rowflex"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sticky-actions">
+      <div class="bar">
+        <button class="btn" id="btnAutosuggest">✨ Autosuggest (simple)</button>
+        <button class="btn warn" id="btnValidate">✔ Vérifier quotas</button>
+        <button class="btn" id="btnDownloadLineups2">💾 Exporter lineups.json</button>
+        <span class="muted small" id="statusMsg"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: État JSON -->
+  <section class="card">
+    <h2>3) État JSON (lecture/écriture manuelle si besoin)</h2>
+    <details>
+      <summary class="muted">Afficher players.json (lecture seule ici)</summary>
+      <pre id="playersPreview" class="small" style="white-space:pre-wrap;"></pre>
+    </details>
+    <details>
+      <summary class="muted">Afficher lineups.json</summary>
+      <pre id="lineupsPreview" class="small" style="white-space:pre-wrap;"></pre>
+    </details>
+  </section>
+
+</main>
+
+<script>
+/* ------------------------- State ------------------------- */
+const state = {
+  players: [],     // array of player objects
+  lineups: {       // tournaments
+    boston:   { def:[], fwd:[], gol:[], notes:"" },
+    meltdown: { def:[], fwd:[], gol:[], notes:"" },
+    throne:   { def:[], fwd:[], gol:[], notes:"" }
+  }
+};
+const POS_MAP = { "Defence":"DEF", "Defense":"DEF", "Def":"DEF", "Forward":"FWD", "Avant":"FWD", "Center":"CEN", "Centre":"CEN", "Goaler":"GOL", "Goalie":"GOL", "Gardien":"GOL" };
+
+/* ------------------------- Utils ------------------------- */
+const slug = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+const byId = id => document.getElementById(id);
+function download(filename, text){
+  const blob = new Blob([text], {type:"application/json;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 500);
+}
+function pretty(o){ return JSON.stringify(o, null, 2); }
+
+/* ------------------------- FormSubmit email parser ------------------------- */
+/* Parse un bloc email FormSubmit "Name Value" en objet normalisé */
+function parseEmailBlock(text){
+  // un bloc = lignes "key<sep>value" ; champs vides autorisés
+  const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l.length||l==='');
+  const obj = {};
+  for(const line of lines){
+    const m = line.match(/^([A-Za-z0-9_ ]+)\s+(.+)$/);
+    if(!m) continue;
+    let key = m[1].trim().toLowerCase().replace(/\s+/g,'_');
+    let val = m[2].trim();
+    obj[key] = val;
+  }
+  return normalizePlayer(obj, text);
+}
+
+function normalizePlayer(raw, rawText){
+  const name = raw.player_name || raw.name || '';
+  const by   = raw.birth_year ? Number(String(raw.birth_year).trim()) : NaN;
+  const id   = `${slug(name)}-${isFinite(by)?by:'xxxx'}`;
+
+  // sides
+  const sides = [];
+  if ((raw.side_left||'').toLowerCase()==='yes' || (raw.side_l||'').toLowerCase()==='yes') sides.push('L');
+  if ((raw.side_right||'').toLowerCase()==='yes' || (raw.side_r||'').toLowerCase()==='yes') sides.push('R');
+
+  // positions
+  const prim = POS_MAP[raw.primary_position] || POS_MAP[raw.position] || (raw.primary_position||'').toUpperCase() || '';
+  const sec  = POS_MAP[raw.secondary_position] || (raw.secondary_position||'').toUpperCase() || 'NONE';
+
+  const availability = {
+    boston:   prettyYN(raw.boston_showdown),
+    meltdown: prettyYN(raw.montreal_meltdown),
+    throne:   prettyYN(raw.the_throne)
+  };
+  function prettyYN(v){
+    const s = (v||'').toString().toUpperCase();
+    if (s==='YES' || s==='OUI') return 'Yes';
+    if (s==='NO'  || s==='NON') return 'No';
+    return 'TBD';
+  }
+
+  const player = {
+    id,
+    name,
+    birth_year: isFinite(by)?by:null,
+    city: raw.city || '',
+    current_team: raw.current_team || '',
+    parent: { email: raw.parent_email||'', phone: raw.parent_phone||'' },
+    positions: { primary: prim || '', secondary: sec || 'NONE' },
+    sides,
+    jersey: {
+      type: raw.jersey_type || '',
+      size: raw.jersey_size || '',
+      pref_numbers: [raw.jersey_number_1, raw.jersey_number_2, raw.jersey_number_3].filter(x=>x && String(x).trim().length)
+    },
+    availability,
+    confidence_pct: raw.confidence_pct ? Number(raw.confidence_pct) : null,
+    consents: {
+      throne_rule: (raw.ack_throne_rule||'').toLowerCase()==='on',
+      limited_spots: (raw.ack_limited_spots||'').toLowerCase()==='on',
+      consent_contact: (raw.consent_contact||'').toLowerCase()==='on'
+    },
+    submitted_at: extractSubmittedAt(rawText) || null,
+    source: extractSource(rawText) || null
+  };
+  return player;
+}
+function extractSubmittedAt(text){
+  const m = text.match(/Submitted at\s+(.+?)\s*\(UTC\)/i);
+  if (!m) return null;
+  // On renvoie approximativement en ISO si possible
+  try { return new Date(m[1]+' UTC').toISOString(); } catch { return m[1]; }
+}
+function extractSource(text){
+  const m = text.match(/Someone just submitted your form on\s+(https?:\/\/\S+)/i);
+  return m ? m[1] : null;
+}
+
+/* ------------------------- Merge players ------------------------- */
+function upsertPlayer(p){
+  // clé = id ; si existe, on remplace si submitted_at plus récent
+  const idx = state.players.findIndex(x=>x.id===p.id);
+  if (idx<0){ state.players.push(p); return; }
+  const a = state.players[idx].submitted_at, b = p.submitted_at;
+  if (b && (!a || new Date(b)>new Date(a))) state.players[idx]=p; // plus récent
+}
+
+/* ------------------------- UI Bindings ------------------------- */
+const pasteArea = byId('pasteArea');
+byId('btnParseAdd').onclick = ()=>{
+  const raw = pasteArea.value.trim();
+  if(!raw){ alert('Colle un ou plusieurs emails FormSubmit.'); return; }
+  const blocks = raw.split(/\n\s*\n/); // séparés par ligne vide
+  let added=0;
+  for(const block of blocks){
+    const p = parseEmailBlock(block);
+    if(p && p.name){ upsertPlayer(p); added++; }
+  }
+  renderPlayers(); updatePreviews();
+  byId('statusMsg').textContent = `Ajout: ${added} joueur(s) fusionné(s).`;
+};
+byId('btnClearPaste').onclick = ()=> pasteArea.value='';
+
+byId('filePlayers').onchange = async (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const txt = await f.text();
+  try{
+    const json = JSON.parse(txt);
+    const arr = Array.isArray(json.players)? json.players : (Array.isArray(json)?json:[]);
+    let added=0;
+    for(const p of arr){ upsertPlayer(p); added++; }
+    renderPlayers(); updatePreviews();
+    byId('statusMsg').textContent = `players.json chargé: ${added} éléments fusionnés.`;
+  }catch(err){ alert('JSON invalide (players).'); }
+};
+
+byId('fileLineups').onchange = async (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  try{
+    const txt = await f.text();
+    const j = JSON.parse(txt);
+    if (j.tournaments){
+      state.lineups = {
+        boston:   j.tournaments.boston   || {def:[],fwd:[],gol:[],notes:""},
+        meltdown: j.tournaments.meltdown || {def:[],fwd:[],gol:[],notes:""},
+        throne:   j.tournaments.throne   || {def:[],fwd:[],gol:[],notes:""}
+      };
+      renderAllSlots(); updatePreviews();
+      byId('statusMsg').textContent = `lineups.json chargé.`;
+    } else { throw new Error(); }
+  }catch{ alert('JSON invalide (lineups).'); }
+};
+
+byId('btnDownloadPlayers').onclick = ()=> download('players.json', pretty({players:state.players}));
+byId('btnDownloadLineups').onclick = ()=> download('lineups.json', pretty({version:1, updated_at:new Date().toISOString(), tournaments:state.lineups}));
+byId('btnDownloadLineups2').onclick = byId('btnDownloadLineups').onclick;
+
+byId('btnResetFilters').onclick = ()=>{
+  byId('filterAvail').value=''; byId('filterPos').value=''; byId('filterConf').value=''; byId('filterSearch').value='';
+  renderPlayers();
+};
+['filterAvail','filterPos','filterConf','filterSearch'].forEach(id=>{
+  byId(id).addEventListener('input', renderPlayers);
+});
+
+/* ------------------------- Render Players ------------------------- */
+function renderPlayers(){
+  const tb = byId('tblPlayers').querySelector('tbody'); tb.innerHTML='';
+  const avail = byId('filterAvail').value; // 'boston'|'meltdown'|'throne'|''
+  const pos   = byId('filterPos').value;   // 'DEF'|'FWD'|'CEN'|'GOL'|''
+  const conf  = byId('filterConf').value;  // '80'|'90'|''
+  const q     = byId('filterSearch').value.toLowerCase();
+
+  const rows = state.players.filter(p=>{
+    if (q && !(`${p.name} ${p.city}`.toLowerCase().includes(q))) return false;
+    if (pos && p.positions.primary!==pos && p.positions.secondary!==pos) return false;
+    if (conf && (p.confidence_pct||0) < Number(conf)) return false;
+    if (avail){
+      const val = p.availability[avail]||'';
+      if (val!=='Yes') return false;
+    }
+    return true;
+  }).sort((a,b)=> (a.name||'').localeCompare(b.name||''));
+
+  for(const p of rows){
+    const tr = document.createElement('tr');
+    const posPill = (role)=>{
+      const span = document.createElement('span'); span.className=`pill ${role||''}`; span.textContent=role||'?'; return span;
+    };
+    const sides = (p.sides||[]).join('/');
+    tr.innerHTML = `
+      <td>${p.name||''}<div class="small muted">${p.parent?.email||''}</div></td>
+      <td>${p.birth_year||''}</td>
+      <td>${p.city||''}</td>
+      <td>${posPill(p.positions?.primary).outerHTML} ${p.positions?.secondary && p.positions.secondary!=='NONE'? posPill(p.positions.secondary).outerHTML:''}</td>
+      <td>${sides||'-'}</td>
+      <td>${p.availability?.boston || ''}</td>
+      <td>${p.availability?.meltdown || ''}</td>
+      <td>${p.availability?.throne || ''}</td>
+      <td>${p.confidence_pct!=null? p.confidence_pct+'%':''}</td>
+      <td class="right">
+        <select data-id="${p.id}" class="small addSel">
+          <option value="">Ajouter…</option>
+          <option value="boston:def">Boston • DEF</option>
+          <option value="boston:fwd">Boston • AV/CEN</option>
+          <option value="boston:gol">Boston • GOL</option>
+          <option value="meltdown:def">Meltdown • DEF</option>
+          <option value="meltdown:fwd">Meltdown • AV/CEN</option>
+          <option value="meltdown:gol">Meltdown • GOL</option>
+          <option value="throne:def">Throne • DEF</option>
+          <option value="throne:fwd">Throne • AV/CEN</option>
+          <option value="throne:gol">Throne • GOL</option>
+        </select>
+      </td>
+    `;
+    tb.appendChild(tr);
+  }
+
+  tb.querySelectorAll('.addSel').forEach(sel=>{
+    sel.onchange = (e)=>{
+      const id = e.target.dataset.id;
+      const [tour, lane] = e.target.value.split(':');
+      if (!id || !tour || !lane) return;
+      addToLineup(tour, lane, id);
+      e.target.value='';
+    };
+  });
+
+  // preview
+  byId('playersPreview').textContent = pretty({players:state.players});
+}
+
+/* ------------------------- Lineups ops ------------------------- */
+function addToLineup(tour, lane, id){
+  const arr = state.lineups[tour][lane];
+  if (arr.includes(id)) return;
+  // quotas mous (affiche, ne bloque pas)
+  const limit = lane==='def'?6 : lane==='fwd'?9 : 1;
+  if (arr.length >= limit){
+    if (!confirm(`Dépassement ${tour.toUpperCase()} ${lane.toUpperCase()} (limite ${limit}). Ajouter quand même ?`)) return;
+  }
+  arr.push(id);
+  renderAllSlots(); updatePreviews();
+}
+function removeFromLineup(tour, lane, id){
+  const arr = state.lineups[tour][lane];
+  const i = arr.indexOf(id); if (i>=0) arr.splice(i,1);
+  renderAllSlots(); updatePreviews();
+}
+function renderAllSlots(){
+  const lanes = [
+    ['boston','def'],['boston','fwd'],['boston','gol'],
+    ['meltdown','def'],['meltdown','fwd'],['meltdown','gol'],
+    ['throne','def'],['throne','fwd'],['throne','gol'],
+  ];
+  for (const [t,l] of lanes){
+    const host = byId(`${t}-${l}`); host.innerHTML='';
+    for (const id of state.lineups[t][l]){
+      const p = state.players.find(x=>x.id===id);
+      const chip = document.createElement('span'); chip.className='chip';
+      chip.innerHTML = `
+        <span class="small bold">${p?.name||id}</span>
+        <span class="pill ${p?.positions?.primary||''}">${p?.positions?.primary||''}</span>
+        <span class="x small" title="retirer">✕</span>
+      `;
+      chip.querySelector('.x').onclick = ()=> removeFromLineup(t,l,id);
+      host.appendChild(chip);
+    }
+  }
+}
+byId('btnValidate').onclick = ()=>{
+  const msgs = [];
+  function check(t,l,lim){
+    const n = state.lineups[t][l].length;
+    if (n!==lim) msgs.push(`${t}: ${l.toUpperCase()} ${n}/${lim}`);
+  }
+  check('boston','def',6);   check('boston','fwd',9);   check('boston','gol',1);
+  check('meltdown','def',6); check('meltdown','fwd',9); check('meltdown','gol',1);
+  check('throne','def',6);   check('throne','fwd',9);   check('throne','gol',1);
+  byId('statusMsg').textContent = msgs.length? ('⚠ Vérifier quotas → '+msgs.join(' | ')) : '✔ Quotas OK pour les 3 tournois';
+};
+byId('btnAutosuggest').onclick = ()=>{
+  // Proposition simple: joueurs dispo Yes avec conf>=80, on remplit DEF/FWD/GOL en priorité par position primaire
+  ['boston','meltdown','throne'].forEach(t=>{
+    const want = {def:6, fwd:9, gol:1};
+    const lanes = state.lineups[t];
+    for (const lane of ['def','fwd','gol']){
+      if (lanes[lane].length>=want[lane]) continue;
+      const needed = want[lane] - lanes[lane].length;
+      const list = state.players.filter(p=>{
+        const avail = (p.availability?.[t]||'')==='Yes';
+        const conf  = (p.confidence_pct||0) >= 80;
+        const has   = lanes[lane].includes(p.id) || state.lineups[t].def.includes(p.id) || state.lineups[t].fwd.includes(p.id) || state.lineups[t].gol.includes(p.id);
+        if (!avail || !conf || has) return false;
+        if (lane==='def') return p.positions?.primary==='DEF' || p.positions?.secondary==='DEF';
+        if (lane==='fwd') return ['FWD','CEN'].includes(p.positions?.primary) || ['FWD','CEN'].includes(p.positions?.secondary);
+        if (lane==='gol') return p.positions?.primary==='GOL' || p.positions?.secondary==='GOL';
+        return false;
+      }).slice(0, needed);
+      lanes[lane].push(...list.map(p=>p.id));
+    }
+  });
+  renderAllSlots(); updatePreviews();
+};
+
+/* ------------------------- Previews ------------------------- */
+function updatePreviews(){
+  byId('playersPreview').textContent = pretty({players:state.players});
+  byId('lineupsPreview').textContent = pretty({version:1, updated_at:new Date().toISOString(), tournaments:state.lineups});
+}
+
+/* ------------------------- Init with empty ------------------------- */
+renderPlayers(); renderAllSlots(); updatePreviews();
+</script>
+</body>
+</html>
