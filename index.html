@@ -114,15 +114,59 @@
     }
     input:focus, select:focus, textarea:focus{border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a}
     input.valid, select.valid, textarea.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
-    select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3path d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
+    select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* choice blocks */
-    .check-row{display:flex; flex-direction:column; gap:10px}
-    .check{position:relative; display:flex; gap:12px; align-items:center; background:#0b1020; padding:14px 44px 14px 14px; border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px; transition:.2s}
-    .check.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
-    .check.valid::after{content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px}
-    .check input[type="radio"], .check input[type="checkbox"]{transform:scale(1.2); margin:0}
+    /* === CHOICES: radio/checkbox blocs — align point bleu + encadré or + ✓ === */
+    .check{
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 44px 14px 48px; /* espace pour la pastille */
+      min-height: 54px;
+      border-radius: 12px;
+      background: #0b1020;
+      border: 1px solid rgba(255,255,255,.08);
+      transition: .2s;
+    }
+    .check input[type="radio"],
+    .check input[type="checkbox"]{
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%) scale(1.1);
+      margin: 0;
+      accent-color: var(--accent2); /* bleu */
+    }
+    .check:has(input:checked){
+      border-color: var(--accent); /* or */
+      background: rgba(212,175,94,.08);
+      box-shadow: 0 0 0 3px rgba(212,175,94,.15);
+    }
+    .check::after{
+      content: "";
+      position: absolute;
+      right: 14px;
+      width: 0; height: 0;
+    }
+    .check:has(input:checked)::after{
+      content: "✓";
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 16px;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .check:focus-within{
+      outline: none;
+      box-shadow: 0 0 0 3px var(--ring);
+      border-color: var(--accent2);
+    }
+    /* neutralise l'ancien mode .check.valid piloté par JS */
+    .check.valid{ border-color: inherit; background: inherit; }
+    .check.valid::after{ content: ""; }
 
     /* submit */
     .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
@@ -309,7 +353,8 @@
           </div>
           <div class="col-12 input-container">
             <label for="video_links">Liens vidéo / Video links</label>
-            <input id="video_links" name="video_links" type="text" placeholder="https://...">
+            <textarea id="video_links" name="video_links"
+              placeholder="Collez n'importe quel texte: liens YouTube/Vimeo, timestamps, notes, plusieurs lignes…"></textarea>
           </div>
         </div>
       </fieldset>
@@ -479,20 +524,16 @@
           });
         });
 
-      // radios
+      // radios: plus de classes visuelles, seulement recalcul du fieldset
       form.querySelectorAll('input[type="radio"]').forEach(r=>{
         r.addEventListener('change', ()=>{
-          const group = form.querySelectorAll(`input[name="${r.name}"]`);
-          group.forEach(i=> i.closest('.check')?.classList.remove('valid'));
-          r.closest('.check')?.classList.add('valid');
           markFieldset(r.closest('fieldset'));
         });
       });
 
-      // checkboxes
+      // checkboxes: idem
       form.querySelectorAll('input[type="checkbox"]').forEach(cbx=>{
         cbx.addEventListener('change', ()=>{
-          cbx.closest('.check')?.classList.toggle('valid', cbx.checked);
           markFieldset(cbx.closest('fieldset'));
         });
       });
