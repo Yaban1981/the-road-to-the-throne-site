@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QHC — The Road to The Throne</title>
   <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, The Throne" />
-  <link rel="icon" href="logos/qhc.png">
 
-  <!-- Favicons / PWA basics -->
+  <!-- Canonical -->
+  <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
+
+  <!-- Favicon / PWA -->
   <link rel="icon" href="logos/qhc.png" sizes="32x32">
   <link rel="apple-touch-icon" href="logos/qhc.png">
   <meta name="theme-color" content="#0a1020">
@@ -15,18 +17,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
 
-  <!-- Open Graph / Twitter -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
-  <meta property="og:title" content="QHC — The Road to The Throne">
-  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
-  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="QHC — The Road to The Throne">
-  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
-  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
@@ -37,7 +27,14 @@
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logo et bannière Québec HC — The Road to The Throne">
 
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="QHC — The Road to The Throne">
+  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
+  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
+  <meta name="twitter:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
 
   <style>
     :root{
@@ -128,30 +125,47 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* === CHOICES: radio/checkbox blocs — align point bleu + encadré or + ✓ === */
+    /* === CHOICES: radios/checkbox avec pastille custom (zéro décalage) === */
+    /* input natif masqué mais focusable + clic partout dans le label */
+    .check input[type="radio"],
+    .check input[type="checkbox"]{
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      margin: 0;
+    }
     .check{
       position: relative;
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 44px 14px 48px; /* espace pour la pastille */
+      padding: 14px 44px 14px 48px;  /* espace pour la pastille */
       min-height: 54px;
       border-radius: 12px;
       background: #0b1020;
       border: 1px solid rgba(255,255,255,.08);
       transition: .2s;
+      cursor: pointer;
     }
-    .check input[type="radio"],
-    .check input[type="checkbox"]{
+    .check::before{
+      content: "";
       position: absolute;
       left: 14px;
       top: 50%;
-      transform: translateY(-50%) scale(1.1);
-      margin: 0;
-      accent-color: var(--accent2); /* bleu */
+      transform: translateY(-50%);
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid #cfd8e3;
+      background: transparent;
+      box-shadow: 0 1px 2px rgba(0,0,0,.35);
+    }
+    .check:has(input:checked)::before{
+      background: var(--accent2);
+      border-color: #fff;
     }
     .check:has(input:checked){
-      border-color: var(--accent); /* or */
+      border-color: var(--accent);
       background: rgba(212,175,94,.08);
       box-shadow: 0 0 0 3px rgba(212,175,94,.15);
     }
@@ -175,7 +189,7 @@
       box-shadow: 0 0 0 3px var(--ring);
       border-color: var(--accent2);
     }
-    /* neutralise l'ancien mode .check.valid piloté par JS */
+    /* neutralise l'ancien mode .check.valid piloté JS */
     .check.valid{ border-color: inherit; background: inherit; }
     .check.valid::after{ content: ""; }
 
@@ -535,14 +549,14 @@
           });
         });
 
-      // radios: plus de classes visuelles, seulement recalcul du fieldset
+      // radios
       form.querySelectorAll('input[type="radio"]').forEach(r=>{
         r.addEventListener('change', ()=>{
           markFieldset(r.closest('fieldset'));
         });
       });
 
-      // checkboxes: idem
+      // checkboxes
       form.querySelectorAll('input[type="checkbox"]').forEach(cbx=>{
         cbx.addEventListener('change', ()=>{
           markFieldset(cbx.closest('fieldset'));
@@ -607,7 +621,7 @@
       }
     }
 
-    // AJAX submit to FormSubmit (prevents "Form should POST" page) + redirect to thanks.html
+    // AJAX submit to FormSubmit + redirect to thanks.html
     (function(){
       const form   = document.getElementById('qhc-form');
       const postTo = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
