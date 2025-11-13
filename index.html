@@ -9,49 +9,70 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
 
-  <!-- Favicon / PWA -->
-  <link rel="icon" href="logos/qhc.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="logos/qhc.png">
+  <!-- Open Graph (Facebook, LinkedIn, iMessage, WhatsApp, Telegram, etc.) -->
+  <meta property="og:site_name" content="Québec HC">
+  <meta property="og:locale" content="fr_CA">
+  <meta property="og:locale:alternate" content="en_CA">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
+  <meta property="og:title" content="QHC — The Road to The Throne">
+  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
+
+  <!-- Image principale (1200×630 recommandé) -->
+  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
+  <meta property="og:image:secure_url" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Bannière Québec HC — The Road to The Throne">
+
+  <!-- Fallback carré (logo) -->
+  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png?v=1">
+  <meta property="og:image:secure_url" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png?v=1">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="Logo Québec HC">
+
+  <!-- Twitter Card (X) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@QHC">
+  <meta name="twitter:creator" content="@QHC">
+  <meta name="twitter:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
+  <meta name="twitter:title" content="QHC — The Road to The Throne">
+  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
+  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
+  <meta name="twitter:image:alt" content="Bannière Québec HC — The Road to The Throne">
+
+  <!-- Schema.org / Google -->
+  <meta itemprop="name" content="QHC — The Road to The Throne">
+  <meta itemprop="description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
+  <meta itemprop="image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
+
+  <!-- Anciennes implémentations -->
+  <link rel="image_src" href="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
+
+  <!-- Favicons / PWA -->
+  <link rel="icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png">
   <meta name="theme-color" content="#0a1020">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
-  <meta property="og:title" content="QHC — The Road to The Throne">
-  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
-  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
-  <meta property="og:image:secure_url" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Logo et bannière Québec HC — The Road to The Throne">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="QHC — The Road to The Throne">
-  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
-  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
-  <meta name="twitter:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
-
   <style>
     :root{
       --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
       --text:#e7ecf3; --muted:#a7b3c7;
-      --accent:#d4af37;           /* gold */
-      --accent2:#3b82f6;          /* blue */
-      --success:#d4af37;          /* gold check */
-      --ring:rgba(59,130,246,.3);
+      --accent:#d4af37; --accent2:#3b82f6;
+      --success:#d4af37; --ring:rgba(59,130,246,.3);
       --radius:16px;
     }
     *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
     html,body{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
     body{
       margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%),
-                  linear-gradient(180deg, #091024, #0a0f1a);
+      background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%), linear-gradient(180deg, #091024, #0a0f1a);
       color:var(--text); line-height:1.5;
     }
 
@@ -126,72 +147,27 @@
     textarea{min-height:120px; resize:vertical}
 
     /* === CHOICES: radios/checkbox avec pastille custom (zéro décalage) === */
-    /* input natif masqué mais focusable + clic partout dans le label */
-    .check input[type="radio"],
-    .check input[type="checkbox"]{
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      margin: 0;
+    .check input[type="radio"], .check input[type="checkbox"]{
+      position:absolute; inset:0; opacity:0; cursor:pointer; margin:0;
     }
     .check{
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 44px 14px 48px;  /* espace pour la pastille */
-      min-height: 54px;
-      border-radius: 12px;
-      background: #0b1020;
-      border: 1px solid rgba(255,255,255,.08);
-      transition: .2s;
-      cursor: pointer;
+      position:relative; display:flex; align-items:center; gap:10px;
+      padding:14px 44px 14px 48px; min-height:54px; border-radius:12px;
+      background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;
     }
     .check::before{
-      content: "";
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      border: 2px solid #cfd8e3;
-      background: transparent;
-      box-shadow: 0 1px 2px rgba(0,0,0,.35);
+      content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent;
+      box-shadow:0 1px 2px rgba(0,0,0,.35);
     }
-    .check:has(input:checked)::before{
-      background: var(--accent2);
-      border-color: #fff;
-    }
-    .check:has(input:checked){
-      border-color: var(--accent);
-      background: rgba(212,175,94,.08);
-      box-shadow: 0 0 0 3px rgba(212,175,94,.15);
-    }
-    .check::after{
-      content: "";
-      position: absolute;
-      right: 14px;
-      width: 0; height: 0;
-    }
+    .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff; }
+    .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08); box-shadow:0 0 0 3px rgba(212,175,94,.15); }
+    .check::after{ content:""; position:absolute; right:14px; width:0; height:0; }
     .check:has(input:checked)::after{
-      content: "✓";
-      color: var(--accent);
-      font-weight: 800;
-      font-size: 16px;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
+      content:"✓"; color:var(--accent); font-weight:800; font-size:16px; right:14px; top:50%; transform:translateY(-50%);
     }
-    .check:focus-within{
-      outline: none;
-      box-shadow: 0 0 0 3px var(--ring);
-      border-color: var(--accent2);
-    }
-    /* neutralise l'ancien mode .check.valid piloté JS */
-    .check.valid{ border-color: inherit; background: inherit; }
-    .check.valid::after{ content: ""; }
+    .check:focus-within{ outline:none; box-shadow:0 0 0 3px var(--ring); border-color:var(--accent2); }
+    .check.valid{ border-color:inherit; background:inherit; } .check.valid::after{ content:""; }
 
     /* submit */
     .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
@@ -378,8 +354,7 @@
           </div>
           <div class="col-12 input-container">
             <label for="video_links">Liens vidéo / Video links</label>
-            <textarea id="video_links" name="video_links"
-              placeholder="Collez n'importe quel texte: liens YouTube/Vimeo, timestamps, notes, plusieurs lignes…"></textarea>
+            <textarea id="video_links" name="video_links" placeholder="Collez n'importe quel texte: liens YouTube/Vimeo, timestamps, notes, plusieurs lignes…"></textarea>
           </div>
         </div>
       </fieldset>
@@ -463,7 +438,6 @@
                      aria-label="Confidence percent" aria-valuemin="80" aria-valuemax="100" aria-valuenow="80"
                      oninput="updateConfidenceValue(this.value)">
               <div class="hand-hint" aria-hidden="true">
-                <!-- main animée or (toujours visible) -->
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.5 9.5V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2M6.5 9.5v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1m-8 3v2a2 2 0 0 0 4 0v-2"/>
                 </svg>
@@ -503,115 +477,90 @@
   <footer><div>© Québec HC — Spring 2026</div></footer>
 
   <script>
-    // Countdown badges (robuste, rafraîchi chaque heure)
+    // Countdowns
     (function(){
-      const mk = (y,m,d)=> new Date(y, m-1, d, 0,0,0,0);
-      const targets = [
-        { id:'cd-boston',   date: mk(2026,5,29) },
-        { id:'cd-meltdown', date: mk(2026,6,5)  },
-        { id:'cd-throne',   date: mk(2026,7,24) }
-      ];
+      const mk=(y,m,d)=>new Date(y,m-1,d,0,0,0,0);
+      const targets=[{id:'cd-boston',date:mk(2026,5,29)},{id:'cd-meltdown',date:mk(2026,6,5)},{id:'cd-throne',date:mk(2026,7,24)}];
       function update(){
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        for (const t of targets){
-          const el = document.getElementById(t.id);
-          if (!el) continue;
-          const ms = t.date - today;
-          const days = Math.ceil(ms / 86400000);
-          el.textContent = (days > 0) ? `J-${days}` : (days === 0 ? 'Jour J' : 'Terminé');
+        const now=new Date(); const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+        for(const t of targets){ const el=document.getElementById(t.id); if(!el) continue;
+          const days=Math.ceil((t.date-today)/86400000);
+          el.textContent=(days>0)?`J-${days}`:(days===0?'Jour J':'Terminé');
         }
       }
       update(); setInterval(update, 3600_000);
     })();
 
-    // Live value (hand stays visible forever)
     function updateConfidenceValue(val){
-      document.getElementById('confVal').textContent = val + '%';
+      document.getElementById('confVal').textContent=val+'%';
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    // Visual validation & fieldset completion
     function setupVisualValidation(){
-      const form = document.getElementById('qhc-form');
+      const form=document.getElementById('qhc-form');
 
-      // text/select/textarea
-      form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select')
-        .forEach(el=>{
-          el.addEventListener('input', ()=>{
-            const wrap = el.closest('.input-container');
-            if(wrap){
-              const filled = (el.tagName==='SELECT') ? el.value !== '' : el.value.trim() !== '';
-              wrap.classList.toggle('valid', filled);
-              el.classList.toggle('valid', filled);
-            }
-            markFieldset(el.closest('fieldset'));
-          });
+      form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select').forEach(el=>{
+        el.addEventListener('input', ()=>{
+          const wrap=el.closest('.input-container');
+          if(wrap){
+            const filled=(el.tagName==='SELECT')?el.value!=='' : el.value.trim()!=='';
+            wrap.classList.toggle('valid', filled);
+            el.classList.toggle('valid', filled);
+          }
+          markFieldset(el.closest('fieldset'));
         });
+      });
 
-      // radios
       form.querySelectorAll('input[type="radio"]').forEach(r=>{
-        r.addEventListener('change', ()=>{
-          markFieldset(r.closest('fieldset'));
-        });
+        r.addEventListener('change', ()=>{ markFieldset(r.closest('fieldset')); });
       });
 
-      // checkboxes
       form.querySelectorAll('input[type="checkbox"]').forEach(cbx=>{
-        cbx.addEventListener('change', ()=>{
-          markFieldset(cbx.closest('fieldset'));
-        });
+        cbx.addEventListener('change', ()=>{ markFieldset(cbx.closest('fieldset')); });
       });
 
-      // prime visuel (ne pas déclencher le range)
       form.querySelectorAll('input,select,textarea').forEach(el=>{
-        if (el.type === 'range') return;
-        const evt = (el.type==='radio'||el.type==='checkbox')?'change':'input';
+        if(el.type==='range') return;
+        const evt=(el.type==='radio'||el.type==='checkbox')?'change':'input';
         el.dispatchEvent(new Event(evt));
       });
 
       function markFieldset(fs){
-        if(!fs) return;
-        let ok=false;
+        if(!fs) return; let ok=false;
         switch(fs.id){
           case 'fieldset-player': {
             const need=['player_name','birth_year','city','parent_email'];
-            ok = need.every(id=>{
+            ok=need.every(id=>{
               const el=document.getElementById(id);
-              return el && (el.tagName==='SELECT' ? el.value!=='' : el.value.trim()!=='') && (el.id!=='parent_email' || el.checkValidity());
-            });
-            break;
+              return el && (el.tagName==='SELECT'? el.value!=='' : el.value.trim()!=='') && (el.id!=='parent_email' || el.checkValidity());
+            }); break;
           }
           case 'fieldset-position': {
-            const primary = !!fs.querySelector('input[name="primary_position"]:checked');
-            const sideOK  = fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
-            ok = primary && sideOK;
-            break;
+            const primary=!!fs.querySelector('input[name="primary_position"]:checked');
+            const sideOK=fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
+            ok=primary && sideOK; break;
           }
           case 'fieldset-jersey': {
-            const typeOK = !!fs.querySelector('input[name="jersey_type"]:checked');
-            const sizeOK = (document.getElementById('jersey_size').value!=='');
-            ok = typeOK && sizeOK;
-            break;
+            const typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
+            const sizeOK=(document.getElementById('jersey_size').value!=='');
+            ok=typeOK && sizeOK; break;
           }
           case 'fieldset-availability': {
             const b=!!fs.querySelector('input[name="boston_showdown"]:checked');
             const m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
             const t=!!fs.querySelector('input[name="the_throne"]:checked');
-            const conf = parseInt(document.getElementById('confidence_pct').value,10) >= 80;
-            ok = b && m && t && conf;
-            break;
+            const conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
+            ok=b && m && t && conf; break;
           }
           case 'fieldset-confirmations': {
             const c1=fs.querySelector('[name="ack_throne_rule"]').checked;
             const c2=fs.querySelector('[name="ack_limited_spots"]').checked;
             const c3=fs.querySelector('[name="consent_contact"]').checked;
-            ok = c1 && c2 && c3;
-            break;
+            ok=c1 && c2 && c3; break;
           }
           default: {
             const req=fs.querySelectorAll('input[required],select[required]');
-            ok = Array.from(req).every(el=>{
+            ok=Array.from(req).every(el=>{
               if(el.type==='radio') return !!fs.querySelector(`input[name="${el.name}"]:checked`);
               return (el.value && el.value.trim()!=='');
             });
@@ -621,55 +570,48 @@
       }
     }
 
-    // AJAX submit to FormSubmit + redirect to thanks.html
+    // AJAX submit via FormSubmit + redirect
     (function(){
-      const form   = document.getElementById('qhc-form');
-      const postTo = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
-
+      const form=document.getElementById('qhc-form');
+      const postTo='https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
       setupVisualValidation();
 
       form.addEventListener('submit', async (e)=>{
         e.preventDefault();
-
-        // native checks
         if(!form.checkValidity()){
-          const firstInvalid = form.querySelector(':invalid');
+          const firstInvalid=form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
 
-        // business checks
-        const right = form.querySelector('[name="side_right"]').checked;
-        const left  = form.querySelector('[name="side_left"]').checked;
+        const right=form.querySelector('[name="side_right"]').checked;
+        const left=form.querySelector('[name="side_left"]').checked;
         if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
 
-        const throne   = form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
-        const boston   = form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
-        const meltdown = form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
+        const throne=form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
+        const boston=form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
+        const meltdown=form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
         if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
           alert("The Throne : cochez 'Oui' à Boston OU Meltdown.");
           return;
         }
 
-        const conf = parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf) || conf < 80){ alert('Confidence must be ≥ 80 %'); return; }
+        const conf=parseInt(document.getElementById('confidence_pct').value,10);
+        if(isNaN(conf) || conf<80){ alert('Confidence must be ≥ 80 %'); return; }
 
-        // lock button
-        const btn = form.querySelector('button[type="submit"]');
-        btn.disabled = true; btn.innerText = 'Envoi… / Submitting…';
+        const btn=form.querySelector('button[type="submit"]');
+        btn.disabled=true; btn.innerText='Envoi… / Submitting…';
 
         try{
-          const fd = new FormData(form);
-          fd.delete('_next'); // we'll redirect manually
-
-          const res = await fetch(postTo, { method:'POST', headers:{'Accept':'application/json'}, body:fd });
+          const fd=new FormData(form);
+          fd.delete('_next');
+          const res=await fetch(postTo,{method:'POST', headers:{'Accept':'application/json'}, body:fd});
           if(!res.ok) throw new Error('FormSubmit error: '+res.status);
-
-          window.location.href = 'thanks.html';
+          window.location.href='thanks.html';
         }catch(err){
           console.error(err);
           alert("Erreur d'envoi. Réessayez dans un instant.");
-          btn.disabled = false; btn.innerText = 'Soumettre / Submit';
+          btn.disabled=false; btn.innerText='Soumettre / Submit';
         }
       });
     })();
