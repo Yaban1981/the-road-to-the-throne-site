@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QHC — The Road to The Throne</title>
   <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, The Throne" />
-
-  <!-- Canonical -->
   <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
-
-  <!-- Important pour certains services de formulaire (référent d’origine) -->
   <meta name="referrer" content="origin">
 
-  <!-- Open Graph (Facebook, LinkedIn, iMessage, WhatsApp, Telegram, etc.) -->
+  <!-- Open Graph -->
   <meta property="og:site_name" content="Québec HC">
   <meta property="og:locale" content="fr_CA">
   <meta property="og:locale:alternate" content="en_CA">
@@ -20,16 +16,13 @@
   <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
   <meta property="og:title" content="QHC — The Road to The Throne">
   <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
-
-  <!-- Image principale (1200×630 recommandé) -->
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
   <meta property="og:image:secure_url" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Bannière Québec HC — The Road to The Throne">
-
-  <!-- Fallback carré (logo) -->
+  <!-- Fallback carré -->
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png?v=1">
   <meta property="og:image:secure_url" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png?v=1">
   <meta property="og:image:type" content="image/png">
@@ -37,7 +30,7 @@
   <meta property="og:image:height" content="512">
   <meta property="og:image:alt" content="Logo Québec HC">
 
-  <!-- Twitter Card (X) -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@QHC">
   <meta name="twitter:creator" content="@QHC">
@@ -47,7 +40,7 @@
   <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
   <meta name="twitter:image:alt" content="Bannière Québec HC — The Road to The Throne">
 
-  <!-- Schema.org / Google -->
+  <!-- Schema.org -->
   <meta itemprop="name" content="QHC — The Road to The Throne">
   <meta itemprop="description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
   <meta itemprop="image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
@@ -55,7 +48,7 @@
   <!-- Anciennes implémentations -->
   <link rel="image_src" href="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
 
-  <!-- Favicons / PWA -->
+  <!-- Favicons -->
   <link rel="icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" sizes="32x32">
   <link rel="apple-touch-icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png">
   <meta name="theme-color" content="#0a1020">
@@ -149,7 +142,7 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* === CHOICES: radios/checkbox avec pastille custom (zéro décalage) === */
+    /* CHOICES */
     .check input[type="radio"], .check input[type="checkbox"]{
       position:absolute; inset:0; opacity:0; cursor:pointer; margin:0;
     }
@@ -180,7 +173,7 @@
     .confidence-display{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
     .confidence-value{font-weight:700; font-size:1.1rem; color:var(--accent2); background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3)}
 
-    /* slider + GOLD hand (always visible) */
+    /* slider */
     .slider-container{position:relative; margin:30px 0 20px; background: rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,94,.5)}
     input[type="range"]{height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px}
     input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); border:2px solid #fff; box-shadow:0 4px 12px rgba(59,130,246,.4)}
@@ -283,9 +276,10 @@
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
       <input type="hidden" name="form_version" value="rttt_v1_mobile">
+      <!-- Redirection ABSOLUE (utile si JS off) -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
 
-      <!-- 1 -->
+      <!-- 1) Player -->
       <fieldset id="fieldset-player">
         <legend>1) Info joueur / Player Info</legend>
         <div class="grid">
@@ -319,7 +313,7 @@
         </div>
       </fieldset>
 
-      <!-- 2 -->
+      <!-- 2) Position -->
       <fieldset id="fieldset-position">
         <legend>2) Poste & style / Position & Style</legend>
         <div class="grid">
@@ -362,7 +356,7 @@
         </div>
       </fieldset>
 
-      <!-- 3 -->
+      <!-- 3) Jersey -->
       <fieldset id="fieldset-jersey">
         <legend>3) Chandail / Jersey</legend>
         <div class="grid">
@@ -401,7 +395,7 @@
         </div>
       </fieldset>
 
-      <!-- 4 -->
+      <!-- 4) Availability -->
       <fieldset id="fieldset-availability">
         <legend>4) Disponibilités / Availability</legend>
         <div class="grid">
@@ -454,7 +448,7 @@
         </div>
       </fieldset>
 
-      <!-- 5 -->
+      <!-- 5) Confirmations -->
       <fieldset id="fieldset-confirmations">
         <legend>5) Confirmations</legend>
         <div class="grid">
@@ -573,50 +567,78 @@
       }
     }
 
-    // Soumission NATlVE du formulaire (pas d'AJAX) avec validations custom
+    // Envoi robuste => AJAX JSON -> fallback mailto -> redirection absolue
     (function(){
-      const form=document.getElementById('qhc-form');
+      const form = document.getElementById('qhc-form');
+      const POST_URL   = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
+      const THANKS_URL = 'https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
       setupVisualValidation();
 
-      form.addEventListener('submit', (e)=>{
-        // 1) contraintes HTML (required/pattern/email…)
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+
+        // 1) Contrôles
         if(!form.checkValidity()){
-          e.preventDefault();
+          form.reportValidity();
           const firstInvalid=form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
-
-        // 2) règles métier
         const right=form.querySelector('[name="side_right"]').checked;
         const left =form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){
-          e.preventDefault();
-          alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.');
-          return;
-        }
+        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
 
         const throne=form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
         const boston=form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
         const meltdown=form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
-        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
-          e.preventDefault();
-          alert("The Throne : cochez 'Oui' à Boston OU Meltdown.");
-          return;
-        }
+        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){ alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return; }
 
         const conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf) || conf<80){
-          e.preventDefault();
-          alert('Confidence must be ≥ 80 %');
-          return;
-        }
+        if(isNaN(conf) || conf<80){ alert('Confidence must be ≥ 80 %'); return; }
 
-        // 3) petite UX : désactiver le bouton pendant l’envoi
+        // 2) Envoi
         const btn=form.querySelector('button[type="submit"]');
         btn.disabled=true; btn.innerText='Envoi… / Submitting…';
-        // NE PAS appeler preventDefault ici : on laisse l’envoi natif se faire.
-        // FormSubmit redirigera vers l’URL présente dans le champ caché _next.
+
+        const payload = Object.fromEntries(new FormData(form).entries());
+
+        try{
+          const ctrl = new AbortController();
+          const timer = setTimeout(()=>ctrl.abort(), 12000); // 12 s timeout
+
+          const res = await fetch(POST_URL, {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+            body: JSON.stringify(payload),
+            signal: ctrl.signal
+          });
+          clearTimeout(timer);
+
+          if(!res.ok) throw new Error('HTTP '+res.status);
+
+          // Succès → redirection ABSOLUE
+          window.location.href = THANKS_URL;
+
+        }catch(err){
+          console.error('Échec FormSubmit, bascule mailto:', err);
+
+          // 3) Fallback: mail prérempli + redirection absolue
+          const lines = Object.entries(payload)
+            .filter(([k])=>k!=='_next')
+            .map(([k,v])=>`${k}: ${String(v)}`)
+            .join('\n');
+
+          const mailto = `mailto:yannick.banaszak@outlook.com?bcc=${encodeURIComponent('David.belanger.6@ulaval.ca')}` +
+                         `&subject=${encodeURIComponent('QHC — Backup form submission')}` +
+                         `&body=${encodeURIComponent('Form service offline\\n\\n'+lines)}`;
+
+          alert("Le service de formulaire est momentanément indisponible.\nUn e‑mail prérempli va s’ouvrir. Merci d’appuyer sur « Envoyer ».\nVous allez être redirigé vers la page de remerciement.");
+          // Ouvre le client mail puis enchaîne sur la page de remerciement
+          window.location.href = mailto;
+          setTimeout(()=>{ window.location.href = THANKS_URL; }, 1200);
+
+          btn.disabled=false; btn.innerText='Soumettre / Submit';
+        }
       });
     })();
   </script>
