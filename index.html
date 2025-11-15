@@ -9,7 +9,7 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
 
-  <!-- Open Graph -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:site_name" content="Québec HC">
   <meta property="og:locale" content="fr_CA">
   <meta property="og:locale:alternate" content="en_CA">
@@ -19,8 +19,6 @@
   <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="QHC — The Road to The Throne">
   <meta name="twitter:description" content="Intérêt tournois printemps 2026">
@@ -223,7 +221,7 @@
     </div>
 
     <!-- FormSubmit (natif, iPhone-friendly) -->
-    <form action="https://formsubmit.co/yannick.banaszak@outlook.com" method="POST" id="qhc-form" target="_self" novalidate>
+    <form action="https://formsubmit.co/yannick.banaszak%40outlook.com" method="POST" id="qhc-form" target="_self" novalidate>
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
@@ -231,7 +229,7 @@
       <input type="hidden" name="form_version" value="rttt_v1_mobile_safe_native">
       <!-- URL ABSOLUE (critique pour iPhone) -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
-      <!-- facultatif : permet Reply-To -->
+      <!-- Reply-To (rempli en JS) -->
       <input type="hidden" id="replyto" name="_replyto" value="">
       <input type="hidden" id="emailAlias" name="email" value="">
 
@@ -450,11 +448,18 @@
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    // Validation visuelle + soumission NATIF (iOS friendly)
+    // Validation visuelle + soumission NATIF
     (function(){
       var form=document.getElementById('qhc-form');
 
-      // Visual cues
+      // _replyto auto
+      var emailField=document.getElementById('parent_email');
+      var replyto=document.getElementById('replyto');
+      var emailAlias=document.getElementById('emailAlias');
+      function syncEmail(){ var v=(emailField.value||'').trim(); replyto.value=v; emailAlias.value=v; }
+      emailField.addEventListener('input', syncEmail); syncEmail();
+
+      // Visuel "valid"
       (function setupVisualValidation(){
         var textFields=form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select');
         for(var i=0;i<textFields.length;i++){
@@ -520,14 +525,7 @@
         }
       })();
 
-      // _replyto auto depuis le champ email parent
-      var emailField=document.getElementById('parent_email');
-      var replyto=document.getElementById('replyto');
-      var emailAlias=document.getElementById('emailAlias');
-      function syncEmail(){ var v=(emailField.value||'').trim(); replyto.value=v; emailAlias.value=v; }
-      emailField.addEventListener('input', syncEmail); syncEmail();
-
-      // Soumission native : on bloque SEULEMENT si une validation échoue
+      // Soumission native (on bloque SEULEMENT si une validation échoue)
       form.addEventListener('submit', function(e){
         // HTML5 required/pattern
         if(!form.checkValidity()){
@@ -553,7 +551,7 @@
         if(isNaN(conf) || conf<80){ e.preventDefault(); alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
 
         // Tout est OK → pas de preventDefault() → POST natif vers FormSubmit
-        syncEmail(); // s'assurer que _replyto est rempli
+        // (redirection assurée par _next absolu)
       });
     })();
   </script>
