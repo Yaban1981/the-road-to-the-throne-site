@@ -103,7 +103,7 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* Choice blocks */
+    /* Choice blocks (visuels simples) */
     .check-row{display:flex; flex-direction:column; gap:10px}
     .check{position:relative; display:flex; gap:12px; align-items:center; background:#0b1020; padding:14px; border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px; transition:.2s}
     .check.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
@@ -116,7 +116,7 @@
     button:hover{transform:translateY(-2px)}
     .outline{background:transparent; border:1px solid rgba(255,255,255,.12); color:#fff}
     .confidence-display{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
-    .confidence-value{font-weight:700; font-size:1.1rem; color:#accent2; background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3)}
+    .confidence-value{font-weight:700; font-size:1.1rem; color:var(--accent2); background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3)}
 
     /* Slider + hint */
     .slider-container{position:relative; margin:30px 0 20px; background: rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,94,.5)}
@@ -131,39 +131,11 @@
     }
 
     /* Fallback Modal */
-    .fallback-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(10, 16, 32, 0.95);
-      z-index: 10000;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .fallback-content {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 24px;
-      max-width: 500px;
-      width: 100%;
-      border: 1px solid rgba(212, 175, 94, 0.3);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
-    }
-    .fallback-content h3 {
-      color: var(--accent);
-      margin-top: 0;
-    }
-    .fallback-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-    .fallback-actions button {
-      flex: 1;
-      min-width: 120px;
-    }
+    .fallback-modal { display:none; position:fixed; inset:0; background: rgba(10,16,32,.95); z-index:10000; align-items:center; justify-content:center; padding:20px; }
+    .fallback-content { background: var(--panel); border-radius: var(--radius); padding: 24px; max-width: 500px; width: 100%; border: 1px solid rgba(212, 175, 94, .3); box-shadow: 0 16px 48px rgba(0,0,0,.5); }
+    .fallback-content h3 { color: var(--accent); margin-top:0; }
+    .fallback-actions { display:flex; gap:12px; margin-top:20px; flex-wrap:wrap; }
+    .fallback-actions button { flex:1; min-width:120px; }
 
     /* Desktop */
     @media (min-width:768px){
@@ -189,21 +161,15 @@
   </noscript>
 
   <!-- Modal de fallback -->
-  <div class="fallback-modal" id="fallbackModal">
-    <div class="fallback-content">
-      <h3>📧 Soumission alternative / Alternative Submission</h3>
+  <div class="fallback-modal" id="fallbackModal" aria-hidden="true">
+    <div class="fallback-content" role="dialog" aria-labelledby="fbTitle">
+      <h3 id="fbTitle">📧 Soumission alternative / Alternative Submission</h3>
       <p>La soumission automatique a échoué. Vous pouvez :</p>
       <p><em>Automatic submission failed. You can:</em></p>
       <div class="fallback-actions">
-        <button onclick="sendFallbackEmail()" style="background:linear-gradient(135deg, var(--accent), #e74c3c)">
-          📤 Envoyer par email / Send by email
-        </button>
-        <button onclick="copyFallbackToClipboard()" class="outline">
-          📋 Copier / Copy
-        </button>
-        <button onclick="closeFallbackModal()" class="outline">
-          Annuler / Cancel
-        </button>
+        <button onclick="sendFallbackEmail()" style="background:linear-gradient(135deg, var(--accent), #e74c3c)">📤 Envoyer par email / Send by email</button>
+        <button onclick="copyFallbackToClipboard()" class="outline">📋 Copier / Copy</button>
+        <button onclick="closeFallbackModal()" class="outline">Annuler / Cancel</button>
       </div>
     </div>
   </div>
@@ -265,8 +231,8 @@
       </div>
     </div>
 
-    <!-- ====== HIDDEN IFRAME (pour soumission native sans quitter la page) ====== -->
-    <iframe name="fs_iframe" id="fs_iframe" style="display:none"></iframe>
+    <!-- ====== IFRAME CACHÉ (soumission native sans quitter la page) ====== -->
+    <iframe name="fs_iframe" id="fs_iframe" title="Form submission frame" style="display:none"></iframe>
 
     <!-- ====== FORMULAIRE (soumission -> iframe) ====== -->
     <form
@@ -281,11 +247,12 @@
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
-      <!-- ABSOLU (secours) -->
+      <!-- (Option test) décommentez pour vérifier la délivrabilité -->
+      <!-- <input type="hidden" name="_cc" value="votre.adresse.test@gmail.com"> -->
+      <!-- ABSOLU (iOS-safe, sert de secours) -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
-      <!-- Reply-To -->
+      <!-- Reply-To (à remplir via JS) -->
       <input type="hidden" id="replyto" name="_replyto" value="">
-      <input type="hidden" id="emailAlias" name="email" value="">
       <input type="hidden" name="form_version" value="rttt_v1_iframe_ios_safe">
 
       <!-- 1 -->
@@ -503,107 +470,75 @@
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    // Fonctions pour le fallback email
-    function showFallbackModal() {
-      document.getElementById('fallbackModal').style.display = 'flex';
-    }
+    // Fallback email modal
+    function showFallbackModal(){ document.getElementById('fallbackModal').style.display='flex'; }
+    function closeFallbackModal(){ document.getElementById('fallbackModal').style.display='none'; }
 
-    function closeFallbackModal() {
-      document.getElementById('fallbackModal').style.display = 'none';
-    }
-
-    function collectFormData() {
-      var form = document.getElementById('qhc-form');
-      var formData = new FormData(form);
-      var data = {};
-      
-      for (var pair of formData.entries()) {
-        data[pair[0]] = pair[1];
-      }
+    function collectFormData(){
+      var form=document.getElementById('qhc-form');
+      var formData=new FormData(form), data={};
+      for (var pair of formData.entries()){ data[pair[0]]=pair[1]; }
       return data;
     }
+    function formatEmailContent(formData){
+      var content="QHC — The Road to The Throne - Formulaire soumis\n\n";
+      content+="=================================\n\n";
+      content+="1) INFO JOUEUR / PLAYER INFO\n";
+      content+="Nom complet: "+(formData.player_name||'')+"\n";
+      content+="Année de naissance: "+(formData.birth_year||'')+"\n";
+      content+="Ville: "+(formData.city||'')+"\n";
+      content+="Équipe actuelle: "+(formData.current_team||'')+"\n";
+      content+="Courriel parent: "+(formData.parent_email||'')+"\n";
+      content+="Téléphone parent: "+(formData.parent_phone||'')+"\n\n";
 
-    function formatEmailContent(formData) {
-      var content = "QHC — The Road to The Throne - Formulaire soumis\n\n";
-      content += "=================================\n\n";
-      
-      // Section 1: Info joueur
-      content += "1) INFO JOUEUR / PLAYER INFO\n";
-      content += "Nom complet: " + (formData.player_name || '') + "\n";
-      content += "Année de naissance: " + (formData.birth_year || '') + "\n";
-      content += "Ville: " + (formData.city || '') + "\n";
-      content += "Équipe actuelle: " + (formData.current_team || '') + "\n";
-      content += "Courriel parent: " + (formData.parent_email || '') + "\n";
-      content += "Téléphone parent: " + (formData.parent_phone || '') + "\n\n";
-      
-      // Section 2: Position
-      content += "2) POSTE & STYLE / POSITION & STYLE\n";
-      content += "Position principale: " + (formData.primary_position || '') + "\n";
-      content += "Position secondaire: " + (formData.secondary_position || '') + "\n";
-      content += "Côté droit: " + (formData.side_right || 'Non') + "\n";
-      content += "Côté gauche: " + (formData.side_left || 'Non') + "\n";
-      content += "Style de joueur: " + (formData.player_style || '') + "\n";
-      content += "Liens vidéo: " + (formData.video_links || '') + "\n\n";
-      
-      // Section 3: Chandail
-      content += "3) CHANDAIL / JERSEY\n";
-      content += "Numéro choix 1: " + (formData.jersey_number_1 || '') + "\n";
-      content += "Numéro choix 2: " + (formData.jersey_number_2 || '') + "\n";
-      content += "Numéro choix 3: " + (formData.jersey_number_3 || '') + "\n";
-      content += "Type: " + (formData.jersey_type || '') + "\n";
-      content += "Taille: " + (formData.jersey_size || '') + "\n\n";
-      
-      // Section 4: Disponibilités
-      content += "4) DISPONIBILITÉS / AVAILABILITY\n";
-      content += "Boston: " + (formData.boston_showdown || '') + "\n";
-      content += "Montréal: " + (formData.montreal_meltdown || '') + "\n";
-      content += "The Throne: " + (formData.the_throne || '') + "\n";
-      content += "Confiance: " + (formData.confidence_pct || '') + "%\n\n";
-      
-      // Section 5: Confirmations
-      content += "5) CONFIRMATIONS\n";
-      content += "Règle The Throne: " + (formData.ack_throne_rule ? 'Oui' : 'Non') + "\n";
-      content += "Places limitées: " + (formData.ack_limited_spots ? 'Oui' : 'Non') + "\n";
-      content += "Contact: " + (formData.consent_contact ? 'Oui' : 'Non') + "\n\n";
-      
-      content += "=================================\n";
-      content += "Soumis le: " + new Date().toLocaleString('fr-CA') + "\n";
-      
+      content+="2) POSTE & STYLE / POSITION & STYLE\n";
+      content+="Position principale: "+(formData.primary_position||'')+"\n";
+      content+="Position secondaire: "+(formData.secondary_position||'')+"\n";
+      content+="Côté droit: "+(formData.side_right||'Non')+"\n";
+      content+="Côté gauche: "+(formData.side_left||'Non')+"\n";
+      content+="Style de joueur: "+(formData.player_style||'')+"\n";
+      content+="Liens vidéo: "+(formData.video_links||'')+"\n\n";
+
+      content+="3) CHANDAIL / JERSEY\n";
+      content+="Numéro choix 1: "+(formData.jersey_number_1||'')+"\n";
+      content+="Numéro choix 2: "+(formData.jersey_number_2||'')+"\n";
+      content+="Numéro choix 3: "+(formData.jersey_number_3||'')+"\n";
+      content+="Type: "+(formData.jersey_type||'')+"\n";
+      content+="Taille: "+(formData.jersey_size||'')+"\n\n";
+
+      content+="4) DISPONIBILITÉS / AVAILABILITY\n";
+      content+="Boston: "+(formData.boston_showdown||'')+"\n";
+      content+="Montréal: "+(formData.montreal_meltdown||'')+"\n";
+      content+="The Throne: "+(formData.the_throne||'')+"\n";
+      content+="Confiance: "+(formData.confidence_pct||'')+"%\n\n";
+
+      content+="5) CONFIRMATIONS\n";
+      content+="Règle The Throne: "+(formData.ack_throne_rule?'Oui':'Non')+"\n";
+      content+="Places limitées: "+(formData.ack_limited_spots?'Oui':'Non')+"\n";
+      content+="Contact: "+(formData.consent_contact?'Oui':'Non')+"\n\n";
+      content+="=================================\n";
+      content+="Soumis le: "+new Date().toLocaleString('fr-CA')+"\n";
       return content;
     }
-
-    function sendFallbackEmail() {
-      var formData = collectFormData();
-      var emailContent = formatEmailContent(formData);
-      var subject = "QHC — The Road to The Throne - Formulaire";
-      var email = "yannick.banaszak@outlook.com";
-      
-      var mailtoLink = "mailto:" + email + 
-                       "?subject=" + encodeURIComponent(subject) + 
-                       "&body=" + encodeURIComponent(emailContent);
-      
-      window.location.href = mailtoLink;
-      closeFallbackModal();
+    function sendFallbackEmail(){
+      var data=collectFormData();
+      var body=formatEmailContent(data);
+      var subject="QHC — The Road to The Throne - Formulaire";
+      var email="yannick.banaszak@outlook.com";
+      var mailto="mailto:"+email+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+      window.location.href=mailto; closeFallbackModal();
     }
-
-    function copyFallbackToClipboard() {
-      var formData = collectFormData();
-      var emailContent = formatEmailContent(formData);
-      
-      navigator.clipboard.writeText(emailContent).then(function() {
-        alert("Contenu copié! Collez-le dans un email. / Content copied! Paste in email.");
-        closeFallbackModal();
-      }).catch(function(err) {
-        // Fallback pour les navigateurs plus anciens
-        var textArea = document.createElement("textarea");
-        textArea.value = emailContent;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        alert("Contenu copié! Collez-le dans un email. / Content copied! Paste in email.");
-        closeFallbackModal();
-      });
+    function copyFallbackToClipboard(){
+      var body=formatEmailContent(collectFormData());
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(body).then(function(){ alert("Contenu copié! Collez-le dans un email."); closeFallbackModal(); })
+        .catch(function(){ legacyCopy(body); });
+      }else{ legacyCopy(body); }
+      function legacyCopy(text){
+        var ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+        alert("Contenu copié! Collez-le dans un email."); closeFallbackModal();
+      }
     }
 
     // Visuel + règles + redirection via iframe
@@ -611,17 +546,17 @@
       var form=document.getElementById('qhc-form');
       var iframe=document.getElementById('fs_iframe');
       var btn=document.getElementById('submitBtn');
-      var submitted=false;
-      var fallbackTriggered = false;
+      var submitted=false, fallbackTriggered=false;
+      var THANKS_URL='https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
 
-      // Mark .valid on inputs
+      // Marquage visuel
       (function setupVisualValidation(){
         var typed=form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select');
         for(var i=0;i<typed.length;i++){
           typed[i].addEventListener('input', function(){
             var el=this, wrap=el.closest?el.closest('.input-container'):null;
             if(wrap){
-              var filled=(el.tagName==='SELECT')?(el.value!=='') :(el.value.trim()!=='');
+              var filled=(el.tagName==='SELECT')?(el.value!==''):(el.value.trim()!=='');
               wrap.classList.toggle('valid', filled);
               el.classList.toggle('valid', filled);
             }
@@ -692,23 +627,22 @@
         }
       })();
 
-      // Sync _replyto / email
+      // Sync _replyto avec l'email parent (SUPPRIME le champ name="email")
       var emailField=document.getElementById('parent_email');
       var replyto=document.getElementById('replyto');
-      var emailAlias=document.getElementById('emailAlias');
-      function syncEmail(){ var v=(emailField.value||'').trim(); replyto.value=v; emailAlias.value=v; }
+      function syncEmail(){ var v=(emailField.value||'').trim(); replyto.value=v; }
       emailField.addEventListener('input', syncEmail); syncEmail();
 
-      // Redirection quand l'iframe a fini de charger (après le POST)
+      // Redirection quand l'iframe a fini de charger (après POST)
       iframe.addEventListener('load', function(){
         if(submitted && !fallbackTriggered){
-          window.location.href='https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
+          window.location.href=THANKS_URL;
         }
       });
 
       // Soumission (native -> iframe)
       form.addEventListener('submit', function(e){
-        // HTML5 required
+        // validations HTML5
         if(!form.checkValidity()){
           e.preventDefault();
           var firstInvalid=form.querySelector(':invalid');
@@ -733,13 +667,12 @@
         submitted=true;
         btn.disabled=true; btn.innerText='Envoi… / Submitting…';
 
-        // garde-fou: si l'iframe ne déclenche pas load (bloqueur), on propose le fallback
+        // Garde-fou : si l'iframe ne déclenche pas load (bloqueur), on propose le fallback
         setTimeout(function(){
           if(submitted && !fallbackTriggered){
-            fallbackTriggered = true;
+            fallbackTriggered=true;
             showFallbackModal();
-            btn.disabled = false;
-            btn.innerText = 'Soumettre / Submit';
+            btn.disabled=false; btn.innerText='Soumettre / Submit';
           }
         }, 5000);
       });
