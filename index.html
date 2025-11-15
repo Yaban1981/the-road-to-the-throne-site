@@ -5,21 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QHC — The Road to The Throne</title>
   <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, The Throne" />
-  <meta name="referrer" content="origin">
+
+  <!-- Canonical -->
   <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
 
-  <!-- Réseaux sociaux -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
   <meta property="og:title" content="QHC — The Road to The Throne">
   <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="QHC — The Road to The Throne">
   <meta name="twitter:description" content="Intérêt tournois printemps 2026">
   <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
 
-  <!-- Icônes -->
+  <!-- Favicons / PWA -->
   <link rel="icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" sizes="32x32">
   <link rel="apple-touch-icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png">
   <meta name="theme-color" content="#0a1020">
@@ -29,8 +32,11 @@
 
   <style>
     :root{
-      --panel:#0e152a; --panel2:#0a1020; --text:#e7ecf3; --muted:#a7b3c7;
-      --accent:#d4af37; --accent2:#3b82f6; --ring:rgba(59,130,246,.3); --radius:16px;
+      --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
+      --text:#e7ecf3; --muted:#a7b3c7;
+      --accent:#d4af37; --accent2:#3b82f6;
+      --success:#d4af37; --ring:rgba(59,130,246,.3);
+      --radius:16px;
     }
     *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
     html,body{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
@@ -40,53 +46,135 @@
       color:var(--text); line-height:1.5;
     }
 
-    .hero{padding:28px 16px 18px; background:linear-gradient(180deg,#0a1020,#0b1222 60%,#0a0f1a); border-bottom:1px solid rgba(255,255,255,.06)}
-    .hero-wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px}
-    .hero-logo{width:120px;height:120px;border-radius:22px;display:grid;place-items:center;overflow:hidden;box-shadow:0 16px 44px rgba(3,102,214,.35)}
-    .hero-logo img{width:100%;height:100%;object-fit:cover;border-radius:20px}
+    /* Hero */
+    .hero{
+      padding:28px 16px 18px;
+      background: radial-gradient(700px 320px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
+                  linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      position:relative; overflow:hidden;
+    }
+    .hero::before{
+      content:""; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg, transparent, var(--accent2), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {0%,100%{opacity:.3} 50%{opacity:1}}
+    .hero-wrap{max-width:980px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:18px}
+    .hero-logo{
+      width:120px; height:120px; border-radius:22px; display:grid; place-items:center; overflow:hidden;
+      background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%);
+      box-shadow: 0 16px 44px rgba(3,102,214,.35)
+    }
+    .hero-logo img{width:100%; height:100%; object-fit:cover; border-radius:20px}
     .hero-text{text-align:center}
-    .hero h1{margin:0;font-size:2rem;line-height:1.15}
-    .hero-sub{margin:6px 0 4px;color:#dfe7ff;font-size:1.1rem}
-    .hero-meta{margin:0;color:#9fb7ff;font-size:.95rem}
+    .hero h1{margin:0; font-size:2rem; letter-spacing:.3px; line-height:1.15}
+    .hero-sub{margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem; opacity:.95}
+    .hero-meta{margin:0; color:#9fb7ff; font-size:.95rem; opacity:.9}
 
-    .tournaments-section{max-width:1040px;margin:0 auto 20px;padding:0 16px}
-    .tournaments{display:grid;grid-template-columns:1fr;gap:16px}
-    .tcard{position:relative;background:#0b1020;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:20px;min-height:180px;display:grid;place-items:center}
-    .t-info-pill{position:absolute;bottom:12px;height:32px;display:flex;align-items:center;padding:6px 12px;border-radius:10px;font-size:.85rem;backdrop-filter:blur(6px)}
-    .t-date{left:12px;color:#dfe7ff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10)}
-    .t-badge{right:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,#1f7cff,#60a5fa)}
+    /* Tournaments */
+    .tournaments-section{max-width:1040px; margin:0 auto 20px; padding:0 16px}
+    .tournaments-section h2{ text-align:center; margin:0 0 20px; font-size:1.4rem; color:#eaf2ff}
+    .tournaments{display:grid; grid-template-columns:1fr; gap:16px}
+    .tcard{
+      position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08);
+      border-radius:20px; padding:20px; min-height:180px; overflow:hidden;
+      display:grid; place-items:center;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3);
+      transition:.3s transform, .3s box-shadow, .3s border-color;
+    }
+    .tcard:hover{transform:translateY(-2px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 40px rgba(0,0,0,.4); border-color: rgba(59,130,246,.3)}
+    .tcard::after{content:""; position:absolute; inset:0; background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%)}
+    .tcard .logo{width:100%; height:100%; display:grid; place-items:center; z-index:2}
+    .tcard .logo img{width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:.3s transform}
+    .tcard:hover .logo img{transform:translateY(0) scale(1.05)}
+    .t-info-pill{position:absolute; bottom:12px; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3}
+    .t-date {left:12px;  font-weight:700; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10)}
+    .t-badge{right:12px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35)}
 
+    /* Layout */
     main{padding:12px 16px 40px; max-width:1040px; margin:0 auto}
-    .card, form{background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06); padding:20px; margin:12px 0}
-    fieldset{border:2px solid rgba(212,175,94,.35); padding:18px; border-radius:14px; margin:16px 0 0; position:relative}
-    fieldset.completed::after{content:"✓"; position:absolute; top:-12px; right:15px; width:24px; height:24px; border-radius:50%; background:var(--accent); color:#0a0f1a; display:flex; align-items:center; justify-content:center; font-weight:800}
+    .card, form{background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06); box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); padding:20px; margin:12px 0}
+    fieldset{border:2px solid rgba(212, 175, 94, .35); padding:18px; border-radius:14px; margin:16px 0 0; position:relative; transition:.3s}
+    fieldset.completed::after{content:"✓"; position:absolute; top:-12px; right:15px; width:24px; height:24px; border-radius:50%; background:var(--success); color:#0a0f1a; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 2px 8px rgba(212,175,94,.4)}
     legend{padding:0 8px; color:var(--accent2); font-weight:700; font-size:1.1rem; margin-bottom:8px}
-
     .grid{display:flex; flex-direction:column; gap:16px}
+    .col-12,.col-6,.col-4,.col-3{width:100%}
+    label{display:block; font-size:1rem; margin-bottom:8px; font-weight:500}
+    .muted{color:var(--muted); font-size:.95rem}
     .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+
+    /* inputs */
     .input-container{position:relative}
-    .input-container.valid::after{content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--accent); font-weight:800}
-    input[type="text"],input[type="email"],input[type="tel"],input[type="range"],select,textarea{
-      width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid rgba(255,255,255,.16);
+    .input-container.valid::after{content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800; font-size:16px}
+    input[type="text"], input[type="email"], input[type="tel"], input[type="range"], select, textarea{
+      width:100%; padding:16px; border-radius:12px; border:1.5px solid rgba(255,255,255,.16);
       background:#0b1020; color:var(--text); outline:none; font-size:16px;
     }
-    input:focus,select:focus,textarea:focus{border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring)}
-    .check-row{display:flex;flex-direction:column;gap:10px}
-    .check{position:relative;display:flex;align-items:center;gap:10px;padding:14px 44px 14px 48px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#0b1020}
-    .check input{position:absolute;inset:0;opacity:0}
-    .check::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;border:2px solid #cfd8e3}
-    .check:has(input:checked)::before{background:var(--accent2);border-color:#fff}
+    input:focus, select:focus, textarea:focus{border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a}
+    input.valid, select.valid, textarea.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
+    select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
+    textarea{min-height:120px; resize:vertical}
 
-    .submit{margin-top:24px;display:flex;gap:12px;flex-direction:column}
-    button{appearance:none;border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:16px 22px;border-radius:14px;font-weight:700;cursor:pointer}
-    .outline{background:transparent;border:1px solid rgba(255,255,255,.12)}
-    .confidence-display{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-    .confidence-value{font-weight:700;font-size:1.1rem;color:#3b82f6;background:rgba(59,130,246,.1);padding:4px 12px;border-radius:20px;border:1px solid rgba(59,130,246,.3)}
+    /* CHOICES */
+    .check input[type="radio"], .check input[type="checkbox"]{
+      position:absolute; inset:0; opacity:0; cursor:pointer; margin:0;
+    }
+    .check{
+      position:relative; display:flex; align-items:center; gap:10px;
+      padding:14px 44px 14px 48px; min-height:54px; border-radius:12px;
+      background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;
+    }
+    .check::before{
+      content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent;
+      box-shadow:0 1px 2px rgba(0,0,0,.35);
+    }
+    .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff; }
+    .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08); box-shadow:0 0 0 3px rgba(212,175,94,.15); }
+    .check::after{ content:""; position:absolute; right:14px; width:0; height:0; }
+    .check:has(input:checked)::after{ content:"✓"; color:var(--accent); font-weight:800; font-size:16px; right:14px; top:50%; transform:translateY(-50%); }
+    .check:focus-within{ outline:none; box-shadow:0 0 0 3px var(--ring); border-color:var(--accent2); }
+    .check.valid{ border-color:inherit; background:inherit; } .check.valid::after{ content:""; }
 
+    /* submit */
+    .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
+    button{appearance:none; border:0; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; padding:18px 24px; border-radius:14px; font-weight:700; font-size:1.1rem; min-height:56px; cursor:pointer; box-shadow:0 8px 24px rgba(59,130,246,.28)}
+    button:hover{transform:translateY(-2px)}
+    .outline{background:transparent; border:1px solid rgba(255,255,255,.12); color:var(--text)}
+    .confidence-display{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
+    .confidence-value{font-weight:700; font-size:1.1rem; color:var(--accent2); background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3)}
+
+    /* slider + gold hand */
+    .slider-container{position:relative; margin:30px 0 20px; background: rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,94,.5)}
+    input[type="range"]{height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px}
+    input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); border:2px solid #fff; box-shadow:0 4px 12px rgba(59,130,246,.4)}
+    input[type="range"]::-webkit-slider-track{ height:8px; background:rgba(255,255,255,.12); border-radius:4px}
+    .hand-hint{ position:absolute; top:-35px; left:0; z-index:5; opacity:.95; pointer-events:none; animation: slideHand 3s ease-in-out infinite}
+    .hand-hint svg{ width:32px; height:32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); color: var(--accent)}
+    @keyframes slideHand{
+      0%{transform:translateX(0); opacity:0}
+      10%{opacity:.95}
+      30%{transform:translateX(calc(100% - 50px)) scale(1.1)}
+      50%{transform:translateX(calc(100% - 50px))}
+      70%{transform:translateX(0) scale(1.1)}
+      90%{opacity:.95}
+      100%{transform:translateX(0); opacity:0}
+    }
+
+    /* Desktop tweaks */
     @media (min-width:768px){
-      .tournaments{grid-template-columns:repeat(3,1fr)}
+      .hero{padding:36px 24px 22px}
+      .hero-wrap{flex-direction:row; justify-content:center; gap:24px}
+      .hero-logo{width:160px; height:160px}
+      .hero h1{font-size:2.4rem}
+      .tournaments{grid-template-columns:repeat(3,1fr); gap:20px}
+      .tcard{min-height:200px}
+      .check-row{flex-direction:row; flex-wrap:wrap}
+      .check{flex:1; min-width:168px}
       .submit{flex-direction:row}
-      .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+      .lang-split{display:flex; gap:12px}
+      .grid{display:grid; gap:16px; grid-template-columns:repeat(12,1fr)}
       .col-12{grid-column:span 12} .col-6{grid-column:span 6} .col-4{grid-column:span 4} .col-3{grid-column:span 3}
     }
   </style>
@@ -100,12 +188,10 @@
 
   <header class="hero">
     <div class="hero-wrap">
-      <div class="hero-logo">
-        <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" alt="Logo Québec HC" width="120" height="120">
-      </div>
+      <div class="hero-logo"><img src="logos/qhc.png" alt="Logo Québec HC"></div>
       <div class="hero-text">
         <h1>The Road to The Throne</h1>
-        <p class="hero-sub">Intérêt tournois printemps 2026 / Spring 2026 interest</p>
+        <p class="hero-sub">Intérêt tournois printemps 2026</p>
         <p class="hero-meta">Confiance requise ≥ 80% • Confidence required ≥ 80%</p>
       </div>
     </div>
@@ -113,25 +199,25 @@
 
   <!-- Tournois -->
   <div class="tournaments-section">
-    <h2 style="text-align:center">Nos Tournois 2026 / Our 2026 Tournaments</h2>
+    <h2>Nos Tournois 2026 / Our 2026 Tournaments</h2>
     <div class="tournaments">
       <div class="tcard">
         <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
-          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/bluechip.png" alt="CCM Blue Chip Invite" loading="lazy">
+          <img src="logos/bluechip.png" alt="CCM Blue Chip Invite logo" loading="lazy">
         </a>
         <div class="t-info-pill t-date">15–17.05.2026</div>
         <div class="t-info-pill t-badge" id="cd-boston">J-—</div>
       </div>
       <div class="tcard">
         <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
-          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/meltdown.png" alt="Montreal Meltdown" loading="lazy">
+          <img src="logos/meltdown.png" alt="Montreal Meltdown logo" loading="lazy">
         </a>
         <div class="t-info-pill t-date">05–07.06.2026</div>
         <div class="t-info-pill t-badge" id="cd-meltdown">J-—</div>
       </div>
       <div class="tcard">
         <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
-          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/throne.png" alt="The Throne" loading="lazy">
+          <img src="logos/throne.png" alt="The Throne Tournament logo" loading="lazy">
         </a>
         <div class="t-info-pill t-date">24–26.07.2026</div>
         <div class="t-info-pill t-badge" id="cd-throne">J-—</div>
@@ -140,33 +226,36 @@
   </div>
 
   <main>
-    <div class="card">
-      <h3>FR — Important</h3>
-      <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
-      <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
-      <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
-      <p class="small">Frais d’assurances et décharges à prévoir.</p>
-      <hr style="opacity:.15;margin:14px 0">
-      <h3>EN — Key info</h3>
-      <p>This form builds <strong>tournament lineups</strong>.</p>
-      <p><strong>Throne rule</strong>: must play in at least <strong>one</strong> other tournament.</p>
-      <p><strong>Limited spots</strong>: staff will build the <strong>best lines/pairs</strong>.</p>
-      <p class="small">Insurance fees & waivers required.</p>
+    <div class="lang-split">
+      <div class="card">
+        <h3>FR — Important</h3>
+        <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
+        <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
+        <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
+        <p class="small">Frais d'assurances et décharges à prévoir.</p>
+      </div>
+      <div class="card">
+        <h3>EN — Key info</h3>
+        <p>This form builds <strong>tournament lineups</strong>.</p>
+        <p><strong>Throne rule</strong>: must play in at least <strong>one</strong> other tournament.</p>
+        <p><strong>Limited spots</strong>: staff will build the <strong>best lines/pairs</strong>.</p>
+        <p class="small">Insurance fees & waivers required.</p>
+      </div>
     </div>
 
-    <!-- En cas de JS OFF, FormSubmit fera la redirection grâce à _next -->
+    <!-- ENVOI NATIF : plus fiable. JS = validations/frictions seulement -->
     <form action="https://formsubmit.co/yannick.banaszak@outlook.com" method="POST" id="qhc-form" novalidate>
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_subject" value="QHC — The Road to The Throne — New submission / Nouvelle soumission">
-      <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca"><!-- retirer lors des tests si besoin -->
-      <input type="hidden" name="form_version" value="rttt_v1_bilingual">
+      <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca"><!-- retire temporairement pour tester si besoin -->
+      <input type="hidden" name="form_version" value="rttt_v1_native_bilingual">
+      <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
-      <!-- Délivrabilité -->
-      <input type="hidden" name="_replyto" id="replyto">
-      <input type="hidden" name="email"    id="emaildup">
+      <!-- Pour meilleure délivrabilité / Reply‑To -->
+      <input type="hidden" id="replyto" name="_replyto" value="">
+      <input type="hidden" id="emailAlias" name="email" value="">
 
-      <!-- 1) Joueur / Player -->
+      <!-- 1 -->
       <fieldset id="fieldset-player">
         <legend>1) Info joueur / Player Info</legend>
         <div class="grid">
@@ -200,7 +289,7 @@
         </div>
       </fieldset>
 
-      <!-- 2) Poste & style / Position & style -->
+      <!-- 2 -->
       <fieldset id="fieldset-position">
         <legend>2) Poste & style / Position & Style</legend>
         <div class="grid">
@@ -238,12 +327,12 @@
           </div>
           <div class="col-12 input-container">
             <label for="video_links">Liens vidéo / Video links</label>
-            <textarea id="video_links" name="video_links" placeholder="Collez vos liens/notes (multi‑lignes)… / Paste your links/notes (multi‑line)…"></textarea>
+            <textarea id="video_links" name="video_links" placeholder="Collez vos liens/notes (multi‑lignes)…"></textarea>
           </div>
         </div>
       </fieldset>
 
-      <!-- 3) Chandail / Jersey -->
+      <!-- 3 -->
       <fieldset id="fieldset-jersey">
         <legend>3) Chandail / Jersey</legend>
         <div class="grid">
@@ -265,8 +354,10 @@
               <label class="check"><input type="radio" name="jersey_type" value="Loaned" checked> Prêté / Loaned</label>
               <label class="check"><input type="radio" name="jersey_type" value="Customized"> Personnalisé / Custom</label>
             </div>
-            <div class="muted" style="margin-top:8px">
-              <strong>Note / Note:</strong> frais <u>supplémentaires</u> pour un chandail <strong>personnalisé</strong> (nom & numéro). / <em>Additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
+            <div class="muted small" style="margin-top:8px">
+              <strong>Note / Note:</strong>
+              des frais <u>supplémentaires</u> seront demandés pour un chandail <strong>personnalisé</strong> (nom & numéro). /
+              <em>Additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
             </div>
           </div>
           <div class="col-6 input-container">
@@ -280,14 +371,14 @@
         </div>
       </fieldset>
 
-      <!-- 4) Disponibilités / Availability -->
+      <!-- 4 -->
       <fieldset id="fieldset-availability">
         <legend>4) Disponibilités / Availability</legend>
         <div class="grid">
-          <div class="col-12" style="color:#a7b3c7">Aucun paiement maintenant / No payment now.</div>
+          <div class="col-12 muted">Aucun paiement maintenant / No payment now.</div>
 
           <div class="col-12">
-            <label class="muted">Boston, MA — <span class="price">≈ 150 $ CAD</span> • <span class="date">15–17.05.2026</span></label>
+            <label class="muted">Boston, MA — <span class="price">≈ 150 $ CAD</span> • <span class="date">15–17.05.2026</span></label>
             <div class="check-row" role="radiogroup" aria-label="Boston">
               <label class="check"><input type="radio" name="boston_showdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="boston_showdown" value="No"> Non / No</label>
@@ -296,7 +387,7 @@
           </div>
 
           <div class="col-12">
-            <label class="muted">Montréal, QC — <span class="price">≈ 150 $ CAD</span> • <span class="date">05–07.06.2026</span></label>
+            <label class="muted">Montréal, QC — <span class="price">≈ 150 $ CAD</span> • <span class="date">05–07.06.2026</span></label>
             <div class="check-row" role="radiogroup" aria-label="Meltdown">
               <label class="check"><input type="radio" name="montreal_meltdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="montreal_meltdown" value="No"> Non / No</label>
@@ -305,7 +396,7 @@
           </div>
 
           <div class="col-12">
-            <label class="muted">Toronto, ON — <span class="price">≈ 250 $ CAD</span> • <span class="date">24–26.07.2026</span></label>
+            <label class="muted">Toronto, ON — <span class="price">≈ 250 $ CAD</span> • <span class="date">24–26.07.2026</span></label>
             <div class="check-row" role="radiogroup" aria-label="The Throne">
               <label class="check"><input type="radio" name="the_throne" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="the_throne" value="No"> Non / No</label>
@@ -333,18 +424,24 @@
         </div>
       </fieldset>
 
-      <!-- 5) Confirmations -->
+      <!-- 5 -->
       <fieldset id="fieldset-confirmations">
         <legend>5) Confirmations</legend>
         <div class="grid">
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="ack_throne_rule" required> Je comprends la règle The Throne / I understand the Throne rule <span class="req">*</span></label>
+            <label class="check"><input type="checkbox" name="ack_throne_rule" required>
+              Je comprends la règle The Throne / I understand the Throne rule <span class="req">*</span>
+            </label>
           </div>
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="ack_limited_spots" required> Places limitées / Limited spots <span class="req">*</span></label>
+            <label class="check"><input type="checkbox" name="ack_limited_spots" required>
+              Places limitées / Limited spots <span class="req">*</span>
+            </label>
           </div>
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="consent_contact" required> J'accepte d'être contacté / I agree to be contacted <span class="req">*</span></label>
+            <label class="check"><input type="checkbox" name="consent_contact" required>
+              J'accepte d'être contacté / I agree to be contacted <span class="req">*</span>
+            </label>
           </div>
         </div>
       </fieldset>
@@ -359,10 +456,12 @@
   <footer><div>© Québec HC — Spring 2026</div></footer>
 
   <script>
-    // Compteurs "J-"
+    // Countdowns (J-…)
     (function(){
       const mk=(y,m,d)=>new Date(y,m-1,d,0,0,0,0);
-      const targets=[{id:'cd-boston',date:mk(2026,5,15)},{id:'cd-meltdown',date:mk(2026,6,5)},{id:'cd-throne',date:mk(2026,7,24)}];
+      const targets=[{id:'cd-boston',date:mk(2026,5,15)},
+                     {id:'cd-meltdown',date:mk(2026,6,5)},
+                     {id:'cd-throne',date:mk(2026,7,24)}];
       function update(){
         const now=new Date(); const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
         for(const t of targets){ const el=document.getElementById(t.id); if(!el) continue;
@@ -381,7 +480,6 @@
     function setupVisualValidation(){
       const form=document.getElementById('qhc-form');
 
-      // Visuel champs
       form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select').forEach(el=>{
         el.addEventListener('input', ()=>{
           const wrap=el.closest('.input-container');
@@ -394,12 +492,15 @@
         });
       });
 
-      // Radios & cases
-      form.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(el=>{
-        el.addEventListener('change', ()=>{ markFieldset(el.closest('fieldset')); });
+      form.querySelectorAll('input[type="radio"]').forEach(r=>{
+        r.addEventListener('change', ()=>{ markFieldset(r.closest('fieldset')); });
       });
 
-      // Prime l'état visuel
+      form.querySelectorAll('input[type="checkbox"]').forEach(cbx=>{
+        cbx.addEventListener('change', ()=>{ markFieldset(cbx.closest('fieldset')); });
+      });
+
+      // prime visuel
       form.querySelectorAll('input,select,textarea').forEach(el=>{
         if(el.type==='range') return;
         const evt=(el.type==='radio'||el.type==='checkbox')?'change':'input';
@@ -444,98 +545,53 @@
       }
     }
 
-    // Soumission AJAX + fallback bilingue + redirection absolue
+    // ENVOI NATIF : validations FR/EN + remplissage _replyto/email alias
     (function(){
-      const form    = document.getElementById('qhc-form');
-      const POST_TO = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
-      const THANKS  = 'https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
+      const form=document.getElementById('qhc-form');
       setupVisualValidation();
 
-      function toObj(f){ return Object.fromEntries(new FormData(f).entries()); }
-      function emailBodyFR_EN(obj){
-        const fr = ['QHC — The Road to The Throne — Soumission (secours)','--- FR ---'];
-        const en = ['--- EN ---'];
-        for(const [k,v] of Object.entries(obj)){ if(!k.startsWith('_')){ fr.push(`${k}: ${v}`); en.push(`${k}: ${v}`); } }
-        return [...fr, ...en].join('\n');
-      }
-
-      async function sendAjax(fd){
-        const ctrl=new AbortController(); const timer=setTimeout(()=>ctrl.abort(),12000);
-        const res=await fetch(POST_TO,{method:'POST',headers:{'Accept':'application/json'},body:fd,signal:ctrl.signal});
-        clearTimeout(timer);
-        if(!res.ok) throw new Error('HTTP '+res.status);
-      }
-
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-
-        // HTML5
+      form.addEventListener('submit', (e)=>{
+        // 1) Validations HTML
         if(!form.checkValidity()){
+          e.preventDefault();
           const firstInvalid=form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
 
-        // Règles métier
+        // 2) Règles métier (bilingues)
         const right=form.querySelector('[name="side_right"]').checked;
         const left =form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side (Right/Left).'); return; }
+        if(!right && !left){
+          e.preventDefault();
+          alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side (Right/Left).');
+          return;
+        }
 
         const throne=form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
         const boston=form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
         const meltdown=form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
         if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
-          alert("Règle The Throne : cochez 'Oui' à Boston OU Meltdown. / The Throne rule: tick 'Yes' for Boston OR Meltdown."); return;
+          e.preventDefault();
+          alert("Règle The Throne : cochez 'Oui' à Boston OU Meltdown. / The Throne rule: tick 'Yes' for Boston OR Meltdown.");
+          return;
         }
 
         const conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf)||conf<80){ alert('Confiance ≥ 80% / Confidence ≥ 80%.'); return; }
+        if(isNaN(conf)||conf<80){
+          e.preventDefault();
+          alert('Confiance ≥ 80 % / Confidence ≥ 80%.');
+          return;
+        }
 
-        // Délivrabilité: alimente _replyto + email avec le courriel parent
+        // 3) Délivrabilité : renseigner _replyto + email alias à partir du champ parent_email
         const parentEmail=(document.getElementById('parent_email').value||'').trim();
         document.getElementById('replyto').value = parentEmail;
-        document.getElementById('emaildup').value = parentEmail;
+        document.getElementById('emailAlias').value = parentEmail;
 
-        // UI
+        // 4) UX : désactiver le bouton (pas de preventDefault si tout est OK)
         const btn=form.querySelector('button[type="submit"]');
         btn.disabled=true; btn.innerText='Envoi… / Submitting…';
-
-        try{
-          const fd=new FormData(form);
-          fd.delete('_next'); // on redirige nous-mêmes
-          await sendAjax(fd);
-          window.location.assign(THANKS);
-        }catch(err){
-          console.error('FormSubmit indisponible:', err);
-          const payload=toObj(form);
-          const body=emailBodyFR_EN(payload);
-
-          // Sauvegarde locale + presse-papiers
-          try{
-            const blob=new Blob([body],{type:'text/plain;charset=utf-8'});
-            const a=document.createElement('a');
-            a.href=URL.createObjectURL(blob);
-            a.download=`qhc-form-backup-${Date.now()}.txt`;
-            document.body.appendChild(a); a.click(); URL.revokeObjectURL(a.href); a.remove();
-            await navigator.clipboard.writeText(body);
-          }catch(_){}
-
-          // Ouvre un e‑mail de secours
-          const subject='QHC — The Road to The Throne — Soumission / Submission (fallback)';
-          const mailto=`mailto:yannick.banaszak@outlook.com?bcc=${encodeURIComponent('David.belanger.6@ulaval.ca')}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          const link=document.createElement('a'); link.href=mailto; link.target='_blank'; link.rel='noopener'; link.style.display='none';
-          document.body.appendChild(link); link.click(); link.remove();
-
-          alert("Le service de formulaire est momentanément indisponible.\n"
-              +"Un e‑mail prérempli s’est ouvert : cliquez sur « Envoyer ».\n"
-              +"Vous allez être redirigé vers la page de remerciement.\n\n"
-              +"The form service is temporarily unavailable.\n"
-              +"A pre‑filled email has opened: please click “Send”.\n"
-              +"You will now be redirected to the thank‑you page.");
-
-          window.location.assign(THANKS);
-          btn.disabled=false; btn.innerText='Soumettre / Submit';
-        }
       });
     })();
   </script>
