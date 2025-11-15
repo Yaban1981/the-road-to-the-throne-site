@@ -102,7 +102,7 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* Choice blocks — radios/checkbox WITHOUT the blue dot (encadré jaune cohérent) */
+    /* Choice blocks — radios/checkbox sans point bleu, avec encadré jaune cohérent (+ fallback JS) */
     .check-row{display:flex; flex-direction:column; gap:10px}
     .check{
       position:relative; display:flex; align-items:center; gap:10px;
@@ -118,7 +118,7 @@
     .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08) }
     .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff }
     .check:has(input:checked)::after{ content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px }
-    /* Fallback anciens navigateurs: classe .selected ajoutée via JS */
+    /* Fallback anciens navigateurs (JS ajoute .selected) */
     .check.selected{ border-color:var(--accent); background:rgba(212,175,94,.08) }
     .check.selected::before{ background:var(--accent2); border-color:#fff }
     .check.selected::after{ content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px }
@@ -128,6 +128,33 @@
     button{appearance:none; border:0; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; padding:18px 24px; border-radius:14px; font-weight:700; font-size:1.1rem; min-height:56px; cursor:pointer; box-shadow:0 8px 24px rgba(59,130,246,.28)}
     button:hover{transform:translateY(-2px)}
     .outline{background:transparent; border:1px solid rgba(255,255,255,.12); color:#fff}
+
+    /* Slider + petite main (animation) */
+    .slider-container{
+      position:relative; margin:30px 0 20px;
+      background: rgba(11,16,32,.5); border-radius:12px; padding:15px;
+      border:2px solid rgba(212,175,94,.5);
+    }
+    input[type="range"]{height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px}
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none; height:28px; width:28px; border-radius:50%;
+      background:var(--accent2); border:2px solid #fff; box-shadow:0 4px 12px rgba(59,130,246,.4)
+    }
+    input[type="range"]::-webkit-slider-track{ height:8px; background:rgba(255,255,255,.12); border-radius:4px}
+    .hand-hint{
+      position:absolute; top:-35px; left:0; z-index:5; opacity:.95; pointer-events:none;
+      animation: slideHand 3s ease-in-out infinite;
+    }
+    .hand-hint svg{ width:32px; height:32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); color: var(--accent) }
+    @keyframes slideHand{
+      0%{transform:translateX(0); opacity:0}
+      10%{opacity:.95}
+      30%{transform:translateX(calc(100% - 50px)) scale(1.1)}
+      50%{transform:translateX(calc(100% - 50px))}
+      70%{transform:translateX(0) scale(1.1)}
+      90%{opacity:.95}
+      100%{transform:translateX(0); opacity:0}
+    }
 
     /* Desktop */
     @media (min-width:768px){
@@ -206,7 +233,7 @@
       </div>
     </div>
 
-    <!-- ========= FORMULAIRE : POST natif vers Apps Script (fiable) ========= -->
+    <!-- ========= FORMULAIRE : POST natif vers Apps Script (fiable iPhone) ========= -->
     <form
       action="https://script.google.com/macros/s/AKfycbwo_M5-za4xlXblsb-9yJ8it_izYLFZnS8p42zERudF3Jwbk4f5exUN_xYsnggdpmJHOg/exec"
       method="POST"
@@ -216,8 +243,9 @@
 
       <!-- Le serveur peut lire _next si tu veux changer l’URL de remerciement -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
-      <!-- Alias pour Reply‑To côté serveur -->
+      <!-- Alias (Reply‑To) pour le script côté serveur -->
       <input type="hidden" id="emailAlias" name="email" value="">
+      <input type="hidden" name="form_version" value="rttt_v1_native_apps_script">
 
       <!-- 1 -->
       <fieldset id="fieldset-player">
@@ -370,9 +398,21 @@
 
           <div class="input-container">
             <label for="confidence_pct">Confiance / Confidence (≥ 80%)</label>
-            <input type="range" id="confidence_pct" name="confidence_pct" min="80" max="100" value="80"
-                   oninput="document.getElementById('confVal').textContent=this.value+'%';">
-            <div class="muted">Valeur / Value : <strong id="confVal">80%</strong></div>
+            <div class="slider-container" id="confidenceSlider">
+              <input type="range" id="confidence_pct" name="confidence_pct" min="80" max="100" value="80"
+                     aria-label="Confidence percent" aria-valuemin="80" aria-valuemax="100" aria-valuenow="80"
+                     oninput="updateConfidenceValue(this.value)">
+              <!-- Petite main animée -->
+              <div class="hand-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10.5 9.5V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2M6.5 9.5v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1m-8 3v2a2 2 0 0 0 4 0v-2"/>
+                </svg>
+              </div>
+            </div>
+            <div class="confidence-display">
+              <span class="muted">Valeur / Value:</span>
+              <span class="confidence-value" id="confVal">80%</span>
+            </div>
           </div>
         </div>
       </fieldset>
@@ -397,7 +437,7 @@
   <footer><div>© Québec HC — Spring 2026</div></footer>
 
   <script>
-    // Countdowns (simples + robustes)
+    // Countdowns
     (function(){
       function mk(y,m,d){ return new Date(y,m-1,d,0,0,0,0); }
       var targets=[{id:'cd-boston',date:mk(2026,5,15)},{id:'cd-meltdown',date:mk(2026,6,5)},{id:'cd-throne',date:mk(2026,7,24)}];
@@ -412,7 +452,13 @@
       update(); setInterval(update, 3600000);
     })();
 
-    // Sync reply‑to alias pour l’email
+    // Met à jour la valeur de confiance + aria
+    function updateConfidenceValue(val){
+      document.getElementById('confVal').textContent = val + '%';
+      document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
+    }
+
+    // Sync de l'alias email pour Reply-To (côté serveur)
     (function(){
       var parentEmail=document.getElementById('parent_email');
       var emailAlias=document.getElementById('emailAlias');
@@ -420,7 +466,7 @@
       if(parentEmail){ parentEmail.addEventListener('input', syncEmail); syncEmail(); }
     })();
 
-    // Fallback visuel pour vieux navigateurs (si :has() indisponible)
+    // Fallback visuel pour anciens navigateurs si :has() indisponible
     (function(){
       var form=document.getElementById('qhc-form');
       form.addEventListener('change', function(e){
@@ -434,10 +480,11 @@
       });
     })();
 
-    // Règles métier AVANT envoi (on ne redirige jamais ici — c’est le serveur qui le fait)
+    // Règles métier AVANT envoi (POST natif – fiable sur iPhone)
     function businessOk(){
       var form=document.getElementById('qhc-form');
       if(!form.checkValidity()){ form.reportValidity(); return false; }
+
       var right=form.querySelector('[name="side_right"]').checked;
       var left =form.querySelector('[name="side_left"]').checked;
       if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return false; }
@@ -450,7 +497,8 @@
       var conf=parseInt(document.getElementById('confidence_pct').value,10);
       if(isNaN(conf)||conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return false; }
 
-      // ✅ Laisser le POST natif se faire vers Apps Script
+      // ✅ Laisser le navigateur POSTer vers Apps Script.
+      // Le script enverra l’email puis redirigera vers thanks.html côté serveur (pas de redirection front).
       return true;
     }
   </script>
