@@ -2,10 +2,30 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QHC — The Road to The Throne</title>
   <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, The Throne" />
-  <link rel="icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:site_name" content="Québec HC">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
+  <meta property="og:title" content="QHC — The Road to The Throne">
+  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
+  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="QHC — The Road to The Throne">
+  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
+  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
+
+  <!-- Favicons -->
+  <link rel="icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png">
   <meta name="theme-color" content="#0a1020">
   <meta name="format-detection" content="telephone=no">
 
@@ -24,80 +44,169 @@
       background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%), linear-gradient(180deg, #091024, #0a0f1a);
       color:var(--text); line-height:1.5;
     }
+
     /* Hero */
-    .hero{padding:28px 16px 18px; background:
-      radial-gradient(700px 320px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
-      linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
+    .hero{
+      padding:28px 16px 18px;
+      background: radial-gradient(700px 320px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
+                  linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
       border-bottom:1px solid rgba(255,255,255,.06);
+      position:relative; overflow:hidden;
     }
+    .hero::before{content:""; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg, transparent, var(--accent2), transparent); animation: shimmer 3s ease-in-out infinite;}
+    @keyframes shimmer {0%,100%{opacity:.3} 50%{opacity:1}}
     .hero-wrap{max-width:980px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:18px}
     .hero-logo{width:120px; height:120px; border-radius:22px; display:grid; place-items:center; overflow:hidden;
-      background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%); box-shadow:0 16px 44px rgba(3,102,214,.35)}
+      background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%); box-shadow: 0 16px 44px rgba(3,102,214,.35)}
     .hero-logo img{width:100%; height:100%; object-fit:cover; border-radius:20px}
-    .hero h1{margin:0; font-size:2rem}
-    .hero-sub{margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem}
-    .muted{color:var(--muted)}
+    .hero-text{text-align:center}
+    .hero h1{margin:0; font-size:2rem; letter-spacing:.3px; line-height:1.15}
+    .hero-sub{margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem; opacity:.95}
+    .hero-meta{margin:0; color:#9fb7ff; font-size:.95rem; opacity:.9}
+
+    /* Tournaments */
+    .tournaments-section{max-width:1040px; margin:0 auto 20px; padding:0 16px}
+    .tournaments-section h2{text-align:center; margin:0 0 20px; font-size:1.4rem; color:#eaf2ff}
+    .tournaments{display:grid; grid-template-columns:1fr; gap:16px}
+    .tcard{position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:20px; min-height:180px; overflow:hidden;
+      display:grid; place-items:center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3); transition:.3s transform,.3s box-shadow,.3s border-color}
+    .tcard:hover{transform:translateY(-2px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 40px rgba(0,0,0,.4); border-color: rgba(59,130,246,.3)}
+    .tcard::after{content:""; position:absolute; inset:0; background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%)}
+    .tcard .logo{width:100%; height:100%; display:grid; place-items:center; z-index:2}
+    .tcard .logo img{width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:.3s transform}
+    .tcard:hover .logo img{transform:translateY(0) scale(1.05)}
+    .t-info-pill{position:absolute; bottom:12px; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3}
+    .t-date {left:12px;  font-weight:700; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10)}
+    .t-badge{right:12px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35)}
+
     /* Layout */
     main{padding:12px 16px 40px; max-width:1040px; margin:0 auto}
-    .card, form{background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius);
-      border:1px solid rgba(255,255,255,.06); padding:20px; margin:12px 0}
-    fieldset{border:2px solid rgba(212,175,94,.35); padding:18px; border-radius:14px; margin:16px 0 0; position:relative}
-    fieldset.completed::after{content:"✓"; position:absolute; top:-12px; right:15px; width:24px; height:24px; border-radius:50%;
-      background:var(--success); color:#0a0f1a; display:flex; align-items:center; justify-content:center; font-weight:800}
-    label{display:block; font-size:1rem; margin-bottom:8px; font-weight:500}
+    .card, form{background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06); box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); padding:20px; margin:12px 0}
+    fieldset{border:2px solid rgba(212,175,94,.35); padding:18px; border-radius:14px; margin:16px 0 0; position:relative; transition:.3s}
+    fieldset.completed::after{content:"✓"; position:absolute; top:-12px; right:15px; width:24px; height:24px; border-radius:50%; background:var(--success); color:#0a0f1a; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 2px 8px rgba(212,175,94,.4)}
+    legend{padding:0 8px; color:var(--accent2); font-weight:700; font-size:1.1rem; margin-bottom:8px}
     .grid{display:flex; flex-direction:column; gap:16px}
-    .input-container{position:relative}
-    .input-container.valid::after{content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800}
+    label{display:block; font-size:1rem; margin-bottom:8px; font-weight:500}
+    .muted{color:var(--muted); font-size:.95rem}
 
+    /* Inputs */
+    .input-container{position:relative}
+    .input-container.valid::after{content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800; font-size:16px}
     input[type="text"], input[type="email"], input[type="tel"], input[type="range"], select, textarea{
       width:100%; padding:16px; border-radius:12px; border:1.5px solid rgba(255,255,255,.16);
-      background:#0b1020; color:var(--text); font-size:16px;
+      background:#0b1020; color:var(--text); outline:none; font-size:16px;
     }
     input:focus, select:focus, textarea:focus{border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a}
+    input.valid, select.valid, textarea.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
+    select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
+    textarea{min-height:120px; resize:vertical}
 
-    /* Radios/checkbox : pas de point bleu natif + encadré jaune cohérent */
+    /* Choice blocks — radios/checkbox WITHOUT the blue dot (encadré jaune cohérent) */
     .check-row{display:flex; flex-direction:column; gap:10px}
-    .check{position:relative; display:flex; align-items:center; gap:10px; padding:14px 44px 14px 48px;
-      border:1px solid rgba(255,255,255,.08); border-radius:12px; background:#0b1020; min-height:54px}
-    .check input{position:absolute; inset:0; margin:0; opacity:0; cursor:pointer}
-    .check::before{content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
-      width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent}
-    /* Style quand coché — moderne */
+    .check{
+      position:relative; display:flex; align-items:center; gap:10px;
+      padding:14px 44px 14px 48px; min-height:54px; border-radius:12px;
+      background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;
+    }
+    .check input{position:absolute; inset:0; opacity:0; margin:0; cursor:pointer}
+    .check::before{
+      content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent;
+      box-shadow:0 1px 2px rgba(0,0,0,.35);
+    }
     .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08) }
     .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff }
-    .check:has(input:checked)::after{ content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--accent); font-weight:800 }
-    /* Fallback ancien iOS/Android (JS ajoute .selected) */
+    .check:has(input:checked)::after{ content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px }
+    /* Fallback anciens navigateurs: classe .selected ajoutée via JS */
     .check.selected{ border-color:var(--accent); background:rgba(212,175,94,.08) }
     .check.selected::before{ background:var(--accent2); border-color:#fff }
-    .check.selected::after{ content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--accent); font-weight:800 }
+    .check.selected::after{ content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px }
 
+    /* Submit */
     .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
-    button{appearance:none; border:0; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; padding:18px 24px; border-radius:14px; font-weight:700; font-size:1.1rem; min-height:56px; cursor:pointer}
-    @media (min-width:768px){ .check-row{flex-direction:row; flex-wrap:wrap} .submit{flex-direction:row} }
+    button{appearance:none; border:0; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; padding:18px 24px; border-radius:14px; font-weight:700; font-size:1.1rem; min-height:56px; cursor:pointer; box-shadow:0 8px 24px rgba(59,130,246,.28)}
+    button:hover{transform:translateY(-2px)}
+    .outline{background:transparent; border:1px solid rgba(255,255,255,.12); color:#fff}
+
+    /* Desktop */
+    @media (min-width:768px){
+      .tournaments{grid-template-columns:repeat(3,1fr); gap:20px}
+      .submit{flex-direction:row}
+      .lang-split{display:flex; gap:12px}
+      .grid{display:grid; gap:16px; grid-template-columns:repeat(12,1fr)}
+      .grid > *{grid-column:span 12}
+      .grid .col-6{grid-column:span 6} .grid .col-4{grid-column:span 4} .grid .col-3{grid-column:span 3}
+    }
   </style>
 </head>
 <body>
+  <noscript>
+    <div style="background:#3b82f6;color:#fff;padding:10px;text-align:center">
+      JavaScript requis pour validations et compteurs. / JavaScript required for validation & countdown.
+    </div>
+  </noscript>
+
   <header class="hero">
     <div class="hero-wrap">
-      <div class="hero-logo"><img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" alt="Logo Québec HC"></div>
+      <div class="hero-logo">
+        <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" alt="Logo Québec HC">
+      </div>
       <div class="hero-text">
         <h1>The Road to The Throne</h1>
         <p class="hero-sub">Intérêt tournois printemps 2026</p>
-        <p class="muted">Confiance requise ≥ 80% • Confidence required ≥ 80%</p>
+        <p class="hero-meta">Confiance requise ≥ 80% • Confidence required ≥ 80%</p>
       </div>
     </div>
   </header>
 
+  <!-- Tournois -->
+  <div class="tournaments-section">
+    <h2>Nos Tournois 2026 / Our 2026 Tournaments</h2>
+    <div class="tournaments">
+      <div class="tcard">
+        <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
+          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/bluechip.png" alt="CCM Blue Chip Invite logo" loading="lazy">
+        </a>
+        <div class="t-info-pill t-date">15–17.05.2026</div>
+        <div class="t-info-pill t-badge" id="cd-boston">J-—</div>
+      </div>
+      <div class="tcard">
+        <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
+          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/meltdown.png" alt="Montreal Meltdown logo" loading="lazy">
+        </a>
+        <div class="t-info-pill t-date">05–07.06.2026</div>
+        <div class="t-info-pill t-badge" id="cd-meltdown">J-—</div>
+      </div>
+      <div class="tcard">
+        <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
+          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/throne.png" alt="The Throne Tournament logo" loading="lazy">
+        </a>
+        <div class="t-info-pill t-date">24–26.07.2026</div>
+        <div class="t-info-pill t-badge" id="cd-throne">J-—</div>
+      </div>
+    </div>
+  </div>
+
   <main>
-    <div class="card">
-      <h3>FR — Important</h3>
-      <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
-      <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
-      <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
-      <p class="muted">Frais d'assurances et décharges à prévoir.</p>
+    <div class="lang-split">
+      <div class="card">
+        <h3>FR — Important</h3>
+        <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
+        <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
+        <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
+        <p class="muted">Frais d'assurances et décharges à prévoir.</p>
+      </div>
+      <div class="card">
+        <h3>EN — Key info</h3>
+        <p>This form builds <strong>tournament lineups</strong>.</p>
+        <p><strong>Throne rule</strong>: must play in at least <strong>one</strong> other tournament.</p>
+        <p><strong>Limited spots</strong>: staff will build the <strong>best lines/pairs</strong>.</p>
+        <p class="muted">Insurance fees & waivers required.</p>
+      </div>
     </div>
 
-    <!-- ========= FORMULAIRE : POST natif vers Apps Script ========= -->
+    <!-- ========= FORMULAIRE : POST natif vers Apps Script (fiable) ========= -->
     <form
       action="https://script.google.com/macros/s/AKfycbwo_M5-za4xlXblsb-9yJ8it_izYLFZnS8p42zERudF3Jwbk4f5exUN_xYsnggdpmJHOg/exec"
       method="POST"
@@ -105,12 +214,12 @@
       onsubmit="return businessOk()"
       novalidate>
 
-      <!-- le serveur lira _next pour la redirection après envoi -->
+      <!-- Le serveur peut lire _next si tu veux changer l’URL de remerciement -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
-      <!-- alias pour Reply-To côté serveur -->
+      <!-- Alias pour Reply‑To côté serveur -->
       <input type="hidden" id="emailAlias" name="email" value="">
 
-      <!-- 1) Joueur -->
+      <!-- 1 -->
       <fieldset id="fieldset-player">
         <legend>1) Info joueur / Player Info</legend>
         <div class="grid">
@@ -144,7 +253,7 @@
         </div>
       </fieldset>
 
-      <!-- 2) Poste & style -->
+      <!-- 2 -->
       <fieldset id="fieldset-position">
         <legend>2) Poste & style / Position & Style</legend>
         <div class="grid">
@@ -157,7 +266,6 @@
               <label class="check"><input type="radio" name="primary_position" value="Goaler" required> Gardien / Goaler</label>
             </div>
           </div>
-
           <div>
             <label>Position secondaire / Secondary position</label>
             <div class="check-row" aria-label="Secondary position">
@@ -188,7 +296,7 @@
         </div>
       </fieldset>
 
-      <!-- 3) Chandail -->
+      <!-- 3 -->
       <fieldset id="fieldset-jersey">
         <legend>3) Chandail / Jersey</legend>
         <div class="grid">
@@ -227,7 +335,7 @@
         </div>
       </fieldset>
 
-      <!-- 4) Disponibilités -->
+      <!-- 4 -->
       <fieldset id="fieldset-availability">
         <legend>4) Disponibilités / Availability</legend>
         <div class="grid">
@@ -269,7 +377,7 @@
         </div>
       </fieldset>
 
-      <!-- 5) Confirmations -->
+      <!-- 5 -->
       <fieldset id="fieldset-confirmations">
         <legend>5) Confirmations</legend>
         <div class="grid">
@@ -286,106 +394,63 @@
     </form>
   </main>
 
+  <footer><div>© Québec HC — Spring 2026</div></footer>
+
   <script>
-    // Synchronise l’alias pour Reply‑To côté serveur
+    // Countdowns (simples + robustes)
     (function(){
-      const parentEmail = document.getElementById('parent_email');
-      const emailAlias  = document.getElementById('emailAlias');
-      function syncEmail(){ emailAlias.value = (parentEmail?.value || '').trim(); }
-      parentEmail?.addEventListener('input', syncEmail); syncEmail();
-    })();
-
-    // Visuel: valid/complété + fallback pour anciens navigateurs (classe .selected)
-    (function(){
-      const form = document.getElementById('qhc-form');
-
-      // Entrées texte/select/textarea
-      form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select')
-      .forEach(el=>{
-        el.addEventListener('input', ()=>{
-          const wrap = el.closest('.input-container');
-          if(wrap){
-            const filled = (el.tagName==='SELECT') ? el.value!=='' : el.value.trim()!=='';
-            wrap.classList.toggle('valid', filled);
-            el.classList.toggle('valid', filled);
-          }
-          mark(el.closest('fieldset'));
-        });
-      });
-
-      // Radios/checkbox: fallback .selected si :has() pas dispo
-      form.addEventListener('change', (e)=>{
-        const t=e.target;
-        if(t.type==='radio'){
-          form.querySelectorAll('input[name="'+t.name+'"]').forEach(r=>r.closest('.check')?.classList.remove('selected'));
-          t.closest('.check')?.classList.add('selected');
-          mark(t.closest('fieldset'));
-        } else if(t.type==='checkbox'){
-          t.closest('.check')?.classList.toggle('selected', t.checked);
-          mark(t.closest('fieldset'));
+      function mk(y,m,d){ return new Date(y,m-1,d,0,0,0,0); }
+      var targets=[{id:'cd-boston',date:mk(2026,5,15)},{id:'cd-meltdown',date:mk(2026,6,5)},{id:'cd-throne',date:mk(2026,7,24)}];
+      function update(){
+        var now=new Date(); var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+        for(var i=0;i<targets.length;i++){
+          var t=targets[i]; var el=document.getElementById(t.id); if(!el) continue;
+          var days=Math.ceil((t.date-today)/86400000);
+          el.textContent=(days>0)?('J-'+days):(days===0?'Jour J':'Terminé');
         }
-      });
-
-      function mark(fs){
-        if(!fs) return; let ok=false;
-        switch(fs.id){
-          case 'fieldset-player': {
-            const need=['player_name','birth_year','city','parent_email'];
-            ok = need.every(id=>{
-              const el=document.getElementById(id);
-              return el && (el.tagName==='SELECT' ? el.value!=='' : el.value.trim()!=='') && (el.id!=='parent_email' || el.checkValidity());
-            }); break;
-          }
-          case 'fieldset-position': {
-            const primary=!!fs.querySelector('input[name="primary_position"]:checked');
-            const sideOK =fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
-            ok=primary && sideOK; break;
-          }
-          case 'fieldset-jersey': {
-            const typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
-            const sizeOK=(document.getElementById('jersey_size').value!=='');
-            ok=typeOK && sizeOK; break;
-          }
-          case 'fieldset-availability': {
-            const b=!!fs.querySelector('input[name="boston_showdown"]:checked');
-            const m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
-            const t=!!fs.querySelector('input[name="the_throne"]:checked');
-            const conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
-            ok=b && m && t && conf; break;
-          }
-          case 'fieldset-confirmations': {
-            const c1=fs.querySelector('[name="ack_throne_rule"]').checked;
-            const c2=fs.querySelector('[name="ack_limited_spots"]').checked;
-            const c3=fs.querySelector('[name="consent_contact"]').checked;
-            ok=c1 && c2 && c3; break;
-          }
-        }
-        fs.classList.toggle('completed', ok);
       }
+      update(); setInterval(update, 3600000);
+    })();
 
-      // Amorçage visuel
-      form.querySelectorAll('input,select,textarea').forEach(el=>{
-        if(el.type==='range') return;
-        const evt=(el.type==='radio'||el.type==='checkbox')?'change':'input';
-        el.dispatchEvent(new Event(evt));
+    // Sync reply‑to alias pour l’email
+    (function(){
+      var parentEmail=document.getElementById('parent_email');
+      var emailAlias=document.getElementById('emailAlias');
+      function syncEmail(){ emailAlias.value=(parentEmail.value||'').trim(); }
+      if(parentEmail){ parentEmail.addEventListener('input', syncEmail); syncEmail(); }
+    })();
+
+    // Fallback visuel pour vieux navigateurs (si :has() indisponible)
+    (function(){
+      var form=document.getElementById('qhc-form');
+      form.addEventListener('change', function(e){
+        var t=e.target;
+        if(t.type==='radio'){
+          form.querySelectorAll('input[name="'+t.name+'"]').forEach(function(r){ r.closest('.check')?.classList.remove('selected'); });
+          t.closest('.check')?.classList.add('selected');
+        }else if(t.type==='checkbox'){
+          t.closest('.check')?.classList.toggle('selected', t.checked);
+        }
       });
     })();
 
-    // Règles métier AVANT envoi (POST natif)
+    // Règles métier AVANT envoi (on ne redirige jamais ici — c’est le serveur qui le fait)
     function businessOk(){
-      const form=document.getElementById('qhc-form');
+      var form=document.getElementById('qhc-form');
       if(!form.checkValidity()){ form.reportValidity(); return false; }
-      const right=form.querySelector('[name="side_right"]').checked;
-      const left =form.querySelector('[name="side_left"]').checked;
+      var right=form.querySelector('[name="side_right"]').checked;
+      var left =form.querySelector('[name="side_left"]').checked;
       if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return false; }
-      const T=form.querySelector('input[name="the_throne"]:checked')?.value||'TBD';
-      const B=form.querySelector('input[name="boston_showdown"]:checked')?.value||'TBD';
-      const M=form.querySelector('input[name="montreal_meltdown"]:checked')?.value||'TBD';
+
+      var T=form.querySelector('input[name="the_throne"]:checked')?.value||'TBD';
+      var B=form.querySelector('input[name="boston_showdown"]:checked')?.value||'TBD';
+      var M=form.querySelector('input[name="montreal_meltdown"]:checked')?.value||'TBD';
       if(T==='Yes' && !(B==='Yes' || M==='Yes')){ alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return false; }
-      const conf=parseInt(document.getElementById('confidence_pct').value,10);
+
+      var conf=parseInt(document.getElementById('confidence_pct').value,10);
       if(isNaN(conf)||conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return false; }
-      // ✅ OK : on laisse le navigateur POSTer vers Apps Script
-      // Le serveur enverra l’e‑mail puis redirigera vers /thanks.html
+
+      // ✅ Laisser le POST natif se faire vers Apps Script
       return true;
     }
   </script>
