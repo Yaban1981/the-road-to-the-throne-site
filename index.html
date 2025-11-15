@@ -132,7 +132,7 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* === CHOICES === */
+    /* CHOICES */
     .check input[type="radio"], .check input[type="checkbox"]{
       position:absolute; inset:0; opacity:0; cursor:pointer; margin:0;
     }
@@ -161,7 +161,7 @@
     .confidence-display{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
     .confidence-value{font-weight:700; font-size:1.1rem; color:var(--accent2); background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3)}
 
-    /* slider + GOLD hand */
+    /* slider */
     .slider-container{position:relative; margin:30px 0 20px; background: rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,94,.5)}
     input[type="range"]{height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px}
     input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); border:2px solid #fff; box-shadow:0 4px 12px rgba(59,130,246,.4)}
@@ -265,6 +265,7 @@
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
       <input type="hidden" name="form_version" value="rttt_v1_mobile">
+      <!-- Redirection ABSOLUE (utile si JS off) -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
 
       <!-- 1 -->
@@ -555,18 +556,22 @@
       }
     }
 
-    // Soumission AJAX JSON + redirection absolue + fallback e‑mail (nouvel onglet)
+    // Soumission AJAX JSON + redirection absolue + fallback FR/EN
     (function(){
-      const form    = document.getElementById('qhc-form');
-      const POST_TO = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
-      const THANKS_URL = 'https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
+      const form = document.getElementById('qhc-form');
+      const POST_TO   = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
+      const THANKS_URL= 'https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
       setupVisualValidation();
 
       function toObj(f){ return Object.fromEntries(new FormData(f).entries()); }
       function emailBody(obj){
-        const lines=['QHC — The Road to The Throne','---'];
-        for(const [k,v] of Object.entries(obj)){ if(!k.startsWith('_')) lines.push(`${k}: ${v}`); }
-        return lines.join('\n');
+        const fr = ['QHC — The Road to The Throne — Soumission (secours)',
+                    '--- FR ---'];
+        const en = ['--- EN ---'];
+        for(const [k,v] of Object.entries(obj)){
+          if(!k.startsWith('_')){ fr.push(`${k}: ${v}`); en.push(`${k}: ${v}`); }
+        }
+        return [...fr, ...en].join('\n');
       }
 
       async function sendAjax(payload){
@@ -592,20 +597,27 @@
           return;
         }
 
-        // Règles métier
+        // Règles métier (bilingues)
         const right=form.querySelector('[name="side_right"]').checked;
         const left =form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
+        if(!right && !left){
+          alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side (Right/Left).');
+          return;
+        }
 
         const throne=form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
         const boston=form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
         const meltdown=form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
         if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
-          alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return;
+          alert("Règle The Throne : cochez 'Oui' à Boston OU Meltdown. / The Throne rule: tick 'Yes' for Boston OR Meltdown.");
+          return;
         }
 
         const conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf) || conf<80){ alert('Confidence must be ≥ 80 %'); return; }
+        if(isNaN(conf) || conf<80){
+          alert('Confiance ≥ 80 % / Confidence ≥ 80%.');
+          return;
+        }
 
         // UI
         const btn=form.querySelector('button[type="submit"]');
@@ -615,22 +627,39 @@
 
         try{
           await sendAjax(payload);
-          window.location.assign(THANKS_URL); // redirection ABSOLUE (succès)
+          window.location.assign(THANKS_URL); // succès -> redirection ABSOLUE
         }catch(err){
           console.error('FormSubmit indisponible:', err);
+
+          // Fallback FR/EN
           const body=emailBody(payload);
-          try{ await navigator.clipboard.writeText(body); }catch(_){}
 
-          alert("Le service de formulaire est momentanément indisponible.\nUn e‑mail prérempli va s’ouvrir.\nVous allez être redirigé vers la page de remerciement.");
+          // Sauvegarde locale (txt) + copie presse-papiers
+          try{
+            const blob=new Blob([body],{type:'text/plain;charset=utf-8'});
+            const a=document.createElement('a');
+            a.href=URL.createObjectURL(blob);
+            a.download=`qhc-form-backup-${Date.now()}.txt`;
+            document.body.appendChild(a); a.click(); URL.revokeObjectURL(a.href); a.remove();
+            await navigator.clipboard.writeText(body);
+          }catch(_){}
 
-          // Ouvre le client e‑mail dans un nouvel onglet/fenêtre…
-          const subject='QHC — The Road to The Throne — Soumission (fallback)';
-          const mailto=`mailto:yannick.banaszak@outlook.com?bcc=${encodeURIComponent('David.belanger.6@ulaval.ca')}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          const a=document.createElement('a');
-          a.href=mailto; a.target='_blank'; a.rel='noopener noreferrer'; a.style.display='none';
-          document.body.appendChild(a); a.click(); a.remove();
+          // Ouvre l’e-mail de secours dans un onglet séparé
+          const subject='QHC — The Road to The Throne — Soumission / Submission (fallback)';
+          const mailto=`mailto:yannick.banaszak@outlook.com?bcc=${encodeURIComponent('David.belanger.6@ulaval.ca')}`
+            + `&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          const link=document.createElement('a');
+          link.href=mailto; link.target='_blank'; link.rel='noopener'; link.style.display='none';
+          document.body.appendChild(link); link.click(); link.remove();
 
-          // …et on redirige la page actuelle immédiatement
+          // Message bilingue puis redirection garantie
+          alert("Le service de formulaire est momentanément indisponible.\n"
+              + "Un e‑mail prérempli s’est ouvert. Merci d’appuyer sur « Envoyer ».\n"
+              + "Vous allez être redirigé vers la page de remerciement.\n\n"
+              + "The form service is temporarily unavailable.\n"
+              + "A pre‑filled email has opened. Please click “Send”.\n"
+              + "You will now be redirected to the thank‑you page.");
+
           window.location.assign(THANKS_URL);
 
           btn.disabled=false; btn.innerText='Soumettre / Submit';
