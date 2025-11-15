@@ -17,8 +17,6 @@
   <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
   <meta property="og:title" content="QHC — The Road to The Throne">
   <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
-
-  <!-- Image OG -->
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 
@@ -111,9 +109,10 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* Choice blocks (visuel) */
+    /* Choices (visuel) */
     .check input[type="radio"], .check input[type="checkbox"]{position:absolute; inset:0; opacity:0; cursor:pointer; margin:0}
-    .check{position:relative; display:flex; align-items:center; gap:10px; padding:14px 44px 14px 48px; min-height:54px; border-radius:12px; background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;}
+    .check{position:relative; display:flex; align-items:center; gap:10px; padding:14px 44px 14px 48px; min-height:54px; border-radius:12px;
+      background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;}
     .check::before{content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%); width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent; box-shadow:0 1px 2px rgba(0,0,0,.35)}
     .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff;}
     .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08); box-shadow:0 0 0 3px rgba(212,175,94,.15);}
@@ -223,16 +222,16 @@
       </div>
     </div>
 
-    <!-- FormSubmit + redirection absolue -->
-    <form action="https://formsubmit.co/yannick.banaszak@outlook.com" method="POST" id="qhc-form" novalidate>
+    <!-- FormSubmit (natif, iPhone-friendly) -->
+    <form action="https://formsubmit.co/yannick.banaszak@outlook.com" method="POST" id="qhc-form" target="_self" novalidate>
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
       <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
-      <input type="hidden" name="form_version" value="rttt_v1_mobile_safe">
-      <!-- URL ABSOLUE pour iOS / cas sans JS -->
+      <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
+      <input type="hidden" name="form_version" value="rttt_v1_mobile_safe_native">
+      <!-- URL ABSOLUE (critique pour iPhone) -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
-      <!-- on recopiera l'email parent dans ces alias (si JS dispo) -->
+      <!-- facultatif : permet Reply-To -->
       <input type="hidden" id="replyto" name="_replyto" value="">
       <input type="hidden" id="emailAlias" name="email" value="">
 
@@ -336,7 +335,8 @@
               <label class="check"><input type="radio" name="jersey_type" value="Customized"> Personnalisé / Custom</label>
             </div>
             <div class="muted small" style="margin-top:8px">
-              <strong>Note / Note:</strong> des frais <u>supplémentaires</u> seront demandés pour un chandail <strong>personnalisé</strong> (nom & numéro). /
+              <strong>Note / Note:</strong>
+              des frais <u>supplémentaires</u> seront demandés pour un chandail <strong>personnalisé</strong> (nom & numéro). /
               <em>Additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
             </div>
           </div>
@@ -450,167 +450,110 @@
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    /* Validation visuelle (badges "completed") */
-    function setupVisualValidation(){
-      var form=document.getElementById('qhc-form');
-
-      var typed=form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select');
-      for(var i=0;i<typed.length;i++){
-        typed[i].addEventListener('input', function(){
-          var el=this, wrap=el.closest?el.closest('.input-container'):null;
-          if(wrap){
-            var filled=(el.tagName==='SELECT')?(el.value!==''):(el.value.trim()!=='');
-            wrap.classList.toggle('valid', filled);
-            el.classList.toggle('valid', filled);
-          }
-          markFieldset(el.closest?el.closest('fieldset'):null);
-        });
-      }
-
-      var radios=form.querySelectorAll('input[type="radio"]');
-      for(i=0;i<radios.length;i++){
-        radios[i].addEventListener('change', function(){ markFieldset(this.closest?this.closest('fieldset'):null); });
-      }
-
-      var checks=form.querySelectorAll('input[type="checkbox"]');
-      for(i=0;i<checks.length;i++){
-        checks[i].addEventListener('change', function(){ markFieldset(this.closest?this.closest('fieldset'):null); });
-      }
-
-      var all=form.querySelectorAll('input,select,textarea');
-      for(i=0;i<all.length;i++){
-        var el=all[i]; if(el.type==='range') continue;
-        var evt=(el.type==='radio'||el.type==='checkbox')?'change':'input';
-        el.dispatchEvent(new Event(evt));
-      }
-
-      function markFieldset(fs){
-        if(!fs) return; var ok=false;
-        switch(fs.id){
-          case 'fieldset-player': {
-            var need=['player_name','birth_year','city','parent_email'];
-            ok=need.every(function(id){
-              var el=document.getElementById(id);
-              return el && (el.tagName==='SELECT'? (el.value!=='') : (el.value.trim()!=='')) && (el.id!=='parent_email' || el.checkValidity());
-            }); break;
-          }
-          case 'fieldset-position': {
-            var primary=!!fs.querySelector('input[name="primary_position"]:checked');
-            var sideOK=fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
-            ok=primary && sideOK; break;
-          }
-          case 'fieldset-jersey': {
-            var typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
-            var sizeOK=(document.getElementById('jersey_size').value!=='');
-            ok=typeOK && sizeOK; break;
-          }
-          case 'fieldset-availability': {
-            var b=!!fs.querySelector('input[name="boston_showdown"]:checked');
-            var m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
-            var t=!!fs.querySelector('input[name="the_throne"]:checked');
-            var conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
-            ok=b && m && t && conf; break;
-          }
-          case 'fieldset-confirmations': {
-            var c1=fs.querySelector('[name="ack_throne_rule"]').checked;
-            var c2=fs.querySelector('[name="ack_limited_spots"]').checked;
-            var c3=fs.querySelector('[name="consent_contact"]').checked;
-            ok=c1 && c2 && c3; break;
-          }
-        }
-        fs.classList.toggle('completed', ok);
-      }
-    }
-
-    // Helpers
-    function isIOS(){
-      var ua=navigator.userAgent||navigator.vendor||window.opera;
-      var iOS=/iPad|iPhone|iPod/.test(ua);
-      var iPadOS=(navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
-      return iOS || iPadOS;
-    }
-    function buildMailtoBody(form){
-      var pairs=[];
-      var fd=new FormData(form);
-      fd.forEach(function(v,k){ if(k && k.charAt(0)==='_') return; pairs.push(k+': '+String(v)); });
-      return pairs.join('\r\n');
-    }
-
-    // Envoi : iOS => NATIF ; autres => AJAX + fallback mailto
+    // Validation visuelle + soumission NATIF (iOS friendly)
     (function(){
       var form=document.getElementById('qhc-form');
-      var postTo='https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
-      var thanks='https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
-      setupVisualValidation();
 
+      // Visual cues
+      (function setupVisualValidation(){
+        var textFields=form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select');
+        for(var i=0;i<textFields.length;i++){
+          textFields[i].addEventListener('input', function(){
+            var el=this, wrap=el.closest?el.closest('.input-container'):null;
+            if(wrap){
+              var filled=(el.tagName==='SELECT')?(el.value!==''):(el.value.trim()!=='');
+              wrap.classList.toggle('valid', filled);
+              el.classList.toggle('valid', filled);
+            }
+            var fs=el.closest?el.closest('fieldset'):null; markFieldset(fs);
+          });
+        }
+        var radios=form.querySelectorAll('input[type="radio"]');
+        for(i=0;i<radios.length;i++){
+          radios[i].addEventListener('change', function(){ var fs=this.closest?this.closest('fieldset'):null; markFieldset(fs); });
+        }
+        var checks=form.querySelectorAll('input[type="checkbox"]');
+        for(i=0;i<checks.length;i++){
+          checks[i].addEventListener('change', function(){ var fs=this.closest?this.closest('fieldset'):null; markFieldset(fs); });
+        }
+        var all=form.querySelectorAll('input,select,textarea');
+        for(i=0;i<all.length;i++){
+          var el=all[i]; if(el.type==='range') continue;
+          var evt=(el.type==='radio'||el.type==='checkbox')?'change':'input';
+          el.dispatchEvent(new Event(evt));
+        }
+        function markFieldset(fs){
+          if(!fs) return; var ok=false;
+          switch(fs.id){
+            case 'fieldset-player': {
+              var need=['player_name','birth_year','city','parent_email'];
+              ok=need.every(function(id){
+                var el=document.getElementById(id);
+                return el && (el.tagName==='SELECT'? (el.value!=='') : (el.value.trim()!=='')) && (el.id!=='parent_email' || el.checkValidity());
+              }); break;
+            }
+            case 'fieldset-position': {
+              var primary=!!fs.querySelector('input[name="primary_position"]:checked');
+              var sideOK=fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
+              ok=primary && sideOK; break;
+            }
+            case 'fieldset-jersey': {
+              var typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
+              var sizeOK=(document.getElementById('jersey_size').value!=='');
+              ok=typeOK && sizeOK; break;
+            }
+            case 'fieldset-availability': {
+              var b=!!fs.querySelector('input[name="boston_showdown"]:checked');
+              var m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
+              var t=!!fs.querySelector('input[name="the_throne"]:checked');
+              var conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
+              ok=b && m && t && conf; break;
+            }
+            case 'fieldset-confirmations': {
+              var c1=fs.querySelector('[name="ack_throne_rule"]').checked;
+              var c2=fs.querySelector('[name="ack_limited_spots"]').checked;
+              var c3=fs.querySelector('[name="consent_contact"]').checked;
+              ok=c1 && c2 && c3; break;
+            }
+          }
+          fs.classList.toggle('completed', ok);
+        }
+      })();
+
+      // _replyto auto depuis le champ email parent
+      var emailField=document.getElementById('parent_email');
+      var replyto=document.getElementById('replyto');
+      var emailAlias=document.getElementById('emailAlias');
+      function syncEmail(){ var v=(emailField.value||'').trim(); replyto.value=v; emailAlias.value=v; }
+      emailField.addEventListener('input', syncEmail); syncEmail();
+
+      // Soumission native : on bloque SEULEMENT si une validation échoue
       form.addEventListener('submit', function(e){
-        e.preventDefault();
-
-        // 1) validations natives
+        // HTML5 required/pattern
         if(!form.checkValidity()){
+          e.preventDefault();
           var firstInvalid=form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
-
-        // 2) règles métier
+        // Règles métier
         var right=form.querySelector('[name="side_right"]').checked;
         var left =form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
+        if(!right && !left){ e.preventDefault(); alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
 
-        var t=form.querySelector('[name="the_throne"]:checked');
-        var b=form.querySelector('[name="boston_showdown"]:checked');
-        var m=form.querySelector('[name="montreal_meltdown"]:checked');
-        var throne=t?t.value:'TBD', boston=b?b.value:'TBD', meltdown=m?m.value:'TBD';
+        var elT=form.querySelector('input[name="the_throne"]:checked');
+        var elB=form.querySelector('input[name="boston_showdown"]:checked');
+        var elM=form.querySelector('input[name="montreal_meltdown"]:checked');
+        var throne=elT?elT.value:'TBD', boston=elB?elB.value:'TBD', meltdown=elM?elM.value:'TBD';
         if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
-          alert("Règle The Throne : cochez 'Oui' à Boston OU Meltdown. / The Throne rule: tick 'Yes' for Boston OR Meltdown.");
-          return;
+          e.preventDefault(); alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return;
         }
 
         var conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf)||conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
+        if(isNaN(conf) || conf<80){ e.preventDefault(); alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
 
-        // 3) alias Reply‑To (quand JS présent)
-        var parentEmail=(document.getElementById('parent_email').value||'').trim();
-        document.getElementById('replyto').value   = parentEmail;
-        document.getElementById('emailAlias').value= parentEmail;
-
-        // 4) iOS => soumission NATIF (fiable)
-        var btn=form.querySelector('button[type="submit"]');
-        btn.disabled=true; btn.innerText='Envoi… / Submitting…';
-
-        if(isIOS() || !window.fetch){
-          form.submit(); // envoi natif vers FormSubmit ; redirection via _next (absolu)
-          return;
-        }
-
-        // 5) Autres navigateurs => AJAX + fallback mailto
-        try{
-          var fd=new FormData(form);
-          fd.delete('_next');
-          fetch(postTo,{method:'POST', headers:{'Accept':'application/json'}, body:fd})
-            .then(function(res){
-              if(!res.ok) throw new Error('FormSubmit error: '+res.status);
-              window.location.href=thanks;
-            })
-            .catch(function(err){
-              console.error(err);
-              alert(
-                "Le service de formulaire est momentanément indisponible.\n" +
-                "Un e‑mail prérempli va s’ouvrir. Merci d’appuyer sur « Envoyer ». / " +
-                "A pre‑filled email will open. Please press “Send”."
-              );
-              var href='mailto:'+encodeURIComponent('yannick.banaszak@outlook.com')
-                      +'?subject='+encodeURIComponent('QHC — The Road to The Throne — Formulaire')
-                      +'&body='+encodeURIComponent(buildMailtoBody(form));
-              window.location.href=href;
-              setTimeout(function(){ window.location.href=thanks; }, 1200);
-              btn.disabled=false; btn.innerText='Soumettre / Submit';
-            });
-        }catch(err){
-          console.error(err);
-          form.submit(); // dernier filet de sécurité
-        }
+        // Tout est OK → pas de preventDefault() → POST natif vers FormSubmit
+        syncEmail(); // s'assurer que _replyto est rempli
       });
     })();
   </script>
