@@ -9,7 +9,7 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
 
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph -->
   <meta property="og:site_name" content="Québec HC">
   <meta property="og:locale" content="fr_CA">
   <meta property="og:locale:alternate" content="en_CA">
@@ -19,6 +19,8 @@
   <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="QHC — The Road to The Throne">
   <meta name="twitter:description" content="Intérêt tournois printemps 2026">
@@ -107,7 +109,7 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* Choices (visuel) */
+    /* Choice blocks (visuel) */
     .check input[type="radio"], .check input[type="checkbox"]{position:absolute; inset:0; opacity:0; cursor:pointer; margin:0}
     .check{position:relative; display:flex; align-items:center; gap:10px; padding:14px 44px 14px 48px; min-height:54px; border-radius:12px;
       background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;}
@@ -220,14 +222,14 @@
       </div>
     </div>
 
-    <!-- FormSubmit (natif, iPhone-friendly) -->
+    <!-- FormSubmit (AJAX + fallback natif) -->
     <form action="https://formsubmit.co/yannick.banaszak%40outlook.com" method="POST" id="qhc-form" target="_self" novalidate>
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
-      <input type="hidden" name="form_version" value="rttt_v1_mobile_safe_native">
-      <!-- URL ABSOLUE (critique pour iPhone) -->
+      <input type="hidden" name="form_version" value="rttt_v1_hybrid_ios_safe">
+      <!-- IMPORTANT : URL ABSOLUE -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
       <!-- Reply-To (rempli en JS) -->
       <input type="hidden" id="replyto" name="_replyto" value="">
@@ -448,18 +450,13 @@
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    // Validation visuelle + soumission NATIF
+    // Visual validation + soumission hybride (AJAX -> thanks, sinon natif)
     (function(){
       var form=document.getElementById('qhc-form');
+      var thanksUrl='https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
+      var ajaxUrl='https://formsubmit.co/ajax/yannick.banaszak%40outlook.com';
 
-      // _replyto auto
-      var emailField=document.getElementById('parent_email');
-      var replyto=document.getElementById('replyto');
-      var emailAlias=document.getElementById('emailAlias');
-      function syncEmail(){ var v=(emailField.value||'').trim(); replyto.value=v; emailAlias.value=v; }
-      emailField.addEventListener('input', syncEmail); syncEmail();
-
-      // Visuel "valid"
+      // Marquer les fieldsets "completed"
       (function setupVisualValidation(){
         var textFields=form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select');
         for(var i=0;i<textFields.length;i++){
@@ -525,33 +522,69 @@
         }
       })();
 
-      // Soumission native (on bloque SEULEMENT si une validation échoue)
+      // Sync Reply-To
+      var emailField=document.getElementById('parent_email');
+      var replyto=document.getElementById('replyto');
+      var emailAlias=document.getElementById('emailAlias');
+      function syncEmail(){ var v=(emailField.value||'').trim(); replyto.value=v; emailAlias.value=v; }
+      emailField.addEventListener('input', syncEmail); syncEmail();
+
+      // Submit hybride
       form.addEventListener('submit', function(e){
-        // HTML5 required/pattern
+        // si on a déjà décidé de passer en natif, on laisse filer
+        if(form.dataset.native==='1'){ return; }
+
+        e.preventDefault();
+
+        // validations HTML5
         if(!form.checkValidity()){
-          e.preventDefault();
           var firstInvalid=form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
-        // Règles métier
+
+        // règles métier
         var right=form.querySelector('[name="side_right"]').checked;
         var left =form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){ e.preventDefault(); alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
+        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
 
         var elT=form.querySelector('input[name="the_throne"]:checked');
         var elB=form.querySelector('input[name="boston_showdown"]:checked');
         var elM=form.querySelector('input[name="montreal_meltdown"]:checked');
         var throne=elT?elT.value:'TBD', boston=elB?elB.value:'TBD', meltdown=elM?elM.value:'TBD';
-        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
-          e.preventDefault(); alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return;
-        }
+        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){ alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return; }
 
         var conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf) || conf<80){ e.preventDefault(); alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
+        if(isNaN(conf) || conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
 
-        // Tout est OK → pas de preventDefault() → POST natif vers FormSubmit
-        // (redirection assurée par _next absolu)
+        // bouton
+        var btn=form.querySelector('button[type="submit"]');
+        btn.disabled=true; btn.innerText='Envoi… / Submitting…';
+
+        // AJAX → thanks ; sinon natif
+        try{
+          var fd=new FormData(form);
+          fd.delete('_next'); // on gère la redirection nous-mêmes
+
+          fetch(ajaxUrl, {method:'POST', headers:{'Accept':'application/json'}, body:fd})
+            .then(function(res){
+              if(!res.ok) throw new Error('FormSubmit error: '+res.status);
+              window.location.href=thanksUrl;
+            })
+            .catch(function(err){
+              console.error(err);
+              // passer en natif
+              form.dataset.native='1';
+              // relâcher le bouton pour la soumission native
+              btn.disabled=false; btn.innerText='Soumettre / Submit';
+              form.submit();
+            });
+        }catch(err){
+          console.error(err);
+          form.dataset.native='1';
+          btn.disabled=false; btn.innerText='Soumettre / Submit';
+          form.submit();
+        }
       });
     })();
   </script>
