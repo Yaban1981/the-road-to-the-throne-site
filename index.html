@@ -9,6 +9,9 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
 
+  <!-- Important pour certains services de formulaire (référent d’origine) -->
+  <meta name="referrer" content="origin">
+
   <!-- Open Graph (Facebook, LinkedIn, iMessage, WhatsApp, Telegram, etc.) -->
   <meta property="og:site_name" content="Québec HC">
   <meta property="og:locale" content="fr_CA">
@@ -280,7 +283,7 @@
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
       <input type="hidden" name="form_version" value="rttt_v1_mobile">
-      <input type="hidden" name="_next" value="thanks.html">
+      <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
 
       <!-- 1 -->
       <fieldset id="fieldset-player">
@@ -570,49 +573,50 @@
       }
     }
 
-    // AJAX submit via FormSubmit + redirect
+    // Soumission NATlVE du formulaire (pas d'AJAX) avec validations custom
     (function(){
       const form=document.getElementById('qhc-form');
-      const postTo='https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
       setupVisualValidation();
 
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
+      form.addEventListener('submit', (e)=>{
+        // 1) contraintes HTML (required/pattern/email…)
         if(!form.checkValidity()){
+          e.preventDefault();
           const firstInvalid=form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
 
+        // 2) règles métier
         const right=form.querySelector('[name="side_right"]').checked;
-        const left=form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
+        const left =form.querySelector('[name="side_left"]').checked;
+        if(!right && !left){
+          e.preventDefault();
+          alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.');
+          return;
+        }
 
         const throne=form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
         const boston=form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
         const meltdown=form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
         if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
+          e.preventDefault();
           alert("The Throne : cochez 'Oui' à Boston OU Meltdown.");
           return;
         }
 
         const conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf) || conf<80){ alert('Confidence must be ≥ 80 %'); return; }
+        if(isNaN(conf) || conf<80){
+          e.preventDefault();
+          alert('Confidence must be ≥ 80 %');
+          return;
+        }
 
+        // 3) petite UX : désactiver le bouton pendant l’envoi
         const btn=form.querySelector('button[type="submit"]');
         btn.disabled=true; btn.innerText='Envoi… / Submitting…';
-
-        try{
-          const fd=new FormData(form);
-          fd.delete('_next');
-          const res=await fetch(postTo,{method:'POST', headers:{'Accept':'application/json'}, body:fd});
-          if(!res.ok) throw new Error('FormSubmit error: '+res.status);
-          window.location.href='thanks.html';
-        }catch(err){
-          console.error(err);
-          alert("Erreur d'envoi. Réessayez dans un instant.");
-          btn.disabled=false; btn.innerText='Soumettre / Submit';
-        }
+        // NE PAS appeler preventDefault ici : on laisse l’envoi natif se faire.
+        // FormSubmit redirigera vers l’URL présente dans le champ caché _next.
       });
     })();
   </script>
