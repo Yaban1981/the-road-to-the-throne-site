@@ -5,26 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QHC — The Road to The Throne</title>
   <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, The Throne" />
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
-
-  <!-- Open Graph / Twitter -->
-  <meta property="og:site_name" content="Québec HC">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
-  <meta property="og:title" content="QHC — The Road to The Throne">
-  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
-  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
-  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="QHC — The Road to The Throne">
-  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
-  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
-
-  <!-- Favicons -->
-  <link rel="icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png">
+  <link rel="icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png">
   <meta name="theme-color" content="#0a1020">
   <meta name="format-detection" content="telephone=no">
 
@@ -43,268 +24,143 @@
       background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%), linear-gradient(180deg, #091024, #0a0f1a);
       color:var(--text); line-height:1.5;
     }
-
     /* Hero */
-    .hero{
-      padding:28px 16px 18px;
-      background: radial-gradient(700px 320px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
-                  linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
+    .hero{padding:28px 16px 18px; background:
+      radial-gradient(700px 320px at 15% -10%, rgba(59,130,246,.18), transparent 60%),
+      linear-gradient(180deg, #0a1020, #0b1222 60%, #0a0f1a);
       border-bottom:1px solid rgba(255,255,255,.06);
-      position:relative; overflow:hidden;
     }
-    .hero::before{content:""; position:absolute; top:0; left:0; right:0; height:1px;
-      background:linear-gradient(90deg, transparent, var(--accent2), transparent); animation: shimmer 3s ease-in-out infinite;}
-    @keyframes shimmer {0%,100%{opacity:.3} 50%{opacity:1}}
     .hero-wrap{max-width:980px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:18px}
     .hero-logo{width:120px; height:120px; border-radius:22px; display:grid; place-items:center; overflow:hidden;
-      background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%); box-shadow: 0 16px 44px rgba(3,102,214,.35)}
+      background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%); box-shadow:0 16px 44px rgba(3,102,214,.35)}
     .hero-logo img{width:100%; height:100%; object-fit:cover; border-radius:20px}
-    .hero-text{text-align:center}
     .hero h1{margin:0; font-size:2rem}
-    .hero-sub{margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem; opacity:.95}
-    .hero-meta{margin:0; color:#9fb7ff; font-size:.95rem; opacity:.9}
-
-    /* Tournaments */
-    .tournaments-section{max-width:1040px; margin:0 auto 20px; padding:0 16px}
-    .tournaments-section h2{text-align:center; margin:0 0 20px; font-size:1.4rem; color:#eaf2ff}
-    .tournaments{display:grid; grid-template-columns:1fr; gap:16px}
-    .tcard{position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:20px; min-height:180px; overflow:hidden;
-      display:grid; place-items:center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3); transition:.3s}
-    .tcard:hover{transform:translateY(-2px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 40px rgba(0,0,0,.4); border-color: rgba(59,130,246,.3)}
-    .tcard::after{content:""; position:absolute; inset:0; background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%)}
-    .tcard .logo{width:100%; height:100%; display:grid; place-items:center; z-index:2}
-    .tcard .logo img{width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:.3s}
-    .tcard:hover .logo img{transform:translateY(0) scale(1.05)}
-    .t-info-pill{position:absolute; bottom:12px; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3}
-    .t-date {left:12px;  font-weight:700; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10)}
-    .t-badge{right:12px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35)}
-
+    .hero-sub{margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem}
+    .muted{color:var(--muted)}
     /* Layout */
     main{padding:12px 16px 40px; max-width:1040px; margin:0 auto}
-    .card, form{background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius); border:1px solid rgba(255,255,255,.06); box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); padding:20px; margin:12px 0}
-    fieldset{border:2px solid rgba(212,175,94,.35); padding:18px; border-radius:14px; margin:16px 0 0; position:relative; transition:.3s}
-    fieldset.completed::after{content:"✓"; position:absolute; top:-12px; right:15px; width:24px; height:24px; border-radius:50%; background:var(--success); color:#0a0f1a; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 2px 8px rgba(212,175,94,.4)}
-    legend{padding:0 8px; color:var(--accent2); font-weight:700; font-size:1.1rem; margin-bottom:8px}
-    .grid{display:flex; flex-direction:column; gap:16px}
-    .col-12,.col-6,.col-4,.col-3{width:100%}
+    .card, form{background:linear-gradient(180deg,var(--panel2),var(--panel)); border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.06); padding:20px; margin:12px 0}
+    fieldset{border:2px solid rgba(212,175,94,.35); padding:18px; border-radius:14px; margin:16px 0 0; position:relative}
+    fieldset.completed::after{content:"✓"; position:absolute; top:-12px; right:15px; width:24px; height:24px; border-radius:50%;
+      background:var(--success); color:#0a0f1a; display:flex; align-items:center; justify-content:center; font-weight:800}
     label{display:block; font-size:1rem; margin-bottom:8px; font-weight:500}
-    .muted{color:var(--muted); font-size:.95rem}
-    .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
-
-    /* Inputs */
+    .grid{display:flex; flex-direction:column; gap:16px}
     .input-container{position:relative}
-    .input-container.valid::after{content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800; font-size:16px}
+    .input-container.valid::after{content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--success); font-weight:800}
+
     input[type="text"], input[type="email"], input[type="tel"], input[type="range"], select, textarea{
       width:100%; padding:16px; border-radius:12px; border:1.5px solid rgba(255,255,255,.16);
-      background:#0b1020; color:var(--text); outline:none; font-size:16px;
+      background:#0b1020; color:var(--text); font-size:16px;
     }
     input:focus, select:focus, textarea:focus{border-color:var(--accent2); box-shadow:0 0 0 3px var(--ring); background:#0b142a}
-    input.valid, select.valid, textarea.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
-    select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
-    textarea{min-height:120px; resize:vertical}
 
-    /* Choix — on masque le « point bleu » natif et on gère .selected */
+    /* Radios/checkbox : pas de point bleu natif + encadré jaune cohérent */
     .check-row{display:flex; flex-direction:column; gap:10px}
-    .check{
-      position:relative; display:flex; gap:12px; align-items:center;
-      background:#0b1020; padding:14px 44px 14px 48px;
-      border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px;
-      transition:.2s;
-    }
-    .check::before{
-      content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
-      width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent;
-      box-shadow:0 1px 2px rgba(0,0,0,.35);
-    }
-    .check.selected{ border-color:var(--accent); background:rgba(212,175,94,.08); box-shadow:0 0 0 3px rgba(212,175,94,.15); }
-    .check.selected::before{ background:var(--accent2); border-color:#fff; }
-    .check.selected::after{
-      content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%);
-      color:var(--accent); font-weight:800; font-size:16px;
-    }
-    .check input[type="radio"], .check input[type="checkbox"]{
-      position:absolute; inset:0; opacity:0; cursor:pointer; margin:0;
-    }
+    .check{position:relative; display:flex; align-items:center; gap:10px; padding:14px 44px 14px 48px;
+      border:1px solid rgba(255,255,255,.08); border-radius:12px; background:#0b1020; min-height:54px}
+    .check input{position:absolute; inset:0; margin:0; opacity:0; cursor:pointer}
+    .check::before{content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent}
+    /* Style quand coché — moderne */
+    .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08) }
+    .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff }
+    .check:has(input:checked)::after{ content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--accent); font-weight:800 }
+    /* Fallback ancien iOS/Android (JS ajoute .selected) */
+    .check.selected{ border-color:var(--accent); background:rgba(212,175,94,.08) }
+    .check.selected::before{ background:var(--accent2); border-color:#fff }
+    .check.selected::after{ content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--accent); font-weight:800 }
 
-    /* Submit */
     .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
-    button{appearance:none; border:0; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; padding:18px 24px; border-radius:14px; font-weight:700; font-size:1.1rem; min-height:56px; cursor:pointer; box-shadow:0 8px 24px rgba(59,130,246,.28)}
-    button:hover{transform:translateY(-2px)}
-    .outline{background:transparent; border:1px solid rgba(255,255,255,.12); color:#fff}
-    .confidence-display{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
-    .confidence-value{font-weight:700; font-size:1.1rem; color:var(--accent2); background:rgba(59,130,246,.1); padding:4px 12px; border-radius:20px; border:1px solid rgba(59,130,246,.3)}
-
-    /* Slider + hint */
-    .slider-container{position:relative; margin:30px 0 20px; background: rgba(11,16,32,.5); border-radius:12px; padding:15px; border:2px solid rgba(212,175,94,.5)}
-    input[type="range"]{height:44px; padding:0; background:transparent; position:relative; z-index:2; width:calc(100% - 10px); margin:0 5px}
-    input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none; height:28px; width:28px; border-radius:50%; background:var(--accent2); border:2px solid #fff; box-shadow:0 4px 12px rgba(59,130,246,.4)}
-    input[type="range"]::-webkit-slider-track{height:8px; background:rgba(255,255,255,.12); border-radius:4px}
-    .hand-hint{ position:absolute; top:-35px; left:0; z-index:5; opacity:.95; pointer-events:none; animation: slideHand 3s ease-in-out infinite}
-    .hand-hint svg{ width:32px; height:32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); color: var(--accent)}
-    @keyframes slideHand{0%{transform:translateX(0); opacity:0} 10%{opacity:.95} 30%{transform:translateX(calc(100% - 50px)) scale(1.1)} 50%{transform:translateX(calc(100% - 50px))} 70%{transform:translateX(0) scale(1.1)} 90%{opacity:.95} 100%{transform:translateX(0); opacity:0}}
-
-    /* Fallback modal (si échec d'envoi) */
-    .fallback-modal{display:none; position:fixed; inset:0; background:rgba(10,16,32,.95); z-index:10000; align-items:center; justify-content:center; padding:20px;}
-    .fallback-content{background:var(--panel); border-radius:var(--radius); padding:24px; max-width:520px; width:100%; border:1px solid rgba(212,175,94,.3); box-shadow:0 16px 48px rgba(0,0,0,.5)}
-    .fallback-actions{display:flex; gap:12px; margin-top:20px; flex-wrap:wrap}
-    .fallback-actions button{flex:1; min-width:120px}
-
-    /* Desktop */
-    @media (min-width:768px){
-      .hero{padding:36px 24px 22px}
-      .hero-wrap{flex-direction:row; justify-content:center; gap:24px}
-      .hero-logo{width:160px; height:160px}
-      .hero h1{font-size:2.4rem}
-      .tournaments{grid-template-columns:repeat(3,1fr); gap:20px}
-      .tcard{min-height:200px}
-      .check{flex:1; min-width:168px}
-      .submit{flex-direction:row}
-      .lang-split{display:flex; gap:12px}
-      .grid{display:grid; gap:16px; grid-template-columns:repeat(12,1fr)}
-      .col-12{grid-column:span 12} .col-6{grid-column:span 6} .col-4{grid-column:span 4} .col-3{grid-column:span 3}
-    }
+    button{appearance:none; border:0; background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; padding:18px 24px; border-radius:14px; font-weight:700; font-size:1.1rem; min-height:56px; cursor:pointer}
+    @media (min-width:768px){ .check-row{flex-direction:row; flex-wrap:wrap} .submit{flex-direction:row} }
   </style>
 </head>
 <body>
-  <noscript>
-    <div style="background:#3b82f6;color:#fff;padding:10px;text-align:center">
-      JavaScript requis pour l'envoi et la redirection. / JavaScript required for submission & redirect.
-    </div>
-  </noscript>
-
-  <!-- Fallback (FR/EN) -->
-  <div class="fallback-modal" id="fallbackModal" aria-hidden="true">
-    <div class="fallback-content" role="dialog" aria-labelledby="fbTitle">
-      <h3 id="fbTitle">📧 Soumission alternative / Alternative Submission</h3>
-      <p>La soumission automatique a échoué.</p>
-      <p><em>Automatic submission failed.</em></p>
-      <div class="fallback-actions">
-        <button id="fbEmail">📤 Envoyer par email / Send by email</button>
-        <button id="fbCopy" class="outline">📋 Copier / Copy</button>
-        <button id="fbProvider" class="outline">🔁 Essayer via la page du fournisseur / Try provider page</button>
-        <button id="fbClose" class="outline">Fermer / Close</button>
-      </div>
-    </div>
-  </div>
-
   <header class="hero">
     <div class="hero-wrap">
       <div class="hero-logo"><img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" alt="Logo Québec HC"></div>
       <div class="hero-text">
         <h1>The Road to The Throne</h1>
         <p class="hero-sub">Intérêt tournois printemps 2026</p>
-        <p class="hero-meta">Confiance requise ≥ 80% • Confidence required ≥ 80%</p>
+        <p class="muted">Confiance requise ≥ 80% • Confidence required ≥ 80%</p>
       </div>
     </div>
   </header>
 
-  <!-- Tournois -->
-  <div class="tournaments-section">
-    <h2>Nos Tournois 2026 / Our 2026 Tournaments</h2>
-    <div class="tournaments">
-      <div class="tcard">
-        <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
-          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/bluechip.png" alt="CCM Blue Chip Invite logo" loading="lazy">
-        </a>
-        <div class="t-info-pill t-date">15–17.05.2026</div>
-        <div class="t-info-pill t-badge" id="cd-boston">J-—</div>
-      </div>
-      <div class="tcard">
-        <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
-          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/meltdown.png" alt="Montreal Meltdown logo" loading="lazy">
-        </a>
-        <div class="t-info-pill t-date">05–07.06.2026</div>
-        <div class="t-info-pill t-badge" id="cd-meltdown">J-—</div>
-      </div>
-      <div class="tcard">
-        <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
-          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/throne.png" alt="The Throne Tournament logo" loading="lazy">
-        </a>
-        <div class="t-info-pill t-date">24–26.07.2026</div>
-        <div class="t-info-pill t-badge" id="cd-throne">J-—</div>
-      </div>
-    </div>
-  </div>
-
   <main>
-    <div class="lang-split">
-      <div class="card">
-        <h3>FR — Important</h3>
-        <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
-        <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
-        <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
-        <p class="small">Frais d'assurances et décharges à prévoir.</p>
-      </div>
-      <div class="card">
-        <h3>EN — Key info</h3>
-        <p>This form builds <strong>tournament lineups</strong>.</p>
-        <p><strong>Throne rule</strong>: must play in at least <strong>one</strong> other tournament.</p>
-        <p><strong>Limited spots</strong>: staff will build the <strong>best lines/pairs</strong>.</p>
-        <p class="small">Insurance fees & waivers required.</p>
-      </div>
+    <div class="card">
+      <h3>FR — Important</h3>
+      <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
+      <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
+      <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
+      <p class="muted">Frais d'assurances et décharges à prévoir.</p>
     </div>
 
-    <!-- ====== FORMULAIRE (AJAX uniquement) ====== -->
-    <form id="qhc-form" novalidate>
-      <!-- paramètres FormSubmit -->
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
-      <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
-      <!-- <input type="hidden" name="_cc" value="ton.gmail.de.test@gmail.com"> -->
-      <input type="hidden" id="replyto" name="_replyto" value="">
-      <input type="hidden" name="form_version" value="rttt_v3_ajax_confirmed">
+    <!-- ========= FORMULAIRE : POST natif vers Apps Script ========= -->
+    <form
+      action="https://script.google.com/macros/s/AKfycbwo_M5-za4xlXblsb-9yJ8it_izYLFZnS8p42zERudF3Jwbk4f5exUN_xYsnggdpmJHOg/exec"
+      method="POST"
+      id="qhc-form"
+      onsubmit="return businessOk()"
+      novalidate>
 
-      <!-- 1 -->
+      <!-- le serveur lira _next pour la redirection après envoi -->
+      <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
+      <!-- alias pour Reply-To côté serveur -->
+      <input type="hidden" id="emailAlias" name="email" value="">
+
+      <!-- 1) Joueur -->
       <fieldset id="fieldset-player">
         <legend>1) Info joueur / Player Info</legend>
         <div class="grid">
-          <div class="col-6 input-container">
+          <div class="input-container">
             <label for="player_name">Nom complet / Full name <span class="req">*</span></label>
             <input id="player_name" name="player_name" type="text" required autocomplete="name">
           </div>
-          <div class="col-3 input-container">
+          <div class="input-container">
             <label for="birth_year">Année / Year <span class="req">*</span></label>
             <select id="birth_year" name="birth_year" required>
               <option value="">— Choisir / Select —</option>
               <option>2012</option><option>2013</option><option>2014</option><option>2015</option>
             </select>
           </div>
-          <div class="col-3 input-container">
+          <div class="input-container">
             <label for="city">Ville / City <span class="req">*</span></label>
             <input id="city" name="city" type="text" required>
           </div>
-          <div class="col-6 input-container">
+          <div class="input-container">
             <label for="current_team">Équipe actuelle / Current team</label>
             <input id="current_team" name="current_team" type="text">
           </div>
-          <div class="col-6 input-container">
+          <div class="input-container">
             <label for="parent_email">Courriel parent / Parent email <span class="req">*</span></label>
             <input id="parent_email" name="parent_email" type="email" required autocomplete="email" inputmode="email">
           </div>
-          <div class="col-6 input-container">
+          <div class="input-container">
             <label for="parent_phone">Téléphone parent / Parent phone</label>
             <input id="parent_phone" name="parent_phone" type="tel" autocomplete="tel">
           </div>
         </div>
       </fieldset>
 
-      <!-- 2 -->
+      <!-- 2) Poste & style -->
       <fieldset id="fieldset-position">
         <legend>2) Poste & style / Position & Style</legend>
         <div class="grid">
-          <div class="col-6">
+          <div>
             <label>Position principale / Primary position <span class="req">*</span></label>
-            <div class="check-row" role="radiogroup" aria-label="Primary position">
+            <div class="check-row" aria-label="Primary position">
               <label class="check"><input type="radio" name="primary_position" value="Forward" required> Avant / Forward</label>
               <label class="check"><input type="radio" name="primary_position" value="Defence" required> Défense / Defence</label>
               <label class="check"><input type="radio" name="primary_position" value="Center" required> Centre / Center</label>
               <label class="check"><input type="radio" name="primary_position" value="Goaler" required> Gardien / Goaler</label>
             </div>
           </div>
-          <div class="col-6">
+
+          <div>
             <label>Position secondaire / Secondary position</label>
-            <div class="check-row" role="radiogroup" aria-label="Secondary position">
+            <div class="check-row" aria-label="Secondary position">
               <label class="check"><input type="radio" name="secondary_position" value="Forward"> Avant / Forward</label>
               <label class="check"><input type="radio" name="secondary_position" value="Defence"> Défense / Defence</label>
               <label class="check"><input type="radio" name="secondary_position" value="Center"> Centre / Center</label>
@@ -313,7 +169,7 @@
             </div>
           </div>
 
-          <div class="col-12">
+          <div>
             <label>Côté / Side <span class="req">*</span></label>
             <div class="check-row" aria-label="Side (L/R)">
               <label class="check"><input type="checkbox" name="side_right" value="Yes"> Droite / Right</label>
@@ -321,46 +177,46 @@
             </div>
           </div>
 
-          <div class="col-12 input-container">
+          <div class="input-container">
             <label for="player_style">Style de joueur / Player style</label>
             <input id="player_style" name="player_style" type="text" placeholder="ex: rapide/fast, offensif/offensive, physique/physical…">
           </div>
-          <div class="col-12 input-container">
+          <div class="input-container">
             <label for="video_links">Liens vidéo / Video links</label>
             <textarea id="video_links" name="video_links" placeholder="Liens YouTube/Vimeo, timestamps, notes (multi‑lignes)…"></textarea>
           </div>
         </div>
       </fieldset>
 
-      <!-- 3 -->
+      <!-- 3) Chandail -->
       <fieldset id="fieldset-jersey">
         <legend>3) Chandail / Jersey</legend>
         <div class="grid">
-          <div class="col-4 input-container">
+          <div class="input-container">
             <label for="jersey_number_1">Choix #1</label>
             <input id="jersey_number_1" name="jersey_number_1" type="text" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 27">
           </div>
-          <div class="col-4 input-container">
+          <div class="input-container">
             <label for="jersey_number_2">Choix #2</label>
             <input id="jersey_number_2" name="jersey_number_2" type="text" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 88">
           </div>
-          <div class="col-4 input-container">
+          <div class="input-container">
             <label for="jersey_number_3">Choix #3</label>
             <input id="jersey_number_3" name="jersey_number_3" type="text" inputmode="numeric" pattern="[0-9]{1,2}" placeholder="ex: 13">
           </div>
-          <div class="col-6">
+
+          <div>
             <label>Type</label>
-            <div class="check-row" role="radiogroup" aria-label="Jersey type">
+            <div class="check-row" aria-label="Jersey type">
               <label class="check"><input type="radio" name="jersey_type" value="Loaned" checked> Prêté / Loaned</label>
               <label class="check"><input type="radio" name="jersey_type" value="Customized"> Personnalisé / Custom</label>
             </div>
-            <div class="muted small" style="margin-top:8px">
-              <strong>Note / Note:</strong>
-              des frais <u>supplémentaires</u> seront demandés pour un chandail <strong>personnalisé</strong> (nom & numéro). /
-              <em>Additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
+            <div class="muted" style="margin-top:8px">
+              <strong>Note / Note:</strong> des frais <u>supplémentaires</u> s’appliquent pour un chandail <strong>personnalisé</strong> (nom & numéro).
             </div>
           </div>
-          <div class="col-6 input-container">
+
+          <div class="input-container">
             <label for="jersey_size">Taille / Size <span class="req">*</span></label>
             <select id="jersey_size" name="jersey_size" required>
               <option value="">— Choisir / Select —</option>
@@ -371,72 +227,55 @@
         </div>
       </fieldset>
 
-      <!-- 4 -->
+      <!-- 4) Disponibilités -->
       <fieldset id="fieldset-availability">
         <legend>4) Disponibilités / Availability</legend>
         <div class="grid">
-          <div class="col-12 muted">Aucun paiement maintenant / No payment now.</div>
+          <div class="muted">Aucun paiement maintenant / No payment now.</div>
 
-          <div class="col-12">
-            <label class="muted">Boston, MA — <span class="price">≈ 150 $ CAD</span> • <span class="date">15–17.05.2026</span></label>
-            <div class="check-row" role="radiogroup" aria-label="Boston">
+          <div>
+            <label class="muted">Boston, MA — ≈ 150 $ CAD • 15–17.05.2026</label>
+            <div class="check-row" aria-label="Boston">
               <label class="check"><input type="radio" name="boston_showdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="boston_showdown" value="No"> Non / No</label>
               <label class="check"><input type="radio" name="boston_showdown" value="TBD" checked> À confirmer / TBD</label>
             </div>
           </div>
 
-          <div class="col-12">
-            <label class="muted">Montréal, QC — <span class="price">≈ 150 $ CAD</span> • <span class="date">05–07.06.2026</span></label>
-            <div class="check-row" role="radiogroup" aria-label="Meltdown">
+          <div>
+            <label class="muted">Montréal, QC — ≈ 150 $ CAD • 05–07.06.2026</label>
+            <div class="check-row" aria-label="Meltdown">
               <label class="check"><input type="radio" name="montreal_meltdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="montreal_meltdown" value="No"> Non / No</label>
               <label class="check"><input type="radio" name="montreal_meltdown" value="TBD" checked> À confirmer / TBD</label>
             </div>
           </div>
 
-          <div class="col-12">
-            <label class="muted">Toronto, ON — <span class="price">≈ 250 $ CAD</span> • <span class="date">24–26.07.2026</span></label>
-            <div class="check-row" role="radiogroup" aria-label="The Throne">
+          <div>
+            <label class="muted">Toronto, ON — ≈ 250 $ CAD • 24–26.07.2026</label>
+            <div class="check-row" aria-label="The Throne">
               <label class="check"><input type="radio" name="the_throne" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="the_throne" value="No"> Non / No</label>
               <label class="check"><input type="radio" name="the_throne" value="TBD" checked> À confirmer / TBD</label>
             </div>
           </div>
 
-          <div class="col-12">
+          <div class="input-container">
             <label for="confidence_pct">Confiance / Confidence (≥ 80%)</label>
-            <div class="slider-container" id="confidenceSlider">
-              <input type="range" id="confidence_pct" name="confidence_pct" min="80" max="100" value="80"
-                     aria-label="Confidence percent" aria-valuemin="80" aria-valuemax="100" aria-valuenow="80"
-                     oninput="updateConfidenceValue(this.value)">
-              <div class="hand-hint" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10.5 9.5V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2M6.5 9.5v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1m-8 3v2a2 2 0 0 0 4 0v-2"/>
-                </svg>
-              </div>
-            </div>
-            <div class="confidence-display">
-              <span class="muted">Valeur / Value:</span>
-              <span class="confidence-value" id="confVal">80%</span>
-            </div>
+            <input type="range" id="confidence_pct" name="confidence_pct" min="80" max="100" value="80"
+                   oninput="document.getElementById('confVal').textContent=this.value+'%';">
+            <div class="muted">Valeur / Value : <strong id="confVal">80%</strong></div>
           </div>
         </div>
       </fieldset>
 
-      <!-- 5 -->
+      <!-- 5) Confirmations -->
       <fieldset id="fieldset-confirmations">
         <legend>5) Confirmations</legend>
         <div class="grid">
-          <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="ack_throne_rule" required> Je comprends la règle The Throne / I understand the Throne rule <span class="req">*</span></label>
-          </div>
-          <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="ack_limited_spots" required> Places limitées / Limited spots <span class="req">*</span></label>
-          </div>
-          <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="consent_contact" required> J'accepte d'être contacté / I agree to be contacted <span class="req">*</span></label>
-          </div>
+          <label class="check"><input type="checkbox" name="ack_throne_rule" required> Je comprends la règle The Throne / I understand the Throne rule <span class="req">*</span></label>
+          <label class="check"><input type="checkbox" name="ack_limited_spots" required> Places limitées / Limited spots <span class="req">*</span></label>
+          <label class="check"><input type="checkbox" name="consent_contact" required> J'accepte d'être contacté / I agree to be contacted <span class="req">*</span></label>
         </div>
       </fieldset>
 
@@ -447,213 +286,108 @@
     </form>
   </main>
 
-  <footer><div>© Québec HC — Spring 2026</div></footer>
-
   <script>
-    // Countdowns
+    // Synchronise l’alias pour Reply‑To côté serveur
     (function(){
-      function mk(y,m,d){ return new Date(y,m-1,d,0,0,0,0); }
-      var targets=[{id:'cd-boston',date:mk(2026,5,15)},{id:'cd-meltdown',date:mk(2026,6,5)},{id:'cd-throne',date:mk(2026,7,24)}];
-      function update(){
-        var now=new Date(); var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-        for(var i=0;i<targets.length;i++){
-          var t=targets[i]; var el=document.getElementById(t.id); if(!el) continue;
-          var days=Math.ceil((t.date-today)/86400000);
-          el.textContent=(days>0)?('J-'+days):(days===0?'Jour J':'Terminé');
-        }
-      }
-      update(); setInterval(update, 3600000);
+      const parentEmail = document.getElementById('parent_email');
+      const emailAlias  = document.getElementById('emailAlias');
+      function syncEmail(){ emailAlias.value = (parentEmail?.value || '').trim(); }
+      parentEmail?.addEventListener('input', syncEmail); syncEmail();
     })();
 
-    function updateConfidenceValue(val){
-      document.getElementById('confVal').textContent=val+'%';
-      document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
-    }
-
-    // Sélections visibles (sans :has())
+    // Visuel: valid/complété + fallback pour anciens navigateurs (classe .selected)
     (function(){
-      var form=document.getElementById('qhc-form');
+      const form = document.getElementById('qhc-form');
 
-      function refresh(){
-        // radios
-        var names=new Set();
-        form.querySelectorAll('input[type="radio"]').forEach(r=>names.add(r.name));
-        names.forEach(function(n){
-          var group=form.querySelectorAll('input[name="'+n+'"]');
-          group.forEach(function(r){
-            var lbl=r.closest('.check');
-            if(lbl) lbl.classList.toggle('selected', r.checked);
-          });
+      // Entrées texte/select/textarea
+      form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select')
+      .forEach(el=>{
+        el.addEventListener('input', ()=>{
+          const wrap = el.closest('.input-container');
+          if(wrap){
+            const filled = (el.tagName==='SELECT') ? el.value!=='' : el.value.trim()!=='';
+            wrap.classList.toggle('valid', filled);
+            el.classList.toggle('valid', filled);
+          }
+          mark(el.closest('fieldset'));
         });
-        // checkboxes
-        form.querySelectorAll('input[type="checkbox"]').forEach(function(c){
-          var lbl=c.closest('.check');
-          if(lbl) lbl.classList.toggle('selected', c.checked);
-        });
-        // champs saisis
-        form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select').forEach(function(el){
-          var wrap=el.closest('.input-container'); if(!wrap) return;
-          var filled=(el.tagName==='SELECT')? el.value!=='' : el.value.trim()!=='';
-          wrap.classList.toggle('valid', filled);
-          el.classList.toggle('valid', filled);
-        });
-        // fieldsets
-        ['fieldset-player','fieldset-position','fieldset-jersey','fieldset-availability','fieldset-confirmations']
-          .forEach(function(id){ markFieldset(document.getElementById(id)); });
-      }
+      });
 
-      function markFieldset(fs){
-        if(!fs) return; var ok=false;
+      // Radios/checkbox: fallback .selected si :has() pas dispo
+      form.addEventListener('change', (e)=>{
+        const t=e.target;
+        if(t.type==='radio'){
+          form.querySelectorAll('input[name="'+t.name+'"]').forEach(r=>r.closest('.check')?.classList.remove('selected'));
+          t.closest('.check')?.classList.add('selected');
+          mark(t.closest('fieldset'));
+        } else if(t.type==='checkbox'){
+          t.closest('.check')?.classList.toggle('selected', t.checked);
+          mark(t.closest('fieldset'));
+        }
+      });
+
+      function mark(fs){
+        if(!fs) return; let ok=false;
         switch(fs.id){
           case 'fieldset-player': {
-            var need=['player_name','birth_year','city','parent_email'];
-            ok=need.every(function(id){
-              var el=document.getElementById(id);
-              return el && (el.tagName==='SELECT'? (el.value!=='') : (el.value.trim()!=='')) && (el.id!=='parent_email' || el.checkValidity());
+            const need=['player_name','birth_year','city','parent_email'];
+            ok = need.every(id=>{
+              const el=document.getElementById(id);
+              return el && (el.tagName==='SELECT' ? el.value!=='' : el.value.trim()!=='') && (el.id!=='parent_email' || el.checkValidity());
             }); break;
           }
           case 'fieldset-position': {
-            var primary=!!fs.querySelector('input[name="primary_position"]:checked');
-            var sideOK=fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
+            const primary=!!fs.querySelector('input[name="primary_position"]:checked');
+            const sideOK =fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
             ok=primary && sideOK; break;
           }
           case 'fieldset-jersey': {
-            var typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
-            var sizeOK=(document.getElementById('jersey_size').value!=='');
+            const typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
+            const sizeOK=(document.getElementById('jersey_size').value!=='');
             ok=typeOK && sizeOK; break;
           }
           case 'fieldset-availability': {
-            var b=!!fs.querySelector('input[name="boston_showdown"]:checked');
-            var m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
-            var t=!!fs.querySelector('input[name="the_throne"]:checked');
-            var conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
+            const b=!!fs.querySelector('input[name="boston_showdown"]:checked');
+            const m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
+            const t=!!fs.querySelector('input[name="the_throne"]:checked');
+            const conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
             ok=b && m && t && conf; break;
           }
           case 'fieldset-confirmations': {
-            var c1=fs.querySelector('[name="ack_throne_rule"]').checked;
-            var c2=fs.querySelector('[name="ack_limited_spots"]').checked;
-            var c3=fs.querySelector('[name="consent_contact"]').checked;
+            const c1=fs.querySelector('[name="ack_throne_rule"]').checked;
+            const c2=fs.querySelector('[name="ack_limited_spots"]').checked;
+            const c3=fs.querySelector('[name="consent_contact"]').checked;
             ok=c1 && c2 && c3; break;
           }
         }
         fs.classList.toggle('completed', ok);
       }
 
-      form.addEventListener('input', refresh, true);
-      form.addEventListener('change', refresh, true);
-      refresh();
-    })();
-
-    // Fallback helpers
-    function showFallback(){ document.getElementById('fallbackModal').style.display='flex'; }
-    function hideFallback(){ document.getElementById('fallbackModal').style.display='none'; }
-    function emailBodyFromForm(){
-      var f=new FormData(document.getElementById('qhc-form'));
-      var lines=[];
-      function add(label, key){ lines.push(label+' '+(f.get(key)||'')); }
-      lines.push('QHC — The Road to The Throne - Formulaire'); lines.push(''); lines.push('=============================='); lines.push('');
-      add('Nom / Name:', 'player_name'); add('Année / Year:', 'birth_year'); add('Ville / City:', 'city');
-      add('Équipe / Team:', 'current_team'); add('Courriel parent / Parent email:', 'parent_email'); add('Téléphone / Phone:', 'parent_phone'); lines.push('');
-      add('Primary:', 'primary_position'); add('Secondary:', 'secondary_position');
-      lines.push('Right: '+(f.get('side_right')?'Yes':'No')); lines.push('Left: '+(f.get('side_left')?'Yes':'No'));
-      add('Style:', 'player_style'); add('Vidéos:', 'video_links'); lines.push('');
-      add('Jersey#1:', 'jersey_number_1'); add('Jersey#2:', 'jersey_number_2'); add('Jersey#3:', 'jersey_number_3');
-      add('Type:', 'jersey_type'); add('Size:', 'jersey_size'); lines.push('');
-      add('Boston:', 'boston_showdown'); add('Meltdown:', 'montreal_meltdown'); add('The Throne:', 'the_throne');
-      lines.push('Confidence: '+(f.get('confidence_pct')||'')+'%'); lines.push('');
-      lines.push('Throne rule: '+(f.get('ack_throne_rule')?'Yes':'No'));
-      lines.push('Limited spots: '+(f.get('ack_limited_spots')?'Yes':'No'));
-      lines.push('Contact: '+(f.get('consent_contact')?'Yes':'No')); lines.push('');
-      lines.push('=============================='); lines.push(''); lines.push(new Date().toLocaleString('fr-CA'));
-      return lines.join('\n');
-    }
-    (function(){
-      var fbE=document.getElementById('fbEmail'), fbC=document.getElementById('fbCopy'),
-          fbP=document.getElementById('fbProvider'), fbX=document.getElementById('fbClose');
-      if(fbE) fbE.onclick=function(){
-        var subject='QHC — The Road to The Throne - Formulaire';
-        var mailto='mailto:yannick.banaszak@outlook.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(emailBodyFromForm());
-        window.location.href=mailto; hideFallback();
-      };
-      if(fbC) fbC.onclick=function(){
-        var txt=emailBodyFromForm();
-        (navigator.clipboard?.writeText(txt) || Promise.reject()).then(()=>{ alert('Contenu copié. Collez-le dans un email.'); hideFallback(); })
-        .catch(function(){ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); alert('Contenu copié. Collez-le dans un email.'); hideFallback(); });
-      };
-      if(fbP) fbP.onclick=function(){
-        // Fallback: POST standard vers la page FormSubmit dans un nouvel onglet
-        var src=document.getElementById('qhc-form');
-        var aux=document.createElement('form'); aux.method='POST'; aux.action='https://formsubmit.co/yannick.banaszak@outlook.com'; aux.target='_blank'; aux.style.display='none';
-        var fd=new FormData(src);
-        // Optionnel: tu peux ajouter un _next absolu si tu veux que FormSubmit redirige après sa page
-        // fd.set('_next','https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html');
-        fd.forEach(function(v,k){ var i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=v; aux.appendChild(i); });
-        document.body.appendChild(aux); aux.submit(); setTimeout(()=>aux.remove(),1000);
-      };
-      if(fbX) fbX.onclick=hideFallback;
-    })();
-
-    // Envoi AJAX confirmé + redirection uniquement si succès
-    (function(){
-      var form   = document.getElementById('qhc-form');
-      var btn    = document.getElementById('submitBtn');
-      var postTo = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
-      var THANKS = 'https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
-
-      // alimente _replyto
-      var emailField=document.getElementById('parent_email');
-      var replyto   =document.getElementById('replyto');
-      function syncEmail(){ replyto.value=(emailField.value||'').trim(); }
-      emailField.addEventListener('input', syncEmail); syncEmail();
-
-      form.addEventListener('submit', async function(e){
-        e.preventDefault();
-
-        // validations HTML5
-        if(!form.checkValidity()){
-          var firstInvalid=form.querySelector(':invalid');
-          if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
-          return;
-        }
-        // règles métier
-        var right=form.querySelector('[name="side_right"]').checked;
-        var left =form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
-        var elT=form.querySelector('input[name="the_throne"]:checked');
-        var elB=form.querySelector('input[name="boston_showdown"]:checked');
-        var elM=form.querySelector('input[name="montreal_meltdown"]:checked');
-        var throne=elT?elT.value:'TBD', boston=elB?elB.value:'TBD', meltdown=elM?elM.value:'TBD';
-        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){ alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return; }
-        var conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf) || conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
-
-        btn.disabled=true; btn.innerText='Envoi… / Submitting…';
-
-        // 1) tentative AJAX
-        try{
-          var fd=new FormData(form);
-          fd.delete('_next'); // redirection gérée côté client
-
-          var res=await fetch(postTo,{method:'POST', headers:{'Accept':'application/json'}, body:fd});
-          var ok=res.ok, json=null;
-          if(ok){ try{ json=await res.json(); }catch(e){} }
-
-          if(ok && json && (json.success===true || json.success==='true')){
-            window.location.href=THANKS; // succès confirmé seulement
-            return;
-          }
-          // pas de confirmation serveur
-          alert("Échec ou confirmation manquante. Le formulaire n'a pas été redirigé.");
-          btn.disabled=false; btn.innerText='Soumettre / Submit';
-          showFallback();
-        }catch(err){
-          console.error(err);
-          alert("Erreur réseau. Le formulaire n'a pas été envoyé.");
-          btn.disabled=false; btn.innerText='Soumettre / Submit';
-          showFallback();
-        }
+      // Amorçage visuel
+      form.querySelectorAll('input,select,textarea').forEach(el=>{
+        if(el.type==='range') return;
+        const evt=(el.type==='radio'||el.type==='checkbox')?'change':'input';
+        el.dispatchEvent(new Event(evt));
       });
     })();
+
+    // Règles métier AVANT envoi (POST natif)
+    function businessOk(){
+      const form=document.getElementById('qhc-form');
+      if(!form.checkValidity()){ form.reportValidity(); return false; }
+      const right=form.querySelector('[name="side_right"]').checked;
+      const left =form.querySelector('[name="side_left"]').checked;
+      if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return false; }
+      const T=form.querySelector('input[name="the_throne"]:checked')?.value||'TBD';
+      const B=form.querySelector('input[name="boston_showdown"]:checked')?.value||'TBD';
+      const M=form.querySelector('input[name="montreal_meltdown"]:checked')?.value||'TBD';
+      if(T==='Yes' && !(B==='Yes' || M==='Yes')){ alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return false; }
+      const conf=parseInt(document.getElementById('confidence_pct').value,10);
+      if(isNaN(conf)||conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return false; }
+      // ✅ OK : on laisse le navigateur POSTer vers Apps Script
+      // Le serveur enverra l’e‑mail puis redirigera vers /thanks.html
+      return true;
+    }
   </script>
 </body>
 </html>
