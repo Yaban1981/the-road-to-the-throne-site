@@ -103,12 +103,28 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* Choice blocks (visuels simples) */
+    /* Choice blocks — visuels clairs (on cache le "point bleu" natif) */
     .check-row{display:flex; flex-direction:column; gap:10px}
-    .check{position:relative; display:flex; gap:12px; align-items:center; background:#0b1020; padding:14px; border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px; transition:.2s}
-    .check.valid{border-color:var(--accent); background:rgba(212,175,94,.07)}
-    .check.valid::after{content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px}
-    .check input[type="radio"], .check input[type="checkbox"]{transform:scale(1.1); margin:0}
+    .check{
+      position:relative; display:flex; gap:12px; align-items:center;
+      background:#0b1020; padding:14px 44px 14px 48px;
+      border:1px solid rgba(255,255,255,.08); border-radius:12px; min-height:54px;
+      transition:.2s;
+    }
+    .check::before{
+      content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent;
+      box-shadow:0 1px 2px rgba(0,0,0,.35);
+    }
+    .check.selected{ border-color:var(--accent); background:rgba(212,175,94,.08); box-shadow:0 0 0 3px rgba(212,175,94,.15); }
+    .check.selected::before{ background:var(--accent2); border-color:#fff; }
+    .check.selected::after{
+      content:"✓"; position:absolute; right:14px; top:50%; transform:translateY(-50%);
+      color:var(--accent); font-weight:800; font-size:16px;
+    }
+    .check input[type="radio"], .check input[type="checkbox"]{
+      position:absolute; inset:0; opacity:0; cursor:pointer; margin:0;
+    }
 
     /* Submit */
     .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
@@ -125,17 +141,13 @@
     input[type="range"]::-webkit-slider-track{height:8px; background:rgba(255,255,255,.12); border-radius:4px}
     .hand-hint{ position:absolute; top:-35px; left:0; z-index:5; opacity:.95; pointer-events:none; animation: slideHand 3s ease-in-out infinite}
     .hand-hint svg{ width:32px; height:32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); color: var(--accent)}
-    @keyframes slideHand{
-      0%{transform:translateX(0); opacity:0} 10%{opacity:.95} 30%{transform:translateX(calc(100% - 50px)) scale(1.1)}
-      50%{transform:translateX(calc(100% - 50px))} 70%{transform:translateX(0) scale(1.1)} 90%{opacity:.95} 100%{transform:translateX(0); opacity:0}
-    }
+    @keyframes slideHand{0%{transform:translateX(0); opacity:0} 10%{opacity:.95} 30%{transform:translateX(calc(100% - 50px)) scale(1.1)} 50%{transform:translateX(calc(100% - 50px))} 70%{transform:translateX(0) scale(1.1)} 90%{opacity:.95} 100%{transform:translateX(0); opacity:0}}
 
-    /* Fallback Modal */
-    .fallback-modal { display:none; position:fixed; inset:0; background: rgba(10,16,32,.95); z-index:10000; align-items:center; justify-content:center; padding:20px; }
-    .fallback-content { background: var(--panel); border-radius: var(--radius); padding: 24px; max-width: 500px; width: 100%; border: 1px solid rgba(212, 175, 94, .3); box-shadow: 0 16px 48px rgba(0,0,0,.5); }
-    .fallback-content h3 { color: var(--accent); margin-top:0; }
-    .fallback-actions { display:flex; gap:12px; margin-top:20px; flex-wrap:wrap; }
-    .fallback-actions button { flex:1; min-width:120px; }
+    /* Fallback modal (si échec d'envoi) */
+    .fallback-modal{display:none; position:fixed; inset:0; background:rgba(10,16,32,.95); z-index:10000; align-items:center; justify-content:center; padding:20px;}
+    .fallback-content{background:var(--panel); border-radius:var(--radius); padding:24px; max-width:520px; width:100%; border:1px solid rgba(212,175,94,.3); box-shadow:0 16px 48px rgba(0,0,0,.5)}
+    .fallback-actions{display:flex; gap:12px; margin-top:20px; flex-wrap:wrap}
+    .fallback-actions button{flex:1; min-width:120px}
 
     /* Desktop */
     @media (min-width:768px){
@@ -160,16 +172,16 @@
     </div>
   </noscript>
 
-  <!-- Modal de fallback -->
+  <!-- Fallback (FR/EN) -->
   <div class="fallback-modal" id="fallbackModal" aria-hidden="true">
     <div class="fallback-content" role="dialog" aria-labelledby="fbTitle">
       <h3 id="fbTitle">📧 Soumission alternative / Alternative Submission</h3>
       <p>La soumission automatique a échoué. Vous pouvez :</p>
       <p><em>Automatic submission failed. You can:</em></p>
       <div class="fallback-actions">
-        <button onclick="sendFallbackEmail()" style="background:linear-gradient(135deg, var(--accent), #e74c3c)">📤 Envoyer par email / Send by email</button>
-        <button onclick="copyFallbackToClipboard()" class="outline">📋 Copier / Copy</button>
-        <button onclick="closeFallbackModal()" class="outline">Annuler / Cancel</button>
+        <button id="fbEmail">📤 Envoyer par email / Send by email</button>
+        <button id="fbCopy" class="outline">📋 Copier / Copy</button>
+        <button id="fbClose" class="outline">Fermer / Close</button>
       </div>
     </div>
   </div>
@@ -231,29 +243,17 @@
       </div>
     </div>
 
-    <!-- ====== IFRAME CACHÉ (soumission native sans quitter la page) ====== -->
-    <iframe name="fs_iframe" id="fs_iframe" title="Form submission frame" style="display:none"></iframe>
-
-    <!-- ====== FORMULAIRE (soumission -> iframe) ====== -->
-    <form
-      action="https://formsubmit.co/yannick.banaszak%40outlook.com"
-      method="POST"
-      target="fs_iframe"
-      id="qhc-form"
-      novalidate>
-
+    <!-- ====== FORMULAIRE (AJAX uniquement) ====== -->
+    <form id="qhc-form" novalidate>
       <!-- paramètres FormSubmit -->
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
-      <!-- (Option test) décommentez pour vérifier la délivrabilité -->
-      <!-- <input type="hidden" name="_cc" value="votre.adresse.test@gmail.com"> -->
-      <!-- ABSOLU (iOS-safe, sert de secours) -->
-      <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
-      <!-- Reply-To (à remplir via JS) -->
+      <!-- Pour tests, tu peux décommenter: -->
+      <!-- <input type="hidden" name="_cc" value="ton.gmail.de.test@gmail.com"> -->
       <input type="hidden" id="replyto" name="_replyto" value="">
-      <input type="hidden" name="form_version" value="rttt_v1_iframe_ios_safe">
+      <input type="hidden" name="form_version" value="rttt_v3_ajax_confirmed">
 
       <!-- 1 -->
       <fieldset id="fieldset-player">
@@ -450,7 +450,7 @@
   <footer><div>© Québec HC — Spring 2026</div></footer>
 
   <script>
-    // Countdowns (compat)
+    // Countdowns
     (function(){
       function mk(y,m,d){ return new Date(y,m-1,d,0,0,0,0); }
       var targets=[{id:'cd-boston',date:mk(2026,5,15)},{id:'cd-meltdown',date:mk(2026,6,5)},{id:'cd-throne',date:mk(2026,7,24)}];
@@ -470,211 +470,186 @@
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    // Fallback email modal
-    function showFallbackModal(){ document.getElementById('fallbackModal').style.display='flex'; }
-    function closeFallbackModal(){ document.getElementById('fallbackModal').style.display='none'; }
-
-    function collectFormData(){
-      var form=document.getElementById('qhc-form');
-      var formData=new FormData(form), data={};
-      for (var pair of formData.entries()){ data[pair[0]]=pair[1]; }
-      return data;
-    }
-    function formatEmailContent(formData){
-      var content="QHC — The Road to The Throne - Formulaire soumis\n\n";
-      content+="=================================\n\n";
-      content+="1) INFO JOUEUR / PLAYER INFO\n";
-      content+="Nom complet: "+(formData.player_name||'')+"\n";
-      content+="Année de naissance: "+(formData.birth_year||'')+"\n";
-      content+="Ville: "+(formData.city||'')+"\n";
-      content+="Équipe actuelle: "+(formData.current_team||'')+"\n";
-      content+="Courriel parent: "+(formData.parent_email||'')+"\n";
-      content+="Téléphone parent: "+(formData.parent_phone||'')+"\n\n";
-
-      content+="2) POSTE & STYLE / POSITION & STYLE\n";
-      content+="Position principale: "+(formData.primary_position||'')+"\n";
-      content+="Position secondaire: "+(formData.secondary_position||'')+"\n";
-      content+="Côté droit: "+(formData.side_right||'Non')+"\n";
-      content+="Côté gauche: "+(formData.side_left||'Non')+"\n";
-      content+="Style de joueur: "+(formData.player_style||'')+"\n";
-      content+="Liens vidéo: "+(formData.video_links||'')+"\n\n";
-
-      content+="3) CHANDAIL / JERSEY\n";
-      content+="Numéro choix 1: "+(formData.jersey_number_1||'')+"\n";
-      content+="Numéro choix 2: "+(formData.jersey_number_2||'')+"\n";
-      content+="Numéro choix 3: "+(formData.jersey_number_3||'')+"\n";
-      content+="Type: "+(formData.jersey_type||'')+"\n";
-      content+="Taille: "+(formData.jersey_size||'')+"\n\n";
-
-      content+="4) DISPONIBILITÉS / AVAILABILITY\n";
-      content+="Boston: "+(formData.boston_showdown||'')+"\n";
-      content+="Montréal: "+(formData.montreal_meltdown||'')+"\n";
-      content+="The Throne: "+(formData.the_throne||'')+"\n";
-      content+="Confiance: "+(formData.confidence_pct||'')+"%\n\n";
-
-      content+="5) CONFIRMATIONS\n";
-      content+="Règle The Throne: "+(formData.ack_throne_rule?'Oui':'Non')+"\n";
-      content+="Places limitées: "+(formData.ack_limited_spots?'Oui':'Non')+"\n";
-      content+="Contact: "+(formData.consent_contact?'Oui':'Non')+"\n\n";
-      content+="=================================\n";
-      content+="Soumis le: "+new Date().toLocaleString('fr-CA')+"\n";
-      return content;
-    }
-    function sendFallbackEmail(){
-      var data=collectFormData();
-      var body=formatEmailContent(data);
-      var subject="QHC — The Road to The Throne - Formulaire";
-      var email="yannick.banaszak@outlook.com";
-      var mailto="mailto:"+email+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-      window.location.href=mailto; closeFallbackModal();
-    }
-    function copyFallbackToClipboard(){
-      var body=formatEmailContent(collectFormData());
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(body).then(function(){ alert("Contenu copié! Collez-le dans un email."); closeFallbackModal(); })
-        .catch(function(){ legacyCopy(body); });
-      }else{ legacyCopy(body); }
-      function legacyCopy(text){
-        var ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select();
-        document.execCommand('copy'); document.body.removeChild(ta);
-        alert("Contenu copié! Collez-le dans un email."); closeFallbackModal();
-      }
-    }
-
-    // Visuel + règles + redirection via iframe
+    // --- Sélections visibles (sans :has()) ---
     (function(){
       var form=document.getElementById('qhc-form');
-      var iframe=document.getElementById('fs_iframe');
-      var btn=document.getElementById('submitBtn');
-      var submitted=false, fallbackTriggered=false;
-      var THANKS_URL='https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
 
-      // Marquage visuel
-      (function setupVisualValidation(){
-        var typed=form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select');
-        for(var i=0;i<typed.length;i++){
-          typed[i].addEventListener('input', function(){
-            var el=this, wrap=el.closest?el.closest('.input-container'):null;
-            if(wrap){
-              var filled=(el.tagName==='SELECT')?(el.value!==''):(el.value.trim()!=='');
-              wrap.classList.toggle('valid', filled);
-              el.classList.toggle('valid', filled);
-            }
-            var fs=el.closest?el.closest('fieldset'):null; markFieldset(fs);
+      function refresh(){
+        // Radios: applique .selected à l'étiquette choisie, la retire aux autres du groupe
+        var names=new Set();
+        form.querySelectorAll('input[type="radio"]').forEach(r=>names.add(r.name));
+        names.forEach(function(n){
+          var group=form.querySelectorAll('input[name="'+n+'"]');
+          group.forEach(function(r){
+            var lbl=r.closest('.check');
+            if(lbl) lbl.classList.toggle('selected', r.checked);
           });
-        }
-        var radios=form.querySelectorAll('input[type="radio"]');
-        for(i=0;i<radios.length;i++){
-          radios[i].addEventListener('change', function(){
-            var group=form.querySelectorAll('input[name="'+this.name+'"]');
-            for(var j=0;j<group.length;j++){
-              var lbl=group[j].closest?group[j].closest('.check'):null;
-              if(lbl) lbl.classList.remove('valid');
-            }
-            var lbl2=this.closest?this.closest('.check'):null; if(lbl2) lbl2.classList.add('valid');
-            var fs=this.closest?this.closest('fieldset'):null; markFieldset(fs);
-          });
-        }
-        var checks=form.querySelectorAll('input[type="checkbox"]');
-        for(i=0;i<checks.length;i++){
-          checks[i].addEventListener('change', function(){
-            var lbl=this.closest?this.closest('.check'):null;
-            if(lbl) lbl.classList.toggle('valid', this.checked);
-            var fs=this.closest?this.closest('fieldset'):null; markFieldset(fs);
-          });
-        }
-        var all=form.querySelectorAll('input,select,textarea');
-        for(i=0;i<all.length;i++){
-          var el=all[i]; if(el.type==='range') continue;
-          var evt=(el.type==='radio'||el.type==='checkbox')?'change':'input';
-          el.dispatchEvent(new Event(evt));
-        }
-        function markFieldset(fs){
-          if(!fs) return; var ok=false;
-          switch(fs.id){
-            case 'fieldset-player': {
-              var need=['player_name','birth_year','city','parent_email'];
-              ok=need.every(function(id){
-                var el=document.getElementById(id);
-                return el && (el.tagName==='SELECT'? (el.value!=='') : (el.value.trim()!=='')) && (el.id!=='parent_email' || el.checkValidity());
-              }); break;
-            }
-            case 'fieldset-position': {
-              var primary=!!fs.querySelector('input[name="primary_position"]:checked');
-              var sideOK=fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
-              ok=primary && sideOK; break;
-            }
-            case 'fieldset-jersey': {
-              var typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
-              var sizeOK=(document.getElementById('jersey_size').value!=='');
-              ok=typeOK && sizeOK; break;
-            }
-            case 'fieldset-availability': {
-              var b=!!fs.querySelector('input[name="boston_showdown"]:checked');
-              var m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
-              var t=!!fs.querySelector('input[name="the_throne"]:checked');
-              var conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
-              ok=b && m && t && conf; break;
-            }
-            case 'fieldset-confirmations': {
-              var c1=fs.querySelector('[name="ack_throne_rule"]').checked;
-              var c2=fs.querySelector('[name="ack_limited_spots"]').checked;
-              var c3=fs.querySelector('[name="consent_contact"]').checked;
-              ok=c1 && c2 && c3; break;
-            }
+        });
+
+        // Checkboxes: .selected si coché
+        form.querySelectorAll('input[type="checkbox"]').forEach(function(c){
+          var lbl=c.closest('.check');
+          if(lbl) lbl.classList.toggle('selected', c.checked);
+        });
+
+        // Visuel inputs saisis
+        form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select').forEach(function(el){
+          var wrap=el.closest('.input-container'); if(!wrap) return;
+          var filled=(el.tagName==='SELECT')? el.value!=='' : el.value.trim()!=='';
+          wrap.classList.toggle('valid', filled);
+          el.classList.toggle('valid', filled);
+        });
+
+        // Fieldsets complets
+        markFieldset(document.getElementById('fieldset-player'));
+        markFieldset(document.getElementById('fieldset-position'));
+        markFieldset(document.getElementById('fieldset-jersey'));
+        markFieldset(document.getElementById('fieldset-availability'));
+        markFieldset(document.getElementById('fieldset-confirmations'));
+      }
+
+      function markFieldset(fs){
+        if(!fs) return; var ok=false;
+        switch(fs.id){
+          case 'fieldset-player': {
+            var need=['player_name','birth_year','city','parent_email'];
+            ok=need.every(function(id){
+              var el=document.getElementById(id);
+              return el && (el.tagName==='SELECT'? (el.value!=='') : (el.value.trim()!=='')) && (el.id!=='parent_email' || el.checkValidity());
+            }); break;
           }
-          fs.classList.toggle('completed', ok);
+          case 'fieldset-position': {
+            var primary=!!fs.querySelector('input[name="primary_position"]:checked');
+            var sideOK=fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
+            ok=primary && sideOK; break;
+          }
+          case 'fieldset-jersey': {
+            var typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
+            var sizeOK=(document.getElementById('jersey_size').value!=='');
+            ok=typeOK && sizeOK; break;
+          }
+          case 'fieldset-availability': {
+            var b=!!fs.querySelector('input[name="boston_showdown"]:checked');
+            var m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
+            var t=!!fs.querySelector('input[name="the_throne"]:checked');
+            var conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
+            ok=b && m && t && conf; break;
+          }
+          case 'fieldset-confirmations': {
+            var c1=fs.querySelector('[name="ack_throne_rule"]').checked;
+            var c2=fs.querySelector('[name="ack_limited_spots"]').checked;
+            var c3=fs.querySelector('[name="consent_contact"]').checked;
+            ok=c1 && c2 && c3; break;
+          }
         }
-      })();
+        fs.classList.toggle('completed', ok);
+      }
 
-      // Sync _replyto avec l'email parent (SUPPRIME le champ name="email")
+      form.addEventListener('input', refresh, true);
+      form.addEventListener('change', refresh, true);
+      refresh();
+    })();
+
+    // --- Fallback helpers ---
+    function showFallback(){ document.getElementById('fallbackModal').style.display='flex'; }
+    function hideFallback(){ document.getElementById('fallbackModal').style.display='none'; }
+    function emailBodyFromForm(){
+      var f=new FormData(document.getElementById('qhc-form'));
+      var lines=[];
+      function add(label, key){ lines.push(label+' '+(f.get(key)||'')); }
+      lines.push('QHC — The Road to The Throne - Formulaire'); lines.push(''); lines.push('=============================='); lines.push('');
+      add('Nom / Name:', 'player_name'); add('Année / Year:', 'birth_year'); add('Ville / City:', 'city');
+      add('Équipe / Team:', 'current_team'); add('Courriel parent / Parent email:', 'parent_email'); add('Téléphone / Phone:', 'parent_phone'); lines.push('');
+      add('Primary:', 'primary_position'); add('Secondary:', 'secondary_position');
+      lines.push('Right: '+(f.get('side_right')?'Yes':'No')); lines.push('Left: '+(f.get('side_left')?'Yes':'No'));
+      add('Style:', 'player_style'); add('Vidéos:', 'video_links'); lines.push('');
+      add('Jersey#1:', 'jersey_number_1'); add('Jersey#2:', 'jersey_number_2'); add('Jersey#3:', 'jersey_number_3');
+      add('Type:', 'jersey_type'); add('Size:', 'jersey_size'); lines.push('');
+      add('Boston:', 'boston_showdown'); add('Meltdown:', 'montreal_meltdown'); add('The Throne:', 'the_throne');
+      lines.push('Confidence: '+(f.get('confidence_pct')||'')+'%'); lines.push('');
+      lines.push('Throne rule: '+(f.get('ack_throne_rule')?'Yes':'No'));
+      lines.push('Limited spots: '+(f.get('ack_limited_spots')?'Yes':'No'));
+      lines.push('Contact: '+(f.get('consent_contact')?'Yes':'No')); lines.push('');
+      lines.push('=============================='); lines.push(''); lines.push(new Date().toLocaleString('fr-CA'));
+      return lines.join('\n');
+    }
+    (function(){
+      var fbE=document.getElementById('fbEmail'), fbC=document.getElementById('fbCopy'), fbX=document.getElementById('fbClose');
+      if(fbE) fbE.onclick=function(){
+        var subject='QHC — The Road to The Throne - Formulaire';
+        var mailto='mailto:yannick.banaszak@outlook.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(emailBodyFromForm());
+        window.location.href=mailto; hideFallback();
+      };
+      if(fbC) fbC.onclick=function(){
+        var txt=emailBodyFromForm();
+        (navigator.clipboard?.writeText(txt) || Promise.reject()).then(()=>{ alert('Contenu copié. Collez-le dans un email.'); hideFallback(); })
+        .catch(function(){
+          var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          alert('Contenu copié. Collez-le dans un email.'); hideFallback();
+        });
+      };
+      if(fbX) fbX.onclick=hideFallback;
+    })();
+
+    // --- Envoi AJAX confirmé + redirection seulement si succès ---
+    (function(){
+      var form   = document.getElementById('qhc-form');
+      var btn    = document.getElementById('submitBtn');
+      var postTo = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
+      var THANKS = 'https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
+
+      // alimente _replyto avec l’email parent
       var emailField=document.getElementById('parent_email');
-      var replyto=document.getElementById('replyto');
-      function syncEmail(){ var v=(emailField.value||'').trim(); replyto.value=v; }
+      var replyto   =document.getElementById('replyto');
+      function syncEmail(){ replyto.value=(emailField.value||'').trim(); }
       emailField.addEventListener('input', syncEmail); syncEmail();
 
-      // Redirection quand l'iframe a fini de charger (après POST)
-      iframe.addEventListener('load', function(){
-        if(submitted && !fallbackTriggered){
-          window.location.href=THANKS_URL;
-        }
-      });
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
 
-      // Soumission (native -> iframe)
-      form.addEventListener('submit', function(e){
         // validations HTML5
         if(!form.checkValidity()){
-          e.preventDefault();
           var firstInvalid=form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
-        // Règles métier
+        // règles métier
         var right=form.querySelector('[name="side_right"]').checked;
         var left =form.querySelector('[name="side_left"]').checked;
-        if(!right && !left){ e.preventDefault(); alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
-
+        if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
         var elT=form.querySelector('input[name="the_throne"]:checked');
         var elB=form.querySelector('input[name="boston_showdown"]:checked');
         var elM=form.querySelector('input[name="montreal_meltdown"]:checked');
         var throne=elT?elT.value:'TBD', boston=elB?elB.value:'TBD', meltdown=elM?elM.value:'TBD';
-        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){ e.preventDefault(); alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return; }
-
+        if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){ alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return; }
         var conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf) || conf<80){ e.preventDefault(); alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
+        if(isNaN(conf) || conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
 
-        // OK -> laisser POST vers l'iframe
-        submitted=true;
         btn.disabled=true; btn.innerText='Envoi… / Submitting…';
+        try{
+          var fd=new FormData(form);
+          fd.delete('_next'); // redirection gérée côté client
 
-        // Garde-fou : si l'iframe ne déclenche pas load (bloqueur), on propose le fallback
-        setTimeout(function(){
-          if(submitted && !fallbackTriggered){
-            fallbackTriggered=true;
-            showFallbackModal();
-            btn.disabled=false; btn.innerText='Soumettre / Submit';
+          var res=await fetch(postTo,{method:'POST', headers:{'Accept':'application/json'}, body:fd});
+          var ok=res.ok, json=null;
+          if(ok){
+            try{ json=await res.json(); }
+            catch(_){} // si JSON impossible, on restera prudent
           }
-        }, 5000);
+          // on ne redirige que si le serveur confirme le succès
+          if(ok && json && (json.success===true || json.success==='true')){
+            window.location.href=THANKS;
+          }else{
+            alert("Échec ou confirmation manquante. Le formulaire n'a pas été redirigé.");
+            btn.disabled=false; btn.innerText='Soumettre / Submit';
+            showFallback(); // optionnel : aide à envoyer manuellement
+          }
+        }catch(err){
+          console.error(err);
+          alert("Erreur réseau. Le formulaire n'a pas été envoyé.");
+          btn.disabled=false; btn.innerText='Soumettre / Submit';
+          showFallback();
+        }
       });
     })();
   </script>
