@@ -60,7 +60,7 @@
       background: radial-gradient(closest-side, rgba(59,130,246,.30), transparent 68%); box-shadow: 0 16px 44px rgba(3,102,214,.35)}
     .hero-logo img{width:100%; height:100%; object-fit:cover; border-radius:20px}
     .hero-text{text-align:center}
-    .hero h1{margin:0; font-size:2rem; letter-spacing:.3px; line-height:1.15}
+    .hero h1{margin:0; font-size:2rem}
     .hero-sub{margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem; opacity:.95}
     .hero-meta{margin:0; color:#9fb7ff; font-size:.95rem; opacity:.9}
 
@@ -69,11 +69,11 @@
     .tournaments-section h2{text-align:center; margin:0 0 20px; font-size:1.4rem; color:#eaf2ff}
     .tournaments{display:grid; grid-template-columns:1fr; gap:16px}
     .tcard{position:relative; background:#0b1020; border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:20px; min-height:180px; overflow:hidden;
-      display:grid; place-items:center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3); transition:.3s transform,.3s box-shadow,.3s border-color}
+      display:grid; place-items:center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 32px rgba(0,0,0,.3); transition:.3s}
     .tcard:hover{transform:translateY(-2px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 40px rgba(0,0,0,.4); border-color: rgba(59,130,246,.3)}
     .tcard::after{content:""; position:absolute; inset:0; background: radial-gradient(60% 55% at 50% 40%, transparent 55%, rgba(0,0,0,.18) 100%)}
     .tcard .logo{width:100%; height:100%; display:grid; place-items:center; z-index:2}
-    .tcard .logo img{width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:.3s transform}
+    .tcard .logo img{width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:.3s}
     .tcard:hover .logo img{transform:translateY(0) scale(1.05)}
     .t-info-pill{position:absolute; bottom:12px; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3}
     .t-date {left:12px;  font-weight:700; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10)}
@@ -103,7 +103,7 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* Choice blocks — visuels clairs (on cache le "point bleu" natif) */
+    /* Choix — on masque le « point bleu » natif et on gère .selected */
     .check-row{display:flex; flex-direction:column; gap:10px}
     .check{
       position:relative; display:flex; gap:12px; align-items:center;
@@ -176,11 +176,12 @@
   <div class="fallback-modal" id="fallbackModal" aria-hidden="true">
     <div class="fallback-content" role="dialog" aria-labelledby="fbTitle">
       <h3 id="fbTitle">📧 Soumission alternative / Alternative Submission</h3>
-      <p>La soumission automatique a échoué. Vous pouvez :</p>
-      <p><em>Automatic submission failed. You can:</em></p>
+      <p>La soumission automatique a échoué.</p>
+      <p><em>Automatic submission failed.</em></p>
       <div class="fallback-actions">
         <button id="fbEmail">📤 Envoyer par email / Send by email</button>
         <button id="fbCopy" class="outline">📋 Copier / Copy</button>
+        <button id="fbProvider" class="outline">🔁 Essayer via la page du fournisseur / Try provider page</button>
         <button id="fbClose" class="outline">Fermer / Close</button>
       </div>
     </div>
@@ -250,7 +251,6 @@
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
-      <!-- Pour tests, tu peux décommenter: -->
       <!-- <input type="hidden" name="_cc" value="ton.gmail.de.test@gmail.com"> -->
       <input type="hidden" id="replyto" name="_replyto" value="">
       <input type="hidden" name="form_version" value="rttt_v3_ajax_confirmed">
@@ -470,12 +470,12 @@
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    // --- Sélections visibles (sans :has()) ---
+    // Sélections visibles (sans :has())
     (function(){
       var form=document.getElementById('qhc-form');
 
       function refresh(){
-        // Radios: applique .selected à l'étiquette choisie, la retire aux autres du groupe
+        // radios
         var names=new Set();
         form.querySelectorAll('input[type="radio"]').forEach(r=>names.add(r.name));
         names.forEach(function(n){
@@ -485,27 +485,21 @@
             if(lbl) lbl.classList.toggle('selected', r.checked);
           });
         });
-
-        // Checkboxes: .selected si coché
+        // checkboxes
         form.querySelectorAll('input[type="checkbox"]').forEach(function(c){
           var lbl=c.closest('.check');
           if(lbl) lbl.classList.toggle('selected', c.checked);
         });
-
-        // Visuel inputs saisis
+        // champs saisis
         form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select').forEach(function(el){
           var wrap=el.closest('.input-container'); if(!wrap) return;
           var filled=(el.tagName==='SELECT')? el.value!=='' : el.value.trim()!=='';
           wrap.classList.toggle('valid', filled);
           el.classList.toggle('valid', filled);
         });
-
-        // Fieldsets complets
-        markFieldset(document.getElementById('fieldset-player'));
-        markFieldset(document.getElementById('fieldset-position'));
-        markFieldset(document.getElementById('fieldset-jersey'));
-        markFieldset(document.getElementById('fieldset-availability'));
-        markFieldset(document.getElementById('fieldset-confirmations'));
+        // fieldsets
+        ['fieldset-player','fieldset-position','fieldset-jersey','fieldset-availability','fieldset-confirmations']
+          .forEach(function(id){ markFieldset(document.getElementById(id)); });
       }
 
       function markFieldset(fs){
@@ -550,7 +544,7 @@
       refresh();
     })();
 
-    // --- Fallback helpers ---
+    // Fallback helpers
     function showFallback(){ document.getElementById('fallbackModal').style.display='flex'; }
     function hideFallback(){ document.getElementById('fallbackModal').style.display='none'; }
     function emailBodyFromForm(){
@@ -574,7 +568,8 @@
       return lines.join('\n');
     }
     (function(){
-      var fbE=document.getElementById('fbEmail'), fbC=document.getElementById('fbCopy'), fbX=document.getElementById('fbClose');
+      var fbE=document.getElementById('fbEmail'), fbC=document.getElementById('fbCopy'),
+          fbP=document.getElementById('fbProvider'), fbX=document.getElementById('fbClose');
       if(fbE) fbE.onclick=function(){
         var subject='QHC — The Road to The Throne - Formulaire';
         var mailto='mailto:yannick.banaszak@outlook.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(emailBodyFromForm());
@@ -583,22 +578,29 @@
       if(fbC) fbC.onclick=function(){
         var txt=emailBodyFromForm();
         (navigator.clipboard?.writeText(txt) || Promise.reject()).then(()=>{ alert('Contenu copié. Collez-le dans un email.'); hideFallback(); })
-        .catch(function(){
-          var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-          alert('Contenu copié. Collez-le dans un email.'); hideFallback();
-        });
+        .catch(function(){ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); alert('Contenu copié. Collez-le dans un email.'); hideFallback(); });
+      };
+      if(fbP) fbP.onclick=function(){
+        // Fallback: POST standard vers la page FormSubmit dans un nouvel onglet
+        var src=document.getElementById('qhc-form');
+        var aux=document.createElement('form'); aux.method='POST'; aux.action='https://formsubmit.co/yannick.banaszak@outlook.com'; aux.target='_blank'; aux.style.display='none';
+        var fd=new FormData(src);
+        // Optionnel: tu peux ajouter un _next absolu si tu veux que FormSubmit redirige après sa page
+        // fd.set('_next','https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html');
+        fd.forEach(function(v,k){ var i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=v; aux.appendChild(i); });
+        document.body.appendChild(aux); aux.submit(); setTimeout(()=>aux.remove(),1000);
       };
       if(fbX) fbX.onclick=hideFallback;
     })();
 
-    // --- Envoi AJAX confirmé + redirection seulement si succès ---
+    // Envoi AJAX confirmé + redirection uniquement si succès
     (function(){
       var form   = document.getElementById('qhc-form');
       var btn    = document.getElementById('submitBtn');
       var postTo = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
       var THANKS = 'https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
 
-      // alimente _replyto avec l’email parent
+      // alimente _replyto
       var emailField=document.getElementById('parent_email');
       var replyto   =document.getElementById('replyto');
       function syncEmail(){ replyto.value=(emailField.value||'').trim(); }
@@ -626,24 +628,24 @@
         if(isNaN(conf) || conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
 
         btn.disabled=true; btn.innerText='Envoi… / Submitting…';
+
+        // 1) tentative AJAX
         try{
           var fd=new FormData(form);
           fd.delete('_next'); // redirection gérée côté client
 
           var res=await fetch(postTo,{method:'POST', headers:{'Accept':'application/json'}, body:fd});
           var ok=res.ok, json=null;
-          if(ok){
-            try{ json=await res.json(); }
-            catch(_){} // si JSON impossible, on restera prudent
-          }
-          // on ne redirige que si le serveur confirme le succès
+          if(ok){ try{ json=await res.json(); }catch(e){} }
+
           if(ok && json && (json.success===true || json.success==='true')){
-            window.location.href=THANKS;
-          }else{
-            alert("Échec ou confirmation manquante. Le formulaire n'a pas été redirigé.");
-            btn.disabled=false; btn.innerText='Soumettre / Submit';
-            showFallback(); // optionnel : aide à envoyer manuellement
+            window.location.href=THANKS; // succès confirmé seulement
+            return;
           }
+          // pas de confirmation serveur
+          alert("Échec ou confirmation manquante. Le formulaire n'a pas été redirigé.");
+          btn.disabled=false; btn.innerText='Soumettre / Submit';
+          showFallback();
         }catch(err){
           console.error(err);
           alert("Erreur réseau. Le formulaire n'a pas été envoyé.");
