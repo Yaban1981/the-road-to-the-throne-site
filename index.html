@@ -5,74 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QHC — The Road to The Throne</title>
   <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, The Throne" />
+  <link rel="icon" href="logos/qhc.png">
 
-  <!-- Canonical -->
-  <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
-
-  <!-- Open Graph (Facebook, LinkedIn, iMessage, WhatsApp, Telegram, etc.) -->
-  <meta property="og:site_name" content="Québec HC">
-  <meta property="og:locale" content="fr_CA">
-  <meta property="og:locale:alternate" content="en_CA">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
-  <meta property="og:title" content="QHC — The Road to The Throne">
-  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
-
-  <!-- Image principale (1200×630 recommandé) -->
-  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
-  <meta property="og:image:secure_url" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Bannière Québec HC — The Road to The Throne">
-
-  <!-- Fallback carré (logo) -->
-  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png?v=1">
-  <meta property="og:image:secure_url" content="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png?v=1">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
-  <meta property="og:image:alt" content="Logo Québec HC">
-
-  <!-- Twitter Card (X) -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@QHC">
-  <meta name="twitter:creator" content="@QHC">
-  <meta name="twitter:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
-  <meta name="twitter:title" content="QHC — The Road to The Throne">
-  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
-  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
-  <meta name="twitter:image:alt" content="Bannière Québec HC — The Road to The Throne">
-
-  <!-- Schema.org / Google -->
-  <meta itemprop="name" content="QHC — The Road to The Throne">
-  <meta itemprop="description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
-  <meta itemprop="image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
-
-  <!-- Anciennes implémentations -->
-  <link rel="image_src" href="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
-
-  <!-- Favicons / PWA -->
-  <link rel="icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="https://yaban1981.github.io/the-road-to-the-throne-site/logos/qhc.png">
+  <!-- Favicons / PWA basics -->
+  <link rel="icon" href="logos/qhc.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="logos/qhc.png">
   <meta name="theme-color" content="#0a1020">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
 
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
+  <meta property="og:title" content="QHC — The Road to The Throne">
+  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
+  <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="QHC — The Road to The Throne">
+  <meta name="twitter:description" content="Intérêt tournois printemps 2026">
+  <meta name="twitter:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/og-image.jpg">
+
   <style>
     :root{
       --bg:#0f172a; --panel:#0e152a; --panel2:#0a1020;
       --text:#e7ecf3; --muted:#a7b3c7;
-      --accent:#d4af37; --accent2:#3b82f6;
-      --success:#d4af37; --ring:rgba(59,130,246,.3);
+      --accent:#d4af37;           /* gold */
+      --accent2:#3b82f6;          /* blue */
+      --success:#d4af37;          /* gold check */
+      --ring:rgba(59,130,246,.3);
       --radius:16px;
     }
     *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
     html,body{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
     body{
       margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%), linear-gradient(180deg, #091024, #0a0f1a);
+      background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%),
+                  linear-gradient(180deg, #091024, #0a0f1a);
       color:var(--text); line-height:1.5;
     }
 
@@ -146,28 +117,56 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* === CHOICES: radios/checkbox avec pastille custom (zéro décalage) === */
-    .check input[type="radio"], .check input[type="checkbox"]{
-      position:absolute; inset:0; opacity:0; cursor:pointer; margin:0;
-    }
+    /* === CHOICES: radio/checkbox blocs — align point bleu + encadré or + ✓ === */
     .check{
-      position:relative; display:flex; align-items:center; gap:10px;
-      padding:14px 44px 14px 48px; min-height:54px; border-radius:12px;
-      background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 44px 14px 48px; /* espace pour la pastille */
+      min-height: 54px;
+      border-radius: 12px;
+      background: #0b1020;
+      border: 1px solid rgba(255,255,255,.08);
+      transition: .2s;
     }
-    .check::before{
-      content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%);
-      width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent;
-      box-shadow:0 1px 2px rgba(0,0,0,.35);
+    .check input[type="radio"],
+    .check input[type="checkbox"]{
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%) scale(1.1);
+      margin: 0;
+      accent-color: var(--accent2); /* bleu */
     }
-    .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff; }
-    .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08); box-shadow:0 0 0 3px rgba(212,175,94,.15); }
-    .check::after{ content:""; position:absolute; right:14px; width:0; height:0; }
+    .check:has(input:checked){
+      border-color: var(--accent); /* or */
+      background: rgba(212,175,94,.08);
+      box-shadow: 0 0 0 3px rgba(212,175,94,.15);
+    }
+    .check::after{
+      content: "";
+      position: absolute;
+      right: 14px;
+      width: 0; height: 0;
+    }
     .check:has(input:checked)::after{
-      content:"✓"; color:var(--accent); font-weight:800; font-size:16px; right:14px; top:50%; transform:translateY(-50%);
+      content: "✓";
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 16px;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
     }
-    .check:focus-within{ outline:none; box-shadow:0 0 0 3px var(--ring); border-color:var(--accent2); }
-    .check.valid{ border-color:inherit; background:inherit; } .check.valid::after{ content:""; }
+    .check:focus-within{
+      outline: none;
+      box-shadow: 0 0 0 3px var(--ring);
+      border-color: var(--accent2);
+    }
+    /* neutralise l'ancien mode .check.valid piloté par JS */
+    .check.valid{ border-color: inherit; background: inherit; }
+    .check.valid::after{ content: ""; }
 
     /* submit */
     .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
@@ -280,8 +279,7 @@
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
       <input type="hidden" name="form_version" value="rttt_v1_mobile">
-      <!-- IMPORTANT: URL ABSOLUE pour que FormSubmit te renvoie chez toi même sans JS -->
-      <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
+      <input type="hidden" name="_next" value="thanks.html">
 
       <!-- 1 -->
       <fieldset id="fieldset-player">
@@ -355,7 +353,8 @@
           </div>
           <div class="col-12 input-container">
             <label for="video_links">Liens vidéo / Video links</label>
-            <textarea id="video_links" name="video_links" placeholder="Collez n'importe quel texte: liens YouTube/Vimeo, timestamps, notes, plusieurs lignes…"></textarea>
+            <textarea id="video_links" name="video_links"
+              placeholder="Collez n'importe quel texte: liens YouTube/Vimeo, timestamps, notes, plusieurs lignes…"></textarea>
           </div>
         </div>
       </fieldset>
@@ -406,7 +405,7 @@
           <div class="col-12 muted">Aucun paiement maintenant / No payment now.</div>
 
           <div class="col-12">
-            <label class="muted">Boston, MA — <span class="price">≈ 150 $ CAD</span> • <span class="date">29–31.05.2026</span></label>
+            <label class="muted">Boston, MA — <span class="price">≈ 150 $ CAD</span></label>
             <div class="check-row" role="radiogroup" aria-label="Boston">
               <label class="check"><input type="radio" name="boston_showdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="boston_showdown" value="No"> Non / No</label>
@@ -415,7 +414,7 @@
           </div>
 
           <div class="col-12">
-            <label class="muted">Montréal, QC — <span class="price">≈ 150 $ CAD</span> • <span class="date">05–07.06.2026</span></label>
+            <label class="muted">Montréal, QC — <span class="price">≈ 150 $ CAD</span></label>
             <div class="check-row" role="radiogroup" aria-label="Meltdown">
               <label class="check"><input type="radio" name="montreal_meltdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="montreal_meltdown" value="No"> Non / No</label>
@@ -424,7 +423,7 @@
           </div>
 
           <div class="col-12">
-            <label class="muted">Toronto, ON — <span class="price">≈ 250 $ CAD</span> • <span class="date">24–26.07.2026</span></label>
+            <label class="muted">Toronto, ON — <span class="price">≈ 250 $ CAD</span></label>
             <div class="check-row" role="radiogroup" aria-label="The Throne">
               <label class="check"><input type="radio" name="the_throne" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="the_throne" value="No"> Non / No</label>
@@ -439,6 +438,7 @@
                      aria-label="Confidence percent" aria-valuemin="80" aria-valuemax="100" aria-valuenow="80"
                      oninput="updateConfidenceValue(this.value)">
               <div class="hand-hint" aria-hidden="true">
+                <!-- main animée or (toujours visible) -->
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.5 9.5V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2M6.5 9.5v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1m-8 3v2a2 2 0 0 0 4 0v-2"/>
                 </svg>
@@ -478,155 +478,173 @@
   <footer><div>© Québec HC — Spring 2026</div></footer>
 
   <script>
-    // Countdowns
+    // Countdown badges (robuste, rafraîchi chaque heure)
     (function(){
-      var mk=function(y,m,d){return new Date(y,m-1,d,0,0,0,0);};
-      var targets=[
-        {id:'cd-boston',  date:mk(2026,5,29)},
-        {id:'cd-meltdown',date:mk(2026,6,5)},
-        {id:'cd-throne',  date:mk(2026,7,24)}
+      const mk = (y,m,d)=> new Date(y, m-1, d, 0,0,0,0);
+      const targets = [
+        { id:'cd-boston',   date: mk(2026,5,29) },
+        { id:'cd-meltdown', date: mk(2026,6,5)  },
+        { id:'cd-throne',   date: mk(2026,7,24) }
       ];
       function update(){
-        var now=new Date(); var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-        for(var i=0;i<targets.length;i++){
-          var t=targets[i]; var el=document.getElementById(t.id); if(!el) continue;
-          var days=Math.ceil((t.date-today)/86400000);
-          el.textContent=(days>0)?('J-'+days):(days===0?'Jour J':'Terminé');
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        for (const t of targets){
+          const el = document.getElementById(t.id);
+          if (!el) continue;
+          const ms = t.date - today;
+          const days = Math.ceil(ms / 86400000);
+          el.textContent = (days > 0) ? `J-${days}` : (days === 0 ? 'Jour J' : 'Terminé');
         }
       }
-      update(); setInterval(update, 3600000); // (compat) pas d'underscore numérique
+      update(); setInterval(update, 3600_000);
     })();
 
+    // Live value (hand stays visible forever)
     function updateConfidenceValue(val){
-      document.getElementById('confVal').textContent=val+'%';
+      document.getElementById('confVal').textContent = val + '%';
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
+    // Visual validation & fieldset completion
     function setupVisualValidation(){
-      var form=document.getElementById('qhc-form');
+      const form = document.getElementById('qhc-form');
 
-      var textFields=form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select');
-      Array.prototype.forEach.call(textFields, function(el){
-        el.addEventListener('input', function(){
-          var wrap=el.closest('.input-container');
-          if(wrap){
-            var filled=(el.tagName==='SELECT')? (el.value!=='') : (el.value.trim()!=='');
-            wrap.classList.toggle('valid', filled);
-            el.classList.toggle('valid', filled);
-          }
-          markFieldset(el.closest('fieldset'));
+      // text/select/textarea
+      form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select')
+        .forEach(el=>{
+          el.addEventListener('input', ()=>{
+            const wrap = el.closest('.input-container');
+            if(wrap){
+              const filled = (el.tagName==='SELECT') ? el.value !== '' : el.value.trim() !== '';
+              wrap.classList.toggle('valid', filled);
+              el.classList.toggle('valid', filled);
+            }
+            markFieldset(el.closest('fieldset'));
+          });
+        });
+
+      // radios: plus de classes visuelles, seulement recalcul du fieldset
+      form.querySelectorAll('input[type="radio"]').forEach(r=>{
+        r.addEventListener('change', ()=>{
+          markFieldset(r.closest('fieldset'));
         });
       });
 
-      var radios=form.querySelectorAll('input[type="radio"]');
-      Array.prototype.forEach.call(radios, function(r){
-        r.addEventListener('change', function(){ markFieldset(r.closest('fieldset')); });
+      // checkboxes: idem
+      form.querySelectorAll('input[type="checkbox"]').forEach(cbx=>{
+        cbx.addEventListener('change', ()=>{
+          markFieldset(cbx.closest('fieldset'));
+        });
       });
 
-      var checks=form.querySelectorAll('input[type="checkbox"]');
-      Array.prototype.forEach.call(checks, function(cbx){
-        cbx.addEventListener('change', function(){ markFieldset(cbx.closest('fieldset')); });
-      });
-
-      var all=form.querySelectorAll('input,select,textarea');
-      Array.prototype.forEach.call(all, function(el){
-        if(el.type==='range') return;
-        var evt=(el.type==='radio'||el.type==='checkbox')?'change':'input';
+      // prime visuel (ne pas déclencher le range)
+      form.querySelectorAll('input,select,textarea').forEach(el=>{
+        if (el.type === 'range') return;
+        const evt = (el.type==='radio'||el.type==='checkbox')?'change':'input';
         el.dispatchEvent(new Event(evt));
       });
 
       function markFieldset(fs){
-        if(!fs) return; var ok=false;
+        if(!fs) return;
+        let ok=false;
         switch(fs.id){
           case 'fieldset-player': {
-            var need=['player_name','birth_year','city','parent_email'];
-            ok=need.every(function(id){
-              var el=document.getElementById(id);
-              return el && (el.tagName==='SELECT'? el.value!=='' : el.value.trim()!=='') && (el.id!=='parent_email' || el.checkValidity());
-            }); break;
+            const need=['player_name','birth_year','city','parent_email'];
+            ok = need.every(id=>{
+              const el=document.getElementById(id);
+              return el && (el.tagName==='SELECT' ? el.value!=='' : el.value.trim()!=='') && (el.id!=='parent_email' || el.checkValidity());
+            });
+            break;
           }
           case 'fieldset-position': {
-            var primary=!!fs.querySelector('input[name="primary_position"]:checked');
-            var sideOK=fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
-            ok=primary && sideOK; break;
+            const primary = !!fs.querySelector('input[name="primary_position"]:checked');
+            const sideOK  = fs.querySelector('[name="side_right"]').checked || fs.querySelector('[name="side_left"]').checked;
+            ok = primary && sideOK;
+            break;
           }
           case 'fieldset-jersey': {
-            var typeOK=!!fs.querySelector('input[name="jersey_type"]:checked');
-            var sizeOK=(document.getElementById('jersey_size').value!=='');
-            ok=typeOK && sizeOK; break;
+            const typeOK = !!fs.querySelector('input[name="jersey_type"]:checked');
+            const sizeOK = (document.getElementById('jersey_size').value!=='');
+            ok = typeOK && sizeOK;
+            break;
           }
           case 'fieldset-availability': {
-            var b=!!fs.querySelector('input[name="boston_showdown"]:checked');
-            var m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
-            var t=!!fs.querySelector('input[name="the_throne"]:checked');
-            var conf=parseInt(document.getElementById('confidence_pct').value,10) >= 80;
-            ok=b && m && t && conf; break;
+            const b=!!fs.querySelector('input[name="boston_showdown"]:checked');
+            const m=!!fs.querySelector('input[name="montreal_meltdown"]:checked');
+            const t=!!fs.querySelector('input[name="the_throne"]:checked');
+            const conf = parseInt(document.getElementById('confidence_pct').value,10) >= 80;
+            ok = b && m && t && conf;
+            break;
           }
           case 'fieldset-confirmations': {
-            var c1=fs.querySelector('[name="ack_throne_rule"]').checked;
-            var c2=fs.querySelector('[name="ack_limited_spots"]').checked;
-            var c3=fs.querySelector('[name="consent_contact"]').checked;
-            ok=c1 && c2 && c3; break;
+            const c1=fs.querySelector('[name="ack_throne_rule"]').checked;
+            const c2=fs.querySelector('[name="ack_limited_spots"]').checked;
+            const c3=fs.querySelector('[name="consent_contact"]').checked;
+            ok = c1 && c2 && c3;
+            break;
+          }
+          default: {
+            const req=fs.querySelectorAll('input[required],select[required]');
+            ok = Array.from(req).every(el=>{
+              if(el.type==='radio') return !!fs.querySelector(`input[name="${el.name}"]:checked`);
+              return (el.value && el.value.trim()!=='');
+            });
           }
         }
         fs.classList.toggle('completed', ok);
       }
     }
 
-    // AJAX submit via FormSubmit + redirection absolue
+    // AJAX submit to FormSubmit (prevents "Form should POST" page) + redirect to thanks.html
     (function(){
-      var form=document.getElementById('qhc-form');
-      var postTo='https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
-      var thanks='https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html';
+      const form   = document.getElementById('qhc-form');
+      const postTo = 'https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
+
       setupVisualValidation();
 
-      form.addEventListener('submit', function(e){
+      form.addEventListener('submit', async (e)=>{
         e.preventDefault();
 
+        // native checks
         if(!form.checkValidity()){
-          var firstInvalid=form.querySelector(':invalid');
+          const firstInvalid = form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
 
-        var right=form.querySelector('[name="side_right"]').checked;
-        var left =form.querySelector('[name="side_left"]').checked;
+        // business checks
+        const right = form.querySelector('[name="side_right"]').checked;
+        const left  = form.querySelector('[name="side_left"]').checked;
         if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
 
-        var tIn=form.querySelector('[name="the_throne"]:checked');
-        var bIn=form.querySelector('[name="boston_showdown"]:checked');
-        var mIn=form.querySelector('[name="montreal_meltdown"]:checked');
-        var throne   = tIn ? tIn.value : 'TBD';
-        var boston   = bIn ? bIn.value : 'TBD';
-        var meltdown = mIn ? mIn.value : 'TBD';
+        const throne   = form.querySelector('[name="the_throne"]:checked')?.value || 'TBD';
+        const boston   = form.querySelector('[name="boston_showdown"]:checked')?.value || 'TBD';
+        const meltdown = form.querySelector('[name="montreal_meltdown"]:checked')?.value || 'TBD';
         if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
           alert("The Throne : cochez 'Oui' à Boston OU Meltdown.");
           return;
         }
 
-        var conf=parseInt(document.getElementById('confidence_pct').value,10);
-        if(isNaN(conf) || conf<80){ alert('Confidence must be ≥ 80 %'); return; }
+        const conf = parseInt(document.getElementById('confidence_pct').value,10);
+        if(isNaN(conf) || conf < 80){ alert('Confidence must be ≥ 80 %'); return; }
 
-        var btn=form.querySelector('button[type="submit"]');
-        btn.disabled=true; btn.innerText='Envoi… / Submitting…';
+        // lock button
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true; btn.innerText = 'Envoi… / Submitting…';
 
         try{
-          var fd=new FormData(form);
-          fd.delete('_next'); // on gère la redirection nous-mêmes
-          fetch(postTo,{method:'POST', headers:{'Accept':'application/json'}, body:fd})
-            .then(function(res){
-              if(!res.ok) throw new Error('FormSubmit error: '+res.status);
-              window.location.href=thanks; // redirection ABSOLUE
-            })
-            .catch(function(err){
-              console.error(err);
-              alert("Erreur d'envoi. Réessayez dans un instant.");
-              btn.disabled=false; btn.innerText='Soumettre / Submit';
-            });
+          const fd = new FormData(form);
+          fd.delete('_next'); // we'll redirect manually
+
+          const res = await fetch(postTo, { method:'POST', headers:{'Accept':'application/json'}, body:fd });
+          if(!res.ok) throw new Error('FormSubmit error: '+res.status);
+
+          window.location.href = 'thanks.html';
         }catch(err){
           console.error(err);
           alert("Erreur d'envoi. Réessayez dans un instant.");
-          btn.disabled=false; btn.innerText='Soumettre / Submit';
+          btn.disabled = false; btn.innerText = 'Soumettre / Submit';
         }
       });
     })();
