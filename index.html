@@ -17,6 +17,8 @@
   <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
   <meta property="og:title" content="QHC — The Road to The Throne">
   <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
+
+  <!-- Image OG -->
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 
@@ -109,17 +111,16 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* Choices (CSS :has pour l’état coché — purement visuel) */
+    /* Choice blocks (visuel) */
     .check input[type="radio"], .check input[type="checkbox"]{position:absolute; inset:0; opacity:0; cursor:pointer; margin:0}
-    .check{position:relative; display:flex; align-items:center; gap:10px; padding:14px 44px 14px 48px; min-height:54px; border-radius:12px;
-      background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;}
+    .check{position:relative; display:flex; align-items:center; gap:10px; padding:14px 44px 14px 48px; min-height:54px; border-radius:12px; background:#0b1020; border:1px solid rgba(255,255,255,.08); transition:.2s; cursor:pointer;}
     .check::before{content:""; position:absolute; left:14px; top:50%; transform:translateY(-50%); width:18px; height:18px; border-radius:50%; border:2px solid #cfd8e3; background:transparent; box-shadow:0 1px 2px rgba(0,0,0,.35)}
     .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff;}
     .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08); box-shadow:0 0 0 3px rgba(212,175,94,.15);}
-    .check::after{ content:""; position:absolute; right:14px; width:0; height:0;}
+    .check::after{ content:""; position:absolute; right:14px;}
     .check:has(input:checked)::after{content:"✓"; color:var(--accent); font-weight:800; font-size:16px; right:14px; top:50%; transform:translateY(-50%);}
-    .check:focus-within{ outline:none; box-shadow:0 0 0 3px var(--ring); border-color:var(--accent2); }
-    .check.valid{ border-color:inherit; background:inherit; } .check.valid::after{ content:""; }
+    .check:focus-within{ outline:none; box-shadow:0 0 0 3px var(--ring); border-color:var(--accent2);}
+    .check.valid{ border-color:inherit; background:inherit;} .check.valid::after{content:"";}
 
     /* Submit */
     .submit{margin-top:24px; display:flex; gap:12px; flex-direction:column}
@@ -222,14 +223,18 @@
       </div>
     </div>
 
-    <!-- Envoi vers FormSubmit + fallback -->
+    <!-- FormSubmit + redirection absolue -->
     <form action="https://formsubmit.co/yannick.banaszak@outlook.com" method="POST" id="qhc-form" novalidate>
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_bcc" value="David.belanger.6@ulaval.ca">
-      <input type="hidden" name="form_version" value="rttt_v1_native_bilingual">
-      <!-- URL ABSOLUE pour que la redirection marche même sans JS -->
+      <input type="hidden" name="_subject" value="QHC — The Road to The Throne">
+      <input type="hidden" name="form_version" value="rttt_v1_mobile_safe">
+      <!-- URL ABSOLUE pour iOS / cas sans JS -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
+      <!-- on recopiera l'email parent dans ces alias (si JS dispo) -->
+      <input type="hidden" id="replyto" name="_replyto" value="">
+      <input type="hidden" id="emailAlias" name="email" value="">
 
       <!-- 1 -->
       <fieldset id="fieldset-player">
@@ -331,8 +336,7 @@
               <label class="check"><input type="radio" name="jersey_type" value="Customized"> Personnalisé / Custom</label>
             </div>
             <div class="muted small" style="margin-top:8px">
-              <strong>Note / Note:</strong>
-              des frais <u>supplémentaires</u> seront demandés pour un chandail <strong>personnalisé</strong> (nom & numéro). /
+              <strong>Note / Note:</strong> des frais <u>supplémentaires</u> seront demandés pour un chandail <strong>personnalisé</strong> (nom & numéro). /
               <em>Additional fee applies</em> for a <strong>custom jersey</strong> (name & number).
             </div>
           </div>
@@ -405,19 +409,13 @@
         <legend>5) Confirmations</legend>
         <div class="grid">
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="ack_throne_rule" required>
-              Je comprends la règle The Throne / I understand the Throne rule <span class="req">*</span>
-            </label>
+            <label class="check"><input type="checkbox" name="ack_throne_rule" required> Je comprends la règle The Throne / I understand the Throne rule <span class="req">*</span></label>
           </div>
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="ack_limited_spots" required>
-              Places limitées / Limited spots <span class="req">*</span>
-            </label>
+            <label class="check"><input type="checkbox" name="ack_limited_spots" required> Places limitées / Limited spots <span class="req">*</span></label>
           </div>
           <div class="col-12 row small">
-            <label class="check"><input type="checkbox" name="consent_contact" required>
-              J'accepte d'être contacté / I agree to be contacted <span class="req">*</span>
-            </label>
+            <label class="check"><input type="checkbox" name="consent_contact" required> J'accepte d'être contacté / I agree to be contacted <span class="req">*</span></label>
           </div>
         </div>
       </fieldset>
@@ -452,7 +450,7 @@
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    /* Validation visuelle (classes .valid + badge fieldset) */
+    /* Validation visuelle (badges "completed") */
     function setupVisualValidation(){
       var form=document.getElementById('qhc-form');
 
@@ -524,24 +522,21 @@
       }
     }
 
-    // Helpers fallback mailto
+    // Helpers
+    function isIOS(){
+      var ua=navigator.userAgent||navigator.vendor||window.opera;
+      var iOS=/iPad|iPhone|iPod/.test(ua);
+      var iPadOS=(navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+      return iOS || iPadOS;
+    }
     function buildMailtoBody(form){
       var pairs=[];
       var fd=new FormData(form);
-      fd.forEach(function(v,k){
-        if(k && k.charAt(0)==='_') return; // ignore champs internes
-        pairs.push(k+': '+String(v));
-      });
+      fd.forEach(function(v,k){ if(k && k.charAt(0)==='_') return; pairs.push(k+': '+String(v)); });
       return pairs.join('\r\n');
     }
-    function openMailto(to, subject, body, bcc){
-      var link='mailto:'+encodeURIComponent(to)
-        +'?subject='+encodeURIComponent(subject)
-        +'&body='+encodeURIComponent(body)+(bcc?('&bcc='+encodeURIComponent(bcc)):'');
-      var a=document.createElement('a'); a.href=link; a.style.display='none'; document.body.appendChild(a); a.click(); setTimeout(function(){a.remove();},100);
-    }
 
-    // Envoi AJAX + fallback bilingue
+    // Envoi : iOS => NATIF ; autres => AJAX + fallback mailto
     (function(){
       var form=document.getElementById('qhc-form');
       var postTo='https://formsubmit.co/ajax/yannick.banaszak@outlook.com';
@@ -551,20 +546,22 @@
       form.addEventListener('submit', function(e){
         e.preventDefault();
 
+        // 1) validations natives
         if(!form.checkValidity()){
           var firstInvalid=form.querySelector(':invalid');
           if(firstInvalid){ firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); }
           return;
         }
 
+        // 2) règles métier
         var right=form.querySelector('[name="side_right"]').checked;
         var left =form.querySelector('[name="side_left"]').checked;
         if(!right && !left){ alert('Sélectionnez au moins un côté (Droit/Gauche). / Select at least one side.'); return; }
 
-        var elT=form.querySelector('[name="the_throne"]:checked');
-        var elB=form.querySelector('[name="boston_showdown"]:checked');
-        var elM=form.querySelector('[name="montreal_meltdown"]:checked');
-        var throne=elT?elT.value:'TBD', boston=elB?elB.value:'TBD', meltdown=elM?elM.value:'TBD';
+        var t=form.querySelector('[name="the_throne"]:checked');
+        var b=form.querySelector('[name="boston_showdown"]:checked');
+        var m=form.querySelector('[name="montreal_meltdown"]:checked');
+        var throne=t?t.value:'TBD', boston=b?b.value:'TBD', meltdown=m?m.value:'TBD';
         if(throne==='Yes' && !(boston==='Yes' || meltdown==='Yes')){
           alert("Règle The Throne : cochez 'Oui' à Boston OU Meltdown. / The Throne rule: tick 'Yes' for Boston OR Meltdown.");
           return;
@@ -573,12 +570,24 @@
         var conf=parseInt(document.getElementById('confidence_pct').value,10);
         if(isNaN(conf)||conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return; }
 
+        // 3) alias Reply‑To (quand JS présent)
+        var parentEmail=(document.getElementById('parent_email').value||'').trim();
+        document.getElementById('replyto').value   = parentEmail;
+        document.getElementById('emailAlias').value= parentEmail;
+
+        // 4) iOS => soumission NATIF (fiable)
         var btn=form.querySelector('button[type="submit"]');
         btn.disabled=true; btn.innerText='Envoi… / Submitting…';
 
+        if(isIOS() || !window.fetch){
+          form.submit(); // envoi natif vers FormSubmit ; redirection via _next (absolu)
+          return;
+        }
+
+        // 5) Autres navigateurs => AJAX + fallback mailto
         try{
           var fd=new FormData(form);
-          fd.delete('_next'); // on gère la redirection nous‑mêmes
+          fd.delete('_next');
           fetch(postTo,{method:'POST', headers:{'Accept':'application/json'}, body:fd})
             .then(function(res){
               if(!res.ok) throw new Error('FormSubmit error: '+res.status);
@@ -588,23 +597,19 @@
               console.error(err);
               alert(
                 "Le service de formulaire est momentanément indisponible.\n" +
-                "Un e‑mail prérempli va s’ouvrir. Merci d’appuyer sur « Envoyer ».\n" +
-                "Vous serez redirigé vers la page de remerciement.\n\n" +
-                "The form service is temporarily unavailable.\n" +
-                "A pre‑filled email will open. Please press “Send”.\n" +
-                "You will be redirected to the thank‑you page."
+                "Un e‑mail prérempli va s’ouvrir. Merci d’appuyer sur « Envoyer ». / " +
+                "A pre‑filled email will open. Please press “Send”."
               );
-              var body=buildMailtoBody(form);
-              openMailto('yannick.banaszak@outlook.com','QHC — The Road to The Throne — Formulaire', body, 'David.belanger.6@ulaval.ca');
+              var href='mailto:'+encodeURIComponent('yannick.banaszak@outlook.com')
+                      +'?subject='+encodeURIComponent('QHC — The Road to The Throne — Formulaire')
+                      +'&body='+encodeURIComponent(buildMailtoBody(form));
+              window.location.href=href;
               setTimeout(function(){ window.location.href=thanks; }, 1200);
               btn.disabled=false; btn.innerText='Soumettre / Submit';
             });
         }catch(err){
           console.error(err);
-          var body2=buildMailtoBody(form);
-          openMailto('yannick.banaszak@outlook.com','QHC — The Road to The Throne — Formulaire', body2, 'David.belanger.6@ulaval.ca');
-          setTimeout(function(){ window.location.href=thanks; }, 1200);
-          btn.disabled=false; btn.innerText='Soumettre / Submit';
+          form.submit(); // dernier filet de sécurité
         }
       });
     })();
