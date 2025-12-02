@@ -4,17 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QHC — The Road to The Throne</title>
-  <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, The Throne" />
+  <meta name="description" content="Intérêt tournois printemps 2026 — Boston, Montreal Meltdown, Jay Peak, The Throne" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://yaban1981.github.io/the-road-to-the-throne-site/">
 
   <!-- Open Graph / Twitter -->
-  <meta property="og:site_name" content="Québec HC">
+  <meta property="og-site_name" content="Québec HC">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yaban1981.github.io/the-road-to-the-throne-site/">
   <meta property="og:title" content="QHC — The Road to The Throne">
-  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • The Throne">
+  <meta property="og:description" content="Tournois printemps 2026 • Boston • Montreal Meltdown • Jay Peak • The Throne">
   <meta property="og:image" content="https://yaban1981.github.io/the-road-to-the-throne-site/images/og-image.jpg?v=1">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -38,7 +38,7 @@
       --radius:16px;
     }
     *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
-    html,body{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+    html,body{scroll-behior:smooth; -webkit-text-size-adjust:100%}
     body{
       margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
       background: radial-gradient(800px 400px at 10% -10%, #0b2451 0%, transparent 60%), linear-gradient(180deg, #091024, #0a0f1a);
@@ -76,9 +76,10 @@
     .tcard .logo{width:100%; height:100%; display:grid; place-items:center; z-index:2}
     .tcard .logo img{width:85%; max-width:280px; max-height:120px; height:auto; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,.45)); transform:translateY(2px); transition:.3s transform}
     .tcard:hover .logo img{transform:translateY(0) scale(1.05)}
-    .t-info-pill{position:absolute; bottom:12px; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3}
-    .t-date {left:12px;  font-weight:700; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10)}
-    .t-badge{right:12px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35)}
+    .t-info-pill{position:absolute; height:32px; display:flex; align-items:center; padding:6px 12px; border-radius:10px; font-variant-numeric:tabular-nums; backdrop-filter:blur(6px); font-size:.85rem; z-index:3}
+    .t-date {bottom:12px; left:12px; font-weight:700; color:#dfe7ff; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10)}
+    .t-badge{bottom:12px; right:12px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1f7cff,#60a5fa); box-shadow:0 6px 16px rgba(31,124,255,.35)}
+    .t-years{top:12px; left:12px; bottom:auto; font-weight:600; color:#e5e7eb; background:rgba(15,23,42,.9); border:1px solid rgba(148,163,184,.7)}
 
     /* Layout */
     main{padding:12px 16px 40px; max-width:1040px; margin:0 auto}
@@ -102,7 +103,7 @@
     select{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:44px}
     textarea{min-height:120px; resize:vertical}
 
-    /* Choice blocks — radios/checkbox sans point bleu, avec encadré jaune cohérent (+ fallback JS) */
+    /* Choice blocks */
     .check-row{display:flex; flex-direction:column; gap:10px}
     .check{
       position:relative; display:flex; align-items:center; gap:10px;
@@ -118,7 +119,6 @@
     .check:has(input:checked){ border-color:var(--accent); background:rgba(212,175,94,.08) }
     .check:has(input:checked)::before{ background:var(--accent2); border-color:#fff }
     .check:has(input:checked)::after{ content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px }
-    /* Fallback anciens navigateurs (JS ajoute .selected) */
     .check.selected{ border-color:var(--accent); background:rgba(212,175,94,.08) }
     .check.selected::before{ background:var(--accent2); border-color:#fff }
     .check.selected::after{ content:"✓"; position:absolute; right:14px; color:var(--accent); font-weight:800; font-size:16px }
@@ -129,7 +129,7 @@
     button:hover{transform:translateY(-2px)}
     .outline{background:transparent; border:1px solid rgba(255,255,255,.12); color:#fff}
 
-    /* Slider + petite main (animation) */
+    /* Slider */
     .slider-container{
       position:relative; margin:30px 0 20px;
       background: rgba(11,16,32,.5); border-radius:12px; padding:15px;
@@ -191,24 +191,42 @@
   <div class="tournaments-section">
     <h2>Nos Tournois 2026 / Our 2026 Tournaments</h2>
     <div class="tournaments">
+      <!-- CCM Blue Chip -->
       <div class="tcard">
         <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
           <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/bluechip.png" alt="CCM Blue Chip Invite logo" loading="lazy">
         </a>
+        <div class="t-info-pill t-years">2014 • 2015 • 2017</div>
         <div class="t-info-pill t-date">15–17.05.2026</div>
         <div class="t-info-pill t-badge" id="cd-boston">J-—</div>
       </div>
+
+      <!-- Montreal Meltdown -->
       <div class="tcard">
         <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
           <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/meltdown.png" alt="Montreal Meltdown logo" loading="lazy">
         </a>
+        <div class="t-info-pill t-years">2014</div>
         <div class="t-info-pill t-date">05–07.06.2026</div>
         <div class="t-info-pill t-badge" id="cd-meltdown">J-—</div>
       </div>
+
+      <!-- Jay Peak / Green Mountain Cup -->
+      <div class="tcard">
+        <a class="logo" href="https://cwenchnextgenseries.com/events/green-mountain-cup" target="_blank" rel="noopener">
+          <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/JayPeak.png" alt="Green Mountain Cup Jay Peak logo" loading="lazy">
+        </a>
+        <div class="t-info-pill t-years">2015</div>
+        <div class="t-info-pill t-date">11–14.06.2026</div>
+        <div class="t-info-pill t-badge" id="cd-jaypeak">J-—</div>
+      </div>
+
+      <!-- The Throne -->
       <div class="tcard">
         <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
           <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/throne.png" alt="The Throne Tournament logo" loading="lazy">
         </a>
+        <div class="t-info-pill t-years">2013 • 2014 • 2015 • 2017</div>
         <div class="t-info-pill t-date">24–26.07.2026</div>
         <div class="t-info-pill t-badge" id="cd-throne">J-—</div>
       </div>
@@ -220,20 +238,20 @@
       <div class="card">
         <h3>FR — Important</h3>
         <p>Ce formulaire sert à former les <strong>alignements par tournoi</strong>.</p>
-        <p><strong>Règle The Throne</strong> : participation à au moins <strong>un</strong> autre tournoi (Boston ou Meltdown).</p>
+        <p><strong>Règle The Throne</strong> (années <strong>2014 &amp; 2015 seulement</strong>) : participation à au moins <strong>un</strong> autre tournoi admissible (Boston / Meltdown / Jay Peak selon l'année).</p>
         <p><strong>Places limitées</strong> : notre staff formera les <strong>meilleurs trios/duos</strong>.</p>
         <p class="muted">Frais d'assurances et décharges à prévoir.</p>
       </div>
       <div class="card">
         <h3>EN — Key info</h3>
         <p>This form builds <strong>tournament lineups</strong>.</p>
-        <p><strong>Throne rule</strong>: must play in at least <strong>one</strong> other tournament.</p>
+        <p><strong>Throne rule</strong> (<strong>2014 &amp; 2015 only</strong>): must also play in at least <strong>one</strong> other eligible tournament (Boston / Meltdown / Jay Peak depending on birth year).</p>
         <p><strong>Limited spots</strong>: staff will build the <strong>best lines/pairs</strong>.</p>
         <p class="muted">Insurance fees & waivers required.</p>
       </div>
     </div>
 
-    <!-- ========= FORMULAIRE : POST natif vers Apps Script (fiable iPhone) ========= -->
+    <!-- ========= FORMULAIRE ========= -->
     <form
       action="https://script.google.com/macros/s/AKfycbwo_M5-za4xlXblsb-9yJ8it_izYLFZnS8p42zERudF3Jwbk4f5exUN_xYsnggdpmJHOg/exec"
       method="POST"
@@ -241,9 +259,7 @@
       onsubmit="return businessOk()"
       novalidate>
 
-      <!-- Le serveur peut lire _next si tu veux changer l’URL de remerciement -->
       <input type="hidden" name="_next" value="https://yaban1981.github.io/the-road-to-the-throne-site/thanks.html">
-      <!-- Alias (Reply‑To) pour le script côté serveur -->
       <input type="hidden" id="emailAlias" name="email" value="">
       <input type="hidden" name="form_version" value="rttt_v1_native_apps_script">
 
@@ -319,7 +335,7 @@
           </div>
           <div class="input-container">
             <label for="video_links">Liens vidéo / Video links</label>
-            <textarea id="video_links" name="video_links" placeholder="Liens YouTube/Vimeo, timestamps, notes (multi‑lignes)…"></textarea>
+            <textarea id="video_links" name="video_links" placeholder="Liens YouTube/Vimeo, timestamps, notes (multi-lignes)…"></textarea>
           </div>
         </div>
       </fieldset>
@@ -348,7 +364,9 @@
               <label class="check"><input type="radio" name="jersey_type" value="Customized"> Personnalisé / Custom</label>
             </div>
             <div class="muted" style="margin-top:8px">
-              <strong>Note / Note:</strong> des frais <u>supplémentaires</u> s’appliquent pour un chandail <strong>personnalisé</strong> (nom & numéro).
+              <strong>Note / Note:</strong>
+              des frais <u>supplémentaires</u> s’appliquent pour un chandail <strong>personnalisé</strong> (nom &amp; numéro) /
+              <u>extra fees</u> apply for a fully <strong>customized</strong> jersey (name &amp; number).
             </div>
           </div>
 
@@ -370,7 +388,10 @@
           <div class="muted">Aucun paiement maintenant / No payment now.</div>
 
           <div>
-            <label class="muted">Boston, MA — ≈ 150 $ CAD • 15–17.05.2026</label>
+            <label class="muted">
+              Boston, MA — CCM Blue Chip Invite — ≈ 175 $ CAD • 15–17.05.2026<br>
+              <strong>Années / Years:</strong> 2014, 2015, 2017
+            </label>
             <div class="check-row" aria-label="Boston">
               <label class="check"><input type="radio" name="boston_showdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="boston_showdown" value="No"> Non / No</label>
@@ -379,7 +400,10 @@
           </div>
 
           <div>
-            <label class="muted">Montréal, QC — ≈ 150 $ CAD • 05–07.06.2026</label>
+            <label class="muted">
+              Montreal, QC — Montreal Meltdown — ≈ 150 $ CAD • 05–07.06.2026<br>
+              <strong>Années / Years:</strong> 2014 seulement / 2014 only
+            </label>
             <div class="check-row" aria-label="Meltdown">
               <label class="check"><input type="radio" name="montreal_meltdown" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="montreal_meltdown" value="No"> Non / No</label>
@@ -388,7 +412,22 @@
           </div>
 
           <div>
-            <label class="muted">Toronto, ON — ≈ 250 $ CAD • 24–26.07.2026</label>
+            <label class="muted">
+              Jay Peak, VT — Green Mountain Cup — ≈ 330 $ CAD • 11–14.06.2026<br>
+              <strong>Années / Years:</strong> 2015 seulement / 2015 only
+            </label>
+            <div class="check-row" aria-label="Jay Peak">
+              <label class="check"><input type="radio" name="jay_peak" value="Yes"> Oui / Yes</label>
+              <label class="check"><input type="radio" name="jay_peak" value="No"> Non / No</label>
+              <label class="check"><input type="radio" name="jay_peak" value="TBD" checked> À confirmer / TBD</label>
+            </div>
+          </div>
+
+          <div>
+            <label class="muted">
+              Toronto, ON — The Throne — ≈ 250 $ CAD • 24–26.07.2026<br>
+              <strong>Années / Years:</strong> 2013, 2014, 2015, 2017
+            </label>
             <div class="check-row" aria-label="The Throne">
               <label class="check"><input type="radio" name="the_throne" value="Yes"> Oui / Yes</label>
               <label class="check"><input type="radio" name="the_throne" value="No"> Non / No</label>
@@ -402,7 +441,6 @@
               <input type="range" id="confidence_pct" name="confidence_pct" min="80" max="100" value="80"
                      aria-label="Confidence percent" aria-valuemin="80" aria-valuemax="100" aria-valuenow="80"
                      oninput="updateConfidenceValue(this.value)">
-              <!-- Petite main animée -->
               <div class="hand-hint" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.5 9.5V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2m8 0V7.5c0-1.1-.9-2-2-2s-2 .9-2 2v2M6.5 9.5v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1m-8 3v2a2 2 0 0 0 4 0v-2"/>
@@ -440,7 +478,12 @@
     // Countdowns
     (function(){
       function mk(y,m,d){ return new Date(y,m-1,d,0,0,0,0); }
-      var targets=[{id:'cd-boston',date:mk(2026,5,15)},{id:'cd-meltdown',date:mk(2026,6,5)},{id:'cd-throne',date:mk(2026,7,24)}];
+      var targets=[
+        {id:'cd-boston',   date:mk(2026,5,15)},
+        {id:'cd-meltdown', date:mk(2026,6,5)},
+        {id:'cd-jaypeak',  date:mk(2026,6,11)},
+        {id:'cd-throne',   date:mk(2026,7,24)}
+      ];
       function update(){
         var now=new Date(); var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
         for(var i=0;i<targets.length;i++){
@@ -452,13 +495,11 @@
       update(); setInterval(update, 3600000);
     })();
 
-    // Met à jour la valeur de confiance + aria
     function updateConfidenceValue(val){
       document.getElementById('confVal').textContent = val + '%';
       document.getElementById('confidence_pct').setAttribute('aria-valuenow', val);
     }
 
-    // Sync de l'alias email pour Reply-To (côté serveur)
     (function(){
       var parentEmail=document.getElementById('parent_email');
       var emailAlias=document.getElementById('emailAlias');
@@ -466,7 +507,6 @@
       if(parentEmail){ parentEmail.addEventListener('input', syncEmail); syncEmail(); }
     })();
 
-    // Fallback visuel pour anciens navigateurs si :has() indisponible
     (function(){
       var form=document.getElementById('qhc-form');
       form.addEventListener('change', function(e){
@@ -480,7 +520,7 @@
       });
     })();
 
-    // Règles métier AVANT envoi (POST natif – fiable sur iPhone)
+    // Règles métier
     function businessOk(){
       var form=document.getElementById('qhc-form');
       if(!form.checkValidity()){ form.reportValidity(); return false; }
@@ -492,13 +532,22 @@
       var T=form.querySelector('input[name="the_throne"]:checked')?.value||'TBD';
       var B=form.querySelector('input[name="boston_showdown"]:checked')?.value||'TBD';
       var M=form.querySelector('input[name="montreal_meltdown"]:checked')?.value||'TBD';
-      if(T==='Yes' && !(B==='Yes' || M==='Yes')){ alert("The Throne : cochez 'Oui' à Boston OU Meltdown."); return false; }
+      var J=form.querySelector('input[name="jay_peak"]:checked')?.value||'TBD';
+      var year=document.getElementById('birth_year').value;
+
+      // Règle The Throne : 2014 & 2015 seulement
+      if(year==='2014' && T==='Yes' && !(B==='Yes' || M==='Yes')){
+        alert("The Throne (2014) : cochez 'Oui' à Boston OU Meltdown. / Select 'Yes' for Boston OR Meltdown.");
+        return false;
+      }
+      if(year==='2015' && T==='Yes' && !(B==='Yes' || J==='Yes')){
+        alert("The Throne (2015) : cochez 'Oui' à Boston OU Jay Peak. / Select 'Yes' for Boston OR Jay Peak.");
+        return false;
+      }
 
       var conf=parseInt(document.getElementById('confidence_pct').value,10);
       if(isNaN(conf)||conf<80){ alert('Confiance ≥ 80 % / Confidence ≥ 80%.'); return false; }
 
-      // ✅ Laisser le navigateur POSTer vers Apps Script.
-      // Le script enverra l’email puis redirigera vers thanks.html côté serveur (pas de redirection front).
       return true;
     }
   </script>
