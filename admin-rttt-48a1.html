@@ -103,7 +103,7 @@
 
     label{font-size:.8rem;color:var(--muted);margin-bottom:4px;display:block}
 
-    select,input[type="text"],input[type="password"]{
+    select,input[type="text"],input[type="password"],textarea{
       width:100%;
       padding:9px 11px;
       border-radius:10px;
@@ -113,7 +113,7 @@
       font-size:.9rem;
       outline:none;
     }
-    select:focus,input:focus{
+    select:focus,input:focus,textarea:focus{
       border-color:var(--accent2);
       box-shadow:0 0 0 2px var(--ring);
     }
@@ -190,8 +190,8 @@
         flex-direction:row;
         align-items:flex-start;
       }
-      .split-left{flex:1.05}
-      .split-right{flex:0.95}
+      .split-left{flex:1.1}
+      .split-right{flex:0.9}
     }
 
     /* Player list */
@@ -214,6 +214,29 @@
       color:var(--muted);
     }
 
+    .players-filter-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-bottom:6px;
+    }
+    .players-filter-row .filter-pill{
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.5);
+      background:#020617;
+      color:#e5e7eb;
+      font-size:.75rem;
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      cursor:pointer;
+    }
+    .players-filter-row .filter-pill[aria-pressed="true"]{
+      border-color:var(--accent2);
+      background:rgba(37,99,235,.16);
+    }
+
     .players-list{
       max-height:420px;
       overflow:auto;
@@ -233,7 +256,7 @@
     .player-header{
       display:flex;
       justify-content:space-between;
-      align-items:center;
+      align-items:flex-start;
       gap:8px;
     }
     .player-name{
@@ -244,6 +267,23 @@
       font-size:.7rem;
       color:var(--muted);
     }
+    .player-actions{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      align-items:flex-end;
+      flex-shrink:0;
+    }
+    .edit-btn{
+      padding:3px 7px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.7);
+      font-size:.7rem;
+      background:rgba(15,23,42,.9);
+      color:#e5e7eb;
+      cursor:pointer;
+    }
+
     .tag-row{
       display:flex;
       flex-wrap:wrap;
@@ -276,6 +316,7 @@
       gap:4px;
       cursor:pointer;
       background:rgba(15,23,42,.9);
+      color:#e5e7eb;
     }
     .confirm-toggle.confirmed{
       border-color:var(--accent);
@@ -325,19 +366,20 @@
 
     .slot-row{
       display:flex;
+      flex-wrap:wrap;
       gap:4px;
       margin-top:2px;
     }
     .slot{
-      flex:1;
-      min-height:32px;
-      border-radius:8px;
+      flex:1 1 calc(33.333% - 4px);
+      min-width:0;
+      min-height:36px;
+      border-radius:10px;
       border:1px dashed rgba(75,85,99,.9);
       padding:3px 6px;
       font-size:.8rem;
       display:flex;
       align-items:center;
-      justify-content:space-between;
       gap:4px;
       cursor:pointer;
       background:rgba(15,23,42,.9);
@@ -348,6 +390,7 @@
       border-radius:999px;
       border:1px solid rgba(75,85,99,.9);
       color:#9ca3af;
+      flex-shrink:0;
     }
     .slot-player{
       flex:1;
@@ -365,12 +408,34 @@
       color:#9ca3af;
       padding:0 2px;
       cursor:pointer;
+      flex-shrink:0;
     }
     .slot.active{
       border-style:solid;
       border-color:var(--accent);
       box-shadow:0 0 0 1px rgba(250,204,21,.4);
       background:rgba(250,204,21,.08);
+    }
+    .slot.has-player{
+      border-style:solid;
+      border-color:rgba(59,130,246,.9);
+      background:radial-gradient(circle at 0% 0%,rgba(59,130,246,.55),rgba(15,23,42,1));
+    }
+    .slot.has-player .slot-player{
+      font-weight:600;
+    }
+
+    .slot-logo{
+      width:18px;height:18px;
+      border-radius:999px;
+      background:radial-gradient(circle at 30% 20%,#e5e7eb,#bfdbfe);
+      color:#111827;
+      display:grid;
+      place-items:center;
+      font-size:.6rem;
+      font-weight:800;
+      border:1px solid rgba(148,163,184,.9);
+      flex-shrink:0;
     }
 
     .status-bar{
@@ -415,13 +480,82 @@
       color:var(--muted);
       margin-top:4px;
     }
+
+    /* Edit overlay (bottom sheet) */
+    .edit-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(15,23,42,.75);
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      z-index:60;
+      opacity:0;
+      pointer-events:none;
+      transition:.2s;
+    }
+    .edit-overlay.show{
+      opacity:1;
+      pointer-events:auto;
+    }
+    .edit-panel{
+      width:100%;
+      max-width:480px;
+      background:#020617;
+      border-radius:18px 18px 0 0;
+      border-top:1px solid rgba(148,163,184,.5);
+      box-shadow:0 -10px 30px rgba(0,0,0,.8);
+      padding:10px 12px 16px;
+      max-height:80vh;
+      overflow:auto;
+    }
+    .edit-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:6px;
+    }
+    .edit-title{
+      font-size:.95rem;
+      font-weight:600;
+    }
+    .edit-close{
+      border:0;
+      background:transparent;
+      color:#9ca3af;
+      font-size:1.1rem;
+      cursor:pointer;
+    }
+    .edit-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px 10px;
+      margin-top:6px;
+    }
+    .edit-grid-full{
+      grid-column:1 / -1;
+    }
+    .edit-footer{
+      display:flex;
+      justify-content:flex-end;
+      gap:6px;
+      margin-top:10px;
+    }
+    .edit-label-inline{
+      font-size:.75rem;
+      color:var(--muted);
+      margin-bottom:2px;
+    }
+
   </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
-    <div class="header-logo">
-      <img src="logos/qhc.png" alt="Québec HC">
+    <div classheader-logo>
+      <div class="header-logo">
+        <img src="logos/qhc.png" alt="Québec HC">
+      </div>
     </div>
     <div class="header-text">
       <h1>QHC — Admin Lineups</h1>
@@ -443,7 +577,6 @@
           <option value="2015">2015</option>
           <option value="2017">2017</option>
           <option value="2013">2013</option>
-          <!-- 2016: pas de tournois configurés pour le moment -->
         </select>
       </div>
       <div style="flex:1">
@@ -469,8 +602,18 @@
           </label>
           <button class="btn btn-ghost btn-sm" id="btnLoadPlayers">Charger joueurs</button>
         </div>
+
+        <div class="players-filter-row" id="posFilterRow">
+          <button type="button" class="filter-pill" data-pos="ALL" aria-pressed="true">Tous</button>
+          <button type="button" class="filter-pill" data-pos="G">Gardiens</button>
+          <button type="button" class="filter-pill" data-pos="D">Défense</button>
+          <button type="button" class="filter-pill" data-pos="C">Centres</button>
+          <button type="button" class="filter-pill" data-pos="F">Ailiers</button>
+        </div>
+
         <div class="hint">
-          Le slot actif est mis en surbrillance. Tape sur une carte joueur pour l'affecter au slot actif.
+          1) Sélectionne un slot dans le lineup → 2) Tape sur un joueur pour l’y placer.  
+          Tap sur ✎ pour éditer (numéros, dispo, chandail, confirmé).
         </div>
         <div class="players-list" id="playersList"></div>
       </div>
@@ -515,49 +658,130 @@
 
 <div class="toast" id="toast"></div>
 
-<script>
-  // ========== CONFIG (ADAPT IF NEEDED) ==========
-  const GH_OWNER = "yaban1981";                   // TODO: adapter si besoin
-  const GH_REPO  = "the-road-to-the-throne-site"; // TODO: adapter si besoin
-  const GH_LINEUPS_TEMPLATE = "data/lineups_YEAR.json";
-  const PLAYERS_PATH = "data/players.json";       // Fichier JSON statique avec tous les joueurs
+<!-- ÉDITION JOUEUR (bottom sheet) -->
+<div class="edit-overlay" id="editOverlay">
+  <div class="edit-panel">
+    <div class="edit-header">
+      <div class="edit-title" id="editTitle">Éditer joueur</div>
+      <button class="edit-close" id="editClose" aria-label="Fermer">✕</button>
+    </div>
 
-  // Tournois alignés sur le formulaire public (index.html):
+    <div class="edit-grid">
+      <div>
+        <div class="edit-label-inline">Type de chandail</div>
+        <select id="editJerseyType">
+          <option value="Loaned">Prêté (Loaned)</option>
+          <option value="Customized">Personnalisé (Customized)</option>
+        </select>
+      </div>
+      <div>
+        <div class="edit-label-inline">Taille</div>
+        <input type="text" id="editJerseySize" placeholder="AS / YL / AXL…">
+      </div>
+
+      <div>
+        <div class="edit-label-inline">Numéro 1 (prioritaire)</div>
+        <input type="text" id="editNum1" inputmode="numeric" placeholder="ex: 76">
+      </div>
+      <div>
+        <div class="edit-label-inline">Numéro 2</div>
+        <input type="text" id="editNum2" inputmode="numeric">
+      </div>
+      <div>
+        <div class="edit-label-inline">Numéro 3</div>
+        <input type="text" id="editNum3" inputmode="numeric">
+      </div>
+
+      <div class="edit-grid-full">
+        <div class="edit-label-inline">Disponibilité tournois</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <div style="flex:1 1 45%">
+            <label class="edit-label-inline">Boston</label>
+            <select id="editAvailBoston">
+              <option value="">(vide)</option>
+              <option value="Yes">Yes</option>
+              <option value="TBD">TBD</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div style="flex:1 1 45%">
+            <label class="edit-label-inline">Meltdown</label>
+            <select id="editAvailMeltdown">
+              <option value="">(vide)</option>
+              <option value="Yes">Yes</option>
+              <option value="TBD">TBD</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div style="flex:1 1 45%">
+            <label class="edit-label-inline">Jay Peak</label>
+            <select id="editAvailJaypeak">
+              <option value="">(vide)</option>
+              <option value="Yes">Yes</option>
+              <option value="TBD">TBD</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div style="flex:1 1 45%">
+            <label class="edit-label-inline">Throne</label>
+            <select id="editAvailThrone">
+              <option value="">(vide)</option>
+              <option value="Yes">Yes</option>
+              <option value="TBD">TBD</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="edit-grid-full">
+        <label class="checkbox-inline">
+          <input type="checkbox" id="editConfirmed">
+          <span>Marqué « confirmé » pour le tournoi courant</span>
+        </label>
+      </div>
+
+      <div class="edit-grid-full">
+        <div class="edit-label-inline">Style / notes</div>
+        <textarea id="editStyle" rows="2" placeholder="Style de jeu / notes coach…"></textarea>
+      </div>
+    </div>
+
+    <div class="edit-footer">
+      <button class="btn btn-ghost btn-sm" id="editCancel">Annuler</button>
+      <button class="btn btn-primary btn-sm" id="editSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // === CONFIG (GH + tournois) ===
+  const GH_OWNER = "yaban1981";
+  const GH_REPO  = "the-road-to-the-throne-site";
+  const GH_LINEUPS_TEMPLATE = "data/lineups_YEAR.json";
+  const PLAYERS_PATH = "data/players.json";
+
   const TOURNAMENTS = {
-    boston: {
-      key: "boston",
-      label: "Boston — CCM Blue Chip",
-      years: [2014, 2015, 2017]
-    },
-    meltdown: {
-      key: "meltdown",
-      label: "Montreal Meltdown",
-      years: [2014]
-    },
-    jaypeak: {
-      key: "jaypeak",
-      label: "Jay Peak — Green Mountain Cup",
-      years: [2015]
-    },
-    throne: {
-      key: "throne",
-      label: "The Throne — Toronto",
-      years: [2013, 2014, 2015, 2017]
-    }
+    boston:   { key:"boston",   label:"Boston — CCM Blue Chip",          years:[2014,2015,2017] },
+    meltdown: { key:"meltdown", label:"Montreal Meltdown",              years:[2014] },
+    jaypeak:  { key:"jaypeak",  label:"Jay Peak — Green Mountain Cup",  years:[2015] },
+    throne:   { key:"throne",   label:"The Throne — Toronto",           years:[2013,2014,2015,2017] }
   };
 
-  // ========== STATE ==========
-  let allPlayers = [];                 // Tous les joueurs de players.json
-  let filteredPlayers = [];            // Joueurs filtrés (année + tournoi + recherche)
+  // === GLOBAL STATE ===
+  let allPlayers = [];
+  let filteredPlayers = [];
   let currentYear = 2014;
   let currentTournamentKey = "boston";
 
-  // state per page (année courante)
-  let lineups = {};  // { tKey: lineupObject }
-  let confirmed = {}; // { tKey: { playerId: true } }
+  let lineups = {};   // per year page, but we stock for all tKeys
+  let confirmed = {}; // per tKey: {playerId:true}
 
   let ghToken = null;
   let ghLineupsSha = null;
+
+  let activeSlot = null; // {tKey, group, role}
+  let positionFilter = "ALL"; // ALL,G,D,C,F
 
   const toastEl = document.getElementById("toast");
 
@@ -567,7 +791,8 @@
     setTimeout(() => toastEl.classList.remove("show"), 1600);
   }
 
-  // ========== UTILITIES ==========
+  function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
+
   function newEmptyLineup(){
     return {
       G: [],
@@ -586,11 +811,10 @@
   }
 
   function getTournamentAvailabilityKeys(tKey){
-    // support plusieurs noms possibles dans players.json
     switch(tKey){
       case "boston":   return ["boston","boston_showdown"];
       case "meltdown": return ["meltdown","montreal_meltdown"];
-      case "jaypeak":  return ["jaypeak","jay_peak"];
+      case "jaypeak":  return ["jaypeak"];
       case "throne":   return ["throne","the_throne"];
       default:         return [tKey];
     }
@@ -611,9 +835,21 @@
     return "tag-avail-tbd";
   }
 
-  function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
+  function jerseyNumberForPlayer(p){
+    const nums = p.jersey?.pref_numbers || [];
+    if (!Array.isArray(nums) || !nums.length) return null;
+    const n = parseInt(nums[0],10);
+    return isNaN(n) ? null : n;
+  }
 
-  // ========== UI: YEAR & TOURNAMENT PILL ROW ==========
+  function lastNameOf(p){
+    const n = (p.name || "").trim();
+    if (!n) return "";
+    const parts = n.split(/\s+/);
+    return parts[parts.length - 1];
+  }
+
+  // === YEAR & TOURNAMENT UI ===
   const yearSelect = document.getElementById("yearSelect");
   const tournamentPills = document.getElementById("tournamentPills");
   const yearHint = document.getElementById("yearHint");
@@ -622,14 +858,13 @@
   function setupYearAndTournaments(){
     currentYear = parseInt(yearSelect.value,10);
 
-    // Compute tournaments valid for year
     const validKeys = Object.values(TOURNAMENTS)
       .filter(t => t.years.includes(currentYear))
       .map(t => t.key);
 
     tournamentPills.innerHTML = "";
 
-    if (validKeys.length === 0){
+    if (!validKeys.length){
       yearHint.textContent = "Aucun tournoi configuré pour cette année pour le moment.";
       currentTournamentKey = null;
       renderPlayers();
@@ -650,13 +885,9 @@
       btn.className = "pill";
       btn.setAttribute("data-tkey", k);
       if (k === currentTournamentKey) btn.setAttribute("aria-pressed","true");
-      btn.innerHTML = `
-        <span>${t.label}</span>
-        <span class="badge">${t.years.join(" • ")}</span>
-      `;
+      btn.innerHTML = `<span>${t.label}</span><span class="badge">${t.years.join(" • ")}</span>`;
       btn.addEventListener("click", () => {
         currentTournamentKey = k;
-        // reset active slot on tournoi change
         activeSlot = null;
         updateTournamentPills();
         renderPlayers();
@@ -687,12 +918,11 @@
   }
 
   yearSelect.addEventListener("change", () => {
-    // Reset GH SHA because file changes with year
     ghLineupsSha = null;
     setupYearAndTournaments();
   });
 
-  // ========== LOAD PLAYERS (data/players.json) ==========
+  // === LOAD PLAYERS ===
   const btnLoadPlayers = document.getElementById("btnLoadPlayers");
   const playersListEl = document.getElementById("playersList");
   const searchInput = document.getElementById("searchInput");
@@ -717,28 +947,44 @@
     }
   });
 
-  searchInput.addEventListener("input", () => {
-    renderPlayers();
-  });
-  onlyAvailableCheckbox.addEventListener("change", () => {
+  searchInput.addEventListener("input", renderPlayers);
+  onlyAvailableCheckbox.addEventListener("change", renderPlayers);
+
+  // === POS FILTER ===
+  const posFilterRow = document.getElementById("posFilterRow");
+  posFilterRow.addEventListener("click", e => {
+    const btn = e.target.closest(".filter-pill");
+    if (!btn) return;
+    const v = btn.getAttribute("data-pos");
+    positionFilter = v;
+    posFilterRow.querySelectorAll(".filter-pill").forEach(b => {
+      if (b === btn) b.setAttribute("aria-pressed","true");
+      else b.removeAttribute("aria-pressed");
+    });
     renderPlayers();
   });
 
-  // ========== PLAYER FILTERING / RENDER ==========
-  let activeSlot = null; // { tKey, group, role }
+  function roleCategory(p){
+    const prim = (p.positions?.primary || "").toUpperCase();
+    const sec  = (p.positions?.secondary || "").toUpperCase();
+    if (prim === "GOL" || sec === "GOL") return "G";
+    if (prim === "DEF" || sec === "DEF") return "D";
+    if (prim === "CEN" || sec === "CEN") return "C";
+    // reste: forwards
+    if (prim === "FWD" || sec === "FWD") return "F";
+    return "X";
+  }
 
+  // === SCORE FOR SLOT ===
   function scoreForSlot(p, tKey, group, role){
-    // negative score = non éligible
     const av = (getAvailability(p, tKey) || "").toUpperCase();
     if (av === "NO" || av === "NON") return -999;
 
     let s = 0;
     const primary = p.positions?.primary?.toUpperCase();
     const secondary = p.positions?.secondary?.toUpperCase();
+    const has = x => primary === x || secondary === x;
 
-    const has = (x) => primary === x || secondary === x;
-
-    // base sur la position
     if (role === "G"){
       if (!has("GOL")) return -999;
       s += 6;
@@ -751,22 +997,22 @@
       if (!has("CEN")) return -999;
       s += 4;
     }else if (role === "LW" || role === "RW"){
-      if (!has("FWD") && !has("CEN")) return -999; // centre accepté à l'aile si besoin
+      if (!has("FWD") && !has("CEN")) return -999;
       s += 3;
       const needSide = role === "LW" ? "L" : "R";
       if ((p.sides || []).includes(needSide)) s += 2;
     }
 
-    // disponibilité
     if (av === "YES" || av === "OUI") s += 2;
-
-    // confiance
     const c = parseInt(p.confidence_pct || "0",10);
     if (c >= 90) s += 2;
     else if (c >= 80) s += 1;
 
     return s;
   }
+
+  // === RENDER PLAYERS ===
+  let editingPlayerId = null;
 
   function renderPlayers(){
     playersListEl.innerHTML = "";
@@ -783,28 +1029,28 @@
     const onlyAvail = onlyAvailableCheckbox.checked;
 
     filteredPlayers = allPlayers.filter(p => {
-      // filter year
       if (String(p.birth_year) !== String(currentYear)) return false;
 
-      // textual filter
       if (q){
         const name = (p.name || "").toLowerCase();
         const city = (p.city || "").toLowerCase();
         if (!name.includes(q) && !city.includes(q)) return false;
       }
 
-      // availability
+      if (positionFilter !== "ALL"){
+        const cat = roleCategory(p);
+        if (cat !== positionFilter) return false;
+      }
+
       if (onlyAvail){
         const av = (getAvailability(p, currentTournamentKey) || "").toUpperCase();
-        if (!(av === "YES" || av === "OUI" || av === "TBD")) return false;
+        if (!(av === "YES" || av === "OUI" || av === "TBD" || av === "")) return false;
       }
 
       return true;
     });
 
-    // Sorting
     let listToRender = filteredPlayers.slice();
-
     if (activeSlot){
       listToRender.sort((a,b) => {
         const sa = scoreForSlot(a, activeSlot.tKey, activeSlot.group, activeSlot.role);
@@ -827,7 +1073,6 @@
       const card = document.createElement("div");
       card.className = "player-card";
 
-      // Candidate highlight
       if (activeSlot){
         const sc = scoreForSlot(p, activeSlot.tKey, activeSlot.group, activeSlot.role);
         if (sc < 0) card.classList.add("candidate-no");
@@ -847,34 +1092,43 @@
       left.appendChild(nameEl);
       left.appendChild(metaEl);
 
+      const actions = document.createElement("div");
+      actions.className = "player-actions";
+
       const confirmBtn = document.createElement("button");
       confirmBtn.type = "button";
       confirmBtn.className = "confirm-toggle";
       confirmBtn.textContent = "Confirmé";
 
+      ensureLineup(currentTournamentKey);
       if (confirmed[currentTournamentKey] && confirmed[currentTournamentKey][p.id]){
         confirmBtn.classList.add("confirmed");
       }
-
-      confirmBtn.addEventListener("click", (ev) => {
+      confirmBtn.addEventListener("click", ev => {
         ev.stopPropagation();
         ensureLineup(currentTournamentKey);
         const map = confirmed[currentTournamentKey];
-        if (map[p.id]){
-          delete map[p.id];
-          confirmBtn.classList.remove("confirmed");
-        }else{
-          map[p.id] = true;
-          confirmBtn.classList.add("confirmed");
-        }
+        if (map[p.id]){ delete map[p.id]; confirmBtn.classList.remove("confirmed"); }
+        else { map[p.id] = true; confirmBtn.classList.add("confirmed"); }
         renderSummary();
       });
 
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.className = "edit-btn";
+      editBtn.textContent = "✎";
+      editBtn.addEventListener("click", ev => {
+        ev.stopPropagation();
+        openEditPlayer(p.id);
+      });
+
+      actions.appendChild(confirmBtn);
+      actions.appendChild(editBtn);
+
       header.appendChild(left);
-      header.appendChild(confirmBtn);
+      header.appendChild(actions);
       card.appendChild(header);
 
-      // tags
       const tags = document.createElement("div");
       tags.className = "tag-row";
 
@@ -900,8 +1154,8 @@
         tags.appendChild(t);
       }
 
-      const prefNumber = p.jersey?.pref_numbers?.[0];
-      if (prefNumber){
+      const prefNumber = jerseyNumberForPlayer(p);
+      if (prefNumber != null){
         const t = document.createElement("span");
         t.className = "tag tag-jersey";
         t.textContent = "#" + prefNumber;
@@ -938,7 +1192,7 @@
 
       card.addEventListener("click", () => {
         if (!activeSlot){
-          toast("Sélectionne d'abord un slot dans la colonne lineup.");
+          toast("Sélectionne d'abord un slot dans le lineup.");
           return;
         }
         assignPlayerToActiveSlot(p.id);
@@ -948,10 +1202,23 @@
     });
   }
 
-  // ========== LINEUP UI ==========
+  // === LINEUP UI ===
   const lineupBoardEl = document.getElementById("lineupBoard");
   const statusBarEl = document.getElementById("statusBar");
   const btnCheckLineup = document.getElementById("btnCheckLineup");
+
+  function getSlotPlayerId(L, group, role){
+    if (group === "G" && role === "G") return L.G[0] || null;
+    if (/^D[1-3]$/.test(group)) return L[group][role][0] || null;
+    if (/^F[1-3]$/.test(group)) return L[group][role][0] || null;
+    return null;
+  }
+
+  function setSlotPlayerId(L, group, role, id){
+    if (group === "G" && role === "G"){ L.G = id ? [id] : []; return; }
+    if (/^D[1-3]$/.test(group)){ L[group][role] = id ? [id] : []; return; }
+    if (/^F[1-3]$/.test(group)){ L[group][role] = id ? [id] : []; return; }
+  }
 
   function renderLineup(){
     lineupBoardEl.innerHTML = "";
@@ -965,42 +1232,19 @@
     ensureLineup(currentTournamentKey);
     const L = lineups[currentTournamentKey];
 
-    const rows = [];
-
-    rows.push({
-      title: "Gardien",
-      key: "G",
-      slots: [{ group:"G", role:"G" }]
-    });
-
-    rows.push({
-      title: "Défense",
-      key: "D",
-      slots: [
-        { group:"D1", role:"LD" },
-        { group:"D1", role:"RD" },
-        { group:"D2", role:"LD" },
-        { group:"D2", role:"RD" },
-        { group:"D3", role:"LD" },
-        { group:"D3", role:"RD" }
-      ]
-    });
-
-    rows.push({
-      title: "Attaque",
-      key: "F",
-      slots: [
-        { group:"F1", role:"LW" },
-        { group:"F1", role:"C"  },
-        { group:"F1", role:"RW" },
-        { group:"F2", role:"LW" },
-        { group:"F2", role:"C"  },
-        { group:"F2", role:"RW" },
-        { group:"F3", role:"LW" },
-        { group:"F3", role:"C"  },
-        { group:"F3", role:"RW" }
-      ]
-    });
+    const rows = [
+      { title:"Gardien", key:"G", slots:[{group:"G", role:"G"}] },
+      { title:"Défense", key:"D", slots:[
+        {group:"D1",role:"LD"},{group:"D1",role:"RD"},
+        {group:"D2",role:"LD"},{group:"D2",role:"RD"},
+        {group:"D3",role:"LD"},{group:"D3",role:"RD"}
+      ]},
+      { title:"Attaque", key:"F", slots:[
+        {group:"F1",role:"LW"},{group:"F1",role:"C"},{group:"F1",role:"RW"},
+        {group:"F2",role:"LW"},{group:"F2",role:"C"},{group:"F2",role:"RW"},
+        {group:"F3",role:"LW"},{group:"F3",role:"C"},{group:"F3",role:"RW"}
+      ]}
+    ];
 
     rows.forEach(row => {
       const rowEl = document.createElement("div");
@@ -1011,13 +1255,9 @@
       const title = document.createElement("div");
       title.className = "lineup-row-title";
       title.textContent = row.title;
-      const count = document.createElement("div");
-      count.textContent = "";
       header.appendChild(title);
-      header.appendChild(count);
       rowEl.appendChild(header);
 
-      // group slots by group name
       const byGroup = {};
       row.slots.forEach(s => {
         if (!byGroup[s.group]) byGroup[s.group] = [];
@@ -1027,9 +1267,13 @@
       Object.keys(byGroup).forEach(g => {
         const line = document.createElement("div");
         line.className = "slot-row";
+
         byGroup[g].forEach(s => {
           const slotEl = document.createElement("div");
           slotEl.className = "slot";
+          slotEl.dataset.group = s.group;
+          slotEl.dataset.role = s.role;
+          slotEl.dataset.tkey = currentTournamentKey;
 
           if (activeSlot &&
               activeSlot.tKey === currentTournamentKey &&
@@ -1038,362 +1282,9 @@
             slotEl.classList.add("active");
           }
 
-          slotEl.dataset.group = s.group;
-          slotEl.dataset.role = s.role;
-          slotEl.dataset.tkey = currentTournamentKey;
-
           const label = document.createElement("span");
           label.className = "slot-label-pill";
           label.textContent = s.group + " • " + s.role;
 
-          const playerSpan = document.createElement("span");
-          playerSpan.className = "slot-player";
-
-          let assignedId = null;
-          if (s.group === "G" && s.role === "G"){
-            assignedId = L.G[0] || null;
-          }else if (/^D[1-3]$/.test(s.group)){
-            assignedId = L[s.group][s.role][0] || null;
-          }else if (/^F[1-3]$/.test(s.group)){
-            assignedId = L[s.group][s.role][0] || null;
-          }
-
-          if (assignedId){
-            const p = allPlayers.find(x => x.id === assignedId);
-            playerSpan.textContent = p ? p.name : assignedId;
-          }else{
-            playerSpan.classList.add("slot-empty");
-            playerSpan.textContent = "Tap pour choisir";
-          }
-
-          const clearBtn = document.createElement("span");
-          clearBtn.className = "slot-clear";
-          clearBtn.textContent = assignedId ? "✕" : "";
-          clearBtn.addEventListener("click", ev => {
-            ev.stopPropagation();
-            clearSlot(currentTournamentKey, s.group, s.role);
-          });
-
-          slotEl.appendChild(label);
-          slotEl.appendChild(playerSpan);
-          slotEl.appendChild(clearBtn);
-
-          slotEl.addEventListener("click", () => {
-            setActiveSlot(currentTournamentKey, s.group, s.role);
-          });
-
-          line.appendChild(slotEl);
-        });
-        rowEl.appendChild(line);
-      });
-
-      lineupBoardEl.appendChild(rowEl);
-    });
-
-    updateStatusBar();
-  }
-
-  function setActiveSlot(tKey, group, role){
-    if (activeSlot &&
-        activeSlot.tKey === tKey &&
-        activeSlot.group === group &&
-        activeSlot.role === role){
-      // unselect if tapping same
-      activeSlot = null;
-    }else{
-      activeSlot = { tKey, group, role };
-    }
-    renderLineup();
-    renderPlayers();
-  }
-
-  function clearSlot(tKey, group, role){
-    ensureLineup(tKey);
-    const L = lineups[tKey];
-    if (group === "G" && role === "G"){
-      L.G = [];
-    }else if (/^D[1-3]$/.test(group)){
-      L[group][role] = [];
-    }else if (/^F[1-3]$/.test(group)){
-      L[group][role] = [];
-    }
-    renderLineup();
-    renderSummary();
-  }
-
-  function assignPlayerToActiveSlot(playerId){
-    if (!activeSlot) return;
-    ensureLineup(activeSlot.tKey);
-    const L = lineups[activeSlot.tKey];
-
-    // Remove player from all slots of this tournoi
-    const removeEverywhere = () => {
-      L.G = L.G.filter(id => id !== playerId);
-      ["D1","D2","D3"].forEach(g => {
-        ["LD","RD"].forEach(r => {
-          L[g][r] = L[g][r].filter(id => id !== playerId);
-        });
-      });
-      ["F1","F2","F3"].forEach(g => {
-        ["LW","C","RW"].forEach(r => {
-          L[g][r] = L[g][r].filter(id => id !== playerId);
-        });
-      });
-    };
-    removeEverywhere();
-
-    // Check eligibility
-    const p = allPlayers.find(x => x.id === playerId);
-    const sc = scoreForSlot(p, activeSlot.tKey, activeSlot.group, activeSlot.role);
-    if (sc < 0){
-      toast("Joueur non éligible à ce slot (position/dispo).");
-      renderLineup();
-      renderPlayers();
-      return;
-    }
-
-    if (activeSlot.group === "G" && activeSlot.role === "G"){
-      L.G = [playerId];
-    }else if (/^D[1-3]$/.test(activeSlot.group)){
-      L[activeSlot.group][activeSlot.role] = [playerId];
-    }else if (/^F[1-3]$/.test(activeSlot.group)){
-      L[activeSlot.group][activeSlot.role] = [playerId];
-    }
-    renderLineup();
-    renderPlayers();
-    renderSummary();
-  }
-
-  function updateStatusBar(){
-    statusBarEl.innerHTML = "";
-    if (!currentTournamentKey){
-      return;
-    }
-    ensureLineup(currentTournamentKey);
-    const L = lineups[currentTournamentKey];
-
-    const cnt = {
-      G: L.G.length,
-      D:
-        L.D1.LD.length + L.D1.RD.length +
-        L.D2.LD.length + L.D2.RD.length +
-        L.D3.LD.length + L.D3.RD.length,
-      F:
-        L.F1.LW.length + L.F1.C.length + L.F1.RW.length +
-        L.F2.LW.length + L.F2.C.length + L.F2.RW.length +
-        L.F3.LW.length + L.F3.C.length + L.F3.RW.length
-    };
-
-    const ok = (cnt.G === 1 && cnt.D === 6 && cnt.F === 9);
-
-    const pill = document.createElement("span");
-    pill.className = "status-pill " + (ok ? "ok" : "bad");
-    pill.textContent = ok
-      ? "Lineup complet (1G / 6D / 9F)"
-      : `Lineup incomplet (G:${cnt.G}/1, D:${cnt.D}/6, F:${cnt.F}/9)`;
-    statusBarEl.appendChild(pill);
-
-    const t = document.createElement("span");
-    t.textContent = ` Année ${currentYear} • ${TOURNAMENTS[currentTournamentKey].label}`;
-    statusBarEl.appendChild(t);
-  }
-
-  btnCheckLineup.addEventListener("click", () => {
-    updateStatusBar();
-    toast("Lineup vérifié.");
-  });
-
-  // ========== SUMMARY ==========
-  const summaryEl = document.getElementById("summary");
-
-  function getSummaryData(){
-    const tKey = currentTournamentKey;
-    const year = currentYear;
-    if (!tKey) return {text:"Pas de tournoi sélectionné.", data:null};
-
-    ensureLineup(tKey);
-
-    const L = lineups[tKey];
-    const confMap = confirmed[tKey] || {};
-    const confirmedIds = Object.keys(confMap);
-
-    const cnt = {
-      G: L.G.length,
-      D:
-        L.D1.LD.length + L.D1.RD.length +
-        L.D2.LD.length + L.D2.RD.length +
-        L.D3.LD.length + L.D3.RD.length,
-      F:
-        L.F1.LW.length + L.F1.C.length + L.F1.RW.length +
-        L.F2.LW.length + L.F2.C.length + L.F2.RW.length +
-        L.F3.LW.length + L.F3.C.length + L.F3.RW.length
-    };
-
-    return {
-      text: "",
-      data: {
-        year,
-        tournament: tKey,
-        tournament_label: TOURNAMENTS[tKey].label,
-        lineup_counts: cnt,
-        confirmed_ids: confirmedIds
-      }
-    };
-  }
-
-  function renderSummary(){
-    const {data} = getSummaryData();
-    if (!data){
-      summaryEl.textContent = "Sélectionne une année et un tournoi pour voir le résumé.";
-      return;
-    }
-    const lines = [];
-
-    lines.push(`Année: ${data.year}`);
-    lines.push(`Tournoi: ${data.tournament_label}`);
-    lines.push("");
-    lines.push(`Lineup: G=${data.lineup_counts.G}, D=${data.lineup_counts.D}, F=${data.lineup_counts.F}`);
-    lines.push(`Confirmés (${data.confirmed_ids.length}):`);
-    if (data.confirmed_ids.length){
-      data.confirmed_ids.forEach(id => {
-        const p = allPlayers.find(x => x.id === id);
-        lines.push(`  - ${p ? p.name : id}`);
-      });
-    }else{
-      lines.push("  (aucun joueur marqué confirmé)");
-    }
-
-    summaryEl.textContent = lines.join("\n");
-  }
-
-  // ========== GitHub Integration ==========
-  const ghTokenInput = document.getElementById("ghToken");
-  const btnGhLoad = document.getElementById("btnGhLoad");
-  const btnGhSave = document.getElementById("btnGhSave");
-
-  function getGhToken(){
-    if (ghToken) return ghToken;
-    const v = (ghTokenInput.value || "").trim();
-    if (!v){
-      alert("Entre un GitHub PAT avec droits 'contents: read/write' sur le repo.");
-      return null;
-    }
-    ghToken = v;
-    return ghToken;
-  }
-
-  function lineupsPathForYear(year){
-    return GH_LINEUPS_TEMPLATE.replace("YEAR", String(year));
-  }
-
-  btnGhLoad.addEventListener("click", async () => {
-    const token = getGhToken();
-    if (!token) return;
-
-    const path = lineupsPathForYear(currentYear);
-
-    try{
-      const res = await fetch(
-        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${encodeURIComponent(path)}`,
-        {
-          headers:{
-            "Accept":"application/vnd.github+json",
-            "Authorization":`Bearer ${token}`,
-            "X-GitHub-Api-Version":"2022-11-28"
-          },
-          cache:"no-store"
-        }
-      );
-
-      if (res.status === 404){
-        toast("Pas encore de lineups pour cette année (fichier manquant).");
-        lineups = {};
-        confirmed = {};
-        ghLineupsSha = null;
-        renderLineup();
-        renderSummary();
-        return;
-      }
-
-      if (!res.ok){
-        const txt = await res.text();
-        console.error("GitHub load error", res.status, txt);
-        alert("Erreur GitHub (load). Vérifie le PAT / repo.");
-        return;
-      }
-
-      const j = await res.json();
-      ghLineupsSha = j.sha || null;
-      const decoded = atob((j.content || "").replace(/\n/g,""));
-      const data = JSON.parse(decoded);
-
-      lineups   = clone(data.tournaments || {});
-      confirmed = clone(data.confirmed   || {});
-
-      toast("Lineups chargés depuis GitHub.");
-      renderLineup();
-      renderPlayers();
-      renderSummary();
-    }catch(e){
-      console.error(e);
-      alert("Erreur lors du chargement GitHub. Voir console.");
-    }
-  });
-
-  btnGhSave.addEventListener("click", async () => {
-    const token = getGhToken();
-    if (!token) return;
-
-    const path = lineupsPathForYear(currentYear);
-
-    const payload = {
-      version: 1,
-      year: String(currentYear),
-      updated_at: new Date().toISOString(),
-      tournaments: lineups,
-      confirmed: confirmed
-    };
-
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
-    const body = {
-      message: `chore: update lineups_${currentYear}.json via QHC admin`,
-      content,
-      sha: ghLineupsSha || undefined
-    };
-
-    try{
-      const res = await fetch(
-        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${encodeURIComponent(path)}`,
-        {
-          method:"PUT",
-          headers:{
-            "Accept":"application/vnd.github+json",
-            "Authorization":`Bearer ${token}`,
-            "X-GitHub-Api-Version":"2022-11-28",
-            "Content-Type":"application/json"
-          },
-          body:JSON.stringify(body)
-        }
-      );
-      const j = await res.json();
-      if (!res.ok){
-        console.error("GitHub save error", res.status, j);
-        alert("Erreur GitHub (save). Vérifie le PAT / repo.");
-        return;
-      }
-      ghLineupsSha = j.content && j.content.sha ? j.content.sha : ghLineupsSha;
-      toast("Lineups sauvegardés sur GitHub.");
-    }catch(e){
-      console.error(e);
-      alert("Erreur lors de la sauvegarde GitHub. Voir console.");
-    }
-  });
-
-  // ========== INIT ==========
-  setupYearAndTournaments();
-  renderPlayers();
-  renderLineup();
-  renderSummary();
-</script>
-</body>
-</html>
+          const logo = document.createElement("span");
+          logo.className = "
