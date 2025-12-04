@@ -868,7 +868,45 @@
     "consent_contact": true
   },
   "submitted_at": "Horodatage: 2025-12-04 15 h 11 min 04 s"
-}
+},
+    {
+      "id": "piero-merola-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Piero Merola",
+      "birth_year": 2014,
+      "city": "Montréal",
+      "current_team": "Montréal Élite",
+      "email": "donato.merola@hotmail.com",
+      "parent": {
+        "email": "donato.merola@hotmail.com",
+        "phone": "5149099759"
+      },
+      "positions": {
+        "primary": "CEN",
+        "secondary": "FWD"
+      },
+      "sides": ["L"],
+      "player_style": "Responsable, rapide",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "YL",
+        "pref_numbers": [11, 71, 37]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "TBD",
+        "throne": "No"
+      },
+      "confidence_pct": 80,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-12-04 17 h 23 min 13 s"
+    }
 
   ]
 }
