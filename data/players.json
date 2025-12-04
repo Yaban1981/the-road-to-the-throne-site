@@ -22,7 +22,7 @@
       "player_style": "Offensif, Shooter",
       "video_links": "",
       "jersey": {
-        "type": "Loaned",
+        "type": "Customized",
         "size": "YL",
         "pref_numbers": [
           9,
@@ -832,43 +832,49 @@
       "submitted_at": "Horodatage: 2025-11-30 21 h 40 min 02 s"
     },
     {
-  "id": "zitong-jeremy-wang-2014",
-  "form_version": "rttt_v1_native_apps_script",
-  "name": "Zitong (Jeremy) Wang",
-  "birth_year": 2014,
-  "city": "Sherbrooke",
-  "current_team": "Harfangs de Sherbrooke AAA",
-  "email": "leo.wang2006@gmail.com",
-  "parent": {
-    "email": "leo.wang2006@gmail.com",
-    "phone": "5145864566"
-  },
-  "positions": {
-    "primary": "DEF",
-    "secondary": "NONE"
-  },
-  "sides": ["L"],
-  "player_style": "fast and resistant",
-  "video_links": "",
-  "jersey": {
-    "type": "Loaned",
-    "size": "AM",
-    "pref_numbers": [25, 26, 15]
-  },
-  "availability": {
-    "boston": "Yes",
-    "meltdown": "Yes",
-    "jaypeak": "No",
-    "throne": "Yes"
-  },
-  "confidence_pct": 94,
-  "consents": {
-    "throne_rule": true,
-    "limited_spots": true,
-    "consent_contact": true
-  },
-  "submitted_at": "Horodatage: 2025-12-04 15 h 11 min 04 s"
-},
+      "id": "zitong-jeremy-wang-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Zitong (Jeremy) Wang",
+      "birth_year": 2014,
+      "city": "Sherbrooke",
+      "current_team": "Harfangs de Sherbrooke AAA",
+      "email": "leo.wang2006@gmail.com",
+      "parent": {
+        "email": "leo.wang2006@gmail.com",
+        "phone": "5145864566"
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "NONE"
+      },
+      "sides": [
+        "L"
+      ],
+      "player_style": "fast and resistant",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "AM",
+        "pref_numbers": [
+          25,
+          26,
+          15
+        ]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "No",
+        "throne": "Yes"
+      },
+      "confidence_pct": 94,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-12-04 15 h 11 min 04 s"
+    },
     {
       "id": "piero-merola-2014",
       "form_version": "rttt_v1_native_apps_script",
@@ -885,13 +891,19 @@
         "primary": "CEN",
         "secondary": "FWD"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Responsable, rapide",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "YL",
-        "pref_numbers": [11, 71, 37]
+        "pref_numbers": [
+          11,
+          71,
+          37
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -907,6 +919,5 @@
       },
       "submitted_at": "Horodatage: 2025-12-04 17 h 23 min 13 s"
     }
-
   ]
 }
