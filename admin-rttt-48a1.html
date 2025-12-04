@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QHC — Admin Lineups 2026</title>
-  <meta name="description" content="Admin mobile-first pour gérer les lineups QHC par année et tournoi (Boston, Meltdown, Jay Peak, The Throne) avec sauvegarde GitHub." />
+  <meta name="description" content="Admin mobile-first pour gérer les lineups QHC par année et tournoi (Boston, Meltdown, Jay Peak, The Throne) avec sauvegarde GitHub ou téléchargement local." />
   <link rel="icon" href="logos/qhc.png" />
   <meta name="theme-color" content="#020617" />
 
@@ -32,7 +32,7 @@
       line-height:1.5;
     }
 
-    /* Header mobile-first */
+    /* Header */
     header{
       padding:16px 12px 10px;
       border-bottom:1px solid rgba(148,163,184,.25);
@@ -88,7 +88,6 @@
     h2{margin:0 0 8px;font-size:1rem}
     .small-title{font-size:.9rem;color:var(--muted);margin-bottom:6px}
 
-    /* Controls */
     .top-controls{
       display:flex;
       flex-direction:column;
@@ -109,7 +108,7 @@
       border-radius:10px;
       border:1px solid rgba(148,163,184,.55);
       background:#020617;
-      color:var(--text);
+      color:#e5e7eb;
       font-size:.9rem;
       outline:none;
     }
@@ -179,7 +178,6 @@
       margin-bottom:4px;
     }
 
-    /* Layout: players + lineup */
     .split{
       display:flex;
       flex-direction:column;
@@ -194,7 +192,6 @@
       .split-right{flex:0.9}
     }
 
-    /* Player list */
     .players-toolbar{
       display:flex;
       gap:6px;
@@ -337,7 +334,6 @@
       color:var(--muted);
     }
 
-    /* Lineup board */
     .lineup-board{
       border-radius:12px;
       border:1px solid rgba(75,85,99,.95);
@@ -481,7 +477,6 @@
       margin-top:4px;
     }
 
-    /* Edit overlay (bottom sheet) */
     .edit-overlay{
       position:fixed;
       inset:0;
@@ -547,7 +542,6 @@
       margin-bottom:2px;
     }
 
-    /* Print mode: on n'affiche que le lineup */
     @media print {
       header,
       section:not(.card-print),
@@ -587,14 +581,13 @@
     </div>
     <div class="header-text">
       <h1>QHC — Admin Lineups</h1>
-      <div class="header-sub">Mobile-first • Tournoi × Année • GitHub DB</div>
+      <div class="header-sub">Mobile-first • Tournoi × Année • GitHub ou téléchargement</div>
       <div class="header-meta">Boston • Montreal Meltdown • Jay Peak • The Throne — années 2013–2017</div>
     </div>
   </div>
 </header>
 
 <main>
-  <!-- FILTRES GLOBALS -->
   <section class="card">
     <h2>1) Contexte : année & tournoi</h2>
     <div class="top-controls">
@@ -615,11 +608,9 @@
     </div>
   </section>
 
-  <!-- JOUEURS + LINEUP -->
   <section class="card card-print">
     <h2>2) Joueurs & lineup</h2>
     <div class="split">
-      <!-- JOUEURS -->
       <div class="split-left">
         <div class="small-title">Joueurs (depuis <code>data/players.json</code>)</div>
         <div class="players-toolbar">
@@ -646,7 +637,6 @@
         <div class="players-list" id="playersList"></div>
       </div>
 
-      <!-- LINEUP -->
       <div class="split-right">
         <div class="small-title">Lineup — <span id="currentContextLabel"></span></div>
         <div class="lineup-board" id="lineupBoard"></div>
@@ -660,19 +650,18 @@
     </div>
   </section>
 
-  <!-- GITHUB / PERSISTENCE -->
   <section class="card">
-    <h2>3) Sauvegarde GitHub</h2>
+    <h2>3) Sauvegarde GitHub ou locale</h2>
     <div class="top-controls">
       <div style="flex:1">
-        <label for="ghToken">GitHub PAT (fine-grained, contents: read/write sur ce repo)</label>
-        <input type="password" id="ghToken" placeholder="pat_... (optionnel si tu n'utilises pas GitHub)">
+        <label for="ghToken">GitHub PAT (optionnel)</label>
+        <input type="password" id="ghToken" placeholder="pat_... (sinon sauvegarde en téléchargement)">
         <div class="hint">
-          Si tu ne renseignes pas de PAT, les boutons GitHub seront ignorés (pas d'erreur).  
-          Lineups : <code>data/lineups_YYYY.json</code> — Joueurs : <code>data/players.json</code>.
+          Sans PAT : les boutons GitHub téléchargent simplement les fichiers JSON (lineups / joueurs) sur ton appareil.  
+          Avec PAT : ils mettent à jour les fichiers dans le repo <code>data/lineups_YYYY.json</code> et <code>data/players.json</code>.
         </div>
       </div>
-      <div style="flex:0 0 200px;display:flex;flex-direction:column;gap:6px">
+      <div style="flex:0 0 220px;display:flex;flex-direction:column;gap:6px">
         <button class="btn btn-ghost btn-sm" id="btnGhLoad">⬇ Charger lineups GitHub</button>
         <button class="btn btn-primary btn-sm" id="btnGhSave">⬆ Sauvegarder lineups</button>
         <button class="btn btn-ghost btn-sm" id="btnGhSavePlayers">⬆ Sauvegarder joueurs</button>
@@ -680,7 +669,6 @@
     </div>
   </section>
 
-  <!-- RÉSUMÉ RAPIDE -->
   <section class="card">
     <h2>4) Résumé rapide</h2>
     <pre id="summary" style="font-size:.75rem;white-space:pre-wrap;margin:0"></pre>
@@ -689,7 +677,6 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- ÉDITION JOUEUR (bottom sheet) -->
 <div class="edit-overlay" id="editOverlay">
   <div class="edit-panel">
     <div class="edit-header">
@@ -787,14 +774,24 @@
 </div>
 
 <script>
-  // === HAPTIC ===
   function haptic(ms = 20){
     try{
       if (navigator.vibrate) navigator.vibrate(ms);
     }catch(e){}
   }
 
-  // === CONFIG (GH + tournois) ===
+  function downloadText(filename, text){
+    const blob = new Blob([text], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 500);
+  }
+
   const GH_OWNER = "yaban1981";
   const GH_REPO  = "the-road-to-the-throne-site";
   const GH_LINEUPS_TEMPLATE = "data/lineups_YEAR.json";
@@ -807,7 +804,6 @@
     throne:   { key:"throne",   label:"The Throne — Toronto",           years:[2013,2014,2015,2017] }
   };
 
-  // === GLOBAL STATE ===
   let originalPlayers = [];
   let allPlayers = [];
   let filteredPlayers = [];
@@ -825,7 +821,6 @@
   let positionFilter = "ALL";
 
   const toastEl = document.getElementById("toast");
-
   function toast(msg){
     toastEl.textContent = msg;
     toastEl.classList.add("show");
@@ -890,7 +885,6 @@
     return parts[parts.length - 1];
   }
 
-  // === YEAR & TOURNAMENT UI ===
   const yearSelect = document.getElementById("yearSelect");
   const tournamentPills = document.getElementById("tournamentPills");
   const yearHint = document.getElementById("yearHint");
@@ -963,7 +957,6 @@
     setupYearAndTournaments();
   });
 
-  // === LOAD PLAYERS ===
   const btnLoadPlayers = document.getElementById("btnLoadPlayers");
   const playersListEl = document.getElementById("playersList");
   const searchInput = document.getElementById("searchInput");
@@ -993,7 +986,6 @@
   searchInput.addEventListener("input", renderPlayers);
   onlyAvailableCheckbox.addEventListener("change", renderPlayers);
 
-  // === POS FILTER ===
   const posFilterRow = document.getElementById("posFilterRow");
   posFilterRow.addEventListener("click", e => {
     const btn = e.target.closest(".filter-pill");
@@ -1017,7 +1009,6 @@
     return "X";
   }
 
-  // === SCORE FOR SLOT ===
   function scoreForSlot(p, tKey, group, role){
     const av = (getAvailability(p, tKey) || "").toUpperCase();
     if (av === "NO" || av === "NON") return -999;
@@ -1053,7 +1044,6 @@
     return s;
   }
 
-  // === RENDER PLAYERS ===
   let editingPlayerId = null;
 
   function renderPlayers(){
@@ -1263,7 +1253,6 @@
     });
   }
 
-  // === LINEUP UI ===
   const lineupBoardEl = document.getElementById("lineupBoard");
   const statusBarEl = document.getElementById("statusBar");
   const btnCheckLineup = document.getElementById("btnCheckLineup");
@@ -1459,7 +1448,7 @@
     const L = lineups[tKey];
     const allIds = [];
 
-    if (L.G[0]) allIds.add(L.G[0]);
+    if (L.G[0]) allIds.push(L.G[0]);
     ["D1","D2","D3"].forEach(g => {
       ["LD","RD"].forEach(r => {
         const id = L[g][r][0];
@@ -1530,47 +1519,6 @@
     haptic();
   }
 
-  function updateStatusBar(){
-    statusBarEl.innerHTML = "";
-    if (!currentTournamentKey) return;
-    ensureLineup(currentTournamentKey);
-    const L = lineups[currentTournamentKey];
-
-    const cnt = {
-      G: L.G.length,
-      D: L.D1.LD.length + L.D1.RD.length +
-         L.D2.LD.length + L.D2.RD.length +
-         L.D3.LD.length + L.D3.RD.length,
-      F: L.F1.LW.length + L.F1.C.length + L.F1.RW.length +
-         L.F2.LW.length + L.F2.C.length + L.F2.RW.length +
-         L.F3.LW.length + L.F3.C.length + L.F3.RW.length
-    };
-
-    const ok = (cnt.G === 1 && cnt.D === 6 && cnt.F === 9);
-
-    const pill = document.createElement("span");
-    pill.className = "status-pill " + (ok ? "ok" : "bad");
-    pill.textContent = ok
-      ? "Lineup complet (1G / 6D / 9F)"
-      : `Lineup incomplet (G:${cnt.G}/1, D:${cnt.D}/6, F:${cnt.F}/9)`;
-    statusBarEl.appendChild(pill);
-
-    const t = document.createElement("span");
-    t.textContent = ` Année ${currentYear} • ${TOURNAMENTS[currentTournamentKey].label}`;
-    statusBarEl.appendChild(t);
-  }
-
-  btnCheckLineup.addEventListener("click", () => {
-    updateStatusBar();
-    toast("Lineup vérifié.");
-    haptic();
-  });
-
-  btnPrintLineup.addEventListener("click", () => {
-    window.print();
-  });
-
-  // === SUMMARY ===
   const summaryEl = document.getElementById("summary");
 
   function getSummaryData(){
@@ -1625,7 +1573,6 @@
     summaryEl.textContent = lines.join("\n");
   }
 
-  // === EDIT PLAYER OVERLAY ===
   const editOverlay = document.getElementById("editOverlay");
   const editClose   = document.getElementById("editClose");
   const editCancel  = document.getElementById("editCancel");
@@ -1742,7 +1689,6 @@
     haptic();
   });
 
-  // === GITHUB INTEGRATION ===
   const ghTokenInput = document.getElementById("ghToken");
   const btnGhLoad = document.getElementById("btnGhLoad");
   const btnGhSave = document.getElementById("btnGhSave");
@@ -1751,10 +1697,7 @@
   function getGhToken(){
     if (ghToken) return ghToken;
     const v = (ghTokenInput.value || "").trim();
-    if (!v){
-      toast("PAT GitHub non configuré — action ignorée.");
-      return null;
-    }
+    if (!v) return null;
     ghToken = v;
     return ghToken;
   }
@@ -1765,7 +1708,10 @@
 
   btnGhLoad.addEventListener("click", async () => {
     const token = getGhToken();
-    if (!token) return;
+    if (!token){
+      toast("PAT non configuré → chargement GitHub ignoré.");
+      return;
+    }
     const path = lineupsPathForYear(currentYear);
     try{
       const res = await fetch(
@@ -1789,9 +1735,8 @@
         return;
       }
       if (!res.ok){
-        const txt = await res.text();
-        console.error("GitHub load error", res.status, txt);
-        toast("Erreur GitHub (load lineups).");
+        console.error("GitHub load error", res.status, await res.text());
+        toast("Erreur GitHub (chargement lineups).");
         return;
       }
       const j = await res.json();
@@ -1812,8 +1757,6 @@
   });
 
   btnGhSave.addEventListener("click", async () => {
-    const token = getGhToken();
-    if (!token) return;
     const path = lineupsPathForYear(currentYear);
     const payload = {
       version: 1,
@@ -1822,7 +1765,17 @@
       tournaments: lineups,
       confirmed: confirmed
     };
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const jsonText = JSON.stringify(payload, null, 2);
+    const token = getGhToken();
+
+    if (!token){
+      downloadText(`lineups_${currentYear}.json`, jsonText);
+      toast("Lineup téléchargé (pas de PAT GitHub).");
+      haptic();
+      return;
+    }
+
+    const content = btoa(unescape(encodeURIComponent(jsonText)));
     const body = {
       message: `chore: update lineups_${currentYear}.json via QHC admin`,
       content,
@@ -1845,7 +1798,9 @@
       const j = await res.json();
       if (!res.ok){
         console.error("GitHub save error", res.status, j);
-        toast("Erreur GitHub (save lineups).");
+        toast("Erreur GitHub (save lineups) → lineup téléchargé localement.");
+        downloadText(`lineups_${currentYear}.json`, jsonText);
+        haptic();
         return;
       }
       ghLineupsSha = j.content && j.content.sha ? j.content.sha : ghLineupsSha;
@@ -1853,14 +1808,24 @@
       haptic();
     }catch(e){
       console.error(e);
-      toast("Erreur lors de la sauvegarde des lineups.");
+      toast("Erreur lors de la sauvegarde des lineups → téléchargement local.");
+      downloadText(`lineups_${currentYear}.json`, jsonText);
+      haptic();
     }
   });
 
   btnGhSavePlayers.addEventListener("click", async () => {
-    const token = getGhToken();
-    if (!token) return;
     const path = PLAYERS_PATH;
+    const payload = { players: allPlayers };
+    const jsonText = JSON.stringify(payload, null, 2);
+    const token = getGhToken();
+
+    if (!token){
+      downloadText("players.json", jsonText);
+      toast("Joueurs téléchargés (pas de PAT GitHub).");
+      haptic();
+      return;
+    }
 
     try{
       const resGet = await fetch(
@@ -1875,9 +1840,10 @@
         }
       );
       if (!resGet.ok && resGet.status !== 404){
-        const txt = await resGet.text();
-        console.error("GitHub get players error", resGet.status, txt);
-        toast("Erreur GitHub (get players).");
+        console.error("GitHub get players error", resGet.status, await resGet.text());
+        toast("Erreur GitHub (get players) → téléchargement local.");
+        downloadText("players.json", jsonText);
+        haptic();
         return;
       }
       if (resGet.ok){
@@ -1887,8 +1853,7 @@
         ghPlayersSha = null;
       }
 
-      const payload = { players: allPlayers };
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+      const content = btoa(unescape(encodeURIComponent(jsonText)));
       const body = {
         message: "chore: update players.json via QHC admin",
         content,
@@ -1911,23 +1876,66 @@
       const jp = await resPut.json();
       if (!resPut.ok){
         console.error("GitHub save players error", resPut.status, jp);
-        toast("Erreur GitHub (save players).");
+        toast("Erreur GitHub (save players) → téléchargement local.");
+        downloadText("players.json", jsonText);
+        haptic();
         return;
       }
       ghPlayersSha = jp.content && jp.content.sha ? jp.content.sha : ghPlayersSha;
-      toast("Joueurs sauvegardés dans players.json.");
+      toast("Joueurs sauvegardés dans players.json sur GitHub.");
       haptic();
     }catch(e){
       console.error(e);
-      toast("Erreur lors de la sauvegarde des joueurs.");
+      toast("Erreur lors de la sauvegarde des joueurs → téléchargement local.");
+      downloadText("players.json", jsonText);
+      haptic();
     }
   });
 
-  // === INIT ===
+  btnCheckLineup.addEventListener("click", () => {
+    updateStatusBar();
+    toast("Lineup vérifié.");
+    haptic();
+  });
+
+  btnPrintLineup.addEventListener("click", () => {
+    window.print();
+  });
+
   setupYearAndTournaments();
   renderPlayers();
   renderLineup();
   renderSummary();
+
+  function updateStatusBar(){
+    statusBarEl.innerHTML = "";
+    if (!currentTournamentKey) return;
+    ensureLineup(currentTournamentKey);
+    const L = lineups[currentTournamentKey];
+
+    const cnt = {
+      G: L.G.length,
+      D: L.D1.LD.length + L.D1.RD.length +
+         L.D2.LD.length + L.D2.RD.length +
+         L.D3.LD.length + L.D3.RD.length,
+      F: L.F1.LW.length + L.F1.C.length + L.F1.RW.length +
+         L.F2.LW.length + L.F2.C.length + L.F2.RW.length +
+         L.F3.LW.length + L.F3.C.length + L.F3.RW.length
+    };
+
+    const ok = (cnt.G === 1 && cnt.D === 6 && cnt.F === 9);
+
+    const pill = document.createElement("span");
+    pill.className = "status-pill " + (ok ? "ok" : "bad");
+    pill.textContent = ok
+      ? "Lineup complet (1G / 6D / 9F)"
+      : `Lineup incomplet (G:${cnt.G}/1, D:${cnt.D}/6, F:${cnt.F}/9)`;
+    statusBarEl.appendChild(pill);
+
+    const t = document.createElement("span");
+    t.textContent = ` Année ${currentYear} • ${TOURNAMENTS[currentTournamentKey].label}`;
+    statusBarEl.appendChild(t);
+  }
 </script>
 </body>
 </html>
