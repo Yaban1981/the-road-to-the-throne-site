@@ -547,15 +547,43 @@
       margin-bottom:2px;
     }
 
+    /* Print mode: on n'affiche que le lineup */
+    @media print {
+      header,
+      section:not(.card-print),
+      #editOverlay,
+      .toast {
+        display:none !important;
+      }
+      body {
+        background:#ffffff !important;
+      }
+      main {
+        padding:0;
+        margin:0;
+      }
+      .card-print{
+        box-shadow:none;
+        border-radius:0;
+        border:0;
+      }
+      .lineup-board {
+        box-shadow:none;
+        border-radius:0;
+        border:0;
+        background:#ffffff;
+      }
+      .slot{
+        min-height:40px;
+      }
+    }
   </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
-    <div classheader-logo>
-      <div class="header-logo">
-        <img src="logos/qhc.png" alt="Québec HC">
-      </div>
+    <div class="header-logo">
+      <img src="logos/qhc.png" alt="Québec HC">
     </div>
     <div class="header-text">
       <h1>QHC — Admin Lineups</h1>
@@ -588,7 +616,7 @@
   </section>
 
   <!-- JOUEURS + LINEUP -->
-  <section class="card">
+  <section class="card card-print">
     <h2>2) Joueurs & lineup</h2>
     <div class="split">
       <!-- JOUEURS -->
@@ -613,7 +641,7 @@
 
         <div class="hint">
           1) Sélectionne un slot dans le lineup → 2) Tape sur un joueur pour l’y placer.  
-          Tap sur ✎ pour éditer (numéros, dispo, chandail, confirmé).
+          Tap sur ✎ ou sur un slot occupé pour éditer (numéros, dispo, chandail, confirmé).
         </div>
         <div class="players-list" id="playersList"></div>
       </div>
@@ -625,6 +653,7 @@
 
         <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
           <button class="btn btn-primary btn-sm" id="btnCheckLineup">✔ Vérifier lineup</button>
+          <button class="btn btn-ghost btn-sm" id="btnPrintLineup">🖨 Mode impression</button>
         </div>
         <div class="status-bar" id="statusBar"></div>
       </div>
@@ -633,18 +662,20 @@
 
   <!-- GITHUB / PERSISTENCE -->
   <section class="card">
-    <h2>3) Sauvegarde GitHub (lineups_YYYY.json)</h2>
+    <h2>3) Sauvegarde GitHub</h2>
     <div class="top-controls">
       <div style="flex:1">
         <label for="ghToken">GitHub PAT (fine-grained, contents: read/write sur ce repo)</label>
         <input type="password" id="ghToken" placeholder="pat_...">
         <div class="hint">
-          Utilisé seulement dans cette page, jamais stocké. Lineups : <code>data/lineups_YYYY.json</code>.
+          Utilisé seulement dans cette page, jamais stocké.  
+          Lineups : <code>data/lineups_YYYY.json</code> — Joueurs : <code>data/players.json</code>.
         </div>
       </div>
-      <div style="flex:0 0 180px;display:flex;flex-direction:column;gap:6px">
-        <button class="btn btn-ghost btn-sm" id="btnGhLoad">⬇ GitHub (charger)</button>
-        <button class="btn btn-primary btn-sm" id="btnGhSave">⬆ GitHub (sauvegarder)</button>
+      <div style="flex:0 0 200px;display:flex;flex-direction:column;gap:6px">
+        <button class="btn btn-ghost btn-sm" id="btnGhLoad">⬇ GitHub (charger lineups)</button>
+        <button class="btn btn-primary btn-sm" id="btnGhSave">⬆ GitHub (sauvegarder lineups)</button>
+        <button class="btn btn-ghost btn-sm" id="btnGhSavePlayers">⬆ GitHub (sauvegarder joueurs)</button>
       </div>
     </div>
   </section>
@@ -748,6 +779,7 @@
     </div>
 
     <div class="edit-footer">
+      <button class="btn btn-ghost btn-sm" id="editReset">Réinitialiser</button>
       <button class="btn btn-ghost btn-sm" id="editCancel">Annuler</button>
       <button class="btn btn-primary btn-sm" id="editSave">Enregistrer</button>
     </div>
@@ -755,6 +787,13 @@
 </div>
 
 <script>
+  // === HAPTIC ===
+  function haptic(ms = 20){
+    try{
+      if (navigator.vibrate) navigator.vibrate(ms);
+    }catch(e){}
+  }
+
   // === CONFIG (GH + tournois) ===
   const GH_OWNER = "yaban1981";
   const GH_REPO  = "the-road-to-the-throne-site";
@@ -769,19 +808,21 @@
   };
 
   // === GLOBAL STATE ===
+  let originalPlayers = [];
   let allPlayers = [];
   let filteredPlayers = [];
   let currentYear = 2014;
   let currentTournamentKey = "boston";
 
-  let lineups = {};   // per year page, but we stock for all tKeys
-  let confirmed = {}; // per tKey: {playerId:true}
+  let lineups = {};
+  let confirmed = {};
 
   let ghToken = null;
   let ghLineupsSha = null;
+  let ghPlayersSha = null;
 
-  let activeSlot = null; // {tKey, group, role}
-  let positionFilter = "ALL"; // ALL,G,D,C,F
+  let activeSlot = null;       // {tKey, group, role}
+  let positionFilter = "ALL";  // ALL,G,D,C,F
 
   const toastEl = document.getElementById("toast");
 
@@ -937,10 +978,12 @@
       }
       const data = await res.json();
       const arr = Array.isArray(data.players) ? data.players : (Array.isArray(data) ? data : []);
-      allPlayers = arr;
+      originalPlayers = clone(arr);
+      allPlayers = clone(arr);
       toast(`Joueurs chargés: ${arr.length}`);
       renderPlayers();
       renderSummary();
+      haptic();
     }catch(e){
       console.error(e);
       toast("Erreur de chargement des joueurs");
@@ -970,7 +1013,6 @@
     if (prim === "GOL" || sec === "GOL") return "G";
     if (prim === "DEF" || sec === "DEF") return "D";
     if (prim === "CEN" || sec === "CEN") return "C";
-    // reste: forwards
     if (prim === "FWD" || sec === "FWD") return "F";
     return "X";
   }
@@ -1025,11 +1067,29 @@
       return;
     }
 
+    ensureLineup(currentTournamentKey);
+    const L = lineups[currentTournamentKey];
+    const placedIds = new Set();
+    if (L.G[0]) placedIds.add(L.G[0]);
+    ["D1","D2","D3"].forEach(g => {
+      ["LD","RD"].forEach(r => {
+        const id = L[g][r][0];
+        if (id) placedIds.add(id);
+      });
+    });
+    ["F1","F2","F3"].forEach(g => {
+      ["LW","C","RW"].forEach(r => {
+        const id = L[g][r][0];
+        if (id) placedIds.add(id);
+      });
+    });
+
     const q = searchInput.value.trim().toLowerCase();
     const onlyAvail = onlyAvailableCheckbox.checked;
 
     filteredPlayers = allPlayers.filter(p => {
       if (String(p.birth_year) !== String(currentYear)) return false;
+      if (placedIds.has(p.id)) return false;
 
       if (q){
         const name = (p.name || "").toLowerCase();
@@ -1111,6 +1171,7 @@
         if (map[p.id]){ delete map[p.id]; confirmBtn.classList.remove("confirmed"); }
         else { map[p.id] = true; confirmBtn.classList.add("confirmed"); }
         renderSummary();
+        haptic();
       });
 
       const editBtn = document.createElement("button");
@@ -1206,6 +1267,7 @@
   const lineupBoardEl = document.getElementById("lineupBoard");
   const statusBarEl = document.getElementById("statusBar");
   const btnCheckLineup = document.getElementById("btnCheckLineup");
+  const btnPrintLineup = document.getElementById("btnPrintLineup");
 
   function getSlotPlayerId(L, group, role){
     if (group === "G" && role === "G") return L.G[0] || null;
@@ -1284,7 +1346,7 @@
 
           const label = document.createElement("span");
           label.className = "slot-label-pill";
-          label.textContent = s.group + " • " + s.role;
+          label.textContent = s.group;
 
           const logo = document.createElement("span");
           logo.className = "slot-logo";
@@ -1319,7 +1381,11 @@
           slotEl.appendChild(clearBtn);
 
           slotEl.addEventListener("click", () => {
+            const assignedId = getSlotPlayerId(L, s.group, s.role);
             setActiveSlot(currentTournamentKey, s.group, s.role);
+            if (assignedId){
+              openEditPlayer(assignedId);
+            }
           });
 
           line.appendChild(slotEl);
@@ -1344,7 +1410,6 @@
       activeSlot = { tKey, group, role };
     }
 
-    // Ajuster le filtre position en fonction du slot
     if (activeSlot){
       let newFilter = "ALL";
       if (role === "G") newFilter = "G";
@@ -1369,6 +1434,7 @@
     setSlotPlayerId(L, group, role, null);
     renderLineup();
     renderSummary();
+    haptic();
   }
 
   function removeEverywhere(tKey, playerId){
@@ -1461,6 +1527,7 @@
     renderLineup();
     renderPlayers();
     renderSummary();
+    haptic();
   }
 
   function updateStatusBar(){
@@ -1496,6 +1563,11 @@
   btnCheckLineup.addEventListener("click", () => {
     updateStatusBar();
     toast("Lineup vérifié.");
+    haptic();
+  });
+
+  btnPrintLineup.addEventListener("click", () => {
+    window.print();
   });
 
   // === SUMMARY ===
@@ -1558,6 +1630,7 @@
   const editClose   = document.getElementById("editClose");
   const editCancel  = document.getElementById("editCancel");
   const editSaveBtn = document.getElementById("editSave");
+  const editReset   = document.getElementById("editReset");
   const editTitle   = document.getElementById("editTitle");
 
   const editJerseyType  = document.getElementById("editJerseyType");
@@ -1612,6 +1685,25 @@
     if (e.target === editOverlay) closeEditPlayer();
   });
 
+  editReset.addEventListener("click", () => {
+    if (!editingPlayerId) return;
+    const idxOrig = originalPlayers.findIndex(x => x.id === editingPlayerId);
+    if (idxOrig < 0){
+      toast("Aucune version originale trouvée.");
+      return;
+    }
+    const orig = clone(originalPlayers[idxOrig]);
+    const idx = allPlayers.findIndex(x => x.id === editingPlayerId);
+    if (idx >= 0) allPlayers[idx] = orig;
+
+    openEditPlayer(editingPlayerId);
+    renderPlayers();
+    renderLineup();
+    renderSummary();
+    toast("Joueur réinitialisé.");
+    haptic();
+  });
+
   editSaveBtn.addEventListener("click", () => {
     if (!editingPlayerId) return;
     const idx = allPlayers.findIndex(x => x.id === editingPlayerId);
@@ -1647,12 +1739,14 @@
     renderLineup();
     renderSummary();
     toast("Joueur mis à jour.");
+    haptic();
   });
 
   // === GITHUB INTEGRATION ===
   const ghTokenInput = document.getElementById("ghToken");
   const btnGhLoad = document.getElementById("btnGhLoad");
   const btnGhSave = document.getElementById("btnGhSave");
+  const btnGhSavePlayers = document.getElementById("btnGhSavePlayers");
 
   function getGhToken(){
     if (ghToken) return ghToken;
@@ -1707,6 +1801,7 @@
       lineups   = clone(data.tournaments || {});
       confirmed = clone(data.confirmed   || {});
       toast("Lineups chargés depuis GitHub.");
+      haptic();
       renderLineup();
       renderPlayers();
       renderSummary();
@@ -1755,9 +1850,76 @@
       }
       ghLineupsSha = j.content && j.content.sha ? j.content.sha : ghLineupsSha;
       toast("Lineups sauvegardés sur GitHub.");
+      haptic();
     }catch(e){
       console.error(e);
-      alert("Erreur lors de la sauvegarde GitHub. Voir console.");
+      alert("Erreur lors de la sauvegarde des lineups. Voir console.");
+    }
+  });
+
+  btnGhSavePlayers.addEventListener("click", async () => {
+    const token = getGhToken();
+    if (!token) return;
+    const path = PLAYERS_PATH;
+
+    try{
+      const resGet = await fetch(
+        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${encodeURIComponent(path)}`,
+        {
+          headers:{
+            "Accept":"application/vnd.github+json",
+            "Authorization":`Bearer ${token}`,
+            "X-GitHub-Api-Version":"2022-11-28"
+          },
+          cache:"no-store"
+        }
+      );
+      if (!resGet.ok && resGet.status !== 404){
+        const txt = await resGet.text();
+        console.error("GitHub get players error", resGet.status, txt);
+        alert("Erreur GitHub (get players).");
+        return;
+      }
+      if (resGet.ok){
+        const j = await resGet.json();
+        ghPlayersSha = j.sha || null;
+      }else{
+        ghPlayersSha = null;
+      }
+
+      const payload = { players: allPlayers };
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+      const body = {
+        message: "chore: update players.json via QHC admin",
+        content,
+        sha: ghPlayersSha || undefined
+      };
+
+      const resPut = await fetch(
+        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${encodeURIComponent(path)}`,
+        {
+          method:"PUT",
+          headers:{
+            "Accept":"application/vnd.github+json",
+            "Authorization":`Bearer ${token}`,
+            "X-GitHub-Api-Version":"2022-11-28",
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(body)
+        }
+      );
+      const jp = await resPut.json();
+      if (!resPut.ok){
+        console.error("GitHub save players error", resPut.status, jp);
+        alert("Erreur GitHub (save players).");
+        return;
+      }
+      ghPlayersSha = jp.content && jp.content.sha ? jp.content.sha : ghPlayersSha;
+      toast("Joueurs sauvegardés dans players.json.");
+      haptic();
+    }catch(e){
+      console.error(e);
+      alert("Erreur lors de la sauvegarde des joueurs. Voir console.");
     }
   });
 
