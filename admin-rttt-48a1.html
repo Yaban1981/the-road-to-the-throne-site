@@ -1287,4 +1287,485 @@
           label.textContent = s.group + " • " + s.role;
 
           const logo = document.createElement("span");
-          logo.className = "
+          logo.className = "slot-logo";
+          logo.textContent = "Q";
+
+          const playerSpan = document.createElement("span");
+          playerSpan.className = "slot-player";
+
+          const clearBtn = document.createElement("span");
+          clearBtn.className = "slot-clear";
+
+          const assignedId = getSlotPlayerId(L, s.group, s.role);
+          if (assignedId){
+            slotEl.classList.add("has-player");
+            const p = allPlayers.find(x => x.id === assignedId);
+            const num = p ? jerseyNumberForPlayer(p) : null;
+            const ln  = p ? lastNameOf(p) : assignedId;
+            playerSpan.textContent = (num != null ? "#" + num + " " : "") + (ln || assignedId);
+            clearBtn.textContent = "✕";
+            clearBtn.addEventListener("click", ev => {
+              ev.stopPropagation();
+              clearSlot(currentTournamentKey, s.group, s.role);
+            });
+          }else{
+            playerSpan.classList.add("slot-empty");
+            playerSpan.textContent = "Tap pour choisir";
+          }
+
+          slotEl.appendChild(label);
+          slotEl.appendChild(logo);
+          slotEl.appendChild(playerSpan);
+          slotEl.appendChild(clearBtn);
+
+          slotEl.addEventListener("click", () => {
+            setActiveSlot(currentTournamentKey, s.group, s.role);
+          });
+
+          line.appendChild(slotEl);
+        });
+
+        rowEl.appendChild(line);
+      });
+
+      lineupBoardEl.appendChild(rowEl);
+    });
+
+    updateStatusBar();
+  }
+
+  function setActiveSlot(tKey, group, role){
+    if (activeSlot &&
+        activeSlot.tKey === tKey &&
+        activeSlot.group === group &&
+        activeSlot.role === role){
+      activeSlot = null;
+    }else{
+      activeSlot = { tKey, group, role };
+    }
+
+    // Ajuster le filtre position en fonction du slot
+    if (activeSlot){
+      let newFilter = "ALL";
+      if (role === "G") newFilter = "G";
+      else if (role === "LD" || role === "RD") newFilter = "D";
+      else if (role === "C") newFilter = "C";
+      else if (role === "LW" || role === "RW") newFilter = "F";
+      positionFilter = newFilter;
+      posFilterRow.querySelectorAll(".filter-pill").forEach(b => {
+        const v = b.getAttribute("data-pos");
+        if (v === positionFilter) b.setAttribute("aria-pressed","true");
+        else b.removeAttribute("aria-pressed");
+      });
+    }
+
+    renderLineup();
+    renderPlayers();
+  }
+
+  function clearSlot(tKey, group, role){
+    ensureLineup(tKey);
+    const L = lineups[tKey];
+    setSlotPlayerId(L, group, role, null);
+    renderLineup();
+    renderSummary();
+  }
+
+  function removeEverywhere(tKey, playerId){
+    ensureLineup(tKey);
+    const L = lineups[tKey];
+    L.G = L.G.filter(id => id !== playerId);
+    ["D1","D2","D3"].forEach(g => {
+      ["LD","RD"].forEach(r => {
+        L[g][r] = L[g][r].filter(id => id !== playerId);
+      });
+    });
+    ["F1","F2","F3"].forEach(g => {
+      ["LW","C","RW"].forEach(r => {
+        L[g][r] = L[g][r].filter(id => id !== playerId);
+      });
+    });
+  }
+
+  function findConflictNumber(tKey, newPlayerId, num){
+    if (num == null) return null;
+    ensureLineup(tKey);
+    const L = lineups[tKey];
+    const allIds = [];
+
+    if (L.G[0]) allIds.push(L.G[0]);
+    ["D1","D2","D3"].forEach(g => {
+      ["LD","RD"].forEach(r => {
+        const id = L[g][r][0];
+        if (id) allIds.push(id);
+      });
+    });
+    ["F1","F2","F3"].forEach(g => {
+      ["LW","C","RW"].forEach(r => {
+        const id = L[g][r][0];
+        if (id) allIds.push(id);
+      });
+    });
+
+    for (const id of allIds){
+      if (id === newPlayerId) continue;
+      const p = allPlayers.find(x => x.id === id);
+      if (!p) continue;
+      const n = jerseyNumberForPlayer(p);
+      if (n === num) return id;
+    }
+    return null;
+  }
+
+  function assignPlayerToActiveSlot(playerId){
+    if (!activeSlot) return;
+    ensureLineup(activeSlot.tKey);
+    const L = lineups[activeSlot.tKey];
+
+    const p = allPlayers.find(x => x.id === playerId);
+    if (!p){
+      toast("Joueur introuvable.");
+      return;
+    }
+    const sc = scoreForSlot(p, activeSlot.tKey, activeSlot.group, activeSlot.role);
+    if (sc < 0){
+      toast("Joueur non éligible à ce slot (position/dispo).");
+      return;
+    }
+
+    const prevId = getSlotPlayerId(L, activeSlot.group, activeSlot.role);
+
+    removeEverywhere(activeSlot.tKey, playerId);
+    setSlotPlayerId(L, activeSlot.group, activeSlot.role, playerId);
+
+    const num = jerseyNumberForPlayer(p);
+    const conflictId = findConflictNumber(activeSlot.tKey, playerId, num);
+    if (conflictId && num != null){
+      const conflictPlayer = allPlayers.find(x => x.id === conflictId);
+      const conflictName = conflictPlayer ? conflictPlayer.name : conflictId;
+      const msg =
+        `Conflit de numéro #${num} entre ${lastNameOf(conflictPlayer||{name:conflictName})} et ${lastNameOf(p)}.\n\n` +
+        "OK = garder le numéro pour le joueur déjà dans le lineup (annuler l'ajout).\n" +
+        "Annuler = garder le numéro pour le nouveau (à toi d'ajuster l'autre dans l'éditeur).";
+      const keepOld = window.confirm(msg);
+      if (keepOld){
+        removeEverywhere(activeSlot.tKey, playerId);
+        if (prevId) setSlotPlayerId(L, activeSlot.group, activeSlot.role, prevId);
+        renderLineup();
+        renderPlayers();
+        renderSummary();
+        return;
+      }
+    }
+
+    renderLineup();
+    renderPlayers();
+    renderSummary();
+  }
+
+  function updateStatusBar(){
+    statusBarEl.innerHTML = "";
+    if (!currentTournamentKey) return;
+    ensureLineup(currentTournamentKey);
+    const L = lineups[currentTournamentKey];
+
+    const cnt = {
+      G: L.G.length,
+      D: L.D1.LD.length + L.D1.RD.length +
+         L.D2.LD.length + L.D2.RD.length +
+         L.D3.LD.length + L.D3.RD.length,
+      F: L.F1.LW.length + L.F1.C.length + L.F1.RW.length +
+         L.F2.LW.length + L.F2.C.length + L.F2.RW.length +
+         L.F3.LW.length + L.F3.C.length + L.F3.RW.length
+    };
+
+    const ok = (cnt.G === 1 && cnt.D === 6 && cnt.F === 9);
+
+    const pill = document.createElement("span");
+    pill.className = "status-pill " + (ok ? "ok" : "bad");
+    pill.textContent = ok
+      ? "Lineup complet (1G / 6D / 9F)"
+      : `Lineup incomplet (G:${cnt.G}/1, D:${cnt.D}/6, F:${cnt.F}/9)`;
+    statusBarEl.appendChild(pill);
+
+    const t = document.createElement("span");
+    t.textContent = ` Année ${currentYear} • ${TOURNAMENTS[currentTournamentKey].label}`;
+    statusBarEl.appendChild(t);
+  }
+
+  btnCheckLineup.addEventListener("click", () => {
+    updateStatusBar();
+    toast("Lineup vérifié.");
+  });
+
+  // === SUMMARY ===
+  const summaryEl = document.getElementById("summary");
+
+  function getSummaryData(){
+    const tKey = currentTournamentKey;
+    if (!tKey) return {data:null};
+    ensureLineup(tKey);
+    const L = lineups[tKey];
+    const confMap = confirmed[tKey] || {};
+    const confirmedIds = Object.keys(confMap);
+
+    const cnt = {
+      G: L.G.length,
+      D: L.D1.LD.length + L.D1.RD.length +
+         L.D2.LD.length + L.D2.RD.length +
+         L.D3.LD.length + L.D3.RD.length,
+      F: L.F1.LW.length + L.F1.C.length + L.F1.RW.length +
+         L.F2.LW.length + L.F2.C.length + L.F2.RW.length +
+         L.F3.LW.length + L.F3.C.length + L.F3.RW.length
+    };
+
+    return {
+      data:{
+        year: currentYear,
+        tournament: tKey,
+        tournament_label: TOURNAMENTS[tKey].label,
+        lineup_counts: cnt,
+        confirmed_ids: confirmedIds
+      }
+    };
+  }
+
+  function renderSummary(){
+    const {data} = getSummaryData();
+    if (!data){
+      summaryEl.textContent = "Sélectionne une année et un tournoi pour voir le résumé.";
+      return;
+    }
+    const lines = [];
+    lines.push(`Année: ${data.year}`);
+    lines.push(`Tournoi: ${data.tournament_label}`);
+    lines.push("");
+    lines.push(`Lineup: G=${data.lineup_counts.G}, D=${data.lineup_counts.D}, F=${data.lineup_counts.F}`);
+    lines.push(`Confirmés (${data.confirmed_ids.length}):`);
+    if (data.confirmed_ids.length){
+      data.confirmed_ids.forEach(id => {
+        const p = allPlayers.find(x => x.id === id);
+        lines.push(`  - ${p ? p.name : id}`);
+      });
+    }else{
+      lines.push("  (aucun joueur marqué confirmé)");
+    }
+    summaryEl.textContent = lines.join("\n");
+  }
+
+  // === EDIT PLAYER OVERLAY ===
+  const editOverlay = document.getElementById("editOverlay");
+  const editClose   = document.getElementById("editClose");
+  const editCancel  = document.getElementById("editCancel");
+  const editSaveBtn = document.getElementById("editSave");
+  const editTitle   = document.getElementById("editTitle");
+
+  const editJerseyType  = document.getElementById("editJerseyType");
+  const editJerseySize  = document.getElementById("editJerseySize");
+  const editNum1        = document.getElementById("editNum1");
+  const editNum2        = document.getElementById("editNum2");
+  const editNum3        = document.getElementById("editNum3");
+  const editAvailBoston = document.getElementById("editAvailBoston");
+  const editAvailMeltdown = document.getElementById("editAvailMeltdown");
+  const editAvailJaypeak  = document.getElementById("editAvailJaypeak");
+  const editAvailThrone   = document.getElementById("editAvailThrone");
+  const editConfirmed   = document.getElementById("editConfirmed");
+  const editStyle       = document.getElementById("editStyle");
+
+  function openEditPlayer(playerId){
+    const p = allPlayers.find(x => x.id === playerId);
+    if (!p) return;
+    editingPlayerId = playerId;
+    editTitle.textContent = `Éditer ${p.name || "(sans nom)"}`;
+
+    editJerseyType.value = p.jersey?.type || "Loaned";
+    editJerseySize.value = p.jersey?.size || "";
+
+    const nums = p.jersey?.pref_numbers || [];
+    editNum1.value = nums[0] != null ? nums[0] : "";
+    editNum2.value = nums[1] != null ? nums[1] : "";
+    editNum3.value = nums[2] != null ? nums[2] : "";
+
+    const av = p.availability || {};
+    editAvailBoston.value   = av.boston   || "";
+    editAvailMeltdown.value = av.meltdown || "";
+    editAvailJaypeak.value  = av.jaypeak  || "";
+    editAvailThrone.value   = av.throne   || "";
+
+    ensureLineup(currentTournamentKey);
+    const map = confirmed[currentTournamentKey] || {};
+    editConfirmed.checked = !!map[playerId];
+
+    editStyle.value = p.player_style || "";
+
+    editOverlay.classList.add("show");
+  }
+
+  function closeEditPlayer(){
+    editOverlay.classList.remove("show");
+    editingPlayerId = null;
+  }
+
+  editClose.addEventListener("click", closeEditPlayer);
+  editCancel.addEventListener("click", closeEditPlayer);
+  editOverlay.addEventListener("click", e => {
+    if (e.target === editOverlay) closeEditPlayer();
+  });
+
+  editSaveBtn.addEventListener("click", () => {
+    if (!editingPlayerId) return;
+    const idx = allPlayers.findIndex(x => x.id === editingPlayerId);
+    if (idx < 0) return;
+    const p = allPlayers[idx];
+
+    p.jersey = p.jersey || {};
+    p.jersey.type = editJerseyType.value || "Loaned";
+    p.jersey.size = editJerseySize.value || "";
+
+    const nums = [];
+    [editNum1.value, editNum2.value, editNum3.value].forEach(v => {
+      const n = parseInt((v || "").trim(),10);
+      if (!isNaN(n)) nums.push(n);
+    });
+    p.jersey.pref_numbers = nums;
+
+    p.availability = p.availability || {};
+    p.availability.boston   = editAvailBoston.value || "";
+    p.availability.meltdown = editAvailMeltdown.value || "";
+    p.availability.jaypeak  = editAvailJaypeak.value || "";
+    p.availability.throne   = editAvailThrone.value || "";
+
+    p.player_style = editStyle.value || "";
+
+    ensureLineup(currentTournamentKey);
+    confirmed[currentTournamentKey] = confirmed[currentTournamentKey] || {};
+    if (editConfirmed.checked) confirmed[currentTournamentKey][editingPlayerId] = true;
+    else delete confirmed[currentTournamentKey][editingPlayerId];
+
+    closeEditPlayer();
+    renderPlayers();
+    renderLineup();
+    renderSummary();
+    toast("Joueur mis à jour.");
+  });
+
+  // === GITHUB INTEGRATION ===
+  const ghTokenInput = document.getElementById("ghToken");
+  const btnGhLoad = document.getElementById("btnGhLoad");
+  const btnGhSave = document.getElementById("btnGhSave");
+
+  function getGhToken(){
+    if (ghToken) return ghToken;
+    const v = (ghTokenInput.value || "").trim();
+    if (!v){
+      alert("Entre un GitHub PAT avec droits 'contents: read/write' sur le repo.");
+      return null;
+    }
+    ghToken = v;
+    return ghToken;
+  }
+
+  function lineupsPathForYear(year){
+    return GH_LINEUPS_TEMPLATE.replace("YEAR", String(year));
+  }
+
+  btnGhLoad.addEventListener("click", async () => {
+    const token = getGhToken();
+    if (!token) return;
+    const path = lineupsPathForYear(currentYear);
+    try{
+      const res = await fetch(
+        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${encodeURIComponent(path)}`,
+        {
+          headers:{
+            "Accept":"application/vnd.github+json",
+            "Authorization":`Bearer ${token}`,
+            "X-GitHub-Api-Version":"2022-11-28"
+          },
+          cache:"no-store"
+        }
+      );
+      if (res.status === 404){
+        toast("Pas encore de lineups pour cette année (fichier manquant).");
+        lineups = {};
+        confirmed = {};
+        ghLineupsSha = null;
+        renderLineup();
+        renderSummary();
+        return;
+      }
+      if (!res.ok){
+        const txt = await res.text();
+        console.error("GitHub load error", res.status, txt);
+        alert("Erreur GitHub (load). Vérifie le PAT / repo.");
+        return;
+      }
+      const j = await res.json();
+      ghLineupsSha = j.sha || null;
+      const decoded = atob((j.content || "").replace(/\n/g,""));
+      const data = JSON.parse(decoded);
+      lineups   = clone(data.tournaments || {});
+      confirmed = clone(data.confirmed   || {});
+      toast("Lineups chargés depuis GitHub.");
+      renderLineup();
+      renderPlayers();
+      renderSummary();
+    }catch(e){
+      console.error(e);
+      alert("Erreur lors du chargement GitHub. Voir console.");
+    }
+  });
+
+  btnGhSave.addEventListener("click", async () => {
+    const token = getGhToken();
+    if (!token) return;
+    const path = lineupsPathForYear(currentYear);
+    const payload = {
+      version: 1,
+      year: String(currentYear),
+      updated_at: new Date().toISOString(),
+      tournaments: lineups,
+      confirmed: confirmed
+    };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const body = {
+      message: `chore: update lineups_${currentYear}.json via QHC admin`,
+      content,
+      sha: ghLineupsSha || undefined
+    };
+    try{
+      const res = await fetch(
+        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${encodeURIComponent(path)}`,
+        {
+          method:"PUT",
+          headers:{
+            "Accept":"application/vnd.github+json",
+            "Authorization":`Bearer ${token}`,
+            "X-GitHub-Api-Version":"2022-11-28",
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(body)
+        }
+      );
+      const j = await res.json();
+      if (!res.ok){
+        console.error("GitHub save error", res.status, j);
+        alert("Erreur GitHub (save). Vérifie le PAT / repo.");
+        return;
+      }
+      ghLineupsSha = j.content && j.content.sha ? j.content.sha : ghLineupsSha;
+      toast("Lineups sauvegardés sur GitHub.");
+    }catch(e){
+      console.error(e);
+      alert("Erreur lors de la sauvegarde GitHub. Voir console.");
+    }
+  });
+
+  // === INIT ===
+  setupYearAndTournaments();
+  renderPlayers();
+  renderLineup();
+  renderSummary();
+</script>
+</body>
+</html>
