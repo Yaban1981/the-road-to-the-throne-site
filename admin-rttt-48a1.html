@@ -666,16 +666,16 @@
     <div class="top-controls">
       <div style="flex:1">
         <label for="ghToken">GitHub PAT (fine-grained, contents: read/write sur ce repo)</label>
-        <input type="password" id="ghToken" placeholder="pat_...">
+        <input type="password" id="ghToken" placeholder="pat_... (optionnel si tu n'utilises pas GitHub)">
         <div class="hint">
-          Utilisé seulement dans cette page, jamais stocké.  
+          Si tu ne renseignes pas de PAT, les boutons GitHub seront ignorés (pas d'erreur).  
           Lineups : <code>data/lineups_YYYY.json</code> — Joueurs : <code>data/players.json</code>.
         </div>
       </div>
       <div style="flex:0 0 200px;display:flex;flex-direction:column;gap:6px">
-        <button class="btn btn-ghost btn-sm" id="btnGhLoad">⬇ GitHub (charger lineups)</button>
-        <button class="btn btn-primary btn-sm" id="btnGhSave">⬆ GitHub (sauvegarder lineups)</button>
-        <button class="btn btn-ghost btn-sm" id="btnGhSavePlayers">⬆ GitHub (sauvegarder joueurs)</button>
+        <button class="btn btn-ghost btn-sm" id="btnGhLoad">⬇ Charger lineups GitHub</button>
+        <button class="btn btn-primary btn-sm" id="btnGhSave">⬆ Sauvegarder lineups</button>
+        <button class="btn btn-ghost btn-sm" id="btnGhSavePlayers">⬆ Sauvegarder joueurs</button>
       </div>
     </div>
   </section>
@@ -821,8 +821,8 @@
   let ghLineupsSha = null;
   let ghPlayersSha = null;
 
-  let activeSlot = null;       // {tKey, group, role}
-  let positionFilter = "ALL";  // ALL,G,D,C,F
+  let activeSlot = null;
+  let positionFilter = "ALL";
 
   const toastEl = document.getElementById("toast");
 
@@ -1459,7 +1459,7 @@
     const L = lineups[tKey];
     const allIds = [];
 
-    if (L.G[0]) allIds.push(L.G[0]);
+    if (L.G[0]) allIds.add(L.G[0]);
     ["D1","D2","D3"].forEach(g => {
       ["LD","RD"].forEach(r => {
         const id = L[g][r][0];
@@ -1752,7 +1752,7 @@
     if (ghToken) return ghToken;
     const v = (ghTokenInput.value || "").trim();
     if (!v){
-      alert("Entre un GitHub PAT avec droits 'contents: read/write' sur le repo.");
+      toast("PAT GitHub non configuré — action ignorée.");
       return null;
     }
     ghToken = v;
@@ -1791,7 +1791,7 @@
       if (!res.ok){
         const txt = await res.text();
         console.error("GitHub load error", res.status, txt);
-        alert("Erreur GitHub (load). Vérifie le PAT / repo.");
+        toast("Erreur GitHub (load lineups).");
         return;
       }
       const j = await res.json();
@@ -1807,7 +1807,7 @@
       renderSummary();
     }catch(e){
       console.error(e);
-      alert("Erreur lors du chargement GitHub. Voir console.");
+      toast("Erreur lors du chargement GitHub (lineups).");
     }
   });
 
@@ -1845,7 +1845,7 @@
       const j = await res.json();
       if (!res.ok){
         console.error("GitHub save error", res.status, j);
-        alert("Erreur GitHub (save). Vérifie le PAT / repo.");
+        toast("Erreur GitHub (save lineups).");
         return;
       }
       ghLineupsSha = j.content && j.content.sha ? j.content.sha : ghLineupsSha;
@@ -1853,7 +1853,7 @@
       haptic();
     }catch(e){
       console.error(e);
-      alert("Erreur lors de la sauvegarde des lineups. Voir console.");
+      toast("Erreur lors de la sauvegarde des lineups.");
     }
   });
 
@@ -1877,7 +1877,7 @@
       if (!resGet.ok && resGet.status !== 404){
         const txt = await resGet.text();
         console.error("GitHub get players error", resGet.status, txt);
-        alert("Erreur GitHub (get players).");
+        toast("Erreur GitHub (get players).");
         return;
       }
       if (resGet.ok){
@@ -1911,7 +1911,7 @@
       const jp = await resPut.json();
       if (!resPut.ok){
         console.error("GitHub save players error", resPut.status, jp);
-        alert("Erreur GitHub (save players).");
+        toast("Erreur GitHub (save players).");
         return;
       }
       ghPlayersSha = jp.content && jp.content.sha ? jp.content.sha : ghPlayersSha;
@@ -1919,7 +1919,7 @@
       haptic();
     }catch(e){
       console.error(e);
-      alert("Erreur lors de la sauvegarde des joueurs. Voir console.");
+      toast("Erreur lors de la sauvegarde des joueurs.");
     }
   });
 
