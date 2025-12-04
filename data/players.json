@@ -77,6 +77,44 @@
       "submitted_at": "Horodatage: 2025-12-01 22 h 37 min 24 s"
     },
     {
+      "id": "luca-iacono-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Luca Iacono",
+      "birth_year": 2014,
+      "city": "Montreal",
+      "current_team": "Montréal Élite",
+      "email": "alvaro.lina.1@gmail.com",
+      "parent": {
+        "email": "alvaro.lina.1@gmail.com",
+        "phone": "5148136294"
+      },
+      "positions": {
+        "primary": "FWD",
+        "secondary": "NONE"
+      },
+      "sides": ["L"],
+      "player_style": "Playmaker",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "YL",
+        "pref_numbers": [10, 7, 20]
+      },
+      "availability": {
+        "boston": "No",
+        "meltdown": "Yes",
+        "jaypeak": "",
+        "throne": "No"
+      },
+      "confidence_pct": 90,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-29 10 h 13 min 35 s"
+    },
+    {
       "id": "derek-villeneuve-2014",
       "form_version": "rttt_v1_native_apps_script",
       "name": "Derek Villeneuve",
@@ -189,6 +227,44 @@
         "consent_contact": true
       },
       "submitted_at": "Horodatage: 2025-11-24 18 h 10 min 10 s"
+    },
+    {
+      "id": "wyatt-cronin-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Wyatt Cronin",
+      "birth_year": 2014,
+      "city": "York",
+      "current_team": "Top Gun Rlite",
+      "email": "ecronin77@protonmail.com",
+      "parent": {
+        "email": "ecronin77@protonmail.com",
+        "phone": "2073517171"
+      },
+      "positions": {
+        "primary": "CEN",
+        "secondary": "FWD"
+      },
+      "sides": ["L"],
+      "player_style": "Gritty fast and furious",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "AS",
+        "pref_numbers": [55, 55, 55]
+      },
+      "availability": {
+        "boston": "TBD",
+        "meltdown": "TBD",
+        "jaypeak": "",
+        "throne": "TBD"
+      },
+      "confidence_pct": 90,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-19 12 h 19 min 02 s"
     },
     {
       "id": "malik-normandin-2014",
