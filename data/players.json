@@ -16,13 +16,19 @@
         "primary": "FWD",
         "secondary": "FWD"
       },
-      "sides": ["R"],
+      "sides": [
+        "R"
+      ],
       "player_style": "Offensif, Shooter",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "YL",
-        "pref_numbers": [9, 29, 11]
+        "pref_numbers": [
+          9,
+          29,
+          11
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -54,13 +60,19 @@
         "primary": "CEN",
         "secondary": "FWD"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "",
       "video_links": "",
       "jersey": {
         "type": "Customized",
         "size": "AS",
-        "pref_numbers": [37, 14, 75]
+        "pref_numbers": [
+          37,
+          14,
+          75
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -92,13 +104,19 @@
         "primary": "FWD",
         "secondary": "NONE"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Playmaker",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "YL",
-        "pref_numbers": [10, 7, 20]
+        "pref_numbers": [
+          10,
+          7,
+          20
+        ]
       },
       "availability": {
         "boston": "No",
@@ -130,13 +148,19 @@
         "primary": "DEF",
         "secondary": "FWD"
       },
-      "sides": ["R"],
+      "sides": [
+        "R"
+      ],
       "player_style": "Mobile ,rapide ,fluide ,bon passeur",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "YL",
-        "pref_numbers": [72, 48, 8]
+        "pref_numbers": [
+          72,
+          48,
+          8
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -168,13 +192,19 @@
         "primary": "FWD",
         "secondary": "NONE"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Rapide",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "AS",
-        "pref_numbers": [16, 19, 81]
+        "pref_numbers": [
+          16,
+          19,
+          81
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -206,13 +236,19 @@
         "primary": "CEN",
         "secondary": "FWD"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Rapide",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "YL",
-        "pref_numbers": [9, 71, 14]
+        "pref_numbers": [
+          9,
+          71,
+          14
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -244,13 +280,19 @@
         "primary": "CEN",
         "secondary": "FWD"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Gritty fast and furious",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "AS",
-        "pref_numbers": [55, 55, 55]
+        "pref_numbers": [
+          55,
+          55,
+          55
+        ]
       },
       "availability": {
         "boston": "TBD",
@@ -282,13 +324,19 @@
         "primary": "CEN",
         "secondary": "FWD"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Fabriquant de jeu / kucherov",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "AS",
-        "pref_numbers": [86, 97, 14]
+        "pref_numbers": [
+          86,
+          97,
+          14
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -320,13 +368,20 @@
         "primary": "DEF",
         "secondary": "NONE"
       },
-      "sides": ["L", "R"],
+      "sides": [
+        "L",
+        "R"
+      ],
       "player_style": "Rapide, mobile, coachable.",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "AS",
-        "pref_numbers": [76, 8, 88]
+        "pref_numbers": [
+          76,
+          8,
+          88
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -358,13 +413,19 @@
         "primary": "DEF",
         "secondary": "NONE"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Défensif et aime se porter en avant",
       "video_links": "",
       "jersey": {
         "type": "Customized",
         "size": "AS",
-        "pref_numbers": [5, 4, 11]
+        "pref_numbers": [
+          5,
+          4,
+          11
+        ]
       },
       "availability": {
         "boston": "TBD",
@@ -396,13 +457,19 @@
         "primary": "DEF",
         "secondary": "NONE"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Polyvalent",
       "video_links": "",
       "jersey": {
         "type": "Customized",
         "size": "AS",
-        "pref_numbers": [8, 6, 53]
+        "pref_numbers": [
+          8,
+          6,
+          53
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -434,13 +501,19 @@
         "primary": "GOL",
         "secondary": "NONE"
       },
-      "sides": ["R"],
+      "sides": [
+        "R"
+      ],
       "player_style": "Jordan Binnington et Dustin Wolf😉",
       "video_links": "",
       "jersey": {
         "type": "Customized",
         "size": "AS",
-        "pref_numbers": [31, 29, 32]
+        "pref_numbers": [
+          31,
+          29,
+          32
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -456,7 +529,6 @@
       },
       "submitted_at": "Submitted at Thu, Nov 13, 2025 8:51 PM (UTC)"
     },
-
     {
       "id": "rafael-leblanc-2015",
       "form_version": "rttt_v1_native_apps_script",
@@ -473,13 +545,19 @@
         "primary": "FWD",
         "secondary": "FWD"
       },
-      "sides": ["R"],
+      "sides": [
+        "R"
+      ],
       "player_style": "All around",
       "video_links": "",
       "jersey": {
         "type": "Customized",
         "size": "YL",
-        "pref_numbers": [62, 94, 55]
+        "pref_numbers": [
+          62,
+          94,
+          55
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -511,7 +589,9 @@
         "primary": "DEF",
         "secondary": "FWD"
       },
-      "sides": ["R"],
+      "sides": [
+        "R"
+      ],
       "player_style": "Défenseur offensif",
       "video_links": "",
       "jersey": {
@@ -549,13 +629,18 @@
         "primary": "GOL",
         "secondary": "NONE"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "AS",
-        "pref_numbers": [31, 0]
+        "pref_numbers": [
+          31,
+          0
+        ]
       },
       "availability": {
         "boston": "TBD",
@@ -587,13 +672,19 @@
         "primary": "FWD",
         "secondary": "DEF"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Excellente vision jeux, robuste et bon passeur",
       "video_links": "",
       "jersey": {
         "type": "Customized",
         "size": "AS",
-        "pref_numbers": [93, 13, 73]
+        "pref_numbers": [
+          93,
+          13,
+          73
+        ]
       },
       "availability": {
         "boston": "Yes",
@@ -625,13 +716,18 @@
         "primary": "DEF",
         "secondary": "FWD"
       },
-      "sides": ["L", "R"],
+      "sides": [
+        "L",
+        "R"
+      ],
       "player_style": "Droitier",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "AS",
-        "pref_numbers": [4]
+        "pref_numbers": [
+          4
+        ]
       },
       "availability": {
         "boston": "No",
@@ -663,13 +759,19 @@
         "primary": "FWD",
         "secondary": "FWD"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "He is an little fast Winger who can quickly switch to attack. Defensive switching is slow and lazy sometimes lol.",
       "video_links": "N/A",
       "jersey": {
         "type": "Loaned",
         "size": "YL",
-        "pref_numbers": [50, 18, 7]
+        "pref_numbers": [
+          50,
+          18,
+          7
+        ]
       },
       "availability": {
         "boston": "TBD",
@@ -701,13 +803,19 @@
         "primary": "DEF",
         "secondary": "CEN"
       },
-      "sides": ["L"],
+      "sides": [
+        "L"
+      ],
       "player_style": "Fabricant de jeux",
       "video_links": "",
       "jersey": {
         "type": "Loaned",
         "size": "YL",
-        "pref_numbers": [24, 10, 98]
+        "pref_numbers": [
+          24,
+          10,
+          98
+        ]
       },
       "availability": {
         "boston": "TBD",
