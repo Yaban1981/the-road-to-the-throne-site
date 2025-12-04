@@ -294,7 +294,16 @@
       border:1px solid rgba(75,85,99,.9);
       background:rgba(15,23,42,.9);
     }
-    .tag-pos{border-color:rgba(56,189,248,.9);color:#e0f2fe}
+    /* Position principale (bleu) */
+    .tag-pos-primary{
+      border-color:rgba(56,189,248,.9);
+      color:#e0f2fe;
+    }
+    /* Position secondaire (orange) */
+    .tag-pos-secondary{
+      border-color:rgba(249,115,22,.9);
+      color:#fed7aa;
+    }
     .tag-side{border-color:rgba(74,222,128,.9);color:#bbf7d0}
     .tag-jersey{border-color:rgba(250,204,21,.9);color:#fef9c3}
     .tag-conf-ok{border-color:rgba(52,211,153,.9);color:#bbf7d0}
@@ -999,14 +1008,27 @@
     renderPlayers();
   });
 
-  function roleCategory(p){
-    const prim = (p.positions?.primary || "").toUpperCase();
-    const sec  = (p.positions?.secondary || "").toUpperCase();
-    if (prim === "GOL" || sec === "GOL") return "G";
-    if (prim === "DEF" || sec === "DEF") return "D";
-    if (prim === "CEN" || sec === "CEN") return "C";
-    if (prim === "FWD" || sec === "FWD") return "F";
-    return "X";
+  // === Position mapping: primaire / secondaire → filtre G/D/C/F ===
+  function mapPosToCategory(pos){
+    const p = (pos || "").toUpperCase();
+    if (p === "GOL" || p === "GOALER") return "G";
+    if (p === "DEF" || p === "DEFENCE") return "D";
+    if (p === "CEN" || p === "CENTER") return "C";
+    if (p === "FWD" || p === "FORWARD") return "F";
+    return null;
+  }
+
+  function roleCategories(p){
+    return {
+      primary:   mapPosToCategory(p.positions?.primary),
+      secondary: mapPosToCategory(p.positions?.secondary)
+    };
+  }
+
+  function matchesPositionFilter(p, filter){
+    if (filter === "ALL") return true;
+    const cats = roleCategories(p);
+    return cats.primary === filter || cats.secondary === filter;
   }
 
   function scoreForSlot(p, tKey, group, role){
@@ -1087,10 +1109,7 @@
         if (!name.includes(q) && !city.includes(q)) return false;
       }
 
-      if (positionFilter !== "ALL"){
-        const cat = roleCategory(p);
-        if (cat !== positionFilter) return false;
-      }
+      if (!matchesPositionFilter(p, positionFilter)) return false;
 
       if (onlyAvail){
         const av = (getAvailability(p, currentTournamentKey) || "").toUpperCase();
@@ -1185,15 +1204,16 @@
 
       const prim = p.positions?.primary;
       const sec  = p.positions?.secondary;
+
       if (prim){
         const t = document.createElement("span");
-        t.className = "tag tag-pos";
+        t.className = "tag tag-pos-primary";
         t.textContent = prim.toUpperCase();
         tags.appendChild(t);
       }
       if (sec && sec.toUpperCase() !== "NONE"){
         const t = document.createElement("span");
-        t.className = "tag tag-pos";
+        t.className = "tag tag-pos-secondary";
         t.textContent = sec.toUpperCase();
         tags.appendChild(t);
       }
@@ -1694,7 +1714,6 @@
   const btnGhSave = document.getElementById("btnGhSave");
   const btnGhSavePlayers = document.getElementById("btnGhSavePlayers");
 
-  // --- NOUVEAU : PAT mémorisé en localStorage ---
   (function initPatFromStorage(){
     try{
       const stored = localStorage.getItem("qhc_admin_pat");
@@ -1724,7 +1743,6 @@
       console.warn("Erreur en écrivant le PAT dans localStorage:", e);
     }
   });
-  // ------------------------------------------------
 
   function getGhToken(){
     if (ghToken) return ghToken;
