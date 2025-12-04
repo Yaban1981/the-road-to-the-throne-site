@@ -657,8 +657,8 @@
         <label for="ghToken">GitHub PAT (optionnel)</label>
         <input type="password" id="ghToken" placeholder="pat_... (sinon sauvegarde en téléchargement)">
         <div class="hint">
-          Sans PAT : les boutons GitHub téléchargent simplement les fichiers JSON (lineups / joueurs) sur ton appareil.  
-          Avec PAT : ils mettent à jour les fichiers dans le repo <code>data/lineups_YYYY.json</code> et <code>data/players.json</code>.
+          Sans PAT : les boutons sauvegardent en téléchargeant les fichiers JSON (lineups / joueurs) sur ton appareil.  
+          Avec PAT : ils mettent à jour <code>data/lineups_YYYY.json</code> et <code>data/players.json</code> dans le repo.
         </div>
       </div>
       <div style="flex:0 0 220px;display:flex;flex-direction:column;gap:6px">
@@ -1693,6 +1693,38 @@
   const btnGhLoad = document.getElementById("btnGhLoad");
   const btnGhSave = document.getElementById("btnGhSave");
   const btnGhSavePlayers = document.getElementById("btnGhSavePlayers");
+
+  // --- NOUVEAU : PAT mémorisé en localStorage ---
+  (function initPatFromStorage(){
+    try{
+      const stored = localStorage.getItem("qhc_admin_pat");
+      if (stored && typeof stored === "string"){
+        ghToken = stored;
+        ghTokenInput.value = stored;
+        toast("PAT GitHub chargé depuis ce navigateur.");
+      }
+    }catch(e){
+      console.warn("Impossible de lire le PAT depuis localStorage:", e);
+    }
+  })();
+
+  ghTokenInput.addEventListener("change", () => {
+    const v = (ghTokenInput.value || "").trim();
+    try{
+      if (v){
+        ghToken = v;
+        localStorage.setItem("qhc_admin_pat", v);
+        toast("PAT GitHub mémorisé sur cet appareil.");
+      }else{
+        ghToken = null;
+        localStorage.removeItem("qhc_admin_pat");
+        toast("PAT GitHub effacé de cet appareil.");
+      }
+    }catch(e){
+      console.warn("Erreur en écrivant le PAT dans localStorage:", e);
+    }
+  });
+  // ------------------------------------------------
 
   function getGhToken(){
     if (ghToken) return ghToken;
