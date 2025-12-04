@@ -1,0 +1,651 @@
+{
+  "players": [
+    {
+      "id": "samy-mottet-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Samy Mottet",
+      "birth_year": 2014,
+      "city": "Bécancour",
+      "current_team": "Estacades Mauricie M13 AAA",
+      "email": "mozer28@hotmail.com",
+      "parent": {
+        "email": "mozer28@hotmail.com",
+        "phone": "8194484899"
+      },
+      "positions": {
+        "primary": "FWD",
+        "secondary": "FWD"
+      },
+      "sides": ["R"],
+      "player_style": "Offensif, Shooter",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "YL",
+        "pref_numbers": [9, 29, 11]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "No",
+        "throne": "No"
+      },
+      "confidence_pct": 95,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-12-02 19 h 58 min 54 s"
+    },
+    {
+      "id": "rj-dumont-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "RJ Dumont",
+      "birth_year": 2014,
+      "city": "Smithfield",
+      "current_team": "Boston JR eagles",
+      "email": "premairhvac@aol.com",
+      "parent": {
+        "email": "premairhvac@aol.com",
+        "phone": "4015249958"
+      },
+      "positions": {
+        "primary": "CEN",
+        "secondary": "FWD"
+      },
+      "sides": ["L"],
+      "player_style": "",
+      "video_links": "",
+      "jersey": {
+        "type": "Customized",
+        "size": "AS",
+        "pref_numbers": [37, 14, 75]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "No",
+        "jaypeak": "",
+        "throne": "TBD"
+      },
+      "confidence_pct": 80,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-12-01 22 h 37 min 24 s"
+    },
+    {
+      "id": "derek-villeneuve-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Derek Villeneuve",
+      "birth_year": 2014,
+      "city": "Saint - Agathe",
+      "current_team": "Sélects du Nord",
+      "email": "villeneuve1605@gmail.com",
+      "parent": {
+        "email": "villeneuve1605@gmail.com",
+        "phone": "8194302637"
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "FWD"
+      },
+      "sides": ["R"],
+      "player_style": "Mobile ,rapide ,fluide ,bon passeur",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "YL",
+        "pref_numbers": [72, 48, 8]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "No",
+        "jaypeak": "",
+        "throne": "No"
+      },
+      "confidence_pct": 95,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-26 17 h 30 min 49 s"
+    },
+    {
+      "id": "samuel-pouliot-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Samuel Pouliot",
+      "birth_year": 2014,
+      "city": "Québec",
+      "current_team": "Aigles Polyvalente ancienne lorette",
+      "email": "grenouille64@hotmail.com",
+      "parent": {
+        "email": "grenouille64@hotmail.com",
+        "phone": "4189539871"
+      },
+      "positions": {
+        "primary": "FWD",
+        "secondary": "NONE"
+      },
+      "sides": ["L"],
+      "player_style": "Rapide",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "AS",
+        "pref_numbers": [16, 19, 81]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "",
+        "throne": "TBD"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-24 22 h 23 min 52 s"
+    },
+    {
+      "id": "hugo-carignan-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Hugo Carignan",
+      "birth_year": 2014,
+      "city": "Trois-Rivières",
+      "current_team": "Estacades AAA",
+      "email": "yannick_carignan@hotmail.com",
+      "parent": {
+        "email": "yannick_carignan@hotmail.com",
+        "phone": "5145881494"
+      },
+      "positions": {
+        "primary": "CEN",
+        "secondary": "FWD"
+      },
+      "sides": ["L"],
+      "player_style": "Rapide",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "YL",
+        "pref_numbers": [9, 71, 14]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "",
+        "throne": "Yes"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-24 18 h 10 min 10 s"
+    },
+    {
+      "id": "malik-normandin-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Malik Normandin",
+      "birth_year": 2014,
+      "city": "Bécancour",
+      "current_team": "Estacades M13 AAA",
+      "email": "nhldanorm@gmail.com",
+      "parent": {
+        "email": "nhldanorm@gmail.com",
+        "phone": "8193835726"
+      },
+      "positions": {
+        "primary": "CEN",
+        "secondary": "FWD"
+      },
+      "sides": ["L"],
+      "player_style": "Fabriquant de jeu / kucherov",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "AS",
+        "pref_numbers": [86, 97, 14]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "",
+        "throne": "Yes"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-19 08 h 57 min 47 s"
+    },
+    {
+      "id": "antoine-banaszak-2014",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Antoine Banaszak",
+      "birth_year": 2014,
+      "city": "Quebec",
+      "current_team": "",
+      "email": "yannick.banaszak@outlook.com",
+      "parent": {
+        "email": "yannick.banaszak@outlook.com",
+        "phone": "4189554820"
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "NONE"
+      },
+      "sides": ["L", "R"],
+      "player_style": "Rapide, mobile, coachable.",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "AS",
+        "pref_numbers": [76, 8, 88]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "",
+        "throne": "Yes"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-15 08 h 03 min 08 s"
+    },
+    {
+      "id": "rafael-de-carvalho-2014",
+      "form_version": "rttt_v1_mobile",
+      "name": "Rafael De Carvalho",
+      "birth_year": 2014,
+      "city": "Québec",
+      "current_team": "M12D1 ASL",
+      "email": "ricardodc25@gmail.com",
+      "parent": {
+        "email": "ricardodc25@gmail.com",
+        "phone": "4188028584"
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "NONE"
+      },
+      "sides": ["L"],
+      "player_style": "Défensif et aime se porter en avant",
+      "video_links": "",
+      "jersey": {
+        "type": "Customized",
+        "size": "AS",
+        "pref_numbers": [5, 4, 11]
+      },
+      "availability": {
+        "boston": "TBD",
+        "meltdown": "TBD",
+        "jaypeak": "",
+        "throne": "TBD"
+      },
+      "confidence_pct": 80,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Submitted at Fri, Nov 14, 2025 12:52 PM (UTC)"
+    },
+    {
+      "id": "thomas-belanger-2014",
+      "form_version": "rttt_v1_mobile",
+      "name": "Thomas Belanger",
+      "birth_year": 2014,
+      "city": "Québec",
+      "current_team": "Aigles HC M12 D1",
+      "email": "david.belanger.6@ulaval.ca",
+      "parent": {
+        "email": "david.belanger.6@ulaval.ca",
+        "phone": "+14185801044"
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "NONE"
+      },
+      "sides": ["L"],
+      "player_style": "Polyvalent",
+      "video_links": "",
+      "jersey": {
+        "type": "Customized",
+        "size": "AS",
+        "pref_numbers": [8, 6, 53]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "",
+        "throne": "Yes"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Submitted at Fri, Nov 14, 2025 3:32 AM (UTC)"
+    },
+    {
+      "id": "emile-st-laurent-2014",
+      "form_version": "rttt_v1_mobile",
+      "name": "Emile St-Laurent",
+      "birth_year": 2014,
+      "city": "St-augustin",
+      "current_team": "Aigles M12 D-1",
+      "email": "solap79@hotmail.com",
+      "parent": {
+        "email": "solap79@hotmail.com",
+        "phone": "+14185738078"
+      },
+      "positions": {
+        "primary": "GOL",
+        "secondary": "NONE"
+      },
+      "sides": ["R"],
+      "player_style": "Jordan Binnington et Dustin Wolf😉",
+      "video_links": "",
+      "jersey": {
+        "type": "Customized",
+        "size": "AS",
+        "pref_numbers": [31, 29, 32]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "Yes",
+        "jaypeak": "",
+        "throne": "Yes"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Submitted at Thu, Nov 13, 2025 8:51 PM (UTC)"
+    },
+
+    {
+      "id": "rafael-leblanc-2015",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Rafaël Leblanc",
+      "birth_year": 2015,
+      "city": "Lévis",
+      "current_team": "M11 AA express Rive-Sud",
+      "email": "lleblanc@legroupeleblanc.ca",
+      "parent": {
+        "email": "lleblanc@legroupeleblanc.ca",
+        "phone": "4185635010"
+      },
+      "positions": {
+        "primary": "FWD",
+        "secondary": "FWD"
+      },
+      "sides": ["R"],
+      "player_style": "All around",
+      "video_links": "",
+      "jersey": {
+        "type": "Customized",
+        "size": "YL",
+        "pref_numbers": [62, 94, 55]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "TBD",
+        "jaypeak": "",
+        "throne": "Yes"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-15 10 h 22 min 33 s"
+    },
+    {
+      "id": "dalmeida-2015",
+      "form_version": "rttt_v1_mobile",
+      "name": "D'Almeida",
+      "birth_year": 2015,
+      "city": "Québec",
+      "current_team": "Seigneurs",
+      "email": "Ruffwudead@hotmail.com",
+      "parent": {
+        "email": "Ruffwudead@hotmail.com",
+        "phone": "4182610527"
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "FWD"
+      },
+      "sides": ["R"],
+      "player_style": "Défenseur offensif",
+      "video_links": "",
+      "jersey": {
+        "type": "Customized",
+        "size": "AXL",
+        "pref_numbers": []
+      },
+      "availability": {
+        "boston": "TBD",
+        "meltdown": "TBD",
+        "jaypeak": "",
+        "throne": "TBD"
+      },
+      "confidence_pct": 86,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Submitted at Fri, Nov 14, 2025 2:09 PM (UTC)"
+    },
+    {
+      "id": "zack-parker-2015",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Zack Parker",
+      "birth_year": 2015,
+      "city": "Rivière-du-Loup",
+      "current_team": "Sphinx M12 D1",
+      "email": "jason.a.parker@live.ca",
+      "parent": {
+        "email": "jason.a.parker@live.ca",
+        "phone": "(418) 894-0010"
+      },
+      "positions": {
+        "primary": "GOL",
+        "secondary": "NONE"
+      },
+      "sides": ["L"],
+      "player_style": "",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "AS",
+        "pref_numbers": [31, 0]
+      },
+      "availability": {
+        "boston": "TBD",
+        "meltdown": "TBD",
+        "jaypeak": "TBD",
+        "throne": "TBD"
+      },
+      "confidence_pct": 80,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-12-02 19 h 52 min 07 s"
+    },
+    {
+      "id": "andy-jourdain-2015",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Andy jourdain",
+      "birth_year": 2015,
+      "city": "Boischatel",
+      "current_team": "HQNE Harfang Atome AA",
+      "email": "nath.julien@hitmail.com",
+      "parent": {
+        "email": "nath.julien@hitmail.com",
+        "phone": "4188083345"
+      },
+      "positions": {
+        "primary": "FWD",
+        "secondary": "DEF"
+      },
+      "sides": ["L"],
+      "player_style": "Excellente vision jeux, robuste et bon passeur",
+      "video_links": "",
+      "jersey": {
+        "type": "Customized",
+        "size": "AS",
+        "pref_numbers": [93, 13, 73]
+      },
+      "availability": {
+        "boston": "Yes",
+        "meltdown": "No",
+        "jaypeak": "Yes",
+        "throne": "Yes"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-12-02 18 h 49 min 52 s"
+    },
+    {
+      "id": "eloi-cyr-2015",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Eloi cyr",
+      "birth_year": 2015,
+      "city": "Rivière du loup",
+      "current_team": "Albatros m13",
+      "email": "emman_@outlook.com",
+      "parent": {
+        "email": "emman_@outlook.com",
+        "phone": "(418) 803-6910"
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "FWD"
+      },
+      "sides": ["L", "R"],
+      "player_style": "Droitier",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "AS",
+        "pref_numbers": [4]
+      },
+      "availability": {
+        "boston": "No",
+        "meltdown": "No",
+        "jaypeak": "",
+        "throne": "No"
+      },
+      "confidence_pct": 100,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-12-01 22 h 24 min 48 s"
+    },
+    {
+      "id": "soyo-igarashi-2015",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "SOYO IGARASHI",
+      "birth_year": 2015,
+      "city": "Beaconsfield",
+      "current_team": "NO Hockey 2025-2026",
+      "email": "cinquante50hurricane@hotmail.com",
+      "parent": {
+        "email": "cinquante50hurricane@hotmail.com",
+        "phone": "514-269-9004"
+      },
+      "positions": {
+        "primary": "FWD",
+        "secondary": "FWD"
+      },
+      "sides": ["L"],
+      "player_style": "He is an little fast Winger who can quickly switch to attack. Defensive switching is slow and lazy sometimes lol.",
+      "video_links": "N/A",
+      "jersey": {
+        "type": "Loaned",
+        "size": "YL",
+        "pref_numbers": [50, 18, 7]
+      },
+      "availability": {
+        "boston": "TBD",
+        "meltdown": "Yes",
+        "jaypeak": "",
+        "throne": "Yes"
+      },
+      "confidence_pct": 80,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-12-01 16 h 24 min 32 s"
+    },
+    {
+      "id": "olivier-desjardins-2015",
+      "form_version": "rttt_v1_native_apps_script",
+      "name": "Olivier Desjardins",
+      "birth_year": 2015,
+      "city": "Rivière-du-Loup",
+      "current_team": "Albatros m13 AAA",
+      "email": "djardins21@hotmail.com",
+      "parent": {
+        "email": "djardins21@hotmail.com",
+        "phone": "+14188947707"
+      },
+      "positions": {
+        "primary": "DEF",
+        "secondary": "CEN"
+      },
+      "sides": ["L"],
+      "player_style": "Fabricant de jeux",
+      "video_links": "",
+      "jersey": {
+        "type": "Loaned",
+        "size": "YL",
+        "pref_numbers": [24, 10, 98]
+      },
+      "availability": {
+        "boston": "TBD",
+        "meltdown": "TBD",
+        "jaypeak": "",
+        "throne": "TBD"
+      },
+      "confidence_pct": 80,
+      "consents": {
+        "throne_rule": true,
+        "limited_spots": true,
+        "consent_contact": true
+      },
+      "submitted_at": "Horodatage: 2025-11-30 21 h 40 min 02 s"
+    }
+  ]
+}
