@@ -819,6 +819,9 @@
   let currentYear = 2014;
   let currentTournamentKey = "boston";
 
+  // *** NOUVEAU : stockage par année ***
+  let lineupsByYear = {};
+  let confirmedByYear = {};
   let lineups = {};
   let confirmed = {};
 
@@ -848,6 +851,13 @@
       F2: { LW: [], C: [], RW: [] },
       F3: { LW: [], C: [], RW: [] }
     };
+  }
+
+  function bindYearState(){
+    if (!lineupsByYear[currentYear]) lineupsByYear[currentYear] = {};
+    if (!confirmedByYear[currentYear]) confirmedByYear[currentYear] = {};
+    lineups = lineupsByYear[currentYear];
+    confirmed = confirmedByYear[currentYear];
   }
 
   function ensureLineup(tKey){
@@ -901,6 +911,7 @@
 
   function setupYearAndTournaments(){
     currentYear = parseInt(yearSelect.value,10);
+    bindYearState(); // important: rebinder lineups/confirmed sur l'année
 
     const validKeys = Object.values(TOURNAMENTS)
       .filter(t => t.years.includes(currentYear))
@@ -1008,7 +1019,6 @@
     renderPlayers();
   });
 
-  // === Position mapping: primaire / secondaire → filtre G/D/C/F ===
   function mapPosToCategory(pos){
     const p = (pos || "").toUpperCase();
     if (p === "GOL" || p === "GOALER") return "G";
@@ -1777,9 +1787,9 @@
       );
       if (res.status === 404){
         toast("Pas encore de lineups pour cette année (fichier manquant).");
-        lineups = {};
-        confirmed = {};
-        ghLineupsSha = null;
+        lineupsByYear[currentYear] = {};
+        confirmedByYear[currentYear] = {};
+        bindYearState();
         renderLineup();
         renderSummary();
         return;
@@ -1793,8 +1803,9 @@
       ghLineupsSha = j.sha || null;
       const decoded = atob((j.content || "").replace(/\n/g,""));
       const data = JSON.parse(decoded);
-      lineups   = clone(data.tournaments || {});
-      confirmed = clone(data.confirmed   || {});
+      lineupsByYear[currentYear]   = clone(data.tournaments || {});
+      confirmedByYear[currentYear] = clone(data.confirmed   || {});
+      bindYearState();
       toast("Lineups chargés depuis GitHub.");
       haptic();
       renderLineup();
@@ -1812,8 +1823,8 @@
       version: 1,
       year: String(currentYear),
       updated_at: new Date().toISOString(),
-      tournaments: lineups,
-      confirmed: confirmed
+      tournaments: lineupsByYear[currentYear] || {},
+      confirmed: confirmedByYear[currentYear] || {}
     };
     const jsonText = JSON.stringify(payload, null, 2);
     const token = getGhToken();
@@ -1952,6 +1963,8 @@
     window.print();
   });
 
+  // Init
+  bindYearState();
   setupYearAndTournaments();
   renderPlayers();
   renderLineup();
