@@ -1,7 +1,7 @@
 {
   "version": 1,
   "year": "2014",
-  "updated_at": "2025-12-05T01:55:32.691Z",
+  "updated_at": "2025-12-05T02:25:11.847Z",
   "tournaments": {
     "boston": {
       "G": [
@@ -56,9 +56,64 @@
           "piero-merola-2014"
         ]
       }
+    },
+    "meltdown": {
+      "G": [
+        "emile-st-laurent-2014"
+      ],
+      "D1": {
+        "LD": [
+          "thomas-belanger-2014"
+        ],
+        "RD": []
+      },
+      "D2": {
+        "LD": [
+          "zitong-jeremy-wang-2014"
+        ],
+        "RD": [
+          "antoine-banaszak-2014"
+        ]
+      },
+      "D3": {
+        "LD": [
+          "rafael-de-carvalho-2014"
+        ],
+        "RD": []
+      },
+      "F1": {
+        "LW": [],
+        "C": [
+          "wyatt-cronin-2014"
+        ],
+        "RW": []
+      },
+      "F2": {
+        "LW": [
+          "luca-iacono-2014"
+        ],
+        "C": [
+          "piero-merola-2014"
+        ],
+        "RW": [
+          "samuel-pouliot-2014"
+        ]
+      },
+      "F3": {
+        "LW": [
+          "hugo-carignan-2014"
+        ],
+        "C": [
+          "malik-normandin-2014"
+        ],
+        "RW": [
+          "samy-mottet-2014"
+        ]
+      }
     }
   },
   "confirmed": {
-    "boston": {}
+    "boston": {},
+    "meltdown": {}
   }
 }
