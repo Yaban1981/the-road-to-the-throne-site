@@ -1,7 +1,7 @@
 {
   "version": 1,
   "year": "2014",
-  "updated_at": "2025-12-05T02:25:16.926Z",
+  "updated_at": "2025-12-05T02:29:28.659Z",
   "tournaments": {
     "boston": {
       "G": [
@@ -110,10 +110,61 @@
           "samy-mottet-2014"
         ]
       }
+    },
+    "throne": {
+      "G": [
+        "emile-st-laurent-2014"
+      ],
+      "D1": {
+        "LD": [
+          "zitong-jeremy-wang-2014"
+        ],
+        "RD": [
+          "antoine-banaszak-2014"
+        ]
+      },
+      "D2": {
+        "LD": [
+          "thomas-belanger-2014"
+        ],
+        "RD": []
+      },
+      "D3": {
+        "LD": [
+          "rafael-de-carvalho-2014"
+        ],
+        "RD": []
+      },
+      "F1": {
+        "LW": [],
+        "C": [
+          "rj-dumont-2014"
+        ],
+        "RW": []
+      },
+      "F2": {
+        "LW": [
+          "samuel-pouliot-2014"
+        ],
+        "C": [
+          "wyatt-cronin-2014"
+        ],
+        "RW": []
+      },
+      "F3": {
+        "LW": [
+          "hugo-carignan-2014"
+        ],
+        "C": [
+          "malik-normandin-2014"
+        ],
+        "RW": []
+      }
     }
   },
   "confirmed": {
     "boston": {},
-    "meltdown": {}
+    "meltdown": {},
+    "throne": {}
   }
 }
