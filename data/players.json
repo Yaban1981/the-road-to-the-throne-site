@@ -554,9 +554,9 @@
         "type": "Customized",
         "size": "YL",
         "pref_numbers": [
+          29,
           62,
-          94,
-          55
+          94
         ]
       },
       "availability": {
