@@ -1,7 +1,7 @@
 {
   "version": 1,
   "year": "2015",
-  "updated_at": "2025-12-05T04:28:29.547Z",
+  "updated_at": "2025-12-08T16:08:25.926Z",
   "tournaments": {
     "boston": {
       "G": [],
@@ -32,7 +32,9 @@
         "LW": [
           "soyo-igarashi-2015"
         ],
-        "C": [],
+        "C": [
+          "william-matte-2015"
+        ],
         "RW": []
       },
       "F3": {
@@ -102,7 +104,9 @@
         "LW": [
           "soyo-igarashi-2015"
         ],
-        "C": [],
+        "C": [
+          "william-matte-2015"
+        ],
         "RW": []
       },
       "F3": {
