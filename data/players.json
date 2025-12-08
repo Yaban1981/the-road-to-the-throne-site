@@ -1,6 +1,82 @@
 {
   "players": [
     {
+  "id": "william-matte-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "William Matte",
+  "birth_year": 2015,
+  "city": "Carleton Sur Mer",
+  "current_team": "Gladiateurs BDC",
+  "email": "ghislano26@hotmail.com",
+  "parent": {
+    "email": "ghislano26@hotmail.com",
+    "phone": "4183912455"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "Rapide, Vaillant",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "YM",
+    "pref_numbers": [29, 61, 12]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "No",
+    "jaypeak": "TBD",
+    "throne": "Yes"
+  },
+  "confidence_pct": 100,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
+},
+    {
+  "id": "romain-gaudreault-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Romain Gaudreault",
+  "birth_year": 2014,
+  "city": "Québec",
+  "current_team": "Gouveurs du Noroit 2 BB",
+  "email": "godrophil@gmail.com",
+  "parent": {
+    "email": "godrophil@gmail.com",
+    "phone": "418-929-2408"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "Joueur offensif polyvalent, aussi efficace au centre qu’à l’aile gauche, avec une bonne vitesse, une vision claire du jeu et un tir précis.",
+  "video_links": "Désolé, aucun pour le moment",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [37, 77, 93]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "Yes",
+    "jaypeak": "No",
+    "throne": "Yes"
+  },
+  "confidence_pct": 100,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2025-12-07 11 h 25 min 15 s"
+},
+    {
       "id": "samy-mottet-2014",
       "form_version": "rttt_v1_native_apps_script",
       "name": "Samy Mottet",
