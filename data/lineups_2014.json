@@ -1,7 +1,7 @@
 {
   "version": 1,
   "year": "2014",
-  "updated_at": "2025-12-05T02:29:28.659Z",
+  "updated_at": "2025-12-11T01:32:55.062Z",
   "tournaments": {
     "boston": {
       "G": [
@@ -23,9 +23,11 @@
       },
       "D3": {
         "LD": [
-          "thomas-belanger-2014"
+          "gavin-black-2014"
         ],
-        "RD": []
+        "RD": [
+          "thomas-belanger-2014"
+        ]
       },
       "F1": {
         "LW": [],
