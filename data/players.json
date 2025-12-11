@@ -39,6 +39,44 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "gavin-black-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Gavin Black",
+  "birth_year": 2014,
+  "city": "Beaconsfield",
+  "current_team": "Lac Saint Louis Lions",
+  "email": "blackcorey@hotmail.com",
+  "parent": {
+    "email": "blackcorey@hotmail.com",
+    "phone": "(514) 266-1827"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "Shifty offensive defensemen",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "AS",
+    "pref_numbers": [67, 14, 19]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "TBD",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 95,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2025-12-10 19 h 53 min 23 s"
+},
+    {
   "id": "romain-gaudreault-2014",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Romain Gaudreault",
