@@ -1,7 +1,7 @@
 {
   "version": 1,
   "year": "2014",
-  "updated_at": "2025-12-11T01:33:32.641Z",
+  "updated_at": "2025-12-30T18:35:19.533Z",
   "tournaments": {
     "boston": {
       "G": [
@@ -30,7 +30,9 @@
         ]
       },
       "F1": {
-        "LW": [],
+        "LW": [
+          "philippe-gosselin-2014"
+        ],
         "C": [
           "rj-dumont-2014"
         ],
