@@ -38,6 +38,85 @@
   },
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
+
+    {
+  "id": "philippe-gosselin-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Philippe Gosselin",
+  "birth_year": 2014,
+  "city": "Sherbrooke",
+  "current_team": "Harfangs Sherbrooke AAA",
+  "email": "alexandre.s.gosselin@gmail.com",
+  "parent": {
+    "email": "alexandre.s.gosselin@gmail.com",
+    "phone": "(819) 923-2539"
+  },
+  "positions": {
+    "primary": "FWD",
+    "secondary": "NONE"
+  },
+  "sides": ["L"],
+  "player_style": "Rapide, scoreur, responsable sur 200 pieds",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [29, 14, 97]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "Yes",
+    "jaypeak": "TBD",
+    "throne": "Yes"
+  },
+  "confidence_pct": 95,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2025-12-30 10 h 32 min 17 s"
+},
+
+    {
+  "id": "tristan-pipon-2013",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Tristan Pipon",
+  "birth_year": 2013,
+  "city": "Alma",
+  "current_team": "Espoirs Élite AAA",
+  "email": "Dompipon@hotmail.com",
+  "parent": {
+    "email": "Dompipon@hotmail.com",
+    "phone": "(418) 487-4110"
+  },
+  "positions": {
+    "primary": "FWD",
+    "secondary": "CEN"
+  },
+  "sides": ["L"],
+  "player_style": "Cole Caufield / défense responsable (David Savard), bloqueur de tirs",
+  "video_links": "Instagram Tristan Pipon",
+  "jersey": {
+    "type": "Loaned",
+    "size": "YL",
+    "pref_numbers": [13, 22, 49]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "TBD",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2025-12-15 21 h 26 min 28 s"
+},
+    
     {
   "id": "gavin-black-2014",
   "form_version": "rttt_v1_native_apps_script",
