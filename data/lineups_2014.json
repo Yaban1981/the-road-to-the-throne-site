@@ -1,7 +1,7 @@
 {
   "version": 1,
   "year": "2014",
-  "updated_at": "2025-12-30T18:36:55.354Z",
+  "updated_at": "2025-12-30T18:37:30.732Z",
   "tournaments": {
     "boston": {
       "G": [
@@ -139,12 +139,14 @@
       },
       "D3": {
         "LD": [
-          "rafael-de-carvalho-2014"
+          "gavin-black-2014"
         ],
         "RD": []
       },
       "F1": {
-        "LW": [],
+        "LW": [
+          "philippe-gosselin-2014"
+        ],
         "C": [
           "rj-dumont-2014"
         ],
