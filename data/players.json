@@ -38,7 +38,48 @@
   },
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
+    {
+  "id": "sheldon-longval-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Sheldon Longval",
+  "birth_year": 2015,
+  "city": "Cap-Santé",
+  "current_team": "Gouverneur du Noroït AA",
+  "email": "kevinlongval@hotmail.com",
+  "parent": {
+    "email": "kevinlongval@hotmail.com",
+    "phone": "4186096074"
+  },
+  "positions": {
+    "primary": "GOL",
+    "secondary": "NONE"
+  },
+  "sides": ["L"],
+  "player_style": "Calme, square, rapidité lors des déplacements",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "AM",
+    "pref_numbers": [4, 32]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "No",
+    "jaypeak": "Yes",
+    "throne": "Yes"
+  },
+  "confidence_pct": 95,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-02 20 h 26 min 36 s"
+},
 
+
+
+    
     {
   "id": "philippe-gosselin-2014",
   "form_version": "rttt_v1_native_apps_script",
