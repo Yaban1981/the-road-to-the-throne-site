@@ -114,6 +114,45 @@
   },
   "submitted_at": ""
 },
+    {
+  "id": "marc-delouard-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Marc Delouard",
+  "birth_year": 2014,
+  "city": "Herznach (Ch)",
+  "current_team": "ZSC Lions",
+  "email": "adelouard@bluewin.ch",
+  "parent": {
+    "email": "adelouard@bluewin.ch",
+    "phone": "+41796790803"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "Defensive/ offensive",
+  "video_links": "Instagram: marc-delouard-icehockey-world",
+  "jersey": {
+    "type": "Loaned",
+    "size": "YL",
+    "pref_numbers": [8, 88, 98]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "TBD",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 99,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-04 11 h 20 min 39 s"
+},
+
 
 
 
