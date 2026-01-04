@@ -1,7 +1,7 @@
 {
   "version": 1,
   "year": "2014",
-  "updated_at": "2025-12-30T18:37:30.732Z",
+  "updated_at": "2026-01-04T16:51:23.086Z",
   "tournaments": {
     "boston": {
       "G": [
@@ -67,7 +67,7 @@
       ],
       "D1": {
         "LD": [
-          "gavin-black-2014"
+          "marc-delouard-2014"
         ],
         "RD": [
           "thomas-belanger-2014"
@@ -85,7 +85,9 @@
         "LD": [
           "rafael-de-carvalho-2014"
         ],
-        "RD": []
+        "RD": [
+          "gavin-black-2014"
+        ]
       },
       "F1": {
         "LW": [
