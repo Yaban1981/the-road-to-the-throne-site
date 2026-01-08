@@ -39,6 +39,48 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "liam-nadeau-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Liam Nadeau",
+  "birth_year": 2014,
+  "city": "Granby",
+  "current_team": "Harfangs Triolet",
+  "email": "Charlesnadeau_prof@hotmail.com",
+  "parent": {
+    "email": "Charlesnadeau_prof@hotmail.com",
+    "phone": "4502041518"
+  },
+  "positions": {
+    "primary": "FWD",
+    "secondary": "FWD"
+  },
+  "sides": ["R"],
+  "player_style": "Rapide offensif, fabricant de jeu",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [11, 22, 5]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "TBD",
+    "jaypeak": "No",
+    "throne": "TBD"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-08 12 h 49 min 30 s"
+},
+
+
+
+    
+    {
   "id": "zack-st-onge-2014",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Zack St-Onge",
