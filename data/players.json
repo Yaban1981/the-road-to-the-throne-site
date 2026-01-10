@@ -114,6 +114,84 @@
   },
   "submitted_at": "Horodatage: 2026-01-08 14 h 48 min 44 s"
 },
+    {
+  "id": "simon-wang-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Simon Wang",
+  "birth_year": 2014,
+  "city": "L'Île-bizard",
+  "current_team": "",
+  "email": "1114367790@qq.com",
+  "parent": {
+    "email": "1114367790@qq.com",
+    "phone": "5145811789"
+  },
+  "positions": {
+    "primary": "FWD",
+    "secondary": "FWD"
+  },
+  "sides": ["R"],
+  "player_style": "fAst",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [29, 19, 9]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "TBD",
+    "jaypeak": "No",
+    "throne": "TBD"
+  },
+  "confidence_pct": 100,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-09 17 h 26 min 36 s"
+},
+    {
+  "id": "thomas-gagnon-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Thomas Gagnon",
+  "birth_year": 2015,
+  "city": "Les Escoumins",
+  "current_team": "Sags marine AA",
+  "email": "fgagnon18@hotmail.com",
+  "parent": {
+    "email": "fgagnon18@hotmail.com",
+    "phone": "4185148929"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "offensif",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "YL",
+    "pref_numbers": [95, 48, 14]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "No",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 91,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-04 23 h 25 min 22 s"
+},
+
+
 
 
 
