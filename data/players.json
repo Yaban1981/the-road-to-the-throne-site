@@ -190,6 +190,84 @@
   },
   "submitted_at": "Horodatage: 2026-01-04 23 h 25 min 22 s"
 },
+    {
+  "id": "nathan-vigneault-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Nathan Vigneault",
+  "birth_year": 2015,
+  "city": "Ancienne-Lorette",
+  "current_team": "Gouverneur noroît 1 M11 AA",
+  "email": "kevinvigneault@hotmail.com",
+  "parent": {
+    "email": "kevinvigneault@hotmail.com",
+    "phone": "(418) 717-9022"
+  },
+  "positions": {
+    "primary": "FWD",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "Rapide, bonne vision du jeu, 2 way player",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "AS",
+    "pref_numbers": [11, 93, 97]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "TBD",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 85,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-10 12 h 40 min 27 s"
+},
+    {
+  "id": "edouard-morin-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Edouard Morin",
+  "birth_year": 2015,
+  "city": "Lévis",
+  "current_team": "Express Rive-Sud AA",
+  "email": "exmorinlkq@gmail.com",
+  "parent": {
+    "email": "exmorinlkq@gmail.com",
+    "phone": "4185698030"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "Rapide, habile, leadership",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "YL",
+    "pref_numbers": [97, 67, 13]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "TBD",
+    "jaypeak": "Yes",
+    "throne": "Yes"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-10 17 h 29 min 16 s"
+},
+
+
 
 
 
