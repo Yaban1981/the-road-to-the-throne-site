@@ -1,7 +1,7 @@
 {
   "version": 1,
   "year": "2014",
-  "updated_at": "2026-01-13T23:55:00.292Z",
+  "updated_at": "2026-01-13T23:57:32.588Z",
   "tournaments": {
     "boston": {
       "G": [
@@ -96,9 +96,11 @@
           "philippe-gosselin-2014"
         ],
         "C": [
-          "wyatt-cronin-2014"
+          "hugo-carignan-2014"
         ],
-        "RW": []
+        "RW": [
+          "samuel-pouliot-2014"
+        ]
       },
       "F2": {
         "LW": [
@@ -107,13 +109,11 @@
         "C": [
           "piero-merola-2014"
         ],
-        "RW": [
-          "samuel-pouliot-2014"
-        ]
+        "RW": []
       },
       "F3": {
         "LW": [
-          "hugo-carignan-2014"
+          "liam-nadeau-2014"
         ],
         "C": [
           "malik-normandin-2014"
