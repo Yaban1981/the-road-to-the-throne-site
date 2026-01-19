@@ -76,6 +76,84 @@
   },
   "submitted_at": "Horodatage: 2026-01-11 21 h 11 min 20 s"
 },
+    {
+  "id": "jacob-mazerolle-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Jacob Mazerolle",
+  "birth_year": 2015,
+  "city": "Sainte-Marie-de-Kent",
+  "current_team": "Kent Sud Flames U11AA",
+  "email": "luc_julie22@yahoo.ca",
+  "parent": {
+    "email": "luc_julie22@yahoo.ca",
+    "phone": "+15062328665"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "NONE"
+  },
+  "sides": ["L"],
+  "player_style": "Défenseur offensif",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "YL",
+    "pref_numbers": [55, 9, 8]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "No",
+    "jaypeak": "Yes",
+    "throne": "Yes"
+  },
+  "confidence_pct": 90,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-18 20 h 18 min 28 s"
+},
+    {
+  "id": "hugo-gagnon-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Hugo Gagnon",
+  "birth_year": 2014,
+  "city": "Saint-Basile NB",
+  "current_team": "M13AAA Pionniers",
+  "email": "dubmli@nbed.nb.ca",
+  "parent": {
+    "email": "dubmli@nbed.nb.ca",
+    "phone": "5067331002"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [19, 91, 88]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "No",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 96,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-18 19 h 45 min 22 s"
+},
+
+
 
 
 
