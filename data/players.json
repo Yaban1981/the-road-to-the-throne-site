@@ -152,6 +152,45 @@
   },
   "submitted_at": "Horodatage: 2026-01-18 19 h 45 min 22 s"
 },
+    {
+  "id": "dylan-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Dylan",
+  "birth_year": 2014,
+  "city": "Montreal",
+  "current_team": "National de Montreal",
+  "email": "mattcarbone@hotmail.com",
+  "parent": {
+    "email": "mattcarbone@hotmail.com",
+    "phone": "+15148239444"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "NONE"
+  },
+  "sides": ["L"],
+  "player_style": "2 way center",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [13, 66]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "TBD",
+    "jaypeak": "No",
+    "throne": "Yes"
+  },
+  "confidence_pct": 90,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-18 22 h 19 min 38 s"
+},
+
 
 
 
