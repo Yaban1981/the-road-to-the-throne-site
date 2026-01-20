@@ -228,6 +228,45 @@
   },
   "submitted_at": "Horodatage: 2026-01-19 18 h 14 min 36 s"
 },
+    {
+  "id": "michael-barbe-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Michael Barbe",
+  "birth_year": 2015,
+  "city": "Gatineau",
+  "current_team": "Dragons / Colts",
+  "email": "mylenesmith38@gmail.com",
+  "parent": {
+    "email": "mylenesmith38@gmail.com",
+    "phone": "613-816-4921"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "FWD"
+  },
+  "sides": ["R"],
+  "player_style": "Rapide / Défenseur offensif / Attaquant défensif / Intelligent sur la glace / Stratégique",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "YL",
+    "pref_numbers": [88, 13, 98]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "No",
+    "jaypeak": "Yes",
+    "throne": "Yes"
+  },
+  "confidence_pct": 100,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-20 16 h 59 min 08 s"
+},
+
 
 
 
