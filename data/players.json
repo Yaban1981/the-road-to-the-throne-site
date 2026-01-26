@@ -266,6 +266,45 @@
   },
   "submitted_at": "Horodatage: 2026-01-20 16 h 59 min 08 s"
 },
+    {
+  "id": "logan-garceau-2013",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Logan Garceau",
+  "birth_year": 2013,
+  "city": "St-Léonard-d’Aston",
+  "current_team": "Estacades M13 AAA Élites",
+  "email": "Benoitgarceau@hotmail.com",
+  "parent": {
+    "email": "Benoitgarceau@hotmail.com",
+    "phone": "8196949538"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["L"],
+  "player_style": "Fabricant de jeu",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [21, 86, 12]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "No",
+    "jaypeak": "No",
+    "throne": "Yes"
+  },
+  "confidence_pct": 100,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-21 18 h 34 min 33 s"
+},
+
 
 
 
