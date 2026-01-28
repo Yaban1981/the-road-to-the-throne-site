@@ -39,6 +39,49 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "thomas-becker-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Thomas Becker",
+  "birth_year": 2015,
+  "city": "Long Island NY",
+  "current_team": "Long Island Royals",
+  "email": "tjbecker385@yahoo.com",
+  "parent": {
+    "email": "tjbecker385@yahoo.com",
+    "phone": "6316602477"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["R"],
+  "player_style": "Two way play maker",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [2, 86, 36]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "TBD",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 89,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-28 14 h 54 min 56 s"
+},
+
+
+
+
+    
+    {
   "id": "reza-khan-2015",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Reza Khan",
