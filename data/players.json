@@ -39,6 +39,50 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "reza-khan-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Reza Khan",
+  "birth_year": 2015,
+  "city": "Webb City",
+  "current_team": "Tulsa Oilers",
+  "email": "hammad-a-khan@hotmail.com",
+  "parent": {
+    "email": "hammad-a-khan@hotmail.com",
+    "phone": "2172051986"
+  },
+  "positions": {
+    "primary": "FWD",
+    "secondary": "CEN"
+  },
+  "sides": ["L"],
+  "player_style": "Offensive. Goes to the net.",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "YL",
+    "pref_numbers": [96, 68, 19]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "No",
+    "jaypeak": "Yes",
+    "throne": "TBD"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-28 11 h 37 min 12 s"
+},
+
+
+
+
+
+    
+    {
   "id": "emile-blais-2015",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Emile Blais",
