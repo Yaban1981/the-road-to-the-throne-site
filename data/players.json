@@ -39,6 +39,49 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "beariston-harding-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Beariston Harding",
+  "birth_year": 2015,
+  "city": "Burlington",
+  "current_team": "Vermont Junior Catamounts 2015 Elite",
+  "email": "wildharding@gmail.com",
+  "parent": {
+    "email": "wildharding@gmail.com",
+    "phone": "18023381353"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "DEF"
+  },
+  "sides": ["R"],
+  "player_style": "Steady D",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "YL",
+    "pref_numbers": [15, 12, 48]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "TBD",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-29 08 h 14 min 01 s"
+},
+
+
+
+
+    
+    {
   "id": "thomas-becker-2015",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Thomas Becker",
