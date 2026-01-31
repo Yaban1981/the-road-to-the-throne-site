@@ -76,6 +76,84 @@
   },
   "submitted_at": "Horodatage: 2026-01-29 08 h 14 min 01 s"
 },
+    {
+  "id": "levi-laroche-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Levi Laroche",
+  "birth_year": 2015,
+  "city": "Cornwall, Vermont, USA",
+  "current_team": "Vermont Jr. Catamounts 2015 Elite",
+  "email": "khlaroche@yahoo.com",
+  "parent": {
+    "email": "khlaroche@yahoo.com",
+    "phone": ""
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["R"],
+  "player_style": "Hard worker, drives the play, fast, good teammate.",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "YL",
+    "pref_numbers": [48, 23, 25]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "No",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-29 18 h 58 min 33 s"
+},
+    {
+  "id": "zdeno-hatin-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Zdeno Hatin",
+  "birth_year": 2015,
+  "city": "Georgia",
+  "current_team": "Jr. Cats",
+  "email": "nikitahatin4@gmail.com",
+  "parent": {
+    "email": "nikitahatin4@gmail.com",
+    "phone": "8027829913"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "DEF"
+  },
+  "sides": ["L"],
+  "player_style": "Unselfish - moves the puck. Great back check",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "YL",
+    "pref_numbers": [11, 33, 88]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "TBD",
+    "jaypeak": "Yes",
+    "throne": "TBD"
+  },
+  "confidence_pct": 94,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-01-29 20 h 22 min 29 s"
+},
+
+
 
 
 
