@@ -39,6 +39,50 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "alessandro-paravan-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Alessandro Paravan",
+  "birth_year": 2014,
+  "city": "Ottawa",
+  "current_team": "Eastern Ottawa Wild U12 AAA",
+  "email": "paravanclan@gmail.com",
+  "parent": {
+    "email": "paravanclan@gmail.com",
+    "phone": "6132279803"
+  },
+  "positions": {
+    "primary": "FWD",
+    "secondary": "NONE"
+  },
+  "sides": ["L"],
+  "player_style": "Rapide offensif",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [44, 13, 93]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "Yes",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-02-01 11 h 32 min 01 s"
+},
+
+
+
+
+
+    
+    {
   "id": "beariston-harding-2015",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Beariston Harding",
