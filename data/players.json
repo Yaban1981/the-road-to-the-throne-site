@@ -39,6 +39,45 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "raphael-leveille-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Raphaël Léveillé",
+  "birth_year": 2015,
+  "city": "Montréal",
+  "current_team": "Montréal Élite Royal Est M11AA",
+  "email": "patrick_leveille@videotron.ca",
+  "parent": {
+    "email": "patrick_leveille@videotron.ca",
+    "phone": "514 808-5038"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "NONE"
+  },
+  "sides": ["R"],
+  "player_style": "Défenseur rapide qui supporte l'attaque. Réalise des bonnes lectures en défensive et pour les passes. Joueur physique.",
+  "video_links": "https://www.youtube.com/watch?v=FKlQhPcFeLc\nhttps://www.youtube.com/watch?v=WxgIQYjLB4o",
+  "jersey": {
+    "type": "Customized",
+    "size": "AS",
+    "pref_numbers": [8, 48, 38]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "No",
+    "jaypeak": "No",
+    "throne": "TBD"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-02-03 07 h 14 min 17 s"
+},
+
+    {
   "id": "mathieu-audet-2014",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Mathieu Audet",
