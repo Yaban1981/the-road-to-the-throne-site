@@ -39,6 +39,49 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "max-corman-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Max Corman",
+  "birth_year": 2015,
+  "city": "Fredericton",
+  "current_team": "FYHA U11AA Outlanders, 2015 Bolts",
+  "email": "dr.rachel.ouellette@gmail.com",
+  "parent": {
+    "email": "dr.rachel.ouellette@gmail.com",
+    "phone": "506-999-3827"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "FWD"
+  },
+  "sides": ["R"],
+  "player_style": "Offensive D, Grinder",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "YM",
+    "pref_numbers": [7, 3, 11]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "No",
+    "jaypeak": "Yes",
+    "throne": "TBD"
+  },
+  "confidence_pct": 90,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-02-03 18 h 53 min 10 s"
+},
+
+
+
+
+    
+    {
   "id": "raphael-leveille-2015",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Raphaël Léveillé",
