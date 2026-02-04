@@ -39,6 +39,45 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "max-oneill-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Max O’Neill",
+  "birth_year": 2015,
+  "city": "Fredericton",
+  "current_team": "Fredericton U11AA Red Wings",
+  "email": "shawn8oneill@gmail.con",
+  "parent": {
+    "email": "shawn8oneill@gmail.con",
+    "phone": "506 2608393"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "NONE"
+  },
+  "sides": ["L", "R"],
+  "player_style": "Physical, hard shot, good first pass",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "AS",
+    "pref_numbers": [48, 21, 53]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "No",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 85,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-02-03 21 h 38 min 22 s"
+},
+
+    {
   "id": "max-corman-2015",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Max Corman",
