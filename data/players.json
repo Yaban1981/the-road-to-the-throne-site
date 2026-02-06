@@ -76,6 +76,45 @@
   },
   "submitted_at": "Horodatage: 2026-02-03 21 h 38 min 22 s"
 },
+    {
+  "id": "london-landry-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "London Landry",
+  "birth_year": 2015,
+  "city": "Cap-Chat",
+  "current_team": "Montagnard",
+  "email": "po18@icloud.com",
+  "parent": {
+    "email": "po18@icloud.com",
+    "phone": "4187641652"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "DEF"
+  },
+  "sides": ["L"],
+  "player_style": "Rapide, intense, défensif avec capacité offensive",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "AS",
+    "pref_numbers": [15, 14]
+  },
+  "availability": {
+    "boston": "Yes",
+    "meltdown": "TBD",
+    "jaypeak": "Yes",
+    "throne": "TBD"
+  },
+  "confidence_pct": 100,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-02-05 17 h 34 min 47 s"
+},
+
 
     {
   "id": "max-corman-2015",
