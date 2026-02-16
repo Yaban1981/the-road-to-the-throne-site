@@ -39,6 +39,47 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "william-element-2014",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "William Element",
+  "birth_year": 2014,
+  "city": "Québec",
+  "current_team": "Aigles",
+  "email": "element2210@hotmail.com",
+  "parent": {
+    "email": "element2210@hotmail.com",
+    "phone": "4185696566"
+  },
+  "positions": {
+    "primary": "CEN",
+    "secondary": "FWD"
+  },
+  "sides": ["R"],
+  "player_style": "",
+  "video_links": "",
+  "jersey": {
+    "type": "Loaned",
+    "size": "AS",
+    "pref_numbers": [71, 93, 22]
+  },
+  "availability": {
+    "boston": "No",
+    "meltdown": "Yes",
+    "jaypeak": "No",
+    "throne": "No"
+  },
+  "confidence_pct": 80,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-02-16 11 h 29 min 26 s"
+},
+
+
+    
+    {
   "id": "nixon-sinden-2015",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Nixon Sinden",
