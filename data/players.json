@@ -39,6 +39,45 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "nixon-sinden-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Nixon Sinden",
+  "birth_year": 2015,
+  "city": "Petawawa",
+  "current_team": "U11 AA UOV Aces",
+  "email": "sinden23@hotmail.ca",
+  "parent": {
+    "email": "sinden23@hotmail.ca",
+    "phone": "16134103948"
+  },
+  "positions": {
+    "primary": "DEF",
+    "secondary": "NONE"
+  },
+  "sides": ["R"],
+  "player_style": "Fast, defensive/offensive, team player, smart passes.",
+  "video_links": "https://evt.live/juniorcast/uov-aces-vs-kitchener-rangers\nhttps://evt.live/juniorcast/uov-aces-vs-york-simcoe-express",
+  "jersey": {
+    "type": "Customized",
+    "size": "YL",
+    "pref_numbers": [16, 10, 5]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "TBD",
+    "jaypeak": "Yes",
+    "throne": "Yes"
+  },
+  "confidence_pct": 100,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-02-15 17 h 08 min 05 s"
+},
+    
+    {
   "id": "gus-wykoff-2015",
   "form_version": "rttt_v1_native_apps_script",
   "name": "Gus Wykoff",
