@@ -39,6 +39,47 @@
   "submitted_at": "Horodatage: 2025-12-07 20 h 46 min 48 s"
 },
     {
+  "id": "aniceto-giuseppe-riccio-2015",
+  "form_version": "rttt_v1_native_apps_script",
+  "name": "Aniceto Giuseppe Riccio",
+  "birth_year": 2015,
+  "city": "Montréal",
+  "current_team": "Montréal Elite National Est.",
+  "email": "entriccio@gmail.com",
+  "parent": {
+    "email": "entriccio@gmail.com",
+    "phone": "4388287884"
+  },
+  "positions": {
+    "primary": "FWD",
+    "secondary": "DEF"
+  },
+  "sides": ["L"],
+  "player_style": "",
+  "video_links": "",
+  "jersey": {
+    "type": "Customized",
+    "size": "AS",
+    "pref_numbers": [6, 97, 29]
+  },
+  "availability": {
+    "boston": "TBD",
+    "meltdown": "TBD",
+    "jaypeak": "TBD",
+    "throne": "TBD"
+  },
+  "confidence_pct": 100,
+  "consents": {
+    "throne_rule": true,
+    "limited_spots": true,
+    "consent_contact": true
+  },
+  "submitted_at": "Horodatage: 2026-02-20 00 h 15 min 40 s"
+},
+
+
+    
+    {
   "id": "william-element-2014",
   "form_version": "rttt_v1_native_apps_script",
   "name": "William Element",
