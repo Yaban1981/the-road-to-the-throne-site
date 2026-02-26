@@ -65,6 +65,15 @@
     .hero-sub{margin:6px 0 4px; color:#dfe7ff; font-size:1.1rem; opacity:.95}
     .hero-meta{margin:0; color:#9fb7ff; font-size:.95rem; opacity:.9}
 
+    /* Year/Level picker (sync with player info) */
+    .year-picker{max-width:700px; margin:0 auto 14px; padding:14px 16px; border:1px solid rgba(255,255,255,.10);
+      border-radius:18px; background:rgba(10,16,32,.55); text-align:center}
+    .year-picker .picker-row{display:flex; gap:12px; justify-content:center; align-items:flex-end; flex-wrap:wrap}
+    .year-picker .picker{min-width:220px}
+    .year-picker label{display:block; font-weight:800; color:#eaf2ff; margin:0 0 8px}
+    .year-picker select{max-width:260px; margin:0 auto; text-align:center}
+    .year-picker .hint{margin-top:8px; color:var(--muted); font-size:.92rem}
+
     /* Tournaments */
     .tournaments-section{max-width:1040px; margin:0 auto 20px; padding:0 16px}
     .tournaments-section h2{text-align:center; margin:0 0 20px; font-size:1.4rem; color:#eaf2ff}
@@ -190,9 +199,28 @@
   <!-- Tournois -->
   <div class="tournaments-section">
     <h2>Nos Tournois 2026 / Our 2026 Tournaments</h2>
+
+    <div class="year-picker">
+      <div class="picker-row">
+        <div class="picker">
+          <label for="year_pick">Année / Year</label>
+          <select id="year_pick" aria-label="Year"></select>
+        </div>
+        <div class="picker">
+          <label for="level_pick">Niveau / Level</label>
+          <select id="level_pick" aria-label="Level">
+            <option value="">— Choisir / Select —</option>
+            <option value="elite">Élite / Elite</option>
+            <option value="aaa">AAA</option>
+          </select>
+        </div>
+      </div>
+      <div class="hint"></div>
+    </div>
+
     <div class="tournaments">
       <!-- CCM Blue Chip -->
-      <div class="tcard">
+      <div class="tcard" data-level="elite">
         <a class="logo" href="https://200x85.com/event/ccm-blue-chip-invite/" target="_blank" rel="noopener">
           <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/bluechip.png" alt="CCM Blue Chip Invite logo" loading="lazy">
         </a>
@@ -202,7 +230,7 @@
       </div>
 
       <!-- Montreal Meltdown -->
-      <div class="tcard">
+      <div class="tcard" data-level="elite">
         <a class="logo" href="https://200x85.com/tournaments/montreal-meltdown/" target="_blank" rel="noopener">
           <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/meltdown.png" alt="Montreal Meltdown logo" loading="lazy">
         </a>
@@ -212,7 +240,7 @@
       </div>
 
       <!-- Jay Peak / Green Mountain Cup -->
-      <div class="tcard">
+      <div class="tcard" data-level="elite">
         <a class="logo" href="https://cwenchnextgenseries.com/events/green-mountain-cup" target="_blank" rel="noopener">
           <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/JayPeak.png" alt="Green Mountain Cup Jay Peak logo" loading="lazy">
         </a>
@@ -223,7 +251,7 @@
 
 
 <!-- Beantown Bash -->
-<div class="tcard">
+<div class="tcard" data-level="elite">
   <a class="logo" href="https://cwenchnextgenseries.com/events/beantown-bash" target="_blank" rel="noopener">
     <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/Beantown.webp" alt="Beantown Bash logo" loading="lazy">
   </a>
@@ -235,7 +263,7 @@
 
 
       <!-- The Throne -->
-      <div class="tcard">
+      <div class="tcard" data-level="elite">
         <a class="logo" href="https://phdbestofbest.com/the-throne/" target="_blank" rel="noopener">
           <img src="https://yaban1981.github.io/the-road-to-the-throne-site/logos/throne.png" alt="The Throne Tournament logo" loading="lazy">
         </a>
@@ -290,6 +318,14 @@
               <option value="">— Choisir / Select —</option>
               <option>2013</option><option>2014</option><option>2015</option><option>2016</option><option>2017</option>
             <option>2018</option><option>2019</option>
+            </select>
+          </div>
+          <div class="input-container">
+            <label for="player_level">Niveau / Level</label>
+            <select id="player_level" name="player_level">
+              <option value="">— Choisir / Select —</option>
+              <option value="elite">Élite / Elite</option>
+              <option value="aaa">AAA</option>
             </select>
           </div>
           <div class="input-container">
@@ -360,8 +396,8 @@
         <div class="grid">
           <div class="muted">Aucun paiement maintenant / No payment now.</div>
 
-          <div>
-            <label class="muted">
+          <div data-level="elite">
+      <label class="muted">
               Boston, MA — CCM Blue Chip Invite — ≈ 175 $ CAD • 15–17.05.2026<br>
               <strong>Années / Years:</strong> 2014, 2015, 2017
             </label>
@@ -373,9 +409,9 @@
           </div>
 
 
-<div>
-  <label class="muted">
-    Boston, MA — Beantown Bash — Prix à déterminer / Price TBD • 29–31.05.2026<br>
+<div data-level="elite">
+      <label class="muted">
+              Boston, MA — Beantown Bash — Prix à déterminer / Price TBD • 29–31.05.2026<br>
     <strong>Années / Years:</strong> 2013 seulement / 2013 only
   </label>
   <div class="check-row" aria-label="Beantown Bash">
@@ -387,8 +423,8 @@
 
 
 
-          <div>
-            <label class="muted">
+          <div data-level="elite">
+      <label class="muted">
               Montreal, QC — Montreal Meltdown — ≈ 150 $ CAD • 05–07.06.2026<br>
               <strong>Années / Years:</strong> 2014 seulement / 2014 only
             </label>
@@ -399,8 +435,8 @@
             </div>
           </div>
 
-          <div>
-            <label class="muted">
+          <div data-level="elite">
+      <label class="muted">
               Jay Peak, VT — Green Mountain Cup — ≈ 330 $ CAD • 11–14.06.2026<br>
               <strong>Années / Years:</strong> 2015 seulement / 2015 only
             </label>
@@ -411,8 +447,8 @@
             </div>
           </div>
 
-          <div>
-            <label class="muted">
+          <div data-level="elite">
+      <label class="muted">
               Toronto, ON — The Throne — ≈ 250 $ CAD • 24–26.07.2026<br>
               <strong>Années / Years:</strong> 2013 @ 2019
             </label>
@@ -539,6 +575,167 @@
 
       return true;
     }
+  
+
+    // --- Availability filter by birth year (show only relevant tournaments) ---
+    function _parseYearsFromText(text){
+      if(!text) return [];
+      var years = (text.match(/\b20\d{2}\b/g) || []).map(function(y){return parseInt(y,10);});
+      years = Array.from(new Set(years)).sort(function(a,b){return a-b;});
+      if(years.length===0) return [];
+      // If the label looks like a range (e.g., "2013 @ 2019" or "2013-2019" or "2013–2019"), expand it
+      if(years.length>=2 && /[@\-–]|to|à/i.test(text)){
+        var start = years[0], end = years[years.length-1];
+        var out=[];
+        for(var y=start; y<=end; y++) out.push(y);
+        return out;
+      }
+      return years;
+    }
+
+    function _setBlockVisible(block, visible){
+      if(!block) return;
+      block.style.display = visible ? '' : 'none';
+      // Disable inputs when hidden so they don't submit silently
+      var inputs = block.querySelectorAll('input, select, textarea, button');
+      inputs.forEach(function(el){ el.disabled = !visible; });
+    }
+
+
+    function _matchLevel(el, lvl){
+      if(!lvl) return true; // no selection => don't filter
+      if(!el) return true;
+      var dl = (el.getAttribute('data-level') || '').toLowerCase().trim();
+      if(!dl) return true; // no tag => visible for all
+      if(dl === 'all' || dl === 'both') return true;
+      var parts = dl.split(/[,\s]+/).filter(Boolean);
+      return parts.indexOf(lvl.toLowerCase()) !== -1;
+    }
+
+        function applyBirthYearFilters(){
+      var yearEl = document.getElementById('birth_year');
+      var year = yearEl ? yearEl.value : '';
+      var y = year ? parseInt(year,10) : null;
+
+      var levelEl = document.getElementById('player_level');
+      var lvl = levelEl ? (levelEl.value || '') : '';
+
+      // 1) Top tournament cards
+      document.querySelectorAll('.tcard').forEach(function(card){
+        var yearsTextEl = card.querySelector('.t-years');
+        var yearsText = yearsTextEl ? yearsTextEl.textContent : '';
+        var years = _parseYearsFromText(yearsText);
+        var visibleYear = (!y) || (years.length===0) || (years.indexOf(y)!==-1);
+        var visibleLevel = _matchLevel(card, lvl);
+        _setBlockVisible(card, visibleYear && visibleLevel);
+      });
+
+      // 2) Availability section rows (form)
+      var avail = document.getElementById('fieldset-availability');
+      if(avail){
+        avail.querySelectorAll('div > label.muted').forEach(function(lbl){
+          var host = lbl.parentElement; // the <div> that wraps label + radios
+          if(!host) return;
+          var yearsLine = lbl.textContent || '';
+          var years = _parseYearsFromText(yearsLine);
+          var visibleYear = (!y) || (years.length===0) || (years.indexOf(y)!==-1);
+          var visibleLevel = _matchLevel(host, lvl);
+          _setBlockVisible(host, visibleYear && visibleLevel);
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      var birthEl = document.getElementById('birth_year');
+      var yearPick = document.getElementById('year_pick');
+
+      var levelEl = document.getElementById('player_level');
+      var levelPick = document.getElementById('level_pick');
+
+      // Populate the top year picker using the same options as birth_year
+      if(yearPick && birthEl){
+        yearPick.innerHTML = '';
+        Array.from(birthEl.options).forEach(function(opt){
+          var o = document.createElement('option');
+          o.value = opt.value || opt.textContent;
+          o.textContent = opt.textContent;
+          // Keep the placeholder as-is
+          if((opt.value || '').trim()==='' && opt.textContent.indexOf('Choisir')!==-1){
+            o.value = '';
+          }
+          yearPick.appendChild(o);
+        });
+      }
+
+      // --- Sync Year (team year <-> birth_year) ---
+      var syncingYear = false;
+
+      function syncYearFromBirth(){
+        if(syncingYear) return;
+        syncingYear = true;
+        if(yearPick) yearPick.value = birthEl ? birthEl.value : '';
+        syncingYear = false;
+        applyBirthYearFilters();
+      }
+
+      function syncYearFromPick(){
+        if(syncingYear) return;
+        syncingYear = true;
+        if(birthEl) birthEl.value = yearPick ? yearPick.value : '';
+        syncingYear = false;
+        applyBirthYearFilters();
+      }
+
+      if(birthEl){
+        birthEl.addEventListener('change', syncYearFromBirth);
+      }
+      if(yearPick){
+        yearPick.addEventListener('change', syncYearFromPick);
+      }
+
+      // Initial year sync (prefer an already-selected birth year if any)
+      if(birthEl && birthEl.value){
+        if(yearPick) yearPick.value = birthEl.value;
+      } else if(yearPick && yearPick.value){
+        if(birthEl) birthEl.value = yearPick.value;
+      }
+
+      // --- Sync Level (top <-> player info) ---
+      var syncingLevel = false;
+
+      function syncLevelFromPlayer(){
+        if(syncingLevel) return;
+        syncingLevel = true;
+        if(levelPick) levelPick.value = levelEl ? (levelEl.value || '') : '';
+        syncingLevel = false;
+        applyBirthYearFilters();
+      }
+
+      function syncLevelFromPick(){
+        if(syncingLevel) return;
+        syncingLevel = true;
+        if(levelEl) levelEl.value = levelPick ? (levelPick.value || '') : '';
+        syncingLevel = false;
+        applyBirthYearFilters();
+      }
+
+      if(levelEl){
+        levelEl.addEventListener('change', syncLevelFromPlayer);
+      }
+      if(levelPick){
+        levelPick.addEventListener('change', syncLevelFromPick);
+      }
+
+      // Initial level sync (prefer an already-selected player level if any)
+      if(levelEl && levelEl.value){
+        if(levelPick) levelPick.value = levelEl.value;
+      } else if(levelPick && levelPick.value){
+        if(levelEl) levelEl.value = levelPick.value;
+      }
+
+      applyBirthYearFilters(); // initial render
+    });
+
   </script>
 </body>
 </html>
